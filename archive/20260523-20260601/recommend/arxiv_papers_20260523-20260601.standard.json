@@ -1,0 +1,331 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-01T13:55:08.919365+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 5,
+    "deep_cap": 6,
+    "deep_selected": 5,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2605.24553v1",
+      "source": "arxiv",
+      "title": "IQA-Spider: Unifying Multi-Granularity Image Quality Assessment with Reasoning, Grounding and Referring",
+      "abstract": "We present IQA-Spider, the first image quality assessment (IQA) framework that unifies reasoning, grounding, and referring into a single LMM-based framework for multi-granularity quality understanding. Existing LMM-based IQA methods typically support only partial perception dimensions, such as quality description and question answering~(\\textit{i.e.}, reasoning) or pixel-level grounding. This limitation largely stems from the absence of (i) a unified task and data formulation and (ii) effective optimization paradigms for multi-granularity learning. To address these limitations, we formulate a rigorous four-task paradigm covering global and local quality description, pixel-level grounding, and region-level referring. Based on this formulation, we construct a corresponding IQA dataset with a scalable and automatic annotation pipeline, thereby providing a solid foundation for unified multi-granularity learning. To further enable unified perception, we adopt a conflict-free two-stage design that progressively extends text-level multi-granularity understanding to pixel-level grounding: (i) the first stage equips the model with fine-grained text-level reasoning across multiple IQA tasks, and (ii) the second stage introduces a training-free text-to-point grounding paradigm, which bridges textual semantics and pixel-level perception by mapping token logits to spatial coordinates. Based on these efforts, we achieve IQA-Spider with unified multi-granularity explainable image quality assessment. Extensive experiments across multiple benchmarks demonstrate strong performance, validating the effectiveness and versatility of the proposed formulation and framework.",
+      "authors": [
+        "Xinge Peng",
+        "Yiting Lu",
+        "Xin Li",
+        "Zhibo Chen"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-05-23T12:39:37+00:00",
+      "link": "https://arxiv.org/pdf/2605.24553v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "IQA framework unifying reasoning, grounding, and referring with LMM",
+      "llm_evidence_cn": "统一推理、定位和引用的LMM图像质量评价框架",
+      "llm_evidence": "统一推理、定位和引用的LMM图像质量评价框架",
+      "canonical_evidence": "统一推理、定位和引用的LMM图像质量评价框架",
+      "llm_tldr_en": "Existing LMM-based IQA methods cover only partial dimensions. IQA-Spider unifies reasoning, grounding, and referring through a four-task paradigm, achieving superior multi-granularity quality understanding.",
+      "llm_tldr_cn": "现有基于大语言-视觉模型的图像质量评价方法通常仅支持部分感知维度，如质量描述和问答。IQA-Spider首次提出统一多粒度质量理解的LMM框架，涵盖全局与局部质量描述、像素级定位和区域级引用四项任务，通过统一任务范式与优化策略实现推理与定位的协同。实验表明该框架在多个IQA基准上取得领先性能，推动了可解释的多模态图像质量评价发展。",
+      "llm_tldr": "现有基于大语言-视觉模型的图像质量评价方法通常仅支持部分感知维度，如质量描述和问答。IQA-Spider首次提出统一多粒度质量理解的LMM框架，涵盖全局与局部质量描述、像素级定位和区域级引用四项任务，通过统一任务范式与优化策略实现推理与定位的协同。实验表明该框架在多个IQA基准上取得领先性能，推动了可解释的多模态图像质量评价发展。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "image quality reasoning and explanation generation via multimodal large models",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.24799v1",
+      "source": "arxiv",
+      "title": "Divide-and-Conquer Inference for Large-Scale Visual Recognition with Multimodal Large Language Models",
+      "abstract": "Multimodal Large Language Models (MLLMs) have demonstrated strong capabilities across a wide range of vision language tasks. However, when applied to large scale image classification, their performance degrades significantly as the label space expands a phenomenon we define as Performance Collapse in Long Sequence Recognition. Through an information theoretic analysis, we reveal that this collapse stems from a fundamental conflict between the escalating information entropy and the prominent attention dilution and decay within attention mechanisms, which impairs the model's ability to maintain a sufficient signal-to-noise ratio when processing extremely long prompts. To mitigate this, we propose Divide-and-Conquer Inference (DCI), a novel test-time scaling strategy for visual recognition with MLLMs. DCI recursively decomposes complex global classification tasks into multiple simpler, localized subproblems and employs a dynamic pruning mechanism to compress the search space. This method effectively improves the local signal to noise ratio and model accuracy by mitigating the inherent weight dilution issues in long-sequence inference. Moreover, while traditional self-attention incurs a prohibitive quadratic computational complexity, DCI achieves more favorable scaling behavior and substantially accelerates inference in large scale classification scenarios. Extensive experiments on benchmarks such as ImageNet-1K and ImageNet-21K demonstrate that DCI consistently improves classification accuracy. This enables lightweight open-source models to rival or even surpass frontier closed-source giants without any additional training or fine-tuning. As a model-agnostic, plug-and-play paradigm, DCI offers an efficient approach for scaling the inferential precision of MLLMs in large-scale scenarios.",
+      "authors": [
+        "Zhipeng Ye",
+        "Jiaqi Huang",
+        "Feng Jiang",
+        "Qiufeng Wang",
+        "Yikang Duan",
+        "Dawei Wang",
+        "Xihang Zhou",
+        "Qian Qiao"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-05-24T01:07:05+00:00",
+      "link": "https://arxiv.org/pdf/2605.24799v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "MLLM for large-scale image classification, processes images and text; proposes divide-and-conquer inference to overcome performance collapse.",
+      "llm_evidence_cn": "MLLM用于大规模图像分类，处理图像和文本；提出分治推理克服性能崩溃。",
+      "llm_evidence": "MLLM用于大规模图像分类，处理图像和文本；提出分治推理克服性能崩溃。",
+      "canonical_evidence": "MLLM用于大规模图像分类，处理图像和文本；提出分治推理克服性能崩溃。",
+      "llm_tldr_en": "This paper tackles the performance collapse of MLLMs in large-scale image classification when label spaces expand. It proposes a divide-and-conquer inference strategy that splits the label space into smaller subproblems processed sequentially, mitigating attention dilution and information entropy. Experiments demonstrate significantly improved classification accuracy on large-scale datasets.",
+      "llm_tldr_cn": "多模态大语言模型在处理大规模图像分类时，随着标签空间扩大性能急剧下降，本文将其定义为长序列识别中的性能崩溃。通过信息论分析揭示其根源在于熵增与注意力稀释。为此提出分治推理策略，将大标签集分解为子问题逐步解决，有效缓解信号噪声比下降。在多个大规模数据集上，该方法使MLLM的分类准确率大幅提升，支持数千类别的识别任务，拓展了MLLM在视觉识别中的应用边界。",
+      "llm_tldr": "多模态大语言模型在处理大规模图像分类时，随着标签空间扩大性能急剧下降，本文将其定义为长序列识别中的性能崩溃。通过信息论分析揭示其根源在于熵增与注意力稀释。为此提出分治推理策略，将大标签集分解为子问题逐步解决，有效缓解信号噪声比下降。在多个大规模数据集上，该方法使MLLM的分类准确率大幅提升，支持数千类别的识别任务，拓展了MLLM在视觉识别中的应用边界。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.29212v1",
+      "source": "arxiv",
+      "title": "MetaRanker: Human-in-the-loop Active Ranking for Metalens Image Quality",
+      "abstract": "Image quality in modern imaging systems emerges from the coupled effects of the sensor, optics, and computational reconstruction. Ultra-thin metalenses offer a path toward substantial miniaturization of optical modules, but practical designs often exhibit pronounced chromatic and field-dependent aberrations that necessitate computational reconstruction. In current metalens pipelines, reconstruction models are commonly trained and selected using distortion-based fidelity objectives, such as PSNR, yet these proxies can be weakly correlated with human preference and downstream utility, reflecting the well-known perception--distortion trade-off. We introduce MetaRanker, a human-in-the-loop active ranking framework that formalizes metalens image quality in terms of semantic interpretability, defined as the degree to which humans can reliably recognize objects and structures in the presence of optical artifacts. MetaRanker combines a probabilistic preference model with uncertainty-aware query selection, and leverages vision--language models to provide lightweight semantic priors. Importantly, these priors are used only to guide the sampling of informative comparisons; human judgments remain the primary supervision signal throughout. Across real-world and synthetic metalens datasets with distinct degradation profiles, MetaRanker produces rankings that align most closely with human assessments, while reducing the number of pairwise annotations required by approximately 80% relative to exhaustive pairwise evaluation. Finally, we show that standard image quality assessment metrics exhibit limited alignment with human interpretability in the metalens domain, positioning MetaRanker as a practical step toward perceptually grounded metalens evaluation and co-design.",
+      "authors": [
+        "Yujin Park",
+        "Haejun Chung",
+        "Ikbeom Jang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.HC"
+      ],
+      "published": "2026-05-28T00:51:48+00:00",
+      "link": "https://arxiv.org/pdf/2605.29212v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Introduces MetaRanker, a human-in-the-loop active ranking framework to assess metalens image quality with perceptual alignment.",
+      "llm_evidence_cn": "提出MetaRanker人机协同主动排序框架，感知对齐地评估超透镜图像质量。",
+      "llm_evidence": "提出MetaRanker人机协同主动排序框架，感知对齐地评估超透镜图像质量。",
+      "canonical_evidence": "提出MetaRanker人机协同主动排序框架，感知对齐地评估超透镜图像质量。",
+      "llm_tldr_en": "Proposes MetaRanker, a human-in-the-loop active ranking framework to assess metalens image quality. Overcomes the weak correlation between PSNR and human preference by actively querying human evaluators for pairwise comparisons. Enables perceptually aligned quality assessment for optimizing computational reconstruction in metalens imaging.",
+      "llm_tldr_cn": "当前超透镜成像系统中常用的PSNR等失真指标与人类主观偏好相关性弱，无法有效反映感知质量。本文提出MetaRanker，一种人机协同主动排序框架，通过主动学习策略向人类评估者查询成对比较，将金属透镜图像质量评估形式化为偏好排序任务。该方法在金属透镜图像数据集上实现了与人类判断高度一致的质量评估，为优化计算重建模型提供了感知对齐的筛选依据。实验表明，MetaRanker能有效指导重建模型选择，提升最终成像质量。",
+      "llm_tldr": "当前超透镜成像系统中常用的PSNR等失真指标与人类主观偏好相关性弱，无法有效反映感知质量。本文提出MetaRanker，一种人机协同主动排序框架，通过主动学习策略向人类评估者查询成对比较，将金属透镜图像质量评估形式化为偏好排序任务。该方法在金属透镜图像数据集上实现了与人类判断高度一致的质量评估，为优化计算重建模型提供了感知对齐的筛选依据。实验表明，MetaRanker能有效指导重建模型选择，提升最终成像质量。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.30269v1",
+      "source": "arxiv",
+      "title": "Boosting Image Quality Assessment Performance: Unsupervised Score Fusion by Deep Maximum a Posteriori Estimation",
+      "abstract": "Over the past decades, numerous Image Quality Assessment (IQA) models have emerged, aiming to predict the perceptual quality of images. However, individual models are often biased toward certain types of image content or distortions, depending on the design principle and process. An intuitive idea is to harness the strengths and mitigate the weaknesses of each IQA model, by fusing the scores of multiple models into a stronger one. Here we make one of the first attempts to seek an optimal solution for the idea and propose a general framework for unsupervised IQA score fusion using deep Maximum a Posteriori (MAP) estimation. The proposed model conducts fine-grained uncertainty estimation at the score level to increase the accuracy and reduce the uncertainty in fused predictions. Comprehensive experiments demonstrate the superiority of the proposed model over individual IQA models and other fusion methods. It also exhibits an interesting capability of rejecting ``bad\" models in the fusion process.",
+      "authors": [
+        "Zhongling Wang",
+        "Raymond Zhou",
+        "Shahrukh Athar",
+        "Wenbo Yang",
+        "Zhou Wang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "eess.IV"
+      ],
+      "published": "2026-05-28T17:29:57+00:00",
+      "link": "https://arxiv.org/pdf/2605.30269v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "directly proposes unsupervised score fusion for IQA performance boosting",
+      "llm_evidence_cn": "直接提出用于提升IQA性能的无监督分数融合方法",
+      "llm_evidence": "直接提出用于提升IQA性能的无监督分数融合方法",
+      "canonical_evidence": "直接提出用于提升IQA性能的无监督分数融合方法",
+      "llm_tldr_en": "The paper presents a deep maximum a posteriori based unsupervised fusion framework that combines multiple IQA models to improve overall prediction accuracy and robustness.",
+      "llm_tldr_cn": "针对单一图像质量评价模型在不同内容或失真类型上存在偏差的问题，本文提出了一种基于深度最大后验估计的无监督分数融合方法，通过估计每个模型评分的不确定性以自适应地融合多个模型的结果，实验证明该方法能显著提升图像质量评价的性能，为构建更鲁棒的IQA系统提供了有效途径。",
+      "llm_tldr": "针对单一图像质量评价模型在不同内容或失真类型上存在偏差的问题，本文提出了一种基于深度最大后验估计的无监督分数融合方法，通过估计每个模型评分的不确定性以自适应地融合多个模型的结果，实验证明该方法能显著提升图像质量评价的性能，为构建更鲁棒的IQA系统提供了有效途径。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "assessing the quality of images",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2605.29335v1",
+      "source": "arxiv",
+      "title": "Rethinking FID Through the Geometry of the Reference Dataset",
+      "abstract": "Fréchet Inception Distance (FID) is widely used to evaluate image generators, yet lower FID does not always correspond to better sample quality. We show that this mismatch depends in part on the geometry of the reference dataset. In a controlled study across six datasets, distributional density and effective rank significantly explain how FID changes as sample quality improves. Concentrated datasets tend to yield more favorable FID trends, whereas more dispersed datasets can make FID worsen despite better samples. Attribution to precision and recall and ablations with alternative feature spaces and distances support the same conclusion. These results suggest that distributional metrics should be interpreted together with the geometry of the reference dataset for more reliable benchmarking.",
+      "authors": [
+        "Yunghee Lee",
+        "Byeonghyun Pak"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-05-28T04:10:47+00:00",
+      "link": "https://arxiv.org/pdf/2605.29335v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "FID is used to evaluate image quality; paper analyzes how reference dataset geometry affects FID trends, improving quality assessment.",
+      "llm_evidence_cn": "FID常用于评价图像质量；分析参考数据集几何如何影响FID趋势以改进质量评估。",
+      "llm_evidence": "FID常用于评价图像质量；分析参考数据集几何如何影响FID趋势以改进质量评估。",
+      "canonical_evidence": "FID常用于评价图像质量；分析参考数据集几何如何影响FID趋势以改进质量评估。",
+      "llm_tldr_en": "Investigates why FID, a popular image generation quality metric, sometimes misaligns with sample quality. Shows that the geometry of the reference dataset (distribution density, effective rank) strongly influences FID behavior. Recommends interpreting FID alongside dataset properties for reliable evaluation.",
+      "llm_tldr_cn": "本文针对FID指标经常无法反映生成图像质量改进的问题，探究参考数据集的几何结构对FID的影响。通过在六个数据集上的控制实验，发现分布密度和有效秩显著影响FID变化趋势：集中数据集更易获得有利FID，而分散数据集则可能掩盖质量提升。这一发现强调在评估生成图像质量时需结合数据集特征来解读分布度量指标，为改进生成模型评价提供了新视角。",
+      "llm_tldr": "本文针对FID指标经常无法反映生成图像质量改进的问题，探究参考数据集的几何结构对FID的影响。通过在六个数据集上的控制实验，发现分布密度和有效秩显著影响FID变化趋势：集中数据集更易获得有利FID，而分散数据集则可能掩盖质量提升。这一发现强调在评估生成图像质量时需结合数据集特征来解读分布度量指标，为改进生成模型评价提供了新视角。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2605.25876v1",
+      "source": "arxiv",
+      "title": "DyCoRM: Dynamic Criterion-Aware Reward Modeling for Text-to-Image Generation",
+      "abstract": "With the continued advancement of text-to-image (T2I) generation, producing high-quality images is becoming increasingly attainable; consequently, user demands are shifting toward images that better satisfy their specific requirements. As reward models play an increasingly important role in assessing whether generated images align with user preference, this trend introduces an important challenge for reward modeling: rather than relying solely on static and general evaluation dimensions, reward models should account for the task-relevant and fine-grained criteria through which users assess whether generated images meet their specific requirements. To address this challenge, we propose DyCoRM, a dynamic, criterion-aware reward model that grounds task-relevant criteria and performs criterion-aware preference comparison. To support this setting, we construct DyCoDataset-20K, which provides dynamic criteria together with criterion-level annotations, and further derive DyCoBench-1K, a benchmark for systematically evaluating reward models under dynamic criteria. We further introduce DyCoPick, which applies criterion-aware reward modeling to selecting T2I images. Our contributions establish the first reward modeling framework for dynamic and fine-grained evaluation and practical application in T2I generation.",
+      "authors": [
+        "Jiaying Qian",
+        "Ziheng Jia",
+        "Qian Zhang",
+        "Zicheng Zhang",
+        "Jiayi Guo",
+        "Junqi Zhang",
+        "Guangtao Zhai",
+        "Xiongkuo Min"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-05-25T14:04:26+00:00",
+      "link": "https://arxiv.org/pdf/2605.25876v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "rewards model for evaluating image quality based on user criteria, a form of quality assessment",
+      "llm_evidence_cn": "基于用户准则的图像质量评估奖励模型",
+      "llm_evidence": "基于用户准则的图像质量评估奖励模型",
+      "canonical_evidence": "基于用户准则的图像质量评估奖励模型",
+      "llm_tldr_en": "DyCoRM is a dynamic criterion-aware reward model that evaluates whether generated images meet fine-grained user requirements, grounding evaluation in explicit criteria.",
+      "llm_tldr_cn": "随着文生图模型进步，用户对图像质量要求更精细，现有奖励模型评估维度静态通用。DyCoRM提出动态准则感知的奖励模型，将评估锚定在任务相关细粒度标准上。通过基于用户偏好的对齐训练，能根据多变准则评价生成图像。实验表明其在多个基准上提升了偏好预测准确度。",
+      "llm_tldr": "随着文生图模型进步，用户对图像质量要求更精细，现有奖励模型评估维度静态通用。DyCoRM提出动态准则感知的奖励模型，将评估锚定在任务相关细粒度标准上。通过基于用户偏好的对齐训练，能根据多变准则评价生成图像。实验表明其在多个基准上提升了偏好预测准确度。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2605.27737v1",
+      "source": "arxiv",
+      "title": "Bounded-Compute Multimodal Regression for Product-Rating Prediction",
+      "abstract": "Vision-language models (VLMs) are increasingly attractive for multimodal quality assessment, but their default reliance on autoregressive text generation and dynamic visual processing is poorly matched to scalar regression under strict latency budgets. We present a bounded-compute adaptation of SmolVLM2-256M-Video-Instruct for product-rating prediction in the LoViF 2026 Efficient VLM challenge. Motivated by recent multimodal engagement-prediction results showing that feature-based regression can outperform token-based score generation, we replace the language-modeling head with a lightweight two-layer MLP fed by pooled decoder states, and we enforce deterministic inputs through fixed 384x384 images and truncated metadata. Across controlled ablations, static global image processing slightly outperforms dynamic tiling, and scaling from 100K to 16M training examples substantially improves validation correlation. Under the official held-out evaluation, our 228M-parameter model achieves 0.39 PLCC and 0.40 CES, providing a strong and reproducible baseline for resource-constrained multimodal regression.",
+      "authors": [
+        "William Leach",
+        "Ru He",
+        "Sizhuo Ma",
+        "Yizhen Jia",
+        "Min Cao",
+        "Jian Wang",
+        "Rick Cao"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-05-26T22:27:58+00:00",
+      "link": "https://arxiv.org/pdf/2605.27737v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Proposes VLM-based bounded-compute regression for quality assessment, bridging multimodal LLMs and scalar rating prediction.",
+      "llm_evidence_cn": "提出基于VLM的有界计算回归用于质量评估，桥接多模态LLM与标量评分预测。",
+      "llm_evidence": "提出基于VLM的有界计算回归用于质量评估，桥接多模态LLM与标量评分预测。",
+      "canonical_evidence": "提出基于VLM的有界计算回归用于质量评估，桥接多模态LLM与标量评分预测。",
+      "llm_tldr_en": "The paper addresses inefficiency of VLMs for scalar quality assessment by proposing bounded-compute multimodal regression. By replacing the LM head with a two-layer MLP and enforcing deterministic inputs, the model achieves efficient product-rating prediction, matching token-based generation within strict latency budgets.",
+      "llm_tldr_cn": "针对视觉语言模型在标量质量评估中因自回归生成和动态视觉处理导致效率低下的问题，本文提出有界计算多模态回归方法。通过将SmolVLM2的语言建模头替换为两层MLP并约束输入为固定384×384图像和截断元数据，模型采用确定性特征回归实现高效评分预测。在LoViF 2026挑战中，该方法在严格延迟预算下性能与文本生成相当。该工作为资源受限场景下的多模态质量评估提供了实用的高效方案。",
+      "llm_tldr": "针对视觉语言模型在标量质量评估中因自回归生成和动态视觉处理导致效率低下的问题，本文提出有界计算多模态回归方法。通过将SmolVLM2的语言建模头替换为两层MLP并约束输入为固定384×384图像和截断元数据，模型采用确定性特征回归实现高效评分预测。在LoViF 2026挑战中，该方法在严格延迟预算下性能与文本生成相当。该工作为资源受限场景下的多模态质量评估提供了实用的高效方案。",
+      "llm_tags": [
+        "query:xiqa:composite"
+      ],
+      "matched_query_tag": "query:xiqa:composite",
+      "matched_query_text": "Papers central to 图像质量评价与推理方法, especially work that connects or combines: assessing the quality of images; image quality assessment with explanations; large language model that processes images and text; generating natural language descriptions of image quality; describing the quality of images; evaluating the quality of images; image quality reasoning and explanation generation via multimodal large models; multimodal large language models for image quality reasoning and explanation generation; reinforcement learning for image quality assessment and description; reasoning based perceptual image quality evaluation with explanations.",
+      "matched_requirement_id": "req-composite-xiqa",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.29415v1",
+      "source": "arxiv",
+      "title": "Constructing efficient channels for ideal observers using the conjugate gradient method",
+      "abstract": "Task-based assessment of image quality (IQ) is critically important for the design and optimization of medical imaging systems. Ideal observers, including the Bayesian Ideal Observer (IO) and the ideal linear observer, i.e., the Hotelling observer (HO), provide objective figures of merit (FOMs) that quantify system performance on signal detection tasks. However, the application of ideal observers to high-dimensional image data is often computationally intractable. Channel mechanisms provide an effective framework for dimensionality reduction that can facilitate the computation of ideal observers. This work presents a conjugate gradient (CG)-based method to construct efficient channels for approximating the IO and HO performance.",
+      "authors": [
+        "Weimin Zhou"
+      ],
+      "primary_category": "eess.IV",
+      "categories": [
+        "eess.IV",
+        "cs.CV",
+        "cs.LG",
+        "eess.SP",
+        "stat.ML"
+      ],
+      "published": "2026-05-28T06:04:00+00:00",
+      "link": "https://arxiv.org/pdf/2605.29415v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Task-based image quality assessment using ideal observers",
+      "llm_evidence_cn": "基于任务的图像质量评价，使用理想观测器",
+      "llm_evidence": "基于任务的图像质量评价，使用理想观测器",
+      "canonical_evidence": "基于任务的图像质量评价，使用理想观测器",
+      "llm_tldr_en": "Addresses computational intractability of ideal observers for high-dimensional medical images by proposing a conjugate gradient method to construct efficient channels for dimensionality reduction, enabling accurate approximation of Bayesian and Hotelling observer performance.",
+      "llm_tldr_cn": "在医学图像质量评价中，理想观测器（如贝叶斯理想观测器和Hotelling观测器）提供客观的检测任务性能指标，但面对高维图像时计算难以实现。本文提出一种基于共轭梯度（CG）的通道构造方法，通过高效降维来近似理想观测器的表现，实现了可扩展且准确的图像质量评估。该方法在保持评估精度的同时大幅降低了计算复杂度，为优化医学成像系统设计提供了关键技术支持。",
+      "llm_tldr": "在医学图像质量评价中，理想观测器（如贝叶斯理想观测器和Hotelling观测器）提供客观的检测任务性能指标，但面对高维图像时计算难以实现。本文提出一种基于共轭梯度（CG）的通道构造方法，通过高效降维来近似理想观测器的表现，实现了可扩展且准确的图像质量评估。该方法在保持评估精度的同时大幅降低了计算复杂度，为优化医学成像系统设计提供了关键技术支持。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "assessing the quality of images",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
