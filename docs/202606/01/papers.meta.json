@@ -1,0 +1,24 @@
+{
+  "label": "2026-06-01",
+  "date": "2026-06-01",
+  "generated_at": "2026-06-01T22:27:23",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202606/01/2605.27452v1-fine-tuning-vision-language-models-for-understanding-current-damage-and-scoring-priority-with-quality-guard-agent",
+      "section": "deep",
+      "title_en": "Fine-Tuning Vision-Language Models for Understanding Current Damage and Scoring Priority with Quality Guard Agent",
+      "authors": "Takato Yasuno",
+      "date": "2026-05-24",
+      "pdf": "https://arxiv.org/pdf/2605.27452v1",
+      "score": "9.0",
+      "evidence": "微调VLM输出损伤自然语言描述和修复优先级，直接实现图像质量推理与解释生成",
+      "tldr": "日本桥梁每五年强制目视检查，但结构损伤定性评级在不同工程师间存在显著差异，且熟练工程师老龄化加剧人力不足。本研究微调视觉语言模型LLaVA-1.5-7B，结合QLoRA与渐进训练策略，从损伤图像与检查文本中自动生成结构构件与损伤模式描述，并通过规则引擎计算五级修复优先指数；同时设计两阶段质量守卫，利用Swallow-8B语言模型过滤低质量输出，避免虚假评分。结果表明，仅2000训练样本即实现接近最优验证损失，训练仅2.9小时；推理采用torch.compile()与批处理优化后单图仅10.06秒，较基线提速70.2%；语义相似度在3000样本时达峰值0.6909，超过后因数据噪声而下降。该工作为桥梁检查数据治理与工程师辅助决策提供了一条实用AI路径。",
+      "tags": "query:xiqa",
+      "abstract_en": "Bridge inspection in Japan requires mandatory visual assessments every five years, yet qualitative damage ratings (levels a-e) assigned by different engineers exhibit significant inter-rater variability -- a critical barrier to consistent infrastructure management. The aging of skilled engineers further threatens inspection capacity. This paper presents a methodology for automating bridge damage understanding and repair priority scoring using fine-tuned Vision-Language Models (VLMs).   We fine-tune LLaVA-1.5-7B with QLoRA on up to 4,000 paired bridge damage images and inspection text records, then evaluate on a fixed test set of 800 images. The model outputs natural language descriptions identifying structural members and damage patterns, from which a rule-based scoring engine calculates a five-level repair priority index. A progressive training study (1k/2k/3k/4k samples) reveals that 2k training samples achieve near-optimal validation loss in only 2.9 hours of training; beyond 2k, validation loss improves by no more than 0.2% per doubling of training samples, exhibiting clear diminishing returns. Furthermore, semantic similarity on the held-out test set peaks at 3k (0.6909) and degrades at 4k (0.6739), indicating that quality-curated mid-scale data outperforms larger but noisier corpora. Inference optimization combining torch.compile() and batch processing (batch_size=8) achieves 10.06 seconds per image -- a 70.2% reduction over the unoptimized baseline.   Our approach contributes to data governance in bridge inspection, reduces inter-rater variability, and provides AI-assisted triage to augment expert engineers in inspection workflows. Furthermore, we introduce a two-stage Quality Guard using a fine-tuned Swallow-8B SLM to reject low-quality VLM outputs before priority scoring, preventing spurious scores from damaged or unrecognised images.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
