@@ -1,93 +1,54 @@
 {
   "mode": "standard",
-  "generated_at": "2026-06-01T14:14:27.114965+00:00",
+  "generated_at": "2026-06-01T15:11:40.488299+00:00",
   "stats": {
     "mode": "standard",
     "tag_count": 1,
-    "deep_divecandidates": 19,
+    "deep_divecandidates": 13,
     "deep_cap": 6,
-    "deep_selected": 15,
-    "quick_candidates": 6,
+    "deep_selected": 11,
+    "quick_candidates": 5,
     "quick_skim_target": 11,
-    "quick_selected": 6
+    "quick_selected": 5
   },
   "deep_dive": [
     {
-      "id": "2605.19522v1",
+      "id": "2605.07786v1",
       "source": "arxiv",
-      "title": "iDiff: Interpretable Difference-aware Framework for Pairwise Image Quality Assessment",
-      "abstract": "Pairwise image quality assessment (IQA) in professional photography requires a model not only to identify the preferred image between two candidates, but also to provide convincing and image-grounded reasoning. In the NTIRE 2026 RAIM challenge, this requirement is further emphasized by jointly evaluating preference prediction and rationale generation. To address this task, we propose iDiff, an Interpretable Difference-aware framework for pairwise image quality assessment. Our method adopts a dual-branch design consisting of an Answer Model and a Thinking Model. The Answer Model performs robust preference prediction by explicitly decomposing each sample into left/right global and local views, followed by content-aware specialization for person and scene images and ensemble-based aggregation across backbones. The Thinking Model focuses on rationale generation and is progressively enhanced with expert-style templates, multi-source quality features, and answer-aware supervision conditioned on the Answer Model prediction. In this way, iDiff jointly models discriminative decision making and structured explanation, improving both robustness and interpretability. Extensive experiments demonstrate the effectiveness of the proposed framework on both accuracy and reasoning-quality metrics. Our method achieved first place in the NTIRE 2026 RAIM challenge, showing the effectiveness of integrating explicit difference modeling with structured multimodal reasoning for pairwise IQA.",
+      "title": "APEX: Assumption-free Projection-based Embedding eXamination Metric for Image Quality Assessment",
+      "abstract": "As generative models achieve unprecedented visual quality, the gold standard for image evaluation remains traditional feature-distribution metrics (e.g., FID). However, these metrics are provably hindered by the closed-vocabulary bottleneck of outdated features and the assumptive bias of rigid parametric formulations. Recent alternatives exploit modern backbones to solve the feature bottleneck, yet continue to suffer from parametric limitations. To close this gap, we introduce APEX (Assumption-free Projection-based Embedding eXamination), a novel evaluation framework leveraging the Sliced Wasserstein Distance as a mathematically grounded, assumption-free similarity measure. APEX inherits effective scalability to high-dimensional spaces, as we prove with theoretical and empirical evidences. Moreover, APEX is embedding-agnostic and uses two open-vocabulary foundation models, CLIP and DINOv2, as feature extractors. Benchmarking APEX against established baselines reveals superior robustness to visual degradations. Additionally, we show that APEX metrics exhibit intra- and cross-dataset stability, ensuring highly stable evaluations on out-of-domain datasets.",
       "authors": [
-        "Xinli Yue",
-        "JianHui Sun",
-        "Tao Shao",
-        "Liangchao Yao",
-        "Fan Xia",
-        "Yuetang Deng"
+        "Caterina Gallegati",
+        "Monica Bianchini",
+        "Franco Scarselli",
+        "Vittorio Murino",
+        "Barbara Toniella Corradini"
       ],
       "primary_category": "cs.CV",
       "categories": [
-        "cs.CV"
+        "cs.CV",
+        "cs.AI"
       ],
-      "published": "2026-05-19T08:24:00+00:00",
-      "link": "https://arxiv.org/pdf/2605.19522v1",
+      "published": "2026-05-08T14:21:51+00:00",
+      "link": "https://arxiv.org/pdf/2605.07786v1",
       "tags": [
         "keyword:XIQA",
         "query:XIQA"
       ],
       "llm_score": 10.0,
-      "llm_evidence_en": "pairwise IQA with image-grounded reasoning and explanation",
-      "llm_evidence_cn": "成对图像质量评估，提供基于图像的推理和解释",
-      "llm_evidence": "成对图像质量评估，提供基于图像的推理和解释",
-      "canonical_evidence": "成对图像质量评估，提供基于图像的推理和解释",
-      "llm_tldr_en": "iDiff targets pairwise IQA in professional photography, requiring both preference prediction and convincing reasoning. It introduces a dual-branch framework with an Answer Model and a Thinking Model for decomposed global/local views and content-aware specialization, demonstrated on the NTIRE 2026 RAIM challenge.",
-      "llm_tldr_cn": "专业摄影中的成对图像质量评估不仅需要识别偏好图像，还需提供有说服力的推理。本文提出iDiff，一个可解释的差异感知框架，采用双分支设计（答案模型和思维模型），通过显式分解左右全局和局部视图并引入内容感知专业化，同时完成偏好预测和理由生成。在NTIRE 2026 RAIM挑战中验证了其有效性，为可解释的图像质量评估提供了新方案。",
-      "llm_tldr": "专业摄影中的成对图像质量评估不仅需要识别偏好图像，还需提供有说服力的推理。本文提出iDiff，一个可解释的差异感知框架，采用双分支设计（答案模型和思维模型），通过显式分解左右全局和局部视图并引入内容感知专业化，同时完成偏好预测和理由生成。在NTIRE 2026 RAIM挑战中验证了其有效性，为可解释的图像质量评估提供了新方案。",
+      "llm_evidence_en": "novel metric for image quality assessment using Sliced Wasserstein Distance on deep embeddings",
+      "llm_evidence_cn": "利用切片Wasserstein距离在深度嵌入上提出新的图像质量评估指标",
+      "llm_evidence": "利用切片Wasserstein距离在深度嵌入上提出新的图像质量评估指标",
+      "canonical_evidence": "利用切片Wasserstein距离在深度嵌入上提出新的图像质量评估指标",
+      "llm_tldr_en": "Introduces APEX, an assumption-free IQA metric using Sliced Wasserstein Distance on modern backbone embeddings, overcoming the vocabulary bottleneck and parametric bias of FID.",
+      "llm_tldr_cn": "针对传统图像质量评估指标（如FID）存在词汇瓶颈和参数化假设偏差的问题，提出APEX指标，基于现代骨干提取的嵌入和切片Wasserstein距离，提供无假设的相似性度量，在高维空间具有良好的可拓展性，实验表明其在评估生成图像质量时更加可靠。",
+      "llm_tldr": "针对传统图像质量评估指标（如FID）存在词汇瓶颈和参数化假设偏差的问题，提出APEX指标，基于现代骨干提取的嵌入和切片Wasserstein距离，提供无假设的相似性度量，在高维空间具有良好的可拓展性，实验表明其在评估生成图像质量时更加可靠。",
       "llm_tags": [
         "query:xiqa"
       ],
       "matched_query_tag": "query:xiqa",
-      "matched_query_text": "image quality assessment with explanations",
-      "matched_requirement_id": "req-2",
-      "selection_source": "fresh_fetch"
-    },
-    {
-      "id": "2605.06170v1",
-      "source": "arxiv",
-      "title": "DynT2I-Eval: A Dynamic Evaluation Framework for Text-to-Image Models",
-      "abstract": "Existing text-to-image (T2I) benchmarks largely rely on fixed prompt sets, leaving them vulnerable to overfitting and benchmark contamination once publicly released and repeatedly reused. In this work, we propose DynT2I-Eval, a fully automated dynamic evaluation framework for T2I models. It constructs a structured visual semantic space from long-form descriptions, decomposing prompts into controllable dimensions (e.g., subject, logical constraint, environment, and composition). This enables the continuous generation of fresh prompts via task-specific spaces and difficulty-aware sampling. DynT2I-Eval evaluates model performance across text alignment, perceptual quality, and aesthetics. Heterogeneous outputs are unified into prompt-conditioned pairwise comparisons, allowing a dynamic scheduler, micro-batch aggregation, and weighted Bayesian updates to maintain a stable online leaderboard despite changing prompt distributions and model injection. Experiments with independently sampled prompt streams demonstrate that continually refreshed prompts provide a robust evaluation protocol, reducing the impact of prompt-set-specific tuning. Simulations and ablations further confirm that the proposed ranking framework achieves a strong balance among cold-start convergence, late-entry discovery, and long-run ranking fidelity.",
-      "authors": [
-        "Juntong Wang",
-        "Jiarui Wang",
-        "Huiyu Duan",
-        "Lewei Li",
-        "Guangtao Zhai",
-        "Xiongkuo Min"
-      ],
-      "primary_category": "cs.CV",
-      "categories": [
-        "cs.CV"
-      ],
-      "published": "2026-05-07T12:53:51+00:00",
-      "link": "https://arxiv.org/pdf/2605.06170v1",
-      "tags": [
-        "keyword:XIQA",
-        "query:XIQA"
-      ],
-      "llm_score": 9.0,
-      "llm_evidence_en": "Evaluates text-to-image models on perceptual quality and aesthetics, directly assessing image quality through a dynamic benchmark.",
-      "llm_evidence_cn": "在感知质量和美学维度上评估文生图模型，直接评价图像质量。",
-      "llm_evidence": "在感知质量和美学维度上评估文生图模型，直接评价图像质量。",
-      "canonical_evidence": "在感知质量和美学维度上评估文生图模型，直接评价图像质量。",
-      "llm_tldr_en": "DynT2I-Eval introduces a dynamic benchmark that generates fresh prompts from a structured semantic space to evaluate text-to-image models on alignment, perceptual quality, and aesthetics, preventing overfitting.",
-      "llm_tldr_cn": "现有文生图评估基准多采用固定提示，面临过拟合与基准污染风险。DynT2I-Eval提出基于结构化视觉语义空间的动态评估框架，将长文本描述分解为可控维度，持续生成新鲜提示，并通过提示条件成对比较统一异构输出，评估模型的文本对齐、感知质量与美学表现。实验表明，该框架能够有效分离模型能力，提供更细粒度且不易被利用的评估结果，为文生图领域提供了更有生命力的评测方案。",
-      "llm_tldr": "现有文生图评估基准多采用固定提示，面临过拟合与基准污染风险。DynT2I-Eval提出基于结构化视觉语义空间的动态评估框架，将长文本描述分解为可控维度，持续生成新鲜提示，并通过提示条件成对比较统一异构输出，评估模型的文本对齐、感知质量与美学表现。实验表明，该框架能够有效分离模型能力，提供更细粒度且不易被利用的评估结果，为文生图领域提供了更有生命力的评测方案。",
-      "llm_tags": [
-        "query:xiqa"
-      ],
-      "matched_query_tag": "query:xiqa",
-      "matched_query_text": "assessing the quality of images",
-      "matched_requirement_id": "req-1",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
       "selection_source": "fresh_fetch"
     },
     {
@@ -114,19 +75,19 @@
         "query:XIQA"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "Applies MLLMs to reason about fusion image quality, addressing limitations of scalar regression and naive MLLM use.",
-      "llm_evidence_cn": "应用多模态大语言模型推理融合图像质量，解决标量回归和朴素MLLM使用的局限性。",
-      "llm_evidence": "应用多模态大语言模型推理融合图像质量，解决标量回归和朴素MLLM使用的局限性。",
-      "canonical_evidence": "应用多模态大语言模型推理融合图像质量，解决标量回归和朴素MLLM使用的局限性。",
-      "llm_tldr_en": "Addresses limitations in infrared-visible image fusion quality assessment by leveraging MLLMs for reasoning and capturing perceptual ambiguity. The method moves beyond scalar regression to generate language-based quality evaluations, enabling more human-aligned and explainable IQA.",
-      "llm_tldr_cn": "当前红外-可见光图像融合质量评估方法过度依赖手工统计量或将源图像视为伪真值，而基于奖励建模的方法使用标量回归，未利用多模态大语言模型的推理能力。本文提出引入MLLMs进行IVIF质量推理，克服了标量回归和简单离散监督的局限，能捕捉每张图像的感知模糊性并生成文本解释。该方法实现了更符合人类感知、可解释的图像融合质量评价。",
-      "llm_tldr": "当前红外-可见光图像融合质量评估方法过度依赖手工统计量或将源图像视为伪真值，而基于奖励建模的方法使用标量回归，未利用多模态大语言模型的推理能力。本文提出引入MLLMs进行IVIF质量推理，克服了标量回归和简单离散监督的局限，能捕捉每张图像的感知模糊性并生成文本解释。该方法实现了更符合人类感知、可解释的图像融合质量评价。",
+      "llm_evidence_en": "Applies multimodal LLM reasoning to assess fused image quality, addressing limitations of scalar regression and discrete ratings",
+      "llm_evidence_cn": "利用多模态大语言模型推理进行红外-可见融合图像质量评估，解决标量回归和离散评分的局限性",
+      "llm_evidence": "利用多模态大语言模型推理进行红外-可见融合图像质量评估，解决标量回归和离散评分的局限性",
+      "canonical_evidence": "利用多模态大语言模型推理进行红外-可见融合图像质量评估，解决标量回归和离散评分的局限性",
+      "llm_tldr_en": "This work leverages MLLM reasoning and addresses perceptual ambiguity for IVIF quality assessment, moving beyond hand-crafted metrics and naive discrete rating supervision.",
+      "llm_tldr_cn": "现有红外可见融合图像质量评价多依赖手工统计量或标量回归，忽视多模态大模型推理能力。本文提出利用MLLM的推理与感知建模能力，结合不确定性编码，实现更合理的融合图像质量评估。实验显示，该方法能有效区分细微质量差异，为融合算法优化提供更可信的反馈。",
+      "llm_tldr": "现有红外可见融合图像质量评价多依赖手工统计量或标量回归，忽视多模态大模型推理能力。本文提出利用MLLM的推理与感知建模能力，结合不确定性编码，实现更合理的融合图像质量评估。实验显示，该方法能有效区分细微质量差异，为融合算法优化提供更可信的反馈。",
       "llm_tags": [
         "query:xiqa"
       ],
       "matched_query_tag": "query:xiqa",
-      "matched_query_text": "multimodal large language models for image quality reasoning and explanation generation",
-      "matched_requirement_id": "req-8",
+      "matched_query_text": "image quality reasoning and explanation generation via multimodal large models",
+      "matched_requirement_id": "req-7",
       "selection_source": "fresh_fetch"
     },
     {
@@ -153,137 +114,19 @@
         "query:XIQA"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "applies multimodal large language models to infrared-visible image fusion quality assessment with reasoning",
-      "llm_evidence_cn": "将多模态大语言模型用于红外-可见光图像融合质量评估并引入推理",
-      "llm_evidence": "将多模态大语言模型用于红外-可见光图像融合质量评估并引入推理",
-      "canonical_evidence": "将多模态大语言模型用于红外-可见光图像融合质量评估并引入推理",
-      "llm_tldr_en": "Proposes leveraging MLLMs for IVIF quality assessment, addressing perceptual ambiguity through soft supervision instead of scalar regression, enabling explainable quality reasoning.",
-      "llm_tldr_cn": "针对红外-可见光图像融合质量评估中现有方法忽视多模态大语言模型推理能力且监督信号粗糙的问题，提出利用多模态大语言模型进行融合质量评级，并编码感知模糊性作为软监督以提升评估与人类感知的一致性。该方法旨在推动图像融合质量评估向可解释、智能化方向发展。",
-      "llm_tldr": "针对红外-可见光图像融合质量评估中现有方法忽视多模态大语言模型推理能力且监督信号粗糙的问题，提出利用多模态大语言模型进行融合质量评级，并编码感知模糊性作为软监督以提升评估与人类感知的一致性。该方法旨在推动图像融合质量评估向可解释、智能化方向发展。",
+      "llm_evidence_en": "leverages reasoning of Multimodal Large Language Models for image fusion quality assessment",
+      "llm_evidence_cn": "利用多模态大语言模型进行图像融合质量评估与推理",
+      "llm_evidence": "利用多模态大语言模型进行图像融合质量评估与推理",
+      "canonical_evidence": "利用多模态大语言模型进行图像融合质量评估与推理",
+      "llm_tldr_en": "Proposes using MLLM reasoning for infrared-visible image fusion quality assessment to capture perceptual ambiguity, improving over scalar regression.",
+      "llm_tldr_cn": "该论文针对红外-可见光图像融合质量评估领域现有方法过度依赖手工艺特征和全参考指标、无法利用多模态大语言模型推理能力且忽视感知歧义的局限，创新性地将多模态大语言模型引入融合图像质量评价任务，设计融合推理机制以捕捉每幅图像的感知模糊性和质量差异，并生成解释性描述，实验结果表明该方法相比常规标量回归和离散监督方式能输出更具感知一致性和解释性的质量预测，在多个数据集上显著提升了评估性能和稳健性，为融合图像质量评估提供了结合语言模型推理的新范式。",
+      "llm_tldr": "该论文针对红外-可见光图像融合质量评估领域现有方法过度依赖手工艺特征和全参考指标、无法利用多模态大语言模型推理能力且忽视感知歧义的局限，创新性地将多模态大语言模型引入融合图像质量评价任务，设计融合推理机制以捕捉每幅图像的感知模糊性和质量差异，并生成解释性描述，实验结果表明该方法相比常规标量回归和离散监督方式能输出更具感知一致性和解释性的质量预测，在多个数据集上显著提升了评估性能和稳健性，为融合图像质量评估提供了结合语言模型推理的新范式。",
       "llm_tags": [
         "query:xiqa"
       ],
       "matched_query_tag": "query:xiqa",
-      "matched_query_text": "image quality reasoning and explanation generation via multimodal large models",
-      "matched_requirement_id": "req-7",
-      "selection_source": "fresh_fetch"
-    },
-    {
-      "id": "2605.07786v1",
-      "source": "arxiv",
-      "title": "APEX: Assumption-free Projection-based Embedding eXamination Metric for Image Quality Assessment",
-      "abstract": "As generative models achieve unprecedented visual quality, the gold standard for image evaluation remains traditional feature-distribution metrics (e.g., FID). However, these metrics are provably hindered by the closed-vocabulary bottleneck of outdated features and the assumptive bias of rigid parametric formulations. Recent alternatives exploit modern backbones to solve the feature bottleneck, yet continue to suffer from parametric limitations. To close this gap, we introduce APEX (Assumption-free Projection-based Embedding eXamination), a novel evaluation framework leveraging the Sliced Wasserstein Distance as a mathematically grounded, assumption-free similarity measure. APEX inherits effective scalability to high-dimensional spaces, as we prove with theoretical and empirical evidences. Moreover, APEX is embedding-agnostic and uses two open-vocabulary foundation models, CLIP and DINOv2, as feature extractors. Benchmarking APEX against established baselines reveals superior robustness to visual degradations. Additionally, we show that APEX metrics exhibit intra- and cross-dataset stability, ensuring highly stable evaluations on out-of-domain datasets.",
-      "authors": [
-        "Caterina Gallegati",
-        "Monica Bianchini",
-        "Franco Scarselli",
-        "Vittorio Murino",
-        "Barbara Toniella Corradini"
-      ],
-      "primary_category": "cs.CV",
-      "categories": [
-        "cs.CV",
-        "cs.AI"
-      ],
-      "published": "2026-05-08T14:21:51+00:00",
-      "link": "https://arxiv.org/pdf/2605.07786v1",
-      "tags": [
-        "keyword:XIQA",
-        "query:XIQA"
-      ],
-      "llm_score": 9.0,
-      "llm_evidence_en": "Proposes a new image quality assessment metric using sliced Wasserstein distance for evaluating generative models",
-      "llm_evidence_cn": "提出基于切片Wasserstein距离的新图像质量评估指标，用于评估生成模型",
-      "llm_evidence": "提出基于切片Wasserstein距离的新图像质量评估指标，用于评估生成模型",
-      "canonical_evidence": "提出基于切片Wasserstein距离的新图像质量评估指标，用于评估生成模型",
-      "llm_tldr_en": "This paper introduces APEX, a novel IQA metric that leverages the sliced Wasserstein distance to overcome the closed-vocabulary bottleneck and parametric biases of traditional distribution metrics like FID, providing a mathematically grounded and assumption-free evaluation.",
-      "llm_tldr_cn": "传统生成模型评价指标（如FID）受限于封闭词汇特征和参数化假设偏差。本文提出APEX指标，采用切片Wasserstein距离作为无假设相似性度量，利用现代骨干网络提取高维特征，实现数学严密且可扩展的图像质量评估。实验表明APEX克服了特征瓶颈和参数化限制，为图像生成质量提供了更可靠的评价。",
-      "llm_tldr": "传统生成模型评价指标（如FID）受限于封闭词汇特征和参数化假设偏差。本文提出APEX指标，采用切片Wasserstein距离作为无假设相似性度量，利用现代骨干网络提取高维特征，实现数学严密且可扩展的图像质量评估。实验表明APEX克服了特征瓶颈和参数化限制，为图像生成质量提供了更可靠的评价。",
-      "llm_tags": [
-        "query:xiqa"
-      ],
-      "matched_query_tag": "query:xiqa",
-      "matched_query_text": "assessing the quality of images",
-      "matched_requirement_id": "req-1",
-      "selection_source": "fresh_fetch"
-    },
-    {
-      "id": "2605.07786v2",
-      "source": "arxiv",
-      "title": "APEX: Assumption-free Projection-based Embedding eXamination Metric for Image Quality Assessment",
-      "abstract": "As generative models achieve unprecedented visual quality, the gold standard for image evaluation remains traditional feature-distribution metrics (e.g., FID). However, these metrics are provably hindered by the closed-vocabulary bottleneck of outdated features and the assumptive bias of rigid parametric formulations. Recent alternatives exploit modern backbones to solve the feature bottleneck, yet continue to suffer from parametric limitations. To close this gap, we introduce APEX (Assumption-free Projection-based Embedding eXamination), a novel evaluation framework leveraging the Sliced Wasserstein Distance as a mathematically grounded, assumption-free similarity measure. APEX inherits effective scalability to high-dimensional spaces, as we prove with theoretical and empirical evidences. Moreover, APEX is embedding-agnostic and uses two open-vocabulary foundation models, CLIP and DINOv2, as feature extractors. Benchmarking APEX against established baselines reveals superior robustness to visual degradations. Additionally, we show that APEX metrics exhibit intra- and cross-dataset stability, ensuring highly stable evaluations on out-of-domain datasets.",
-      "authors": [
-        "Caterina Gallegati",
-        "Monica Bianchini",
-        "Franco Scarselli",
-        "Vittorio Murino",
-        "Barbara Toniella Corradini"
-      ],
-      "primary_category": "cs.CV",
-      "categories": [
-        "cs.CV",
-        "cs.AI"
-      ],
-      "published": "2026-05-08T14:21:51+00:00",
-      "link": "https://arxiv.org/pdf/2605.07786v2",
-      "tags": [
-        "keyword:XIQA",
-        "query:XIQA"
-      ],
-      "llm_score": 9.0,
-      "llm_evidence_en": "proposes a novel image quality assessment metric using Sliced Wasserstein Distance",
-      "llm_evidence_cn": "提出基于Sliced Wasserstein距离的图像质量评估新指标",
-      "llm_evidence": "提出基于Sliced Wasserstein距离的图像质量评估新指标",
-      "canonical_evidence": "提出基于Sliced Wasserstein距离的图像质量评估新指标",
-      "llm_tldr_en": "introduces APEX, an assumption-free metric for image quality assessment leveraging Sliced Wasserstein Distance, overcoming feature-distribution metric bottlenecks.",
-      "llm_tldr_cn": "针对现有生成模型评估指标受限于过时特征和参数假设的问题，提出APEX，一个基于Sliced Wasserstein距离的假设自由评估框架。APEX可有效扩展到高维嵌入，在保持计算可行性的同时提供更鲁棒的图像质量评估，为生成模型评价提供了新基准。",
-      "llm_tldr": "针对现有生成模型评估指标受限于过时特征和参数假设的问题，提出APEX，一个基于Sliced Wasserstein距离的假设自由评估框架。APEX可有效扩展到高维嵌入，在保持计算可行性的同时提供更鲁棒的图像质量评估，为生成模型评价提供了新基准。",
-      "llm_tags": [
-        "query:xiqa"
-      ],
-      "matched_query_tag": "query:xiqa",
-      "matched_query_text": "assessing the quality of images",
-      "matched_requirement_id": "req-1",
-      "selection_source": "fresh_fetch"
-    },
-    {
-      "id": "2605.08664v1",
-      "source": "arxiv",
-      "title": "IPAD-CLIP: Teaching CLIP to Detect Image Local Perceptual Artifacts",
-      "abstract": "Current image quality assessment methods are heavily biased towards global distortions (e.g., noise, blur), neglecting local perceptual artifacts such as ghosting, lens flare, and moire effects. Although significant progress has been made in artifact removal, the fundamental problem of automatic artifact detection remains largely unexplored. In this paper, we formalize the Image Perceptual Artifact Detection (IPAD) task to address this gap. We contribute a benchmark dataset comprising 3,520 artifact images, including 520 real-captured and 3,000 synthetic samples, each paired with pixel-level masks across three representative artifact categories. The core challenge of IPAD lies in the localized, subtle, and semantically weak nature of these artifacts, which makes them prone to missed detection. To overcome this, we introduce IPAD-CLIP, a novel framework built upon CLIP that enhances artifact discrimination in both textual and visual spaces while preserving generalization capabilities. Our key insight is that local artifacts often exhibit strong correlations with specific semantic contexts. Accordingly, we learn artifact-aware text embeddings to explicitly model the object-artifact relationships, resulting in enhanced representations that clear differentiate between clean and artifact prompts. These text embeddings are then used as anchors to shift the visual encoder's attention from high-level semantics to subtle, low-level artifacts. Extensive experiments demonstrate that IPAD-CLIP offers a resource-efficient adaptation of CLIP for detection, significantly outperforming advanced image anomaly detection and manipulation detection methods on our benchmark. To the best of our knowledge, this is the first study addressing multi-class local perceptual artifact detection in terms of both dataset and model.",
-      "authors": [
-        "Juan Wang",
-        "Xinyu Sun",
-        "Ke Zhang",
-        "Jin Wang",
-        "Bing Li",
-        "Weiming Hu",
-        "Liang Wang"
-      ],
-      "primary_category": "cs.CV",
-      "categories": [
-        "cs.CV"
-      ],
-      "published": "2026-05-09T04:04:41+00:00",
-      "link": "https://arxiv.org/pdf/2605.08664v1",
-      "tags": [
-        "keyword:XIQA",
-        "query:XIQA"
-      ],
-      "llm_score": 9.0,
-      "llm_evidence_en": "detection of local perceptual artifacts for image quality assessment",
-      "llm_evidence_cn": "检测局部感知伪影以评估图像质量",
-      "llm_evidence": "检测局部感知伪影以评估图像质量",
-      "canonical_evidence": "检测局部感知伪影以评估图像质量",
-      "llm_tldr_en": "The paper formalizes the Image Perceptual Artifact Detection (IPAD) task for local distortions like ghosting and flare, proposes a CLIP-based detection method and a benchmark dataset, advancing image quality assessment by addressing neglected local artifacts.",
-      "llm_tldr_cn": "现有图像质量评价方法偏重全局失真，忽视鬼影、镜头眩光等局部感知伪影。本文正式定义图像感知伪影检测（IPAD）任务，构建包含520张真实图像和3000张合成图像及像素级掩码的数据集，并提出基于CLIP的检测方法IPAD-CLIP。实验证明该方法能有效检测三类代表性伪影，为自动伪影检测奠定基础，对提升图像质量评价的全面性具有重要意义。",
-      "llm_tldr": "现有图像质量评价方法偏重全局失真，忽视鬼影、镜头眩光等局部感知伪影。本文正式定义图像感知伪影检测（IPAD）任务，构建包含520张真实图像和3000张合成图像及像素级掩码的数据集，并提出基于CLIP的检测方法IPAD-CLIP。实验证明该方法能有效检测三类代表性伪影，为自动伪影检测奠定基础，对提升图像质量评价的全面性具有重要意义。",
-      "llm_tags": [
-        "query:xiqa"
-      ],
-      "matched_query_tag": "query:xiqa",
-      "matched_query_text": "assessing the quality of images",
-      "matched_requirement_id": "req-1",
+      "matched_query_text": "multimodal large language models for image quality reasoning and explanation generation",
+      "matched_requirement_id": "req-8",
       "selection_source": "fresh_fetch"
     },
     {
@@ -311,13 +154,13 @@
         "query:XIQA"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "Benchmark for VLM-based language-grounded image quality assessment in remote sensing, providing descriptions of degradations.",
-      "llm_evidence_cn": "面向遥感VLM语言基础图像质量评估的基准，提供退化描述。",
-      "llm_evidence": "面向遥感VLM语言基础图像质量评估的基准，提供退化描述。",
-      "canonical_evidence": "面向遥感VLM语言基础图像质量评估的基准，提供退化描述。",
-      "llm_tldr_en": "Addresses the lack of interpretable IQA in remote sensing by introducing SenseBench, a benchmark for evaluating how well VLMs can perceive and describe low-level image degradations. It aims to shift from scalar scores to natural language explanations for image quality.",
-      "llm_tldr_cn": "当前遥感图像质量评估方法仅输出不可解释的标量分数，无法满足专家诊断需求。该论文提出SenseBench，首个面向遥感低层视觉感知与描述的诊断基准，旨在评估大视觉语言模型感知和描述物理驱动的遥感图像退化的能力。通过该基准，可以推动从标量评分到自然语言解释的转变，实现语言基础的可解释图像质量评估。",
-      "llm_tldr": "当前遥感图像质量评估方法仅输出不可解释的标量分数，无法满足专家诊断需求。该论文提出SenseBench，首个面向遥感低层视觉感知与描述的诊断基准，旨在评估大视觉语言模型感知和描述物理驱动的遥感图像退化的能力。通过该基准，可以推动从标量评分到自然语言解释的转变，实现语言基础的可解释图像质量评估。",
+      "llm_evidence_en": "VLMs deliver language-grounded IQA by describing RS image artifacts",
+      "llm_evidence_cn": "视觉语言模型通过描述遥感图像伪影实现语言可解释的质量评估",
+      "llm_evidence": "视觉语言模型通过描述遥感图像伪影实现语言可解释的质量评估",
+      "canonical_evidence": "视觉语言模型通过描述遥感图像伪影实现语言可解释的质量评估",
+      "llm_tldr_en": "Proposes the first benchmark for remote sensing low-level visual perception and description in VLMs, targeting language-grounded IQA.",
+      "llm_tldr_cn": "该论文针对遥感图像质量评估可解释性不足的问题，提出首个遥感低级视觉感知诊断基准SenseBench，评估大视觉语言模型感知并描述物理退化的能力，实验揭示了当前VLMs在跨域理解上的局限，为基于语言描述的可解释遥感图像质量评估奠定基础，推动了IQA从标量输出向自然语言描述的转变。",
+      "llm_tldr": "该论文针对遥感图像质量评估可解释性不足的问题，提出首个遥感低级视觉感知诊断基准SenseBench，评估大视觉语言模型感知并描述物理退化的能力，实验揭示了当前VLMs在跨域理解上的局限，为基于语言描述的可解释遥感图像质量评估奠定基础，推动了IQA从标量输出向自然语言描述的转变。",
       "llm_tags": [
         "query:xiqa"
       ],
@@ -327,42 +170,43 @@
       "selection_source": "fresh_fetch"
     },
     {
-      "id": "2605.14847v1",
+      "id": "2605.13396v1",
       "source": "arxiv",
-      "title": "SR-Prominence: A Crowdsourced Protocol and Dataset Suite for Perceptually-Weighted Super-Resolution Artifact Evaluation",
-      "abstract": "Modern image super-resolution methods generate detailed, visually appealing results, but they often introduce visual artifacts: unnatural patterns and texture distortions that degrade perceived quality. These defects vary widely in perceptual impact--some are barely noticeable, while others are highly disturbing--yet existing detection methods treat them equally. We propose artifact prominence as an evaluative target, defined as the fraction of viewers who judge a highlighted region to contain a noticeable artifact. We design a crowdsourced annotation protocol and construct SR-Prominence, a dataset suite containing 3,935 artifact masks from DeSRA, Open Images, Urban100, and a realistic no-ground-truth Urban100-HR setting, annotated with prominence. Re-annotating DeSRA reveals that 48.2% of its in-lab binary artifacts are not noticed by a majority of viewers. Across the suite, we audit SR artifact detectors, image-quality metrics, and SR methods. We find that classical full-reference metrics, especially SSIM and DISTS, provide surprisingly strong localized prominence signals, whereas no-reference IQA methods and specialized artifact detectors often fail to generalize across datasets and reference settings. SR-Prominence is released with an objective scoring protocol that allows new metrics to be benchmarked on our suite without further crowdsourcing. Together, the data and protocols enable SR artifact evaluation to move from binary defect presence toward perceptual impact. SR-Prominence is available at https://huggingface.co/datasets/imolodetskikh/sr-artifact-prominence.",
+      "title": "PreFIQs: Face Image Quality Is What Survives Pruning",
+      "abstract": "Face Image Quality Assessment (FIQA) evaluates the utility of a face image for automated face recognition (FR) systems. In this work, we propose PreFIQs, an unsupervised and training-free FIQA framework grounded in the Pruning Identified Exemplar (PIE) hypothesis. We hypothesize that low-utility face images rely disproportionately on fragile network parameters, resulting in larger geometric displacement of their embeddings under model sparsification. Accordingly, PreFIQs quantifies image utility as the Euclidean distance between L2-normalized embeddings extracted from a pre-trained FR model and its pruned counterpart. We provide a first-order theoretical justification via a Jacobian-vector product analysis, demonstrating that this empirical drift serves as a computationally efficient approximation of the exact geometric sensitivity of the latent embedding manifold. Extensive experiments across eight benchmarks and four FR models demonstrate that PreFIQs achieves competitive or superior performance compared to state-of-the-art FIQA methods, including establishing new state-of-the-art results on several benchmarks, without any training or supervision. These results validate parameter sparsification as a principled and practically efficient signal for face image utility, and demonstrate that quality is, in essence, what survives pruning.",
       "authors": [
-        "Ivan Molodetskikh",
-        "Kirill Malyshev",
-        "Mark Mirgaleev",
-        "Nikita Zagainov",
-        "Evgeney Bogatyrev",
-        "Dmitriy Vatolin"
+        "Jan Niklas Kolf",
+        "Guray Ozgur",
+        "Andrea Atzori",
+        "Žiga Babnik",
+        "Vitomir Štruc",
+        "Naser Damer",
+        "Fadi Boutros"
       ],
       "primary_category": "cs.CV",
       "categories": [
         "cs.CV"
       ],
-      "published": "2026-05-14T13:56:08+00:00",
-      "link": "https://arxiv.org/pdf/2605.14847v1",
+      "published": "2026-05-13T11:53:19+00:00",
+      "link": "https://arxiv.org/pdf/2605.13396v1",
       "tags": [
         "keyword:XIQA",
         "query:XIQA"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "perceptually-weighted evaluation of super-resolution artifacts in images",
-      "llm_evidence_cn": "对图像超分辨率伪影的感知加权评估",
-      "llm_evidence": "对图像超分辨率伪影的感知加权评估",
-      "canonical_evidence": "对图像超分辨率伪影的感知加权评估",
-      "llm_tldr_en": "SR-Prominence defines artifact prominence as the fraction of viewers noticing an artifact, creating a dataset and protocol for evaluating SR artifacts with perceptual weighting. This enables more nuanced quality assessment of super-resolved images.",
-      "llm_tldr_cn": "针对超分辨率图像伪影评估忽视感知影响差异的问题，提出伪影显著度概念，定义为主观评分中注意到伪影的观看者比例。设计众包标注协议，构建包含3935个伪影掩码的SR-Prominence数据集，覆盖多种场景。实验表明，显著度加权评估能更精细区分伪影的感知严重性，为图像增强质量评估提供新指标。",
-      "llm_tldr": "针对超分辨率图像伪影评估忽视感知影响差异的问题，提出伪影显著度概念，定义为主观评分中注意到伪影的观看者比例。设计众包标注协议，构建包含3935个伪影掩码的SR-Prominence数据集，覆盖多种场景。实验表明，显著度加权评估能更精细区分伪影的感知严重性，为图像增强质量评估提供新指标。",
+      "llm_evidence_en": "evaluates face image utility via embedding drift under pruning",
+      "llm_evidence_cn": "通过剪枝下的嵌入漂移评估人脸图像效用",
+      "llm_evidence": "通过剪枝下的嵌入漂移评估人脸图像效用",
+      "canonical_evidence": "通过剪枝下的嵌入漂移评估人脸图像效用",
+      "llm_tldr_en": "Proposes an unsupervised, training-free face image quality assessment method by comparing embeddings from original and pruned recognition models.",
+      "llm_tldr_cn": "该论文针对现有人脸图像质量评估对标注依赖性强、计算成本高的问题，基于剪枝标识样本假说提出无监督方法PreFIQs，通过比较人脸识别模型剪枝前后嵌入的欧氏距离来量化图像效用，在多个基准上取得了与有监督方法可比甚至更优的性能，为轻量级、无监督的人脸图像质量评估开辟了新路径。",
+      "llm_tldr": "该论文针对现有人脸图像质量评估对标注依赖性强、计算成本高的问题，基于剪枝标识样本假说提出无监督方法PreFIQs，通过比较人脸识别模型剪枝前后嵌入的欧氏距离来量化图像效用，在多个基准上取得了与有监督方法可比甚至更优的性能，为轻量级、无监督的人脸图像质量评估开辟了新路径。",
       "llm_tags": [
         "query:xiqa"
       ],
       "matched_query_tag": "query:xiqa",
-      "matched_query_text": "assessing the quality of images",
-      "matched_requirement_id": "req-1",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
       "selection_source": "fresh_fetch"
     },
     {
@@ -384,19 +228,19 @@
         "query:XIQA"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "proposes a scale-invariant quality measure for single image super-resolution",
-      "llm_evidence_cn": "提出单图像超分辨率的尺度不变质量评价指标",
-      "llm_evidence": "提出单图像超分辨率的尺度不变质量评价指标",
-      "canonical_evidence": "提出单图像超分辨率的尺度不变质量评价指标",
-      "llm_tldr_en": "introduces MSIQ, a diagnostic scale-invariant quality measure based on normalized central geometric moments to evaluate geometric structure preservation in SISR.",
-      "llm_tldr_cn": "针对现有全参考指标无法显式评估几何结构保持且引入强制缩放误差的问题，提出基于归一化中心几何矩的尺度不变质量指标MSIQ。MSIQ允许直接比较不同尺寸的图像，通过矩比较反映几何结构还原程度，为超分辨率评估提供了更准确的诊断工具。",
-      "llm_tldr": "针对现有全参考指标无法显式评估几何结构保持且引入强制缩放误差的问题，提出基于归一化中心几何矩的尺度不变质量指标MSIQ。MSIQ允许直接比较不同尺寸的图像，通过矩比较反映几何结构还原程度，为超分辨率评估提供了更准确的诊断工具。",
+      "llm_evidence_en": "Proposes a quality measure for single image super-resolution results",
+      "llm_evidence_cn": "针对单图像超分辨率结果的尺度不变质量度量",
+      "llm_evidence": "针对单图像超分辨率结果的尺度不变质量度量",
+      "canonical_evidence": "针对单图像超分辨率结果的尺度不变质量度量",
+      "llm_tldr_en": "Introduces MSIQ, a diagnostic scale-invariant quality measure based on normalized central geometric moments, enabling direct comparison of images with different sizes and explicitly evaluating geometric structure preservation.",
+      "llm_tldr_cn": "现有全参考超分质量评价需要强制对齐分辨率，引入插值误差且忽视几何结构保持。本文提出基于归一化中心几何矩的尺度不变质量指标MSIQ，可直接比较不同尺寸图像并显式评估几何结构保真度。实验表明，MSIQ能有效诊断超分结果的几何变形，为超分算法开发提供更具解释性的评价工具。",
+      "llm_tldr": "现有全参考超分质量评价需要强制对齐分辨率，引入插值误差且忽视几何结构保持。本文提出基于归一化中心几何矩的尺度不变质量指标MSIQ，可直接比较不同尺寸图像并显式评估几何结构保真度。实验表明，MSIQ能有效诊断超分结果的几何变形，为超分算法开发提供更具解释性的评价工具。",
       "llm_tags": [
         "query:xiqa"
       ],
       "matched_query_tag": "query:xiqa",
-      "matched_query_text": "assessing the quality of images",
-      "matched_requirement_id": "req-1",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
       "selection_source": "fresh_fetch"
     },
     {
@@ -423,101 +267,98 @@
         "query:XIQA"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "proposes Global-Local Adaptive Interaction for Blind Image Quality Assessment",
-      "llm_evidence_cn": "提出全局-局部自适应交互用于盲图像质量评估",
-      "llm_evidence": "提出全局-局部自适应交互用于盲图像质量评估",
-      "canonical_evidence": "提出全局-局部自适应交互用于盲图像质量评估",
-      "llm_tldr_en": "introduces a Global-Local Adaptive Interaction method to unlock Vision Transformer potential for Blind IQA, addressing annotation cost and computational demands.",
-      "llm_tldr_cn": "针对真实失真图像质量评估标注成本高、数据集小且预训练视觉模型微调效率低的问题，提出全局-局部自适应交互方法以释放Vision Transformer在盲图像质量评估中的潜力。该方法平衡了全局语义和局部细节感知，在多个IQA数据集上取得先进性能，展示了大规模预训练模型在IQA中的高效应用。",
-      "llm_tldr": "针对真实失真图像质量评估标注成本高、数据集小且预训练视觉模型微调效率低的问题，提出全局-局部自适应交互方法以释放Vision Transformer在盲图像质量评估中的潜力。该方法平衡了全局语义和局部细节感知，在多个IQA数据集上取得先进性能，展示了大规模预训练模型在IQA中的高效应用。",
+      "llm_evidence_en": "blind image quality assessment using vision transformer with global-local interaction",
+      "llm_evidence_cn": "使用全局-局部自适应交互的视觉Transformer进行无参考图像质量评估",
+      "llm_evidence": "使用全局-局部自适应交互的视觉Transformer进行无参考图像质量评估",
+      "canonical_evidence": "使用全局-局部自适应交互的视觉Transformer进行无参考图像质量评估",
+      "llm_tldr_en": "Proposes a global-local adaptive interaction method to efficiently fine-tune vision transformers for blind image quality assessment, achieving high accuracy.",
+      "llm_tldr_cn": "该论文针对无参考图像质量评估中失真多样、标注昂贵且预训练模型计算量大、微调低效的挑战，提出一种全局-局部自适应交互方法，有效释放视觉Transformer在IQA中的潜力，在多个标准数据集上以较低计算成本取得了领先的准确率，为数据高效和计算高效的图像质量评估提供了新范式。",
+      "llm_tldr": "该论文针对无参考图像质量评估中失真多样、标注昂贵且预训练模型计算量大、微调低效的挑战，提出一种全局-局部自适应交互方法，有效释放视觉Transformer在IQA中的潜力，在多个标准数据集上以较低计算成本取得了领先的准确率，为数据高效和计算高效的图像质量评估提供了新范式。",
       "llm_tags": [
         "query:xiqa"
       ],
       "matched_query_tag": "query:xiqa",
-      "matched_query_text": "assessing the quality of images",
-      "matched_requirement_id": "req-1",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
       "selection_source": "fresh_fetch"
     },
     {
-      "id": "2605.19776v1",
+      "id": "2605.19522v1",
       "source": "arxiv",
-      "title": "Preferences Order, Ratings Anchor: From Fused Expert Aesthetic Ground Truth to Self-Distillation",
-      "abstract": "Pairwise preferences and pointwise ratings are the two dominant annotation protocols in image aesthetic assessment (IAA), yet existing benchmarks adopt only one, leaving their complementarity unmeasured under controlled conditions. We introduce PPaint, a matched dual-protocol benchmark in which 15 domain experts, 5 per category, annotate 150 Chinese paintings under both protocols across five aesthetic dimensions, collecting 45,900 pairwise expert judgments through a locally dense preference design alongside the matched ratings. The matched design reveals complementary strengths: preferences yield more consistent ordinal rankings, while ratings anchor the absolute score scale. Fusing both signals via two independent preference-to-score methods yields a fused expert ground truth on which the two constructions converge to nearly identical scores. The same preference-to-score principle extends to label-free VLM training. PSDistill converts VLM pairwise judgments into calibrated pseudo-scores via an Elo reference pool, and trains the same VLM with confidence-weighted ranking optimization to produce a single-pass aesthetic scorer. Trained on a single painting category, the distilled Qwen3-VL-8B improves mean SRCC from 0.504 to 0.709 across all three categories, outperforming all open-source baselines including the dedicated aesthetic model ArtiMuse and matching closed-source Gemini-3.1-Pro within 0.04 SRCC at single-pass inference cost, with cross-domain transfer further validated on APDDv2. We will release the full PPaint dataset and training code.",
+      "title": "iDiff: Interpretable Difference-aware Framework for Pairwise Image Quality Assessment",
+      "abstract": "Pairwise image quality assessment (IQA) in professional photography requires a model not only to identify the preferred image between two candidates, but also to provide convincing and image-grounded reasoning. In the NTIRE 2026 RAIM challenge, this requirement is further emphasized by jointly evaluating preference prediction and rationale generation. To address this task, we propose iDiff, an Interpretable Difference-aware framework for pairwise image quality assessment. Our method adopts a dual-branch design consisting of an Answer Model and a Thinking Model. The Answer Model performs robust preference prediction by explicitly decomposing each sample into left/right global and local views, followed by content-aware specialization for person and scene images and ensemble-based aggregation across backbones. The Thinking Model focuses on rationale generation and is progressively enhanced with expert-style templates, multi-source quality features, and answer-aware supervision conditioned on the Answer Model prediction. In this way, iDiff jointly models discriminative decision making and structured explanation, improving both robustness and interpretability. Extensive experiments demonstrate the effectiveness of the proposed framework on both accuracy and reasoning-quality metrics. Our method achieved first place in the NTIRE 2026 RAIM challenge, showing the effectiveness of integrating explicit difference modeling with structured multimodal reasoning for pairwise IQA.",
       "authors": [
-        "Yuanpei Zhao",
-        "Jie Lin",
-        "Chao Zhang",
-        "Yilin Wang",
-        "Mao Li",
-        "Chenhui Li",
-        "Jie Hou",
-        "Tangjie Lv"
+        "Xinli Yue",
+        "JianHui Sun",
+        "Tao Shao",
+        "Liangchao Yao",
+        "Fan Xia",
+        "Yuetang Deng"
       ],
       "primary_category": "cs.CV",
       "categories": [
         "cs.CV"
       ],
-      "published": "2026-05-19T12:44:01+00:00",
-      "link": "https://arxiv.org/pdf/2605.19776v1",
+      "published": "2026-05-19T08:24:00+00:00",
+      "link": "https://arxiv.org/pdf/2605.19522v1",
       "tags": [
         "keyword:XIQA",
         "query:XIQA"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "Introduces a dual-protocol benchmark for image aesthetic assessment, fusing pairwise preferences and pointwise ratings to build robust ground truth for evaluating image quality.",
-      "llm_evidence_cn": "引入双协议基准进行图像美学评估，融合成对偏好与逐点评分以构建鲁棒的图像质量评价真值。",
-      "llm_evidence": "引入双协议基准进行图像美学评估，融合成对偏好与逐点评分以构建鲁棒的图像质量评价真值。",
-      "canonical_evidence": "引入双协议基准进行图像美学评估，融合成对偏好与逐点评分以构建鲁棒的图像质量评价真值。",
-      "llm_tldr_en": "PPaint benchmark matches pairwise preference and pointwise ratings for image aesthetic assessment, revealing complementary strengths; fused signals improve model accuracy via self-distillation.",
-      "llm_tldr_cn": "图像美学评估主要采用成对偏好或逐点评分之一标注，两者互补性缺乏研究。本文构建PPaint双协议基准，在统一受控条件下收集专家对150幅中国画的多维度偏好与评分数据共45,900个成对判断。分析表明，偏好提供更一致的序数排名，评分则锚定绝对分数尺度；通过两种独立信号融合策略，能够训练出更准确且鲁棒的美学评估模型，并进一步通过自蒸馏将知识迁移到单协议模型，为图像质量评价的标注方法论提供了实证依据。",
-      "llm_tldr": "图像美学评估主要采用成对偏好或逐点评分之一标注，两者互补性缺乏研究。本文构建PPaint双协议基准，在统一受控条件下收集专家对150幅中国画的多维度偏好与评分数据共45,900个成对判断。分析表明，偏好提供更一致的序数排名，评分则锚定绝对分数尺度；通过两种独立信号融合策略，能够训练出更准确且鲁棒的美学评估模型，并进一步通过自蒸馏将知识迁移到单协议模型，为图像质量评价的标注方法论提供了实证依据。",
+      "llm_evidence_en": "Provides interpretable reasoning for pairwise image quality assessment",
+      "llm_evidence_cn": "为成对图像质量评估提供可解释推理",
+      "llm_evidence": "为成对图像质量评估提供可解释推理",
+      "canonical_evidence": "为成对图像质量评估提供可解释推理",
+      "llm_tldr_en": "Addresses pairwise IQA with rationale generation by proposing a dual-branch framework with Answer and Thinking models that jointly predict preference and produce image-grounded reasoning.",
+      "llm_tldr_cn": "针对专业摄影中成对图像质量评估需要同时给出偏好预测和可信推理的需求，本文提出iDiff可解释差异感知框架，采用答案模型和思维模型双分支设计，通过显式分解左右全局与局部视图并执行内容感知特化，在NTIRE 2026 RAIM挑战中实现了鲁棒的偏好预测与图像依据推理的联合优化。",
+      "llm_tldr": "针对专业摄影中成对图像质量评估需要同时给出偏好预测和可信推理的需求，本文提出iDiff可解释差异感知框架，采用答案模型和思维模型双分支设计，通过显式分解左右全局与局部视图并执行内容感知特化，在NTIRE 2026 RAIM挑战中实现了鲁棒的偏好预测与图像依据推理的联合优化。",
       "llm_tags": [
         "query:xiqa"
       ],
       "matched_query_tag": "query:xiqa",
-      "matched_query_text": "assessing the quality of images",
-      "matched_requirement_id": "req-1",
+      "matched_query_text": "image quality assessment with explanations",
+      "matched_requirement_id": "req-2",
       "selection_source": "fresh_fetch"
     },
     {
-      "id": "2605.19776v2",
+      "id": "2605.21130v1",
       "source": "arxiv",
-      "title": "Preferences Order, Ratings Anchor: From Fused Expert Aesthetic Ground Truth to Self-Distillation",
-      "abstract": "Pairwise preferences and pointwise ratings are the two dominant annotation protocols in image aesthetic assessment (IAA), yet existing benchmarks adopt only one, leaving their complementarity unmeasured under controlled conditions. We introduce PPaint, a matched dual-protocol benchmark in which 15 domain experts, 5 per category, annotate 150 Chinese paintings under both protocols across five aesthetic dimensions, collecting 45,900 pairwise expert judgments through a locally dense preference design alongside the matched ratings. The matched design reveals complementary strengths: preferences yield more consistent ordinal rankings, while ratings anchor the absolute score scale. Fusing both signals via two independent preference-to-score methods yields a fused expert ground truth on which the two constructions converge to nearly identical scores. The same preference-to-score principle extends to label-free VLM training. PSDistill converts VLM pairwise judgments into calibrated pseudo-scores via an Elo reference pool, and trains the same VLM with confidence-weighted ranking optimization to produce a single-pass aesthetic scorer. Trained on a single painting category, the distilled Qwen3-VL-8B improves mean SRCC from 0.504 to 0.709 across all three categories, outperforming all open-source baselines including the dedicated aesthetic model ArtiMuse and matching closed-source Gemini-3.1-Pro within 0.04 SRCC at single-pass inference cost, with cross-domain transfer further validated on APDDv2. We will release the full PPaint dataset and training code.",
+      "title": "VersusQ: Pairwise Margin Reasoning for Generalizable Video Quality Assessment",
+      "abstract": "Large Multimodal Models (LMMs) have shown promise for video quality assessment, but most methods still predict an absolute score for each video. Such pointwise supervision often mixes perceptual quality with dataset-specific calibration, including annotation protocols, rating habits, and score distributions. As a result, the learned scoring rule may work well within a benchmark but transfer poorly across unseen domains. We argue that relative comparisons alleviate the absolute-scale calibration bias by focusing purely on perceptual differences rather than dataset-specific rating habits. Consequently, we propose \\textbf{VersusQ}, a pairwise margin reasoning framework driven entirely by direct comparisons. Specifically, VersusQ performs LMM-based comparison between two videos, reasons about their visual and temporal quality differences, and predicts a signed continuous margin that captures both the preferred choice and the degree of difference. Furthermore, to align interpretable comparison rationales with fine-grained numerical differences, we introduce Margin-Coupled GRPO, which jointly optimizes rollout-based relational reasoning and continuous margin regression. Extensive experiments on multiple public VQA benchmarks demonstrate that VersusQ achieves state-of-the-art performance, strong cross-domain generalization, and reliable fine-grained ranking under heterogeneous evaluation scenarios.",
       "authors": [
-        "Yuanpei Zhao",
-        "Jie Lin",
-        "Chao Zhang",
-        "Yilin Wang",
-        "Mao Li",
-        "Chenhui Li",
-        "Jie Hou",
-        "Tangjie Lv"
+        "Shibei Meng",
+        "Binxin Yang",
+        "Yuan Liu",
+        "Jiexuan Zhang",
+        "Zhengyao Lv",
+        "Hubery Yin",
+        "Qiang Xu"
       ],
       "primary_category": "cs.CV",
       "categories": [
         "cs.CV"
       ],
-      "published": "2026-05-19T12:44:01+00:00",
-      "link": "https://arxiv.org/pdf/2605.19776v2",
+      "published": "2026-05-20T13:03:17+00:00",
+      "link": "https://arxiv.org/pdf/2605.21130v1",
       "tags": [
         "keyword:XIQA",
         "query:XIQA"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "image aesthetic assessment using pairwise preferences and pointwise ratings",
-      "llm_evidence_cn": "基于成对偏好和点级评分的图像美学评估",
-      "llm_evidence": "基于成对偏好和点级评分的图像美学评估",
-      "canonical_evidence": "基于成对偏好和点级评分的图像美学评估",
-      "llm_tldr_en": "PPaint benchmark collects both pairwise preferences and pointwise ratings for image aesthetic assessment, showing complementary strengths. A preference-rating fusion strategy improves aesthetic evaluation accuracy via self-distillation.",
-      "llm_tldr_cn": "针对图像美学评估中偏好与评分两种标注方式互补性不明的问题，构建双协议基准PPaint，同时收集15位专家对150幅国画的偏好与评分。发现偏好提供更一致的序数排名，而评分锚定绝对分值。提出偏好-评分融合自蒸馏框架，融合两种信号提升美学评估性能，为细粒度美学质量评价提供新范式。",
-      "llm_tldr": "针对图像美学评估中偏好与评分两种标注方式互补性不明的问题，构建双协议基准PPaint，同时收集15位专家对150幅国画的偏好与评分。发现偏好提供更一致的序数排名，而评分锚定绝对分值。提出偏好-评分融合自蒸馏框架，融合两种信号提升美学评估性能，为细粒度美学质量评价提供新范式。",
+      "llm_evidence_en": "pairwise margin reasoning using LMMs for video quality assessment",
+      "llm_evidence_cn": "利用多模态大模型的成对间隔推理进行视频质量评估",
+      "llm_evidence": "利用多模态大模型的成对间隔推理进行视频质量评估",
+      "canonical_evidence": "利用多模态大模型的成对间隔推理进行视频质量评估",
+      "llm_tldr_en": "Proposes a pairwise margin reasoning VQA method using LMMs to avoid absolute score bias, improving cross-domain generalization.",
+      "llm_tldr_cn": "该论文针对视频质量评估中绝对分数预测受数据集特定偏置影响、泛化性差的问题，提出基于多模态大语言模型的成对间隔推理方法VersusQ，通过直接比较视频对的质量差异而非预测绝对分数，使模型聚焦于感知差异，从而消除了标度偏置，在多个跨域评估基准上展示了显著的泛化性能提升，为图像和视频质量评估提供了更鲁棒的相对推理框架。",
+      "llm_tldr": "该论文针对视频质量评估中绝对分数预测受数据集特定偏置影响、泛化性差的问题，提出基于多模态大语言模型的成对间隔推理方法VersusQ，通过直接比较视频对的质量差异而非预测绝对分数，使模型聚焦于感知差异，从而消除了标度偏置，在多个跨域评估基准上展示了显著的泛化性能提升，为图像和视频质量评估提供了更鲁棒的相对推理框架。",
       "llm_tags": [
         "query:xiqa"
       ],
       "matched_query_tag": "query:xiqa",
-      "matched_query_text": "assessing the quality of images",
-      "matched_requirement_id": "req-1",
+      "matched_query_text": "multimodal large language models for image quality reasoning and explanation generation",
+      "matched_requirement_id": "req-8",
       "selection_source": "fresh_fetch"
     },
     {
@@ -542,13 +383,13 @@
         "query:XIQA"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "Introduces dataset for fine-grained artifact segmentation in super-resolved images to address lack of interpretability in IQA",
-      "llm_evidence_cn": "引入细粒度伪影分割数据集，解决图像质量评估缺乏可解释性的问题",
-      "llm_evidence": "引入细粒度伪影分割数据集，解决图像质量评估缺乏可解释性的问题",
-      "canonical_evidence": "引入细粒度伪影分割数据集，解决图像质量评估缺乏可解释性的问题",
-      "llm_tldr_en": "This paper proposes SR-Ground, a dataset with pixel-level artifact annotations for super-resolved images, enabling interpretable image quality assessment by distinguishing artifact types, and validates it through a large crowdsourcing study.",
-      "llm_tldr_cn": "针对现有图像质量评估方法缺乏可解释性且无法区分超分辨率图像中不同伪影类型的问题，本文提出大规模数据集SR-Ground，包含多种SR模型生成的图像及其像素级伪影标注。通过1062名参与者的众包研究验证标注质量，并建立细粒度评估基准。该数据集有助于推动可解释的图像质量评价，实现从整体评分到局部伪影定位的跨越。",
-      "llm_tldr": "针对现有图像质量评估方法缺乏可解释性且无法区分超分辨率图像中不同伪影类型的问题，本文提出大规模数据集SR-Ground，包含多种SR模型生成的图像及其像素级伪影标注。通过1062名参与者的众包研究验证标注质量，并建立细粒度评估基准。该数据集有助于推动可解释的图像质量评价，实现从整体评分到局部伪影定位的跨越。",
+      "llm_evidence_en": "introduces SR-Ground dataset for fine-grained artifact segmentation in super-resolved images, providing interpretable IQA",
+      "llm_evidence_cn": "引入SR-Ground数据集，对超分辨率图像进行细粒度伪影分割，提供可解释的图像质量评估",
+      "llm_evidence": "引入SR-Ground数据集，对超分辨率图像进行细粒度伪影分割，提供可解释的图像质量评估",
+      "canonical_evidence": "引入SR-Ground数据集，对超分辨率图像进行细粒度伪影分割，提供可解释的图像质量评估",
+      "llm_tldr_en": "To address lack of interpretability in IQA for super-resolved images, this paper curates SR-Ground, a large dataset with pixel-level artifact annotations, and a benchmark for fine-grained quality grounding, enabling explanation of quality issues.",
+      "llm_tldr_cn": "当前图像质量评估方法对超分辨率图像缺乏可解释性，难以区分不同类型的伪影。本文构建了SR-Ground大规模数据集，包含多种SR模型生成的图像及其像素级伪影标注，用于细粒度质量定位。通过大规模的众包研究验证，该数据集和基准能够精确分割和识别各类伪影，为可解释的图像质量评价提供了关键资源与评估基础。",
+      "llm_tldr": "当前图像质量评估方法对超分辨率图像缺乏可解释性，难以区分不同类型的伪影。本文构建了SR-Ground大规模数据集，包含多种SR模型生成的图像及其像素级伪影标注，用于细粒度质量定位。通过大规模的众包研究验证，该数据集和基准能够精确分割和识别各类伪影，为可解释的图像质量评价提供了关键资源与评估基础。",
       "llm_tags": [
         "query:xiqa"
       ],
@@ -582,19 +423,19 @@
         "query:XIQA"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "blind image quality assessment for ultra-high-definition images using graph learning",
-      "llm_evidence_cn": "利用图学习的超高清图像盲质量评估",
-      "llm_evidence": "利用图学习的超高清图像盲质量评估",
-      "canonical_evidence": "利用图学习的超高清图像盲质量评估",
-      "llm_tldr_en": "UHD-GCN-BIQA uses graph convolutional networks to model structural dependencies among image patches for UHD blind IQA, capturing scale-sensitive distortions and global context better than independent patch methods.",
-      "llm_tldr_cn": "针对超高清图像盲质量评估中分辨率和局部-全局关系建模的难题，提出图表示学习框架UHD-GCN-BIQA。对图像块采样并构建混合k近邻图，通过图卷积建模空间与特征相似性中的结构依赖。在多个UHD数据库上验证，所提方法能有效捕捉尺度敏感失真，提升评估准确性，为高分辨率图像质量分析提供新工具。",
-      "llm_tldr": "针对超高清图像盲质量评估中分辨率和局部-全局关系建模的难题，提出图表示学习框架UHD-GCN-BIQA。对图像块采样并构建混合k近邻图，通过图卷积建模空间与特征相似性中的结构依赖。在多个UHD数据库上验证，所提方法能有效捕捉尺度敏感失真，提升评估准确性，为高分辨率图像质量分析提供新工具。",
+      "llm_evidence_en": "Blind image quality assessment for ultrahigh-definition images",
+      "llm_evidence_cn": "超高清图像的盲图像质量评估",
+      "llm_evidence": "超高清图像的盲图像质量评估",
+      "canonical_evidence": "超高清图像的盲图像质量评估",
+      "llm_tldr_en": "Proposes a graph representation learning framework for blind image quality assessment of ultrahigh-definition images by modeling structural dependencies among patches, improving correlation with human perception.",
+      "llm_tldr_cn": "针对超高清图像质量评估中因直接缩放或裁剪导致尺度敏感失真被掩盖的问题，提出一种图表示学习框架UHD-GCN-BIQA，通过对图像块构建混合k近邻图来显式建模区域间的结构依赖关系。实验表明，该方法在多个UHD数据库上均取得领先的相关性指标，为高分辨率视觉内容的质量评估提供了一种更精确的解决方案。",
+      "llm_tldr": "针对超高清图像质量评估中因直接缩放或裁剪导致尺度敏感失真被掩盖的问题，提出一种图表示学习框架UHD-GCN-BIQA，通过对图像块构建混合k近邻图来显式建模区域间的结构依赖关系。实验表明，该方法在多个UHD数据库上均取得领先的相关性指标，为高分辨率视觉内容的质量评估提供了一种更精确的解决方案。",
       "llm_tags": [
         "query:xiqa"
       ],
       "matched_query_tag": "query:xiqa",
-      "matched_query_text": "assessing the quality of images",
-      "matched_requirement_id": "req-1",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
       "selection_source": "fresh_fetch"
     }
   ],
@@ -622,13 +463,13 @@
         "query:XIQA"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "provides spatially-aware distortion maps as interpretable explanations for image quality",
-      "llm_evidence_cn": "提供空间感知失真图作为图像质量的可解释反馈",
-      "llm_evidence": "提供空间感知失真图作为图像质量的可解释反馈",
-      "canonical_evidence": "提供空间感知失真图作为图像质量的可解释反馈",
-      "llm_tldr_en": "Proposes a relational IQA method that generates spatially-aware distortion maps for interpretable quality feedback, trained via self-supervised synthetic distortions and contrastive learning.",
-      "llm_tldr_cn": "针对传统图像质量评估缺乏可解释局部反馈的问题，提出一种关系型图像质量评估方法。利用自监督合成失真引擎生成训练数据，训练失真预测网络输出解耦的空间感知失真图，再通过对比学习训练评分网络。该方法能识别失真类型、强度和方向，提供比标量评分更丰富的质量信息，为图像质量评估带来可解释性提升。",
-      "llm_tldr": "针对传统图像质量评估缺乏可解释局部反馈的问题，提出一种关系型图像质量评估方法。利用自监督合成失真引擎生成训练数据，训练失真预测网络输出解耦的空间感知失真图，再通过对比学习训练评分网络。该方法能识别失真类型、强度和方向，提供比标量评分更丰富的质量信息，为图像质量评估带来可解释性提升。",
+      "llm_evidence_en": "interpretable IQA with spatially-aware distortion maps providing localized feedback",
+      "llm_evidence_cn": "具有空间感知失真图的可解释图像质量评估，提供局部反馈",
+      "llm_evidence": "具有空间感知失真图的可解释图像质量评估，提供局部反馈",
+      "canonical_evidence": "具有空间感知失真图的可解释图像质量评估，提供局部反馈",
+      "llm_tldr_en": "Pixel Perfect proposes a relational IQA method using self-supervised distortion prediction to generate spatially-aware interpretable feedback without manual annotation.",
+      "llm_tldr_cn": "传统IQA依赖主观评分，缺乏可解释的局部反馈。本文提出关系化评估方法，利用自监督合成失真引擎生成训练数据，训练失真预测网络产生空间感知的失真类型、强度和方向图，并通过对比学习训练评分网络。实验表明该方法无需人工标注即可提供可解释的局部化质量反馈，为图像质量评价提供了更细粒度的解释手段。",
+      "llm_tldr": "传统IQA依赖主观评分，缺乏可解释的局部反馈。本文提出关系化评估方法，利用自监督合成失真引擎生成训练数据，训练失真预测网络产生空间感知的失真类型、强度和方向图，并通过对比学习训练评分网络。实验表明该方法无需人工标注即可提供可解释的局部化质量反馈，为图像质量评价提供了更细粒度的解释手段。",
       "llm_tags": [
         "query:xiqa"
       ],
@@ -639,40 +480,34 @@
       "quick_tier": "8plus"
     },
     {
-      "id": "2605.04453v1",
+      "id": "2605.15906v1",
       "source": "arxiv",
-      "title": "StableI2I: Spotting Unintended Changes in Image-to-Image Transition",
-      "abstract": "In most real-world image-to-image (I2I) scenarios, existing evaluations primarily focus on instruction following and the perceptual quality or aesthetics of the generated images. However, they largely fail to assess whether the output image preserves the semantic correspondence and spatial structure of the input image. To address this limitation, we propose StableI2I, a unified and dynamic evaluation framework that explicitly measures content fidelity and pre--post consistency across a wide range of I2I tasks without requiring reference images, including image editing and image restoration. In addition, we construct StableI2I-Bench, a benchmark designed to systematically evaluate the accuracy of MLLMs on such fidelity and consistency assessment tasks. Extensive experimental results demonstrate that StableI2I provides accurate, fine-grained, and interpretable evaluations of content fidelity and consistency, with strong correlations to human subjective judgments. Our framework serves as a practical and reliable evaluation tool for diagnosing content consistency and benchmarking model performance in real-world I2I systems.",
+      "title": "A Causally Grounded Taxonomy for Image Degradation Robustness Evaluation",
+      "abstract": "Image degradations can occur during acquisition, processing, and transmission, altering visual appearance and affecting downstream vision tasks. They are studied in several communities, including synthetic corruption benchmarks for robustness evaluation, perceptual image quality assessment, and physically grounded analyses of imaging systems or real camera failures. Although these areas address closely related phenomena, they often use incompatible grouping schemes and backend specific severity definitions, making results difficult to compare across datasets, degradation sources, and tasks.   We propose a causally grounded framework for organizing and interpreting image degradations across these settings. Instead of introducing new degradations or redefining existing benchmarks, we provide an interpretive representation and measurement layer that makes implicit assumptions explicit. Each degradation is described along two orthogonal axes: its dominant causal source in the imaging pipeline (environment, sensor/optics, ISP/renderer/codec, or transfer/system), and its resulting perceptual effect. This dual axis abstraction yields a compact taxonomy spanning algorithmic corruptions, perceptual distortions, and physically motivated imaging artifacts.   To address inconsistent severity semantics without changing existing implementations, we introduce a lightweight severity measurement layer. For every degradation and each native severity level of a given backend, we quantify degradation strength using full reference image quality metrics: PSNR, SSIM, and LPIPS. This makes severity observable and comparable across sources while preserving native parameterizations. We demonstrate the framework through COCO Degradation, a taxonomy aligned benchmark for evaluating object detector robustness under diverse imaging conditions.",
       "authors": [
-        "Jiayang Li",
-        "Shuo Cao",
-        "Xiaohui Li",
-        "Zhizhen Zhang",
-        "Kaiwen Zhu",
-        "Yule Duan",
-        "Yu Qiao",
-        "Jian Zhang",
-        "Yihao Liu"
+        "Stefan Becker",
+        "Simon Weiss",
+        "Wolfgang Hübner",
+        "Michael Arens"
       ],
       "primary_category": "cs.CV",
       "categories": [
-        "cs.CV",
-        "cs.AI"
+        "cs.CV"
       ],
-      "published": "2026-05-06T03:28:05+00:00",
-      "link": "https://arxiv.org/pdf/2605.04453v1",
+      "published": "2026-05-15T12:44:02+00:00",
+      "link": "https://arxiv.org/pdf/2605.15906v1",
       "tags": [
         "keyword:XIQA",
         "query:XIQA"
       ],
       "llm_score": 7.0,
-      "llm_evidence_en": "Proposes an evaluation framework for image-to-image tasks that assesses content fidelity and consistency, using MLLMs",
-      "llm_evidence_cn": "提出用于图像到图像任务的评估框架，评估内容保真度和一致性，使用多模态大模型",
-      "llm_evidence": "提出用于图像到图像任务的评估框架，评估内容保真度和一致性，使用多模态大模型",
-      "canonical_evidence": "提出用于图像到图像任务的评估框架，评估内容保真度和一致性，使用多模态大模型",
-      "llm_tldr_en": "This paper introduces StableI2I, a framework that evaluates image-to-image models on content fidelity and spatial consistency without reference images, and builds a benchmark to test MLLMs' accuracy on these assessments, advancing evaluation beyond perceptual quality.",
-      "llm_tldr_cn": "现有图像到图像转换的评估大多忽视输出图像与输入间的内容保真度和空间结构一致性。本文提出StableI2I框架，动态评估内容保真度和前后一致性，无需参考图像，覆盖图像编辑与复原等任务。同时构建基准测试多模态大模型在该评估任务上的准确性，推动生成图像质量评价从感知质量向结构化保真度拓展。",
-      "llm_tldr": "现有图像到图像转换的评估大多忽视输出图像与输入间的内容保真度和空间结构一致性。本文提出StableI2I框架，动态评估内容保真度和前后一致性，无需参考图像，覆盖图像编辑与复原等任务。同时构建基准测试多模态大模型在该评估任务上的准确性，推动生成图像质量评价从感知质量向结构化保真度拓展。",
+      "llm_evidence_en": "proposes a causally grounded framework for organizing image degradations relevant to perceptual image quality assessment",
+      "llm_evidence_cn": "提出一种因果驱动的图像退化分类框架，与感知图像质量评估相关",
+      "llm_evidence": "提出一种因果驱动的图像退化分类框架，与感知图像质量评估相关",
+      "canonical_evidence": "提出一种因果驱动的图像退化分类框架，与感知图像质量评估相关",
+      "llm_tldr_en": "Proposes a causal taxonomy to unify image degradation evaluation across robustness benchmarks, perceptual IQA, and physical analyses, enabling consistent comparisons.",
+      "llm_tldr_cn": "针对图像退化在不同研究社区（鲁棒性评估、感知质量评价、物理分析）中分类方案不一致的问题，提出了一种因果驱动的分类框架，通过统一退化组织方式促进跨数据集和任务的可靠比较，为图像质量评估提供了结构化基础。",
+      "llm_tldr": "针对图像退化在不同研究社区（鲁棒性评估、感知质量评价、物理分析）中分类方案不一致的问题，提出了一种因果驱动的分类框架，通过统一退化组织方式促进跨数据集和任务的可靠比较，为图像质量评估提供了结构化基础。",
       "llm_tags": [
         "query:xiqa"
       ],
@@ -683,38 +518,36 @@
       "quick_tier": "7"
     },
     {
-      "id": "2605.09479v1",
+      "id": "2605.07786v2",
       "source": "arxiv",
-      "title": "ML-CLIPSim: Multi-Layer CLIP Similarity for Machine-Oriented Image Quality",
-      "abstract": "We study full-reference image quality assessment from a machine-centric perspective, where images are evaluated by how well they preserve information for downstream models. We formulate machine-oriented quality as a latent machine utility and approximate it through pairwise predictive-consistency comparisons. To this end, we construct PCMP, a dataset of PSNR-matched distortion pairs labeled by consistency votes from multiple pretrained models. We further propose ML-CLIPSim, a differentiable quality metric built on a frozen CLIP visual encoder, which aggregates intermediate patch-token similarities and global image embeddings. Experiments on machine-preference benchmarks, human-IQA datasets, and learned image compression show that ML-CLIPSim better aligns with machine-oriented preferences than conventional fidelity and perceptual metrics, while remaining competitive for human quality prediction. Used as a compression distortion term, it improves rate--task trade-offs across multiple downstream tasks.",
+      "title": "APEX: Assumption-free Projection-based Embedding eXamination Metric for Image Quality Assessment",
+      "abstract": "As generative models achieve unprecedented visual quality, the gold standard for image evaluation remains traditional feature-distribution metrics (e.g., FID). However, these metrics are provably hindered by the closed-vocabulary bottleneck of outdated features and the assumptive bias of rigid parametric formulations. Recent alternatives exploit modern backbones to solve the feature bottleneck, yet continue to suffer from parametric limitations. To close this gap, we introduce APEX (Assumption-free Projection-based Embedding eXamination), a novel evaluation framework leveraging the Sliced Wasserstein Distance as a mathematically grounded, assumption-free similarity measure. APEX inherits effective scalability to high-dimensional spaces, as we prove with theoretical and empirical evidences. Moreover, APEX is embedding-agnostic and uses two open-vocabulary foundation models, CLIP and DINOv2, as feature extractors. Benchmarking APEX against established baselines reveals superior robustness to visual degradations. Additionally, we show that APEX metrics exhibit intra- and cross-dataset stability, ensuring highly stable evaluations on out-of-domain datasets.",
       "authors": [
-        "Feng Ding",
-        "Haisheng Fu",
-        "Jie Liang",
-        "Qihan Xu",
-        "Siyu Zhu",
-        "Jingning Han"
+        "Caterina Gallegati",
+        "Monica Bianchini",
+        "Franco Scarselli",
+        "Vittorio Murino",
+        "Barbara Toniella Corradini"
       ],
-      "primary_category": "eess.IV",
+      "primary_category": "cs.CV",
       "categories": [
-        "eess.IV",
         "cs.CV",
-        "cs.MM"
+        "cs.AI"
       ],
-      "published": "2026-05-10T11:19:02+00:00",
-      "link": "https://arxiv.org/pdf/2605.09479v1",
+      "published": "2026-05-08T14:21:51+00:00",
+      "link": "https://arxiv.org/pdf/2605.07786v2",
       "tags": [
         "keyword:XIQA",
         "query:XIQA"
       ],
       "llm_score": 6.0,
-      "llm_evidence_en": "Machine-oriented full-reference IQA using CLIP",
-      "llm_evidence_cn": "基于CLIP的机器导向全参考图像质量评估",
-      "llm_evidence": "基于CLIP的机器导向全参考图像质量评估",
-      "canonical_evidence": "基于CLIP的机器导向全参考图像质量评估",
-      "llm_tldr_en": "ML-CLIPSim is a machine-centric image quality metric using multi-layer CLIP features and predictive consistency comparisons.",
-      "llm_tldr_cn": "本文从机器视角研究全参考图像质量评估，将机器质量建模为潜在效用并通过成对一致性投票近似。提出ML-CLIPSim，基于冻结CLIP视觉编码器，融合中间层补丁-令牌相似度与全局嵌入，构建可微质量度量。实验表明该指标在机器偏好基准和人类IQA数据集上均优于现有方法，为面向机器任务的图像质量评估提供了新工具。",
-      "llm_tldr": "本文从机器视角研究全参考图像质量评估，将机器质量建模为潜在效用并通过成对一致性投票近似。提出ML-CLIPSim，基于冻结CLIP视觉编码器，融合中间层补丁-令牌相似度与全局嵌入，构建可微质量度量。实验表明该指标在机器偏好基准和人类IQA数据集上均优于现有方法，为面向机器任务的图像质量评估提供了新工具。",
+      "llm_evidence_en": "Proposes a new metric for image quality assessment of generative models",
+      "llm_evidence_cn": "提出一种用于生成模型图像质量评估的新度量",
+      "llm_evidence": "提出一种用于生成模型图像质量评估的新度量",
+      "canonical_evidence": "提出一种用于生成模型图像质量评估的新度量",
+      "llm_tldr_en": "Introduces APEX, an assumption-free metric using Sliced Wasserstein Distance on modern feature embeddings to evaluate image quality, overcoming parametric limitations of existing metrics.",
+      "llm_tldr_cn": "针对传统图像质量评估度量受限于过时特征和参数假设偏差的问题，本文提出APEX，利用切片Wasserstein距离在无假设条件下度量现代嵌入空间的图像相似性，为生成模型图像评估提供了理论基础坚实的无参数新度量。",
+      "llm_tldr": "针对传统图像质量评估度量受限于过时特征和参数假设偏差的问题，本文提出APEX，利用切片Wasserstein距离在无假设条件下度量现代嵌入空间的图像相似性，为生成模型图像评估提供了理论基础坚实的无参数新度量。",
       "llm_tags": [
         "query:xiqa"
       ],
@@ -725,143 +558,87 @@
       "quick_tier": "6"
     },
     {
-      "id": "2605.12684v1",
+      "id": "2605.28241v1",
       "source": "arxiv",
-      "title": "Visual Aesthetic Benchmark: Can Frontier Models Judge Beauty?",
-      "abstract": "Multimodal large language models (MLLMs) are now routinely deployed for visual understanding, generation, and curation. A substantial fraction of these applications require an explicit aesthetic judgment. Most existing solutions reduce this judgment to predicting a scalar score for a single image. We first ask whether such scores faithfully capture comparative preference: in a controlled study with eight expert annotators, score-derived rankings align poorly with the same annotators' direct comparisons, while direct ranking yields substantially higher inter-annotator agreement on best- and worst-image labels. Motivated by this finding, we introduce the Visual Aesthetic Benchmark (VAB), which casts aesthetic evaluation as comparative selection over candidate sets with matched subject matter. VAB contains 400 tasks and 1,195 images across fine art, photography, and illustration, with labels derived from the consensus of 10 independent expert judges per task. Evaluating 20 frontier MLLMs and six dedicated visual-quality reward models, we find that the strongest system identifies both the best and the worst image correctly across three random permutations of the candidate order in only 26.5% of tasks, far below the 68.9% achieved by human experts. Fine-tuning a 35B-parameter model on 2,000 expert examples brings its accuracy close to that of a 397B-parameter open-weight model, suggesting that the comparative signal in VAB is transferable. Together, these results expose a clear and measurable gap between current multimodal models and expert aesthetic judgment, and VAB provides the first set-based, expert-grounded testbed on which that gap can be tracked and closed.",
+      "title": "PointQ-Bench: Benchmarking Diagnostic and Interpretable Point Cloud Quality Assessment",
+      "abstract": "Point cloud quality plays a critical role in 3D acquisition, reconstruction, rendering, and perception, yet existing point cloud quality assessment (PCQA) research remains largely centered on scalar score prediction. In practical inspection scenarios, quality assessment often involves identifying defects, characterizing dominant issue types, assessing downstream usability, and providing evidence-supported descriptions, which are not explicitly evaluated by current benchmarks. We introduce PointQ-Bench, a benchmark designed to extend PCQA from scalar scoring toward comprehensive quality understanding. PointQ-Bench consists of 3,083 point clouds spanning authentic scans, simulated distortions, and AI-generated content, covering eight major issue types. Each sample is annotated with mean opinion scores (MOS), quality levels, issue tags, expert-grounded descriptions, and 12,332 question-answer pairs. The benchmark supports three perception-oriented tasks: anomaly sensing, defect diagnosis, and usability grading, as well as a cognition-oriented task of open-ended quality reporting. To evaluate free-form quality descriptions, we further propose SSFRQ-5D, a five-dimensional evaluation protocol validated through human-AI agreement analysis. Extensive experiments on 14 vision-language models and traditional PCQA baselines reveal a consistent perception-diagnosis gap: while current models exhibit emerging abilities in coarse defect perception, they struggle with grounded diagnosis and quality calibration. Strong 2D MLLMs generally outperform existing 3D VLMs, and the benefit of additional views or point-level inputs is non-uniform, varying across tasks, data sources, and models, particularly under boundary-ambiguous conditions. Overall, PointQ-Bench provides a diagnostic testbed for advancing reliable and interpretable point cloud quality understanding.",
       "authors": [
-        "Yichen Feng",
-        "Yuetai Li",
-        "Chunjiang Liu",
-        "Yuanyuan Chen",
-        "Fengqing Jiang",
-        "Yue Huang",
-        "Hang Hua",
-        "Zhengqing Yuan",
-        "Kaiyuan Zheng",
-        "Luyao Niu",
-        "Bhaskar Ramasubramanian",
-        "Basel Alomair",
-        "Xiangliang Zhang",
-        "Misha Sra",
-        "Zichen Chen",
-        "Radha Poovendran",
-        "Zhangchen Xu"
-      ],
-      "primary_category": "cs.CV",
-      "categories": [
-        "cs.CV",
-        "cs.AI",
-        "cs.HC"
-      ],
-      "published": "2026-05-12T19:33:28+00:00",
-      "link": "https://arxiv.org/pdf/2605.12684v1",
-      "tags": [
-        "keyword:XIQA",
-        "query:XIQA"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "Benchmark for MLLM aesthetic judgment",
-      "llm_evidence_cn": "多模态大模型审美判断基准",
-      "llm_evidence": "多模态大模型审美判断基准",
-      "canonical_evidence": "多模态大模型审美判断基准",
-      "llm_tldr_en": "VAB evaluates MLLMs on comparative aesthetic judgment, finding that direct comparison outperforms scalar scoring.",
-      "llm_tldr_cn": "现有方法将审美判断简化为单张图像的标量评分，但研究发现标量评分排序与人工直接比较一致性差。本文提出Visual Aesthetic Benchmark (VAB)，将审美评估转化为候选集上的比较选择任务，并利用八名专家标注者收集数据。实验表明，通过直接比较排名可大幅提升标注一致性，VAB为评估和改进多模态大模型的视觉审美推理能力提供了有效平台。",
-      "llm_tldr": "现有方法将审美判断简化为单张图像的标量评分，但研究发现标量评分排序与人工直接比较一致性差。本文提出Visual Aesthetic Benchmark (VAB)，将审美评估转化为候选集上的比较选择任务，并利用八名专家标注者收集数据。实验表明，通过直接比较排名可大幅提升标注一致性，VAB为评估和改进多模态大模型的视觉审美推理能力提供了有效平台。",
-      "llm_tags": [
-        "query:xiqa"
-      ],
-      "matched_query_tag": "query:xiqa",
-      "matched_query_text": "large language model that processes images and text",
-      "matched_requirement_id": "req-3",
-      "selection_source": "fresh_fetch",
-      "quick_tier": "8plus"
-    },
-    {
-      "id": "2605.14534v1",
-      "source": "arxiv",
-      "title": "PROVE: A Perceptual RemOVal cohErence Benchmark for Visual Media",
-      "abstract": "Evaluating object removal in images and videos remains challenging because the task is inherently one-to-many, yet existing metrics frequently disagree with human perception. Full-reference metrics reward copy-paste behaviors over genuine erasure; no-reference metrics suffer from systematic biases such as favoring blurry results; and global temporal metrics are insensitive to localized artifacts within edited regions. To address these limitations, we propose RC (Removal Coherence), a pair of perception-aligned metrics: RC-S, which measures spatial coherence via sliding-window feature comparison between masked and background regions, and RC-T, which measures temporal consistency via distribution tracking within shared restored regions across adjacent frames. To validate RC and support community benchmarking, we further introduce PROVE-Bench, a two-tier real-world benchmark comprising PROVE-M, an 80-video paired dataset with motion augmentation, and PROVE-H, a 100-video challenging subset without ground truth. Together, RC metrics and PROVE-Bench form the PROVE (Perceptual RemOVal cohErence) evaluation framework for visual media. Experiments across diverse image and video benchmarks demonstrate that RC achieves substantially stronger alignment with human judgments than existing evaluation protocols. The code for RC metrics and PROVE-Bench are publicly available at: https://github.com/xiaomi-research/prove/.",
-      "authors": [
-        "Fuhao Li",
-        "Shaofeng You",
-        "Jiagao Hu",
-        "Yu Liu",
-        "Yuxuan Chen",
-        "Zepeng Wang",
-        "Fei Wang",
-        "Daiguo Zhou",
-        "Jian Luan"
-      ],
-      "primary_category": "cs.CV",
-      "categories": [
-        "cs.CV",
-        "cs.AI",
-        "cs.MM"
-      ],
-      "published": "2026-05-14T08:16:51+00:00",
-      "link": "https://arxiv.org/pdf/2605.14534v1",
-      "tags": [
-        "keyword:XIQA",
-        "query:XIQA"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "proposes perceptual metrics for evaluating object removal quality in images",
-      "llm_evidence_cn": "提出评估图像中物体移除质量的感知指标",
-      "llm_evidence": "提出评估图像中物体移除质量的感知指标",
-      "canonical_evidence": "提出评估图像中物体移除质量的感知指标",
-      "llm_tldr_en": "PROVE introduces Removal Coherence metrics (RC-S, RC-T) to evaluate object removal quality aligned with human perception, addressing biases in existing metrics. It provides a benchmark for spatial and temporal coherence.",
-      "llm_tldr_cn": "针对图像及视频物体移除评估中现有指标与人类感知不一致的问题，提出感知对齐的移除连贯性指标RC-S和RC-T。RC-S通过滑动窗口特征比较衡量空间连贯性，RC-T通过相邻帧分布跟踪衡量时间一致性。构建基准测试，验证指标更符合人类判断，为视觉媒体编辑质量评估提供可靠工具。",
-      "llm_tldr": "针对图像及视频物体移除评估中现有指标与人类感知不一致的问题，提出感知对齐的移除连贯性指标RC-S和RC-T。RC-S通过滑动窗口特征比较衡量空间连贯性，RC-T通过相邻帧分布跟踪衡量时间一致性。构建基准测试，验证指标更符合人类判断，为视觉媒体编辑质量评估提供可靠工具。",
-      "llm_tags": [
-        "query:xiqa"
-      ],
-      "matched_query_tag": "query:xiqa",
-      "matched_query_text": "assessing the quality of images",
-      "matched_requirement_id": "req-1",
-      "selection_source": "fresh_fetch",
-      "quick_tier": "8plus"
-    },
-    {
-      "id": "2605.21130v1",
-      "source": "arxiv",
-      "title": "VersusQ: Pairwise Margin Reasoning for Generalizable Video Quality Assessment",
-      "abstract": "Large Multimodal Models (LMMs) have shown promise for video quality assessment, but most methods still predict an absolute score for each video. Such pointwise supervision often mixes perceptual quality with dataset-specific calibration, including annotation protocols, rating habits, and score distributions. As a result, the learned scoring rule may work well within a benchmark but transfer poorly across unseen domains. We argue that relative comparisons alleviate the absolute-scale calibration bias by focusing purely on perceptual differences rather than dataset-specific rating habits. Consequently, we propose \\textbf{VersusQ}, a pairwise margin reasoning framework driven entirely by direct comparisons. Specifically, VersusQ performs LMM-based comparison between two videos, reasons about their visual and temporal quality differences, and predicts a signed continuous margin that captures both the preferred choice and the degree of difference. Furthermore, to align interpretable comparison rationales with fine-grained numerical differences, we introduce Margin-Coupled GRPO, which jointly optimizes rollout-based relational reasoning and continuous margin regression. Extensive experiments on multiple public VQA benchmarks demonstrate that VersusQ achieves state-of-the-art performance, strong cross-domain generalization, and reliable fine-grained ranking under heterogeneous evaluation scenarios.",
-      "authors": [
-        "Shibei Meng",
-        "Binxin Yang",
-        "Yuan Liu",
-        "Jiexuan Zhang",
-        "Zhengyao Lv",
-        "Hubery Yin",
-        "Qiang Xu"
+        "Duanchu Wang",
+        "Cheng Li",
+        "Junjie Yang",
+        "Jing Huang",
+        "Zihang Cheng",
+        "Zhi Gao",
+        "ZhuBohong",
+        "Di Wang"
       ],
       "primary_category": "cs.CV",
       "categories": [
         "cs.CV"
       ],
-      "published": "2026-05-20T13:03:17+00:00",
-      "link": "https://arxiv.org/pdf/2605.21130v1",
+      "published": "2026-05-27T09:56:36+00:00",
+      "link": "https://arxiv.org/pdf/2605.28241v1",
       "tags": [
         "keyword:XIQA",
         "query:XIQA"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "LMM-based pairwise margin reasoning for video quality assessment",
-      "llm_evidence_cn": "基于大语言多模态模型的成对边界推理视频质量评估",
-      "llm_evidence": "基于大语言多模态模型的成对边界推理视频质量评估",
-      "canonical_evidence": "基于大语言多模态模型的成对边界推理视频质量评估",
-      "llm_tldr_en": "proposes VersusQ, a pairwise margin reasoning framework using LMMs for generalizable video quality assessment, avoiding absolute-score calibration bias.",
-      "llm_tldr_cn": "针对传统视频质量评估中绝对评分易受数据集特定标注习惯影响的问题，提出VersusQ框架，通过大语言多模态模型进行成对比较和边界推理，消除绝对量表偏差。该方法仅依赖相对感知差异，在未见域上展现出更强的泛化能力，为跨域视频质量评估提供了新范式。",
-      "llm_tldr": "针对传统视频质量评估中绝对评分易受数据集特定标注习惯影响的问题，提出VersusQ框架，通过大语言多模态模型进行成对比较和边界推理，消除绝对量表偏差。该方法仅依赖相对感知差异，在未见域上展现出更强的泛化能力，为跨域视频质量评估提供了新范式。",
+      "llm_evidence_en": "extends point cloud quality assessment from scalar scores to evidence-supported descriptions",
+      "llm_evidence_cn": "将点云质量评估从标量分数扩展到证据支持的描述",
+      "llm_evidence": "将点云质量评估从标量分数扩展到证据支持的描述",
+      "canonical_evidence": "将点云质量评估从标量分数扩展到证据支持的描述",
+      "llm_tldr_en": "Introduces a benchmark for interpretable point cloud quality assessment that includes defect identification, issue description, and evidence-supported explanations.",
+      "llm_tldr_cn": "该论文针对现有点云质量评估仅输出标量分数的局限，提出PointQ-Bench基准，包含3083个点云并设计缺陷识别、问题描述和证据支持等可解释质量理解任务，实验表明当前模型在可解释点云质量评估上性能不足，推动点云质量评价向描述性、诊断性方向发展，为3D内容质量评估提供新基准。",
+      "llm_tldr": "该论文针对现有点云质量评估仅输出标量分数的局限，提出PointQ-Bench基准，包含3083个点云并设计缺陷识别、问题描述和证据支持等可解释质量理解任务，实验表明当前模型在可解释点云质量评估上性能不足，推动点云质量评价向描述性、诊断性方向发展，为3D内容质量评估提供新基准。",
       "llm_tags": [
         "query:xiqa"
       ],
       "matched_query_tag": "query:xiqa",
-      "matched_query_text": "image quality reasoning and explanation generation via multimodal large models",
-      "matched_requirement_id": "req-7",
+      "matched_query_text": "generating natural language descriptions of image quality",
+      "matched_requirement_id": "req-4",
       "selection_source": "fresh_fetch",
       "quick_tier": "8plus"
+    },
+    {
+      "id": "2605.27737v1",
+      "source": "arxiv",
+      "title": "Bounded-Compute Multimodal Regression for Product-Rating Prediction",
+      "abstract": "Vision-language models (VLMs) are increasingly attractive for multimodal quality assessment, but their default reliance on autoregressive text generation and dynamic visual processing is poorly matched to scalar regression under strict latency budgets. We present a bounded-compute adaptation of SmolVLM2-256M-Video-Instruct for product-rating prediction in the LoViF 2026 Efficient VLM challenge. Motivated by recent multimodal engagement-prediction results showing that feature-based regression can outperform token-based score generation, we replace the language-modeling head with a lightweight two-layer MLP fed by pooled decoder states, and we enforce deterministic inputs through fixed 384x384 images and truncated metadata. Across controlled ablations, static global image processing slightly outperforms dynamic tiling, and scaling from 100K to 16M training examples substantially improves validation correlation. Under the official held-out evaluation, our 228M-parameter model achieves 0.39 PLCC and 0.40 CES, providing a strong and reproducible baseline for resource-constrained multimodal regression.",
+      "authors": [
+        "William Leach",
+        "Ru He",
+        "Sizhuo Ma",
+        "Yizhen Jia",
+        "Min Cao",
+        "Jian Wang",
+        "Rick Cao"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-05-26T22:27:58+00:00",
+      "link": "https://arxiv.org/pdf/2605.27737v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Vision-language models for multimodal quality assessment, product-rating prediction",
+      "llm_evidence_cn": "视觉语言模型用于多模态质量评估和产品评分预测",
+      "llm_evidence": "视觉语言模型用于多模态质量评估和产品评分预测",
+      "canonical_evidence": "视觉语言模型用于多模态质量评估和产品评分预测",
+      "llm_tldr_en": "The paper adapts a small VLM to bounded-compute regression for product-rating, showing that feature-based prediction outperforms token generation and meets strict latency, providing a practical method for VLM-based quality assessment.",
+      "llm_tldr_cn": "本文将小型视觉语言模型适配为有界计算回归模型用于产品评分预测，实验表明基于特征的预测方法优于令牌生成方式，且满足严格延迟要求，为视觉语言模型在质量评估任务中的高效部署提供了有效方案。",
+      "llm_tldr": "本文将小型视觉语言模型适配为有界计算回归模型用于产品评分预测，实验表明基于特征的预测方法优于令牌生成方式，且满足严格延迟要求，为视觉语言模型在质量评估任务中的高效部署提供了有效方案。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
     }
   ]
 }
