@@ -1,0 +1,1044 @@
+Title: SenseBench: A Benchmark for Remote Sensing Low-Level Visual Perception and Description in Large Vision-Language Models
+
+URL Source: https://arxiv.org/pdf/2605.10576v1
+
+Published Time: Tue, 12 May 2026 02:53:47 GMT
+
+Number of Pages: 42
+
+Markdown Content:
+# SenseBench: A Benchmark for Remote Sensing Low-Level Visual Perception and Description in Large Vision-Language Models 
+
+Chen Zhong 1∗ Xiao An 1∗, Jiaxing Sun 2, Zihan Gui 1, Guangyi Yang 1 Wei He 1† 
+
+> 1
+
+Wuhan University 2 Shanghai Artificial Intelligent Laboratory 
+
+sunjiaxing@pjlab.org.cn {chen_zhong, anxiao, sunjiax0323, syro_gzh, weihe1990}@whu.edu.cn 
+
+Abstract 
+
+Low-level visual perception underpins reliable remote sensing (RS) image anal-ysis, yet current image quality assessment (IQA) methods output uninterpretable scalar scores rather than characterizing physics-driven RS degradations, deviat-ing markedly from the diagnostic needs of RS experts. While Vision-Language Models (VLMs) present a compelling alternative by delivering language-grounded IQA, their visual priors are heavily biased toward ground-level natural images. Consequently, whether VLMs can overcome this domain gap to perceive and artic-ulate RS artifacts remains insufficiently studied. To bridge this gap, we propose 
+
+SenseBench , the first dedicated diagnostic benchmark for RS low-level visual perception and description. Driven by a physics-based hierarchical taxonomy that unifies both non-reference and reference-based paradigms, SenseBench features over 10K meticulously curated instances across 6 major and 22 fine-grained RS degradation categories. Specifically, two complementary protocols are designed for evaluation: objective low-level visual perception and subjective diagnostic de-scription . Comprehensive evaluation of 29 state-of-the-art VLMs reveals not only skewed domain priors and multi-distortion collapse, but also fluency illusion and a 
+
+perception-description inversion effect. We hope SenseBench provides a robust evaluation testbed and high-quality diagnostic data to advance the development of VLMs in RS low-level perception. Code and datasets are available here. 
+
+1 Introduction 
+
+Robust low-level visual perception is a fundamental prerequisite for reliable remote sensing (RS) image analysis [ 1]. Throughout acquisition, transmission, and processing, RS imagery is inevitably corrupted by highly complex, physics-driven degradations [ 2, 3]. Domain-specific distortions, ranging from atmospheric interference to specialized sensor noise, severely compromise the vital underlying visual structure [ 4], making accurate image quality assessment (IQA) essential for successful downstream interpretation. While conventional IQA methods attempt to address this challenge by regressing scalar quality scores [ 5– 7], they fundamentally suffer from two critical limitations. First, their focus remains narrowly confined to generic distortions (e.g., Gaussian noise, motion blur, or JPEG compression), inherently failing to capture the intricate, compound degradations endemic to diverse RS scenarios. Second, practical RS workflows demand granular degradation analysis to guide downstream restoration or image selection. By collapsing multifaceted visual quality into a single numerical proxy, conventional methods bypass explicit perceptual reasoning, thereby losing semantic interpretability and failing to provide the actionable diagnostic insights required by RS practitioners to make informed, reliable decisions in complex real-world scenarios [8].  
+
+> ∗Equal contribution. †Corresponding author. Preprint.
+> arXiv:2605.10576v1 [cs.CV] 11 May 2026
+
+Table 1: Comparison of SenseBench with Existing Benchmarks. Dimension means the number of fine-grained evaluation capabilities. Abbreviations adopted: MCQ for Multi-Choice Question; FF for Free-Form; BBox for Bounding Box; Seg for Segmentation Mask; L-L for Low Level.                                                                                                     
+
+> Benchmark Domain Data Sources New-Data Geospatial Coverage Answer Type Multi-image Dims.
+> MMBench [15] General Multiple Public Datasets ✗N/A MCQ ✗20 MMStar [16] General Multiple Public Datasets ✗N/A MCQ ✗18 Q-Bench(+) [17] General L-L Multiple Public Datasets ✗N/A MCQ, FF ✓N/A DepictQA-Wild [18] General L-L Multiple Public Datasets ✓N/A MCQ, FF ✓4MICBench [19] General L-L Multiple Public Datasets ✓N/A MCQ, FF ✓N/A LHRS-Bench [20] RS Google Earth+OSM ✓N/A MCQ ✗11 GeoChat-Bench [21] RS SAMRS ✗Multiple Regions FF, BBox ✗6VRSBench [14] RS DOTA, DIOR ✗N/A FF, BBox ✗3CHOICE [22] RS Diverse Platforms ✓50 Cities Worldwide MCQ, BBox, Seg ✓23 DisasterM3 [23] RS Disaster xBD, BRIGHT, etc. ✓N/A MCQ, BBox, Seg, FF ✓12 DynamicVL [24] RS City NAIP ✓USA MCQ, Seg, FF ✓7REOBench [13] RS Robust AID, DIOR, etc. ✗N/A MCQ, BBox, Seg, FF ✗6
+> SenseBench (Ours) RS L-L Diverse Platforms ✓Worldwide MCQ, FF ✓22
+
+Large Vision-Language Models (VLMs) emerge as a powerful paradigm to bridge this interpretability gap. Empowered by massive multimodal pretraining and instruction tuning, general-domain models such as Q-Instruct [ 9] and DepictQA [ 10 ] excel at detecting artifacts, reasoning about degradation severity, and generating fine-grained linguistic diagnostics. While these capabilities make VLMs theoretically ideal for RS quality assessment, their internal visual priors are overwhelmingly anchored to ground-level, natural photography. Conversely, RS imagery presents drastically different spatial statistics, spectral signatures [ 11 ], and complex, physics-driven degradation mechanisms that lack counterparts in standard datasets [ 12 ]. Consequently, it remains completely unresolved whether current VLMs can overcome this profound domain shift to reliably perceive and articulate specialized RS distortions. As Table 1 illustrates, existing RS benchmarks predominantly target high-level semantic recognition or constrain themselves to superficial artifact categories. This conspicuous absence of a dedicated diagnostic benchmark leaves the low-level perceptual limits of VLMs in the RS domain entirely unquantified, thereby obstructing systematic progress in this critical area [ 13 , 14 ]. To systematically address these challenges and answer the core research question— To what extent can current VLMs robustly perceive and understand physics-driven RS degradations? —we propose 
+
+SenseBench , the first diagnostic benchmark explicitly designed to quantify the low-level visual percep-tion and description capabilities of VLMs in the RS domain. As illustrated in Figure 1, SenseBench covers 6 major categories and 22 fine-grained sub-categories, and unifies both no-reference and reference-based paradigms through a rigorous multi-stage construction pipeline. Specifically, (1) 
+
+Global Data Sampling: To mitigate regional bias, pristine reference images are systematically curated across six continents via population-weighted geospatial sampling. (2) Physics-Based Dis-tortion Synthesis: We employ a parameter-controlled degradation engine to inject diverse artifacts, guaranteeing deterministic and fully traceable ground-truth labels for objective perception assessment. (3) Dual-Perspective Protocol: Moving beyond conventional single-image inspection (non-reference evaluation), we introduce pairwise comparative analysis (full-reference evaluation), faithfully reflect-ing real-world demands for selecting optimal multi-temporal observations and evaluating restoration algorithms. (4) GPT-Assisted Diagnostic Generation: Beyond simple multiple-choice questions, we utilize a constrained LLM pipeline to synthesize open-ended quality inspection reports, which subsequently undergo strict human-in-the-loop verification to serve as semantic ground truths. Leveraging this comprehensive testing framework, we conduct a systematic zero-shot evaluation of 29 state-of-the-art VLMs. The experimental results reveal three critical structural limitations in current models: (1) Skewed domain priors: General VLMs heavily favor natural photographic degradations, while RS-specialized models overfit to RS-centric distortions, with neither achieving a balanced visual foundation. (2) Multi-distortion collapse: Model robustness degrades exponentially when confronting compound degradations, indicating that entangled artifact understanding is not a trivial extension of isolated distortion recognition. (3) Fluency illusion and perception-description inversion effect: 
+
+VLMs frequently generate linguistically confident but visually ungrounded diagnostic reports, and paradoxically exhibit a severe disconnect between their objective perceptual accuracy and subjective descriptive capabilities, exposing a profound misalignment between textual priors and authentic visual reasoning. 2Mis sing
+
+> Correction
+> Noise
+> Compression
+> Blur
+> Blin d
+> Stretching
+> Compression
+> Bandswitc h
+> Tilesmiss
+> Deadpixels
+> Deadline
+> Ga ussia n
+> Impulse
+> Spatially
+> Stripe
+> Sidelo be
+> Spe ckle
+> Ga us sian
+> Motion
+> Attenuation
+> SPIHT
+> WEBP
+> JPEG2 000
+> JPEG
+> Cloud
+> Haze
+> Cloud
+
+Figure 1: Overview of the dataset coverage and degradation taxonomy. The left panel shows the global distribution of sampled locations in our dataset, with orange dots denoting individual sampling points. The right panel presents the hierarchical taxonomy of image degradations used in our benchmark. 
+
+2 Related Work 
+
+Image Quality Assessment. Blind IQA has advanced from handcrafted statistical models [ 25 , 26 ] to transformer architectures [ 5], recently further enhanced with vision-language pretraining that enables zero-shot estimation and cross-dataset generalization (e.g., CLIP-IQA [ 7 ], LIQE [ 6 ]). However, these methods are developed exclusively on natural photographic content, creating a fundamental mismatch with RS imagery. RS degradations are physics-driven [ 2], including atmospheric interference, sensor noise, and spectral distortions, with acquisition and scene statistics fundamentally distinct from natural images. Existing RS IQA work addresses narrow degradation subsets via feature engineering [ 27 ], block-matching [ 28 ], task-specific databases [ 29 ], and domain models [ 30 ]. Yet all reduce quality to scalar scores, forfeiting semantic interpretability and diagnostic reasoning. This is precisely what RS practitioners require to guide restoration and image selection. 
+
+Vision-Language Models. VLMs now extend beyond high-level semantic reasoning to fine-grained low-level visual understanding [ 31 –33 ]. Through instruction tuning, models such as Q-Instruct [ 9 ]and DepictQA [ 10 ] detect artifacts, reason about degradation severity, and produce diagnostic descriptions aligned with human judgment [ 34 , 35 ]. Such capabilities position VLMs as promising candidates for interpretable RS quality assessment, yet general VLMs inherit biases toward natural images. Specialized VLMs for RS have emerged across visual grounding [ 21 , 36 ], multi-sensor fusion [ 37 , 38 ], temporal reasoning [ 39 ], and scalable architectures [ 40 –42 ], but remain trained under the implicit assumption of clean imaging conditions. Whether current VLMs can perceive and articulate the physics-driven RS degradations remains insufficiently studied. 
+
+Evaluation Benchmarks. For natural images, Q-Bench(+) [ 17 ] and DepictQA-Wild [ 18 ] established rigorous evaluation protocols for low-level perception and description, systematically exposing critical gaps between model capabilities and human judgment. Conversely, RS benchmarks have proliferated across high-level semantic tasks, including hierarchical reasoning [ 22 ], object-level understanding [ 14 ], disaster response [ 23 ], and dynamic scenes [ 24 ], but remain silent on fine-grained low-level perception. Even rare exceptions like REOBench [ 13 ] treat image quality as a mere confounding variable rather than the true subject of evaluation. Because complex RS degradations arise from distinct physical mechanisms, the direct transfer of natural-image benchmarks proves fundamentally inadequate. SenseBench elegantly fills this paramount void as the pioneering dedicated framework for evaluating VLM low-level perception and diagnostic description on RS imagery. 
+
+3 SenseBench 
+
+3.1 Hierarchical Distortion Taxonomy 
+
+Anchored in the physics of the remote sensing imaging chain and established technical standards (detailed in Appendix A), SenseBench introduces a hierarchical distortion taxonomy spanning the complete acquisition-to-processing pipeline. Integrating classical low-level vision formulations [ 43 –47 ], the taxonomy defines 6 major categories (L-1) systematically stratified into 22 fine-grained 
+
+3(Q): Write three concise sentences for the distorted RS image: 
+
+identify the main distortion, explain its impact on interpretability, and 
+
+assess overall quality. Do not number the sentences or speculate 
+
+beyond visible quality. 
+
+(Q): Compare Image 1 and Image 2 in terms of visible distortions and 
+
+overall quality. State which image has better quality and briefly 
+
+explain why.                                               
+
+> How
+> (a)  SensePerception
+> (Q): How severe is the
+> distortion in this image?
+> (A): Moderate distortion
+> (Q): Provide a rating for this
+> remote sensing image.
+> (A): Severe distortion
+> (Q): How noticeable is the
+> distortion in the image?
+> (A): Severe distortion
+> (Q): Which severity label
+> best describes Image 2?
+> (A): Moderate distortion
+> (Q): Rate Image 2’s distortion
+> severity vs. Image 1.
+> (A): Severe distortion
+> Image(I): ImagePair (I’): Image(I): ImagePair (I’): ImagePair (I’):
+> (Q): What type of distortion is
+> present in this image?
+> (A): Cloud
+> (Q): Select all types of
+> distortions in this image.
+> (A): Cloud , Blur
+> (Q): What artifact is
+> introduced in Image2?
+> (A): Blur
+> (Q): What is the dominant
+> distortion in this image?
+> (A): Missing tiles
+> (Q): What is the dominant
+> degradation in Image 2?
+> (A): Haze
+> (Q): What distortion best
+> explains the difference?
+> (A): Linear dead pixels
+> Image(I): Image(I): Image(I): ImagePair (I’): ImagePair (I’): ImagePair (I’):
+> (Q): Does this image exhibit
+> dead pixels ?
+> (A): Yes
+> (Q): Does this image contain
+> cloud and dead pixels?
+> (A): Yes
+> (Q): Does this image
+> contain gaussian noise?
+> (A): Yes
+> (Q): Is Image 2 comparable in
+> quality to Image 1?
+> (A): No
+> (Q): Is Image 2 less distorted
+> than Image 1?
+> (A): No
+> (Q): Does Image 2 preserve
+> same clarity as Image 1?
+> (A): No
+> Image(I): Image(I): ImagePair (I’): Image(I): ImagePair (I’): ImagePair (I’):
+
+Paired input 
+
+Single Distortion Intra -Image General Multiple Distortions RS -Centric Inter -Temporal 
+
+> (b)  SenseDescription
+
+Single input Paired input 
+
+(A): Image 1 shows no obvious geometric or radiometric distortion, 
+
+with clear details, sharp edges, and strong contrast. Image 2 is affected 
+
+by uniform haze, with washed -out details, low contrast, and muted 
+
+colors, but also appears to contain motion blur across the terrain .
+
+Overall, Image 1 has much higher overall quality because Image 2’s 
+
+haze and motion blur greatly reduces visual clarity and interpretability.  
+
+> Image 1
+> Image 2
+
+Completeness: 2 Correctness: 1 Faithfulness: 1
+
+> Image
+
+(A): The image contains a large white missing -data region in the 
+
+lower -right area , while the remaining urban details are still clear. This 
+
+data gap masks local structures and leaves part of the spatial 
+
+information incomplete. Overall, the image quality is severely 
+
+degraded because the missing region limits reliable interpretation. 
+
+Completeness: 2 Correctness: 1 Faithfulness : 2    
+
+> Image(I):
+> (Q): Please rate this remote
+> sensing image.
+> (A): Severe distortion
+
+Single input Single & Paired input 
+
+> Whether What
+
+Figure 2: Overview of the SenseBench evaluation framework. The upper part shows the SensePercep-tion task taxonomy across input formats, distortion settings, and whether /what /how question types. The lower part illustrates SenseDescription examples for single and paired inputs, where responses are evaluated by completeness , correctness , and faithfulness , with red text indicating incorrect or unsupported statements. 
+
+sub-categories (L-2) , as illustrated in Figure 1. This granular architecture ensures rigorous coverage of diverse real-world degradation scenarios. Formal definitions are provided in Appendix A.1 .
+
+3.1.1 SensePerception 
+
+Remote sensing imagery exhibits physics-driven artifacts fundamentally distinct from natural pho-tography, a domain gap persistently unverified by existing low-level benchmarks [ 17 ]. To quantify this capability, SensePerception establishes a rigorous multiple-choice question (MCQ) protocol governed by two orthogonal dimensions: question types that codify progressive perceptual skills, and 
+
+evaluation scenarios that stratify contextual complexity. Figure 2 illustrates representative evaluation instances. Both structural dimensions are formally detailed below. 
+
+Question Types. We postulate that an ideal VLM capable of performing reliable Remote Sensing IQA must exhibit progressive perceptual capabilities, advancing from basic degradation detection to fine-grained categorization and severity quantification. Consequently, we formulate three discrete question types, structured along the vertical axis of Figure 2. Whether questions assess base sensitivity to perceivable distortions and quality deviations. What questions demand precise categorization of the dominant degradation (e.g., distinguishing Gaussian from sensor-specific Speckle Noise ). How 
+
+questions quantify severity across three standardized levels ( No/Slight , Moderate , Severe ). Extending beyond strict no-reference evaluation, these question types seamlessly adapt to full-reference and pairwise comparative protocols by accepting paired inputs, forcing models to reason over relative artifact existence, typological differences, or severity gaps. 
+
+Evaluation Scenarios. To systematically expose domain biases and robustness against escalating 
+
+contextual complexity , samples are stratified across three distinct axes, structured along the hori-zontal axis of Figure 2. General vs. RS-Centric (Domain Context): General distortions (e.g., blur, compression) benchmark the transferability of natural-image priors, while RS-Centric artifacts (e.g., cloud obstruction, scan-line missing) probe specialized domain adaptation. Single vs. Multiple 
+
+(Degradation Context): Single distortions provide isolated diagnostics, whereas Multiple superim-posed distortions simulate the highly complex, compound degradations of authentic RS workflows. 
+
+Intra-image vs. Inter-temporal (Comparative Context, paired inputs only): Intra-image pairings 4Global spatial distribution sampling                    
+
+> quality
+> Satellite Data Map Data Public Data
+> Multi -temporal &Multi -modal data Multiple Images
+> Multi -temporal
+> 𝑡 −1𝑡
+> Multi -modal
+> RGB SAR
+> The image’s is {grade}
+> Fine Fair Blurry Poor
+
+…                       
+
+> Language -
+> prompt
+> Algorithm Filtering Human Verification
+> 𝐷 s
+> GPT -assisted data synthesis
+> Graded distortion synthesis
+> 𝑎𝑟𝑒𝑎 𝑖
+> Data Clean
+> Weighted Sum
+> Clustering
+> High -resolution
+> 𝐼𝑚𝑔 1
+> 𝐼𝑚𝑔 2
+> Ref
+> Out
+> Distortion type
+> Severity
+> Template
+> Data info
+> The presence of
+> severe cloud
+> cover obscures
+> large portions of
+> the urban area
+> ...
+> Output label
+> Objective question
+> Subjective question
+> Whether What How
+> or
+> 12n
+> …
+> Option
+> A/B/C/D
+> Completeness
+> Correctness
+> Faithfulness
+> Description
+> 𝐼𝑚𝑔 1
+> 𝐼𝑚𝑔 2
+> Response
+> Label
+> Exact
+> match
+> Describe the image ’s low -level quality by
+> stating the primary degradation …
+> 𝐼𝑚𝑔 1
+> 𝐼𝑚𝑔 2LLM -as -judge
+> Data statistics
+> Total: 10𝑘 Sin/Mul: 7/3𝑘
+> Obj/Sub: 9/1𝑘 Type: 22
+> Origin image Algorithm Distort ed image
+> Filtered Data
+
+Figure 3: Overview of SenseBench construction. Remote sensing images are sourced globally from various satellite, map, and public datasets. Multiple approaches, including graded distortion synthesis and GPT-assisted data synthesis with language prompts, generate problems, with algorithm filtering and human verification ensuring accuracy of degradations, labels, and data quality. juxtapose pristine and degraded views of identical scenes, echoing full-reference IQA mechanics; 
+
+Inter-temporal pairings evaluate identical geolocations across timestamps, modeling the critical observation selection process in temporal Earth analysis. 
+
+3.1.2 SenseDescription 
+
+While multiple-choice paradigms quantify baseline perception, they cannot ascertain if a model synthesizes coherent visual narratives or merely exploits surface-level correlations. Practical RS workflows inherently demand free-form diagnostics, such as rigorous quality inspection notes or comparative justifications for multi-temporal analysis. Operating across the identical evaluation sce-narios defined for SensePerception , SenseDescription challenges models to generate comprehensive natural-language reports for both full-reference and non-reference. Surpassing generic VQA and captioning, these diagnostics must jointly identify degradation typologies, quantify severity, and articulate impacts on visual interpretability. 
+
+Evaluation Dimensions. A trustworthy diagnostic report demands exhaustive coverage, factual precision, and reference-grounded reliability. Accordingly, we evaluate candidate generations along three orthogonal dimensions. Completeness measures the recall of all reference degradation factors, penalizing artifact omissions. Correctness assesses strict factual alignment with the reference, penalizing contradictions in visual attribution. Faithfulness measures reference-grounded reliability, penalizing hallucinated, unsupported, or irrelevant claims absent from the verified reference. 
+
+3.2 Benchmark Construction 
+
+Configured strictly as a zero-shot evaluation protocol, SenseBench encompasses 10,815 meticulously curated instances, comprising 7,300 isolated single-view assessments and 3,515 paired comparative ones. This extensive corpus fully covers the 6 major and 22 fine-grained taxonomy categories. As illustrated in Figure 3, the construction pipeline enforces absolute traceability and coverage : every evaluation instance is directly anchored to parameter-controlled synthesis or a meticulously sourced real-world observation. Crucially, SenseDescription reference reports are programmatically generated from the explicit metadata orchestrating the SensePerception MCQ labels, thereby structurally eliminating human subjective drift between the two tasks. 
+
+Global Geospatial Curation. To mitigate the regional bias prevalent in existing RS datasets, we adopt a rigorous three-stage global sampling strategy. First, continent boundaries from Natural Earth 
+
+are used to enforce continent-wise quotas across all six inhabited continents. Second, representative cities are drawn by population-weighted sampling. Third, geographic coordinates are randomly sampled within OpenStreetMap city boundaries, and the corresponding high-resolution tiles are retrieved from Google Earth [48 ]. For distortion categories defying synthetic replication (e.g., 5SAR speckle, cloud obscuration), images are sourced from curated real-world datasets to preserve authentic physical signatures. To comply with provider Terms of Service, all source imagery is curated exclusively for non-commercial academic research. 
+
+Physics-Based Synthesis & Traceable Labeling. Each SensePerception sample is generated by a specialized physics-based engine governed by a continuous severity parameter s, yielding a functionally degraded image paired with structured, traceable metadata (distortion category, sub-category, severity level). To reduce human annotation subjectivity, task labels are mathematically projected from s: Whether labels are assigned positive iff s surpasses an empirically calibrated perceptual visibility threshold; What labels map directly to the injected distortion category; and How 
+
+labels discretize s into three qualitative severity tiers via distortion-specific thresholds, grounding the entire evaluation protocol in objective and reproducible labeling protocol. 
+
+Constraint-Driven Reference Generation. SenseDescription references are synthesized by prompt-ing GPT-5.2 with a triplet ⟨distorted image, high-quality reference, structured metadata ⟩, designed as detailed visual inspection reports rather than generic captions. Two strict principles constrain generation: (i) Perceptual Visibility , limiting narratives to visible phenomena to eradicate semantic hallucinations; and (ii) Comprehensive Coverage , forcing exhaustive alignment with the taxonomy in Figure 1. To structurally prevent inference-time leakage, high-quality references are strictly withheld post-generation, yielding completely self-contained target texts. These generated candidates then undergo rigorous human-in-the-loop verification to systematically rectify unsupported claims and remove latent leakage residues, ultimately outputting definitive semantic ground truths. 
+
+Multi-Stage Quality Auditing. Auditing is conducted by 12 evaluators with backgrounds in RS and computer vision via a three-phase protocol: (i) algorithmic filtering removes retrieval errors and corrupted tiles; (ii) human verification audits consistency among metadata, labels, and task definitions; and (iii) perceptual auditing on a stratified 8% sample evaluates degradation recognizability, severity alignment, and synthesis naturalness, with each sample cross-checked by two evaluators and disagree-ments adjudicated by a third expert. Samples failing any stage are discarded and re-synthesized. Full statistics, prompt templates, annotation guidelines, and rubrics are provided in Appendix A.2 and Appendix D. 
+
+3.3 Evaluation Strategy Evaluation of SensePerception . Both single-image and paired-image SensePerception tasks enforce a strictly zero-shot, multiple-choice formulation containing 2 to 4 candidates per query. VLMs are instructed to emit either the canonical choice letter or the verbatim text, enabling a deterministic extraction pipeline to reliably recover the predicted index. To rigorously neutralize positional priors, the ground-truth locations are uniformly randomized, whereas distractors adhere to a fixed semantic ordering. We report absolute exact-match (EM) accuracy as the primary quantitative metric. 
+
+Evaluation of SenseDescription . For open-ended diagnostic reporting, static n-gram metrics such as BLEU [ 49 ] and ROUGE [ 50 ] fail to capture fine-grained semantic consistency and low-level diagnostic accuracy. We therefore adopt an LLM-as-a-Judge framework [ 51 ]. To reduce self-preference bias, we use Prometheus [ 52 ], an open-source evaluation-oriented LLM, as the independent judge, which is architecturally distinct from the model used for reference generation. Given a candidate report ˆRi and the gold-standard reference Ri, the judge assigns a discrete score sdi ∈{0, 1, 2} for each evaluation dimension d ∈ { Completeness , Correctness , Faithfulness } defined in Sec. 3.1.2, where 0, 1, and 2 denote critical failure, partial alignment, and full alignment, respectively. For each dimension, we report both the mean score and the per-score proportions {P0, P 1, P 2}. The composite Sum score is computed as the unweighted sum of the three mean dimension scores. 
+
+4 Experiment 
+
+We conducted a comprehensive evaluation of 29 mainstream VLMs on SenseBench. The main paper reports 22 representative models, covering 14 general-domain VLMs, 5 RS vision-language models, and 3 IQA vision-language models. The general-domain VLMs reported in the main tables include two closed-source models, GPT-5.4 and Gemini-3.1-Pro-Preview, as well as Ovis2.5-9B [ 53 ], Llama3.2-11B [ 54 ], Phi4-vision [ 55 ], LLaVA2-ov-7B [ 56 ], InternVL3.5-8B/14B/38B/30B-A3B [ 32 ], Qwen3VL-8B/32B/30B-A3B [ 31 ], and KimiVL-A3B [ 57 ]. The RSVLMs include GeoChat [ 21 ], 6Table 2: Quantitative results of VLMs on low-level perception for single images.                                                                                                                                                                                                     
+
+> Sub-categories Question Type Domain Context Average ↑
+> Model Whether ↑What ↑How ↑General ↑RS ↑Single ↑Multi ↑
+> HUMAN EVALUATOR 90.58% 88.62% 90.26% 90.11% 89.32% 89.75% 90.00% 89.82% GPT-5.4 68.46% 60.43% 58.54% 64.83% 62.87% 64.23% 41.50% 62.48% Gemini-3.1-pro-preview 87.17% 80.17% 59.92% 79.47% 80.06% 79.68% 41.17% 75.75%
+> Ovis2.5-9B[53] 50.39% 41.48% 37.31% 46.33% 41.48% 43.87% 29.50% 43.06% Llama3.2-11B[54] 54.17% 42.21% 38.62% 49.70% 42.02% 45.57% 46.67% 45.00% Phi4-vision[55] 51.75% 37.33% 38.38% 43.97% 42.19% 42.42% 44.83% 42.49% LLaVA2-ov-7B[56] 70.58% 67.57% 54.31% 71.07% 61.46% 67.26% 46.00% 64.15% InternVL3.5-8B[32] 56.59% 40.70% 42.38% 48.89% 44.52% 47.19% 46.83% 46.56% InternVL3.5-14B[32] 53.14% 41.77% 42.23% 46.47% 44.64% 46.47% 39.67% 45.71% InternVL3.5-38B[32] 57.70% 50.27% 25.46% 49.92% 50.52% 46.43% 36.67% 44.48% InternVL3.5-30B-A3B[32] 58.99% 47.96% 47.77% 53.30% 51.61% 52.26% 44.17% 51.57% Qwen3VL-8B[31] 64.35% 54.20% 52.38% 59.80% 53.29% 58.02% 50.33% 56.98% Qwen3VL-32B[31] 69.94% 63.65% 60.15% 70.06% 56.40% 65.92% 58.33% 64.58% Qwen3VL-30B-A3B[31] 65.66% 54.75% 50.46% 60.93% 54.83% 57.13% 58.50% 56.96% KimiVL-A3B[57] 66.11% 51.73% 49.31% 58.82% 55.89% 56.85% 47.17% 55.72% DepictQA[10] 50.06% 31.49% 21.00% 39.00% 33.20% 35.87% 41.00% 34.18% Q-instruct-llava-13b[9] 53.95% 36.41% 48.69% 45.37% 46.98% 46.11% 40.83% 46.35% Q-instruct-llava-7b[9] 47.17% 28.11% 34.31% 37.40% 36.31% 36.57% 37.50% 36.53% GeoChat[21] 46.13% 29.80% 20.92% 34.60% 33.83% 33.57% 33.50% 32.28% TEOChat[58] 54.57% 29.99% 27.38% 37.70% 41.52% 38.51% 24.50% 37.31% EarthDial[37] 58.96% 48.06% 30.31% 46.23% 52.87% 48.89% 20.50% 45.78% LHRS-Bot[20] 54.96% 27.01% 26.15% 35.47% 40.56% 37.40% 33.17% 36.04% LHRS-Bot-nova[59] 47.83% 23.54% 21.54% 30.83% 33.85% 30.85% 41.33% 30.97%
+
+TEOChat [ 58 ], EarthDial [ 37 ], and LHRS-Bot/LHRS-Bot-nova [ 20 , 59 ]. The IQA-VLMs include DepictQA [ 10 ] and Q-Instruct-LLaVA-7B/13B [ 9 ]. Further details on the evaluation protocol, implementation settings, and metric computation are provided in Appendix C, while complete results are reported in Appendix E. 
+
+4.1 Findings on SensePerception 
+
+The quantitative results for the SensePerception task are detailed in Tables 2 and 3. By dissecting performance across our hierarchical taxonomy, SenseBench unveils several critical characteristics of current multimodal architectures. 
+
+The Domain Gap in Foundational Priors. Figure 4 (a) provides direct empirical evidence of a severe, bipartite domain bias in low-level perceptual priors. General-domain VLMs systematically cluster below the diagonal, demonstrating robust perception of general degradations while failing to generalize to physics-driven RS artifacts. Conversely, RS-specialized models exhibit an inverse bias, shifting above the diagonal due to domain-specific instruction tuning that seemingly compromises generic robustness. Crucially, as shown in Table 2, this dichotomy is orthogonal to raw model capacity: even state-of-the-art architectures exhibit profound domain penalties, with Qwen3VL-32B degrading from 70 .06% on general to 56 .40% on RS-centric distortions. The absence of any model in the upper-right quadrant (the area of balanced, high-accuracy perception) clearly demonstrates that general visual capabilities do not automatically transfer to specialized low-level tasks. To achieve true visual universality, future models must explicitly incorporate physical degradation distributions during training. 
+
+Robustness Collapse Under Multi-distortion. Figure 4 (b) evaluates model resilience against compounded degradations. The resulting distribution overwhelmingly skews below the diagonal, confirming that severe vulnerability to superimposed artifacts is a population-level bottleneck across modern VLMs, rather than an isolated architectural flaw. Alarmingly, as shown in Table 2, the steepest performance collapses occur among the most capable single-distortion performers: Gemini-3.1-pro-preview plummets from 79 .68% to 41 .17% , and EarthDial collapses from 48 .89% to 20 .50% . While a few low-performing models hover near the diagonal, their apparent robustness is merely a statistical floor effect, where near-random baseline inaccuracy masks the true compounding difficulty. These findings empirically demonstrate that multi-distortion robustness is a distinct capability rather than a simple extension of single-distortion competence. Models that successfully recognize isolated atomic artifacts fundamentally fail to disentangle them when superposed. This exposes a critical limitation in existing evaluation paradigms: standard single-distortion benchmarks provide a dangerously over-7Table 3: Quantitative results of VLMs on low-level perception for paired images. 
+
+Sub-categories Question Type Domain Context Average ↑
+
+Model Whether ↑ What ↑ How ↑ General ↑ RS ↑ Intra. ↑ Inter. ↑
+
+HUMAN EVALUATOR 95.28% 89.44% 82.05% 89.81% 89.87% 81.92% 89.62% 88.92% GPT-5.4 85.64% 80.45% 62.36% 76.73% 75.58% 77.50% 78.00% 76.15% Gemini-3.1-pro-preview 89.64% 90.00% 64.21% 81.94% 80.63% 82.55% 84.33% 81.28% 
+
+Ovis2.5-9B[53] 58.36% 60.55% 36.64% 51.52% 56.92% 51.13% 61.13% 51.85% Llama3.2-11B[54] 72.73% 32.82% 31.33% 46.00% 49.49% 45.42% 53.08% 45.63% Phi4-vision[55] 83.73% 34.64% 36.36% 52.24% 55.34% 52.64% 56.10% 51.58% LLaVA2-ov-7B[56] 69.00% 52.09% 37.62% 57.21% 51.94% 51.70% 63.52% 52.90% InternVL3.5-8B[32] 51.27% 57.55% 63.92% 52.61% 62.13% 56.37% 57.74% 57.58% InternVL3.5-14B[32] 56.91% 61.27% 56.64% 54.85% 63.24% 57.92% 60.00% 58.27% InternVL3.5-38B[32] 56.00% 62.73% 52.73% 51.94% 65.30% 59.62% 52.70% 57.15% InternVL3.5-30B-A3B[32] 68.73% 66.64% 62.80% 63.58% 70.28% 65.52% 69.06% 66.06% Qwen3VL-8B[31] 72.00% 66.55% 51.33% 63.64% 66.48% 63.25% 69.18% 63.29% Qwen3VL-32B[31] 79.27% 75.82% 57.62% 70.30% 75.73% 70.57% 78.24% 70.90% Qwen3VL-30B-A3B[31] 91.55% 60.55% 54.69% 69.82% 72.09% 66.60% 82.01% 68.93% KimiVL-A3B[57] 71.45% 53.73% 49.51% 58.18% 60.95% 54.95% 71.19% 58.23% DepictQA[10] 60.18% 23.09% 23.55% 41.82% 29.39% 37.03% 42.44% 35.61% TEOChat[58] 34.55% 30.00% 37.06% 31.64% 35.81% 35.33% 28.43% 33.87% EarthDial[37] 26.91% 50.73% 40.28% 38.06% 40.63% 43.92% 26.54% 39.31% 30 40 50 60 70            
+
+> 30
+> 40
+> 50
+> 60
+> 70
+> 20 30 40 50 60 70
+> 20
+> 30
+> 40
+> 50
+> 60
+> 70
+> 30 40 50 60 70 80
+> 30
+> 40
+> 50
+> 60
+> 70
+> 80
+> Llama3.2-11B
+> LLaVA2-ov-7B
+> InternVL3.5-8B
+> Qwen3VL-32B
+> Qwen3VL-30B-A3B
+> EarthDial
+> LHRS-Bot
+> DepictQA
+> LLaVA2-ov-7B
+> InternVL3.5-38B
+> Qwen3VL-32B
+> TEOChat
+> EarthDial
+> LHRS-Bot
+> Q-Instruct-13B LLaVA2-ov-7B
+> InternVL3.5-14B
+> InternVL3.5-38B
+> InternVL3.5-30B-A3B
+> Qwen3VL-8B
+> TEOChat
+> DepictQA
+> (a) Domain bias of VLMs on low-level perception
+> General VLMs
+> RS VLMs
+> IQA VLMs
+> Accuracy on RS distortions (%)
+> Accuracy on General distortions (%)
+> General-biased region
+> RS-biased region
+> (b) Performance shift from single to multi distortion
+> General VLMs
+> RS VLMs
+> IQA VLMs
+> Accuracy on Multi distortions (%)
+> Accuracy on Single distortions (%)
+> Single-distortion biased
+> Multi-distortion biased
+> (c) Comparative gains of VLMs in low-level perception
+> General VLMs
+> RS VLMs
+> IQA VLMs
+> Accuracy on Paired images (%)
+> Accuracy on Single image (%)
+> Single-image region
+> Paired-image region
+
+Figure 4: Cross-perspective analysis of VLMs on SenseBench. Circles, squares, and triangles denote general-domain, RS-specialized, and IQA-VLMs, respectively; marker size indicates parameter count, and the dashed diagonal marks parity. optimistic proxy for real-world reliability, making SenseBench’s stratified multi-distortion testing mandatory. 
+
+The Anchoring Effect in Paired Perception. Figure 4 (c) contrasts non-reference and full-reference perception to evaluate the impact of visual priors. While the model population generally shifts above the diagonal—confirming that a reference acts as a structural anchor to lower degradation detection thresholds—this anchoring benefit uncovers a stark domain dichotomy. General-domain VLMs systematically leverage the reference to boost accuracy, whereas RSVLMs paradoxically regress, exposing a critical deficit in multi-image spatial alignment within current domain-specific tuning recipes. Notably, as shown in Table 2 and 3, strong single-image performers such as InternVL3.5-38B further benefit from comparative settings, improving by over 10% when provided with paired visual evidence. This reveals a fundamental disconnect: single-image perception is not a reliable proxy for comparative reasoning. Therefore, evaluating both scenarios independently is essential, validating SenseBench’s dual-protocol design. 
+
+4.2 Findings on SenseDescription 
+
+While SensePerception rigorously quantifies baseline recognition accuracy, practical remote sensing workflows demand actionable, natural-language diagnostics. SenseDescription elevates the evaluation from discrete classification to open-ended diagnostic reporting, challenging models to explicitly articulate degradation semantics. Table 4 reports performance across the three axes defined in 3.2, unveiling critical nuances in how current VLMs translate visual priors into coherent narratives. 8Table 4: Quantitative results of VLMs on low-level description for single and paired images.                                                                                                                                                                                    
+
+> Evaluation Settings Single Image Paired Images Model Complete. ↑Correct. ↑Faithful. ↑Sum ↑Complete. ↑Correct. ↑Faithful. ↑Sum ↑
+> HUMAN EVALUATOR 1.70 1.57 1.92 5.19 1.70 1.45 1.64 4.79 GPT-5.4 1.84 1.47 1.56 4.87 1.75 1.13 1.22 4.10 Gemini-3.1-pro-preview 1.73 1.45 1.53 4.71 1.70 1.49 1.50 4.69
+> Ovis2.5-9B[53] 1.38 1.44 1.93 4.75 1.10 1.35 1.76 4.21 Llama-3.2-11B[54] 0.79 0.63 1.11 2.53 0.97 0.67 0.94 2.58 Phi4-vision[55] 1.05 0.75 1.73 3.53 0.83 0.09 0.62 1.54 LLaVA2-ov-7B[56] 0.92 1.19 1.76 3.87 1.01 0.46 0.95 2.42 InternVL3.5-8B[32] 1.19 0.85 1.74 3.78 0.80 0.37 0.75 1.92 InternVL3.5-14B[32] 1.20 0.81 1.88 3.89 0.70 0.35 0.74 1.79 InternVL3.5-38B[32] 1.01 0.71 1.73 3.45 0.84 0.64 0.89 2.37 InternVL3.5-30B-A3B[32] 0.97 0.66 1.60 3.23 0.82 0.42 0.86 2.10 Qwen3VL-8B[31] 1.24 0.99 1.85 4.08 1.23 0.66 1.24 3.13 Qwen3VL-32B[31] 1.32 1.06 1.91 4.29 1.46 1.11 1.61 4.18 Qwen3VL-30B-A3B[31] 1.29 1.09 1.82 4.20 1.15 0.81 1.22 3.18 KimiVL-A3B[57] 0.76 0.78 1.08 2.62 0.97 0.84 1.09 2.90 DepictQA[10] 1.50 0.97 1.19 3.66 1.11 0.31 1.05 2.47 Q-Instruct-LLaVA-13B[9] 1.04 1.07 1.21 3.32 ----Q-Instruct-LLaVA-7B[9] 1.06 1.07 1.18 3.31 ----GeoChat[21] 0.83 0.32 0.90 2.05 ----TEOChat[58] 0.84 0.39 1.38 2.61 0.37 0.19 0.45 1.01 EarthDial[37] 0.22 0.35 0.52 1.09 0.00 0.00 0.23 0.23
+
+The Fluency Illusion in Diagnostic Description. Table 4 exposes a systematic asymmetry across evaluation axes: models achieve high Faithfulness and moderate Completeness, but consistently collapse on Correctness. This unveils a fluency illusion —current VLMs generate diagnostic reports that appear linguistically confident and visually grounded, yet fundamentally misidentify the specific degradation type or misjudge its severity. The dominant failure mode is therefore not semantic hallucination, but imprecise low-level categorization (e.g., confusing SAR speckle with Gaussian noise) and inaccurate severity scaling. A monolithic scalar metric would entirely obscure these disparate bottlenecks, substantiating the necessity of SenseDescription’s multi-dimensional rubric for dissecting genuine diagnostic capabilities. 
+
+The Perception-Description Inversion Effect in Full-reference Evaluation. Table 4 reveals a striking contradiction between discrete perceptual accuracy and open-ended generative competence. Models like InternVL3.5 series suffer a precipitous drop in composite Sum scores (from ∼ 3.6 to 
+
+∼ 2.0), while several RSVLMs hit catastrophic P0 failure rates approaching 100% in Completeness, indicating a near-total inability to articulate cross-image discrepancies. We hypothesize this severe degradation stems from a critical lack of comparative instruction-tuning: while models possess sufficient single-image feature extraction capabilities, they lack the specific cross-attention alignment necessary to track and narrate subtle pixel-level deviations between two simultaneously presented high-resolution inputs. Consequently, perceiving and narrating comparative data face distinct bottlenecks. While paired perception benefits implicitly from structural anchoring, paired description is profoundly constrained by the scarcity of multi-image relational reasoning during instruction tuning. Exposing this critical capacity gap is essential, validating the necessity of SenseBench’s dual-task design. 
+
+5 Conclusion 
+
+In this paper, we introduce SenseBench , the first rigorous benchmark dedicated to evaluating the low-level visual perception and diagnostic description capabilities of VLMs in remote sensing. Spanning 10,815 instances across a physics-driven degradation taxonomy, it thoroughly assesses architectures through complementary non-reference and full-reference protocols. Our extensive zero-shot evaluation of 29 state-of-the-art VLMs exposes critical structural bottlenecks: a severe bipartite domain bias that precludes visual universality, a population-level robustness collapse under compounded distortions, and a deceptive "fluency illusion" in textual diagnostics. Crucially, we iden-tify a profound perception-description inversion effect when processing paired inputs, demonstrating that current instruction tuning severely lacks multi-image relational reasoning. Ultimately, these vulnerabilities reveal a systemic gap between high-level semantic alignment and low-level physical fidelity. SenseBench establishes the indispensable analytical framework required to forge genuinely reliable, degradation-aware visual foundations for Earth observation. 9References 
+
+[1] Siqi Lu, Junlin Guo, James R Zimmer-Dauphinee, Jordan M Nieusma, Xiao Wang, Parker VanValkenburgh, Steven A Wernke, and Yuankai Huo. Vision foundation models in remote sensing: A survey. IEEE Geoscience and Remote Sensing Magazine , 13(3):190–215, 2025. [2] Xiao Xiang Zhu, Devis Tuia, Lichao Mou, Gui-Song Xia, Liangpei Zhang, Feng Xu, and Friedrich Fraundorfer. Deep learning in remote sensing: A comprehensive review and list of resources. IEEE geoscience and remote sensing magazine , 5(4):8–36, 2017. [3] Devis Tuia, Benjamin Kellenberger, Sara Beery, Blair R Costelloe, Silvia Zuffi, Benjamin Risse, Alexander Mathis, Mackenzie W Mathis, Frank Van Langevelde, Tilo Burghardt, et al. Perspectives in machine learning for wildlife conservation. Nature communications , 13(1):792, 2022. [4] Zijun Wei, Chaozhen Lan, Fushan Yao, Longhao Wang, Tian Gao, and Hanyang Yu. Bpme: A blind perceptual metric-driven method for enhancing degraded polar optical remote sensing imagery. IEEE Transactions on Geoscience and Remote Sensing , 64:1–13, 2025. [5] Junjie Ke, Qifei Wang, Yilin Wang, Peyman Milanfar, and Feng Yang. Musiq: Multi-scale image quality transformer. In Proceedings of the IEEE/CVF international conference on computer vision , pages 5148–5157, 2021. [6] Weixia Zhang, Guangtao Zhai, Ying Wei, Xiaokang Yang, and Kede Ma. Blind image quality as-sessment via vision-language correspondence: A multitask learning perspective. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition , pages 14071–14081, 2023. [7] Jianyi Wang, Kelvin CK Chan, and Chen Change Loy. Exploring clip for assessing the look and feel of images. In Proceedings of the AAAI conference on artificial intelligence , volume 37, pages 2555–2563, 2023. [8] Xiang Li, Congcong Wen, Yuan Hu, Zhenghang Yuan, and Xiao Xiang Zhu. Vision-language models in remote sensing: Current progress and future trends. IEEE Geoscience and Remote Sensing Magazine , 12(2):32–66, 2024. [9] Haoning Wu, Zicheng Zhang, Erli Zhang, Chaofeng Chen, Liang Liao, Annan Wang, Kaixin Xu, Chunyi Li, Jingwen Hou, Guangtao Zhai, et al. Q-instruct: Improving low-level visual abilities for multi-modality foundation models. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition , pages 25490–25500, 2024. [10] Zhiyuan You, Zheyuan Li, Jinjin Gu, Zhenfei Yin, Tianfan Xue, and Chao Dong. Depicting beyond scores: Advancing image quality assessment through multi-modal language models. In 
+
+European Conference on Computer Vision , pages 259–276. Springer, 2024. [11] Xiao An, Wei He, Jiaqi Zou, Guangyi Yang, and Hongyan Zhang. Pretrain a remote sensing foundation model by promoting intra-instance similarity. IEEE Transactions on Geoscience and Remote Sensing , 62:1–15, 2024. [12] Wenli Huang, Yang Wu, Xiaomeng Xin, Zhihong Liu, Jinjun Wang, and Ye Deng. Task-guided prompting for unified remote sensing image restoration. IEEE Transactions on Geoscience and Remote Sensing , 64:1–17, 2025. [13] Xiang Li, Yong Tao, Siyuan Zhang, Siwei Liu, Zhitong Xiong, Chunbo Luo, Lu Liu, Mykola Pechenizkiy, Xiao Xiang Zhu, and Tianjin Huang. Reobench: Benchmarking robustness of earth observation foundation models. arXiv preprint arXiv:2505.16793 , 2025. [14] Xiang Li, Jian Ding, and Mohamed Elhoseiny. Vrsbench: A versatile vision-language bench-mark dataset for remote sensing image understanding. Advances in Neural Information Pro-cessing Systems , 37:3229–3242, 2024. [15] Yuan Liu, Haodong Duan, Yuanhan Zhang, Bo Li, Songyang Zhang, Wangbo Zhao, Yike Yuan, Jiaqi Wang, Conghui He, Ziwei Liu, et al. Mmbench: Is your multi-modal model an all-around player? In European conference on computer vision , pages 216–233. Springer, 2024. 10 [16] Lin Chen, Jinsong Li, Xiaoyi Dong, Pan Zhang, Yuhang Zang, Zehui Chen, Haodong Duan, Jiaqi Wang, Yu Qiao, Dahua Lin, et al. Are we on the right way for evaluating large vision-language models? Advances in Neural Information Processing Systems , 37:27056–27087, 2024. [17] Zicheng Zhang, Haoning Wu, Erli Zhang, Guangtao Zhai, and Weisi Lin. Q-bench: A benchmark for multi-modal foundation models on low-level vision from single images to pairs. IEEE Transactions on Pattern Analysis and Machine Intelligence , 2024. [18] Zhiyuan You, Jinjin Gu, Xin Cai, Zheyuan Li, Kaiwen Zhu, Chao Dong, and Tianfan Xue. Enhancing descriptive image quality assessment with a large-scale multi-modal dataset. IEEE Transactions on Image Processing , 34:8201–8215, 2025. [19] Haoning Wu, Hanwei Zhu, Zicheng Zhang, Erli Zhang, Chaofeng Chen, Liang Liao, Chunyi Li, Annan Wang, Wenxiu Sun, Qiong Yan, et al. Towards open-ended visual quality comparison. In European Conference on Computer Vision , pages 360–377. Springer, 2024. [20] Dilxat Muhtar, Zhenshi Li, Feng Gu, Xueliang Zhang, and Pengfeng Xiao. Lhrs-bot: Em-powering remote sensing with vgi-enhanced large multimodal language model. In European Conference on Computer Vision , pages 440–457. Springer, 2024. [21] Kartik Kuckreja, Muhammad Sohail Danish, Muzammal Naseer, Abhijit Das, Salman Khan, and Fahad Shahbaz Khan. Geochat: Grounded large vision-language model for remote sensing. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition ,pages 27831–27840, 2024. [22] Xiao An, Jiaxing Sun, Zihan Gui, and Wei He. Choice: Benchmarking the remote sensing capabilities of large vision-language models. arXiv preprint arXiv:2411.18145 , 2024. [23] Junjue Wang, Weihao Xuan, Heli Qi, Zhihao Liu, Kunyi Liu, Yuhan Wu, Hongruixuan Chen, Jian Song, Junshi Xia, Zhuo Zheng, et al. Disasterm3: A remote sensing vision-language dataset for disaster damage assessment and response. arXiv preprint arXiv:2505.21089 , 2025. [24] Weihao Xuan, Junjue Wang, Heli Qi, Zihang Chen, Zhuo Zheng, Yanfei Zhong, Junshi Xia, and Naoto Yokoya. Dynamicvl: Benchmarking multimodal large language models for dynamic city understanding. arXiv preprint arXiv:2505.21076 , 2025. [25] Anish Mittal, Anush Krishna Moorthy, and Alan Conrad Bovik. No-reference image quality assessment in the spatial domain. IEEE Transactions on image processing , 21(12):4695–4708, 2012. [26] Anish Mittal, Rajiv Soundararajan, and Alan C Bovik. Making a “completely blind” image quality analyzer. IEEE Signal processing letters , 20(3):209–212, 2012. [27] Junhua Yan, Xuehan Bai, Yongqi Xiao, Yin Zhang, and Xiangyang Lv. No-reference remote sensing image quality assessment based on gradient-weighted natural scene statistics in spatial domain. Journal of Electronic Imaging , 28(1):013033–013033, 2019. [28] Ningshan Xu, Dongao Ma, Guoqiang Ren, and Yongmei Huang. Bm-iqe: An image quality evaluator with block-matching for both real-life scenes and remote sensing scenes. Sensors , 20 (12):3472, 2020. [29] Yiming Xiong, Feng Shao, Xiangchao Meng, Qiuping Jiang, Weiwei Sun, Randi Fu, and Yo-Sung Ho. A large-scale remote sensing database for subjective and objective quality assessment of pansharpened images. Journal of Visual Communication and Image Representation , 73: 102947, 2020. [30] Wenzhong Tian, Arturo Sanchez-Azofeifa, Za Kan, Qingzhan Zhao, Guoshun Zhang, Yuzhen Wu, and Kai Jiang. Nr-iqa for uav hyperspectral image based on distortion constructing, feature screening, and machine learning. International Journal of Applied Earth Observation and Geoinformation , 133:104130, 2024. 11 [31] Shuai Bai, Yuxuan Cai, Ruizhe Chen, Keqin Chen, Xionghui Chen, Zesen Cheng, Lianghao Deng, Wei Ding, Chang Gao, Chunjiang Ge, Wenbin Ge, Zhifang Guo, Qidong Huang, Jie Huang, Fei Huang, Binyuan Hui, Shutong Jiang, Zhaohai Li, Mingsheng Li, Mei Li, Kaixin Li, Zicheng Lin, Junyang Lin, Xuejing Liu, Jiawei Liu, Chenglong Liu, Yang Liu, Dayiheng Liu, Shixuan Liu, Dunjie Lu, Ruilin Luo, Chenxu Lv, Rui Men, Lingchen Meng, Xuancheng Ren, Xingzhang Ren, Sibo Song, Yuchong Sun, Jun Tang, Jianhong Tu, Jianqiang Wan, Peng Wang, Pengfei Wang, Qiuyue Wang, Yuxuan Wang, Tianbao Xie, Yiheng Xu, Haiyang Xu, Jin Xu, Zhibo Yang, Mingkun Yang, Jianxin Yang, An Yang, Bowen Yu, Fei Zhang, Hang Zhang, Xi Zhang, Bo Zheng, Humen Zhong, Jingren Zhou, Fan Zhou, Jing Zhou, Yuanzhi Zhu, and Ke Zhu. Qwen3-vl technical report. arXiv preprint arXiv:2511.21631 , 2025. [32] Weiyun Wang, Zhangwei Gao, Lixin Gu, Hengjun Pu, Long Cui, Xingguang Wei, Zhaoyang Liu, Linglin Jing, Shenglong Ye, Jie Shao, et al. Internvl3. 5: Advancing open-source multimodal models in versatility, reasoning, and efficiency. arXiv preprint arXiv:2508.18265 , 2025. [33] Haotian Liu, Chunyuan Li, Yuheng Li, and Yong Jae Lee. Improved baselines with visual instruction tuning. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition , pages 26296–26306, 2024. [34] Haoning Wu, Zicheng Zhang, Weixia Zhang, Chaofeng Chen, Liang Liao, Chunyi Li, Yixuan Gao, Annan Wang, Erli Zhang, Wenxiu Sun, et al. Q-align: Teaching lmms for visual scoring via discrete text-defined levels. arXiv preprint arXiv:2312.17090 , 2023. [35] Zhenchen Tang, Songlin Yang, Bo Peng, Zichuan Wang, and Jing Dong. Revisiting mllm based image quality assessment: Errors and remedy. In Proceedings of the AAAI Conference on Artificial Intelligence , volume 40, pages 9475–9483, 2026. [36] Yuan Hu, Jianlong Yuan, Congcong Wen, Xiaonan Lu, Yu Liu, and Xiang Li. Rsgpt: A remote sensing vision language model and benchmark. ISPRS Journal of Photogrammetry and Remote Sensing , 224:272–286, 2025. [37] Sagar Soni, Akshay Dudhane, Hiyam Debary, Mustansar Fiaz, Muhammad Akhtar Munir, Muhammad Sohail Danish, Paolo Fraccaro, Campbell D Watson, Levente J Klein, Fahad Shah-baz Khan, et al. Earthdial: Turning multi-sensory earth observations to interactive dialogues. In 
+
+Proceedings of the Computer Vision and Pattern Recognition Conference , pages 14303–14313, 2025. [38] Kelu Yao, Nuo Xu, Rong Yang, Yingying Xu, Zhuoyan Gao, Titinunt Kitrungrotsakul, Yi Ren, Pu Zhang, Jin Wang, Ning Wei, et al. Falcon: A remote sensing vision-language foundation model. arXiv preprint arXiv:2503.11070 , 2025. [39] Jeremy Andrew Irvin, Emily Ruoyu Liu, Joyce Chuyi Chen, Ines Dormoy, Jinyoung Kim, Samar Khanna, Zhuo Zheng, and Stefano Ermon. Teochat: A large vision-language assistant for temporal earth observation data. arXiv preprint arXiv:2410.06234 , 2024. [40] Hui Lin, Danfeng Hong, Shuhang Ge, Chuyao Luo, Kai Jiang, Hao Jin, and Congcong Wen. Rs-moe: A vision-language model with mixture of experts for remote sensing image captioning and visual question answering. IEEE Transactions on Geoscience and Remote Sensing , 2025. [41] Xu Liu and Zhouhui Lian. Rsunivlm: A unified vision language model for remote sensing via granularity-oriented mixture of experts. arXiv preprint arXiv:2412.05679 , 2024. [42] Jiaqi Liu, Ronghao Fu, Lang Sun, Haoran Liu, Xiao Yang, Weipeng Zhang, Xu Na, Zhuoran Duan, and Bo Yang. Skymoe: A vision-language foundation model for enhancing geospatial interpretation with mixture of experts. arXiv preprint arXiv:2512.02517 , 2025. [43] Yi Wang, Syed Muhammad Arsalan Bashir, Mahrukh Khan, Qudrat Ullah, Rui Wang, Yilin Song, Zhe Guo, and Yilong Niu. Remote sensing image super-resolution and object detection: Benchmark and state of the art. Expert Systems with Applications , 197:116793, 2022. [44] Zhenghua Huang, Yang Yang, Hao Yu, Qian Li, Yu Shi, Yaozong Zhang, and Hao Fang. Rcst: Residual context-sharing transformer cascade to approximate taylor expansion for remote sensing image denoising. IEEE Transactions on Geoscience and Remote Sensing , 63:1–15, 2025. 12 [45] Yan Zhang, Pengcheng Zheng, Chengxiao Zeng, Bin Xiao, Zhenghao Li, and Xinbo Gao. Jointly rs image deblurring and super-resolution with adjustable-kernel and multi-domain attention. 
+
+IEEE Transactions on Geoscience and Remote Sensing , 2024. [46] Shichao Zhou, Chenwei Deng, Baojun Zhao, Yatong Xia, Qisheng Li, and Zhenzhong Chen. Remote sensing image compression: A review. In 2015 IEEE International conference on multimedia big data , pages 406–410. IEEE, 2015. [47] Kinga Karwowska, Damian Wierzbicki, and Michal Kedzierski. Image inpainting and digital camouflage: Methods, applications, and perspectives for remote sensing. IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing , 2025. [48] Noel Gorelick, Matt Hancher, Mike Dixon, Simon Ilyushchenko, David Thau, and Rebecca Moore. Google earth engine: Planetary-scale geospatial analysis for everyone. Remote sensing of Environment , 202:18–27, 2017. [49] Kishore Papineni, Salim Roukos, Todd Ward, and Wei-Jing Zhu. Bleu: a method for automatic evaluation of machine translation. In Proceedings of the 40th annual meeting of the Association for Computational Linguistics , pages 311–318, 2002. [50] Chin-Yew Lin. Rouge: A package for automatic evaluation of summaries. In Text summarization branches out , pages 74–81, 2004. [51] Jiawei Gu, Xuhui Jiang, Zhichao Shi, Hexiang Tan, Xuehao Zhai, Chengjin Xu, Wei Li, Yinghan Shen, Shengjie Ma, Honghao Liu, et al. A survey on llm-as-a-judge. The Innovation , 2024. [52] Seungone Kim, Juyoung Suk, Shayne Longpre, Bill Yuchen Lin, Jamin Shin, Sean Welleck, Graham Neubig, Moontae Lee, Kyungjae Lee, and Minjoon Seo. Prometheus 2: An open source language model specialized in evaluating other language models. In Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing , pages 4334–4353, 2024. [53] Shiyin Lu, Yang Li, Yu Xia, Yuwei Hu, Shanshan Zhao, Yanqing Ma, Zhichao Wei, Yinglun Li, Lunhao Duan, Jianshan Zhao, et al. Ovis2. 5 technical report. arXiv preprint arXiv:2508.11737 ,2025. [54] Aaron Grattafiori, Abhimanyu Dubey, Abhinav Jauhri, Abhinav Pandey, Abhishek Kadian, Ahmad Al-Dahle, Aiesha Letman, Akhil Mathur, Alan Schelten, Alex Vaughan, et al. The llama 3 herd of models. arXiv preprint arXiv:2407.21783 , 2024. [55] Abdelrahman Abouelenin, Atabak Ashfaq, Adam Atkinson, Hany Awadalla, Nguyen Bach, Jianmin Bao, Alon Benhaim, Martin Cai, Vishrav Chaudhary, Congcong Chen, et al. Phi-4-mini technical report: Compact yet powerful multimodal language models via mixture-of-loras. 
+
+arXiv preprint arXiv:2503.01743 , 2025. [56] Bo Li, Yuanhan Zhang, Dong Guo, Renrui Zhang, Feng Li, Hao Zhang, Kaichen Zhang, Peiyuan Zhang, Yanwei Li, Ziwei Liu, et al. Llava-onevision: Easy visual task transfer. arXiv preprint arXiv:2408.03326 , 2024. [57] Kimi Team, Angang Du, Bohong Yin, Bowei Xing, Bowen Qu, Bowen Wang, Cheng Chen, Chenlin Zhang, Chenzhuang Du, Chu Wei, et al. Kimi-vl technical report. arXiv preprint arXiv:2504.07491 , 2025. [58] Jeremy Andrew Irvin, Emily Ruoyu Liu, Joyce Chuyi Chen, Ines Dormoy, Jinyoung Kim, Samar Khanna, Zhuo Zheng, and Stefano Ermon. Teochat: A large vision-language assistant for temporal earth observation data. arXiv preprint arXiv:2410.06234 , 2024. [59] Zhenshi Li, Dilxat Muhtar, Feng Gu, Yanglangxing He, Xueliang Zhang, Pengfeng Xiao, Guangjun He, and Xiaoxiang Zhu. Lhrs-bot-nova: Improved multimodal large language model for remote sensing vision-language interpretation. ISPRS Journal of Photogrammetry and Remote Sensing , 227:539–550, 2025. [60] Shiyin Lu, Yang Li, Qing-Guo Chen, Zhao Xu, Weihua Luo, Kaifu Zhang, and Han-Jia Ye. Ovis: Structural embedding alignment for multimodal large language model. arXiv preprint arXiv:2405.20797 , 2024. 13 [61] Matt Deitke, Christopher Clark, Sangho Lee, Rohun Tripathi, Yue Yang, Jae Sung Park, Mohammadreza Salehi, Niklas Muennighoff, Kyle Lo, Luca Soldaini, et al. Molmo and pixmo: Open weights and open data for state-of-the-art vision-language models. In Proceedings of the Computer Vision and Pattern Recognition Conference , pages 91–104, 2025. [62] Zhongang Cai, Ruisi Wang, Chenyang Gu, Fanyi Pu, Junxiang Xu, Yubo Wang, Wanqi Yin, Zhitao Yang, Chen Wei, Qingping Sun, et al. Scaling spatial intelligence with multimodal foundation models. arXiv preprint arXiv:2511.13719 , 2025. [63] Haoyu Lu, Wen Liu, Bo Zhang, Bingxuan Wang, Kai Dong, Bo Liu, Jingxiang Sun, Tongzheng Ren, Zhuoshu Li, Hao Yang, et al. Deepseek-vl: towards real-world vision-language under-standing. arXiv preprint arXiv:2403.05525 , 2024. [64] Hamid R Sheikh, Muhammad F Sabir, Alan C Bovik, et al. A statistical evaluation of recent full reference image quality assessment algorithms. IEEE Trans. Image Process. , 15(11):3440–3451, 2006. [65] Nikolay Ponomarenko, Lina Jin, Oleg Ieremeiev, Vladimir Lukin, Karen Egiazarian, Jaakko Astola, Benoit Vozel, Kacem Chehdi, Marco Carli, Federica Battisti, et al. Image database tid2013: Peculiarities, results and perspectives. Signal processing: Image communication , 30: 57–77, 2015. [66] Hanhe Lin, Vlad Hosu, and Dietmar Saupe. Kadid-10k: A large-scale artificially distorted iqa database. In 2019 Eleventh International Conference on Quality of Multimedia Experience (QoMEX) , pages 1–3. IEEE, 2019. [67] Haoning Wu, Zicheng Zhang, Erli Zhang, Chaofeng Chen, Liang Liao, Annan Wang, Chunyi Li, Wenxiu Sun, Qiong Yan, Guangtao Zhai, et al. Q-bench: A benchmark for general-purpose foundation models on low-level vision. arXiv preprint arXiv:2309.14181 , 2023. [68] Weihao Yu, Zhengyuan Yang, Linjie Li, Jianfeng Wang, Kevin Lin, Zicheng Liu, Xinchao Wang, and Lijuan Wang. Mm-vet: Evaluating large multimodal models for integrated capabilities. 
+
+arXiv preprint arXiv:2308.02490 , 2023. 14 Appendix Contents 
+
+A Benchmark Taxonomy Details 16 
+
+A.1 Definition of Each L-2 Distortions . . . . . . . . . . . . . . . . . . . . . . . . . . 16 A.2 Statistics of SenseBench . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19 
+
+B Dataset Construction Details 19 
+
+B.1 Data Collection and Geographic Sampling . . . . . . . . . . . . . . . . . . . . . . 19 B.2 Data Filtering and Cleaning . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21 B.3 Distortion Synthesis and Benchmark Construction . . . . . . . . . . . . . . . . . . 21 
+
+C Evaluation Details 23 
+
+C.1 Evaluation Settings . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23 C.2 Evaluation Protocol for SensePerception . . . . . . . . . . . . . . . . . . . . . . . 24 C.3 Evaluation Protocol for SenseDescription . . . . . . . . . . . . . . . . . . . . . . 25 
+
+D Quality Control 27 
+
+D.1 Quality Control Procedure . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27 D.2 Human Evaluation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28 D.3 Evaluation Quality Control . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28 D.4 Information of the Human Annotators . . . . . . . . . . . . . . . . . . . . . . . . 28 
+
+E Additional Results 29 
+
+E.1 Complete SensePerception Results . . . . . . . . . . . . . . . . . . . . . . . . . . 29 E.2 Complete SenseDescription Results . . . . . . . . . . . . . . . . . . . . . . . . . 31 E.3 Distortion-wise Analysis . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33 
+
+F Limitations & Solutions 33 
+
+F.1 Biases in synthetic degradations. . . . . . . . . . . . . . . . . . . . . . . . . . . . 34 F.2 Annotation bias in diagnostic descriptions . . . . . . . . . . . . . . . . . . . . . . 34 F.3 Judge-model bias in open-ended evaluation . . . . . . . . . . . . . . . . . . . . . 34 
+
+G Broader impacts 35 
+
+15 A Benchmark Taxonomy Details 
+
+To support a thorough and unbiased evaluation of VLMs, we organize SenseBench into 6 L-1 dimensions and further 22 L-2 distortions, grounded in widely adopted remote sensing quality assessment standards (ISO 19157-1:2023 1, ISO 19115-2:2019 2, GB/T 24356–2023 3). We first present the detailed definition of each L-2 distortion, accompanied by representative examples, and then report the overall statistics of SenseBench. 
+
+A.1 Definition of Each L-2 Distortions Gaussian Nois e Impulse Nois e        
+
+> Which distortion most
+> significantly affects this image?
+> A. color distortion
+> B. image compression
+> C. Gaussian noise
+> D. No distortion
+> Provide an overall rating for this
+> image based on the following
+> three levels of distortion
+> A. No /Slight distortion
+> B. Moderate distortion
+> C. Severe distortion
+
+Spatially Nois e Stripe Nois e        
+
+> A. No /Slight distortion
+> B. Moderate distortion
+> C. Severe distortion
+> How would you ratethe general
+> quality of this image?
+> Is stripe noise the primary
+> source of degradation ?
+> A. No
+> B. Yes
+
+Deadline Noise Speckle Noise    
+
+> What type of distortion is present
+> in this remote sensing image ?
+> A.Deadline Noise
+> B. Missing tiles
+> C. Gaussian Noise
+> D. Cloud
+> Is speckle noise visible in the
+> image ?
+> A. Yes
+> B. No
+
+Sidelobe Noise    
+
+> What is the primary distortion that most seriously
+> degrades the quality of this SAR image ?
+> A.Ghosting
+> B. Speckle
+> C. Striping
+> D. Sidelobe
+
+Figure 5: Examples of L-2 distortions within the L-1 dimension of Image Noise. 
+
+Noise. This category models sensor-inherent noise and signal transmission perturbations, compris-ing 7 L-2 distortions that span statistical sensor noise, detector array artifacts, and coherent imaging interference. In Figure 5, we present some visualization examples for this dimension. • Gaussian Noise : This distortion simulates thermal noise and readout noise in sensor elec-tronics, modeled as additive perturbations following a Gaussian distribution. It represents one of the most prevalent noise types affecting RSI quality across all sensor platforms. • Impulse Noise : This distortion replicates sudden pixel-level corruptions caused by transmis-sion errors or sensor malfunctions, manifesting as sparsely distributed extreme values that disrupt local image statistics. • Spatially Correlated Noise : This distortion models noise components that exhibit spatial dependence rather than pixel-wise independence, reflecting realistic sensor behaviors where neighboring pixels share correlated perturbations. 
+
+> 1https://www.iso.org/standard/78900.html
+> 2https://www.iso.org/standard/67039.html
+> 3https://openstd.samr.gov.cn/bzgk/std/newGbInfo?hcno=2874EFAC7523FB293E6AF2E4068CEB02
+
+16 Gaussian Blur Motion Blur           
+
+> Which distortion most
+> significantly affects this image?
+> A. Haze
+> B. Missing tiles
+> C. Motion Blur
+> D. Gaussian Blur
+> How severe is the distortion in
+> this image?
+> A. No /Slight distortion
+> B. Moderate distortion
+> C. Severe distortion
+
+Figure 6: Examples of L-2 distortions within the L-1 dimension of Image Blur Haze Cloud  
+
+> What type of distortion is present
+> in this remote sensing image ?
+> A. Haze
+> B. Missing tiles
+> C. Image compression
+> D. Cloud
+> A. No
+> Does gathering cloud lead
+> to information loss?
+> B. Yes
+
+Figure 7: Examples of L-2 distortions within the L-1 dimension of Image Cloud. • Stripe Noise : This distortion arises from inter-detector calibration mismatches in push-broom scanners, producing line-structured artifacts aligned with the scanning direction. • Dead-line Noise : This distortion corresponds to the complete failure of individual detector elements, resulting in continuous missing lines that severely compromise downstream interpretation. • Speckle Noise : This distortion is an inherent granular pattern in SAR imagery caused by the coherent summation of backscattered signals from sub-resolution scatterers, exhibiting multiplicative rather than additive behavior. • Sidelobe Noise : This distortion originates from the point spread function of SAR systems, where strong scatterers produce cross-shaped energy leakage into adjacent pixels and obscure neighboring targets. 
+
+Blur. This category captures resolution loss arising from optical imperfections or platform–target relative motion In Figure 6, we present some visualization examples for this dimension. • Gaussian Blur : This distortion models isotropic point-spread function (PSF) broadening caused by optical defocus, atmospheric turbulence, and diffraction-limited imaging, leading to uniform attenuation of high-frequency details across the image. • Motion Blur : This distortion models directional PSF elongation induced by satellite along-track velocity, attitude jitter, and target motion within the integration window, with kernel orientation and length sampled to reflect typical low-Earth-orbit acquisition geometries. 
+
+Cloud. This category quantifies visibility degradation caused by atmospheric particulates and hydrometeors, comprising 2 L-2 distortions. In Figure 7, we present some visualization examples for this dimension. • Cloud : This distortion introduces opaque occlusions through a hybrid pipeline, where cloud masks are either harvested from publicly available cloud-annotated datasets or generated procedurally, and are then alpha-composited with clean scenes to produce semantically plausible occlusions over surface content. • Haze : This distortion is synthesized via the standard atmospheric scattering model: 
+
+I(x) = J(x)t(x) + A 1 − t(x), (1) where the transmission map t(x) and global airlight A are randomized across samples to span a realistic range of optical depths, jointly attenuating contrast and shifting the spectral signature of surface reflectance. 17 JPEG JPEG2000 
+
+WebP SPIHT              
+
+> What specific degradation is
+> observed in this satellite image ?
+> A. Gaussian noise
+> B. WebP compression
+> C. Motion blur
+> D. JPEG compression
+> What is the main cause of
+> degradation in this image ?
+> A. Cloud
+> B. SPIHT compression
+> C. Gaussian noise
+> D. JPEG compression
+> How severe is the distortion in
+> this image?
+> A. No /Slight distortion
+> B. Moderate distortion
+> C. Severe distortion
+> A. No
+> B. Yes
+> Does the image exhibit image
+> compression ?
+
+Figure 8: Examples of L-2 distortions within the L-1 dimension of Image Compression. 
+
+Compression. This category simulates lossy coding artifacts incurred during on-board compression, downlink transmission, and archival storage, comprising 4 L-2 distortions that span legacy and modern satellite codecs. In Figure 8, we present some visualization examples for this dimension. • JPEG : This distortion produces DCT-based 8 × 8 blocking artifacts caused by coarse quantization of frequency coefficients within independently coded macroblocks, representing the most widely deployed lossy compression standard in remote sensing pipelines. • JPEG2000 : This distortion induces wavelet-based ringing and edge smearing arising from the truncation of high-frequency subbands, offering improved rate-distortion performance over JPEG at the cost of distinct boundary artifacts. • WebP : This distortion introduces predictive-block residuals from modern web-oriented compression, where intra-frame prediction errors and adaptive block partitioning give rise to artifact patterns absent in classical codecs. • SPIHT : This distortion produces progressive bit-plane truncation characteristic of embedded zerotree wavelet coders, which remain widely deployed in legacy spaceborne systems where progressive transmission is prioritized. Band Attenuation Band Switch 
+
+Compression Stretching       
+
+> What visual defect does this
+> image exhibit ?
+> What is the main cause of
+> degradation in this image?
+> Does the image exhibit image
+> distortion?
+> Is the geometric compression
+> significant in this figure?
+> A. Band attenuation
+> B. WebP compression
+> C. Gaussian blur
+> D. Stripe noise
+> A. Missing tiles
+> B. Stretching
+> C. JPEG compression
+> D. Motion Blur
+> A. No
+> B. Yes
+> A. No
+> B. Yes
+
+Figure 9: Examples of L-2 distortions within the L-1 dimension of Image Correction. 
+
+Correction. This category models residual artifacts left by imperfect spectral or geometric rectifica-tion during ground-segment processing, comprising 4 L-2 distortions that span spectral and geometric failure modes. In Figure 9, we present some visualization examples for this dimension. • Band Attenuation : This distortion corresponds to per-channel radiometric gain loss from imperfect cross-calibration, where individual spectral bands are systematically darkened relative to the others, breaking the radiometric balance across channels. 18 • Band Switch : This distortion corresponds to channel permutation caused by metadata corruption during ground-segment processing, where spectral bands are assigned to incorrect color components and produce semantically implausible color renderings. • Compression : This distortion models unintended axis-wise shrinkage of the image, where one spatial dimension is contracted relative to the other, typically arising from inaccurate orthorectification or sensor-model misregistration during geometric correction. • Stretching : This distortion models unintended axis-wise elongation of the image, where one spatial dimension is expanded relative to the other, producing distorted aspect ratios that violate the metric consistency required for spatial reasoning. Tile Missing Point -like Dead Pixels 
+
+Linear Blindness          
+
+> What visual defect does this
+> image exhibit ?
+> Does the image exhibit tile
+> missing?
+> Is the Linear Blindness
+> significant in this figure?
+> A. JPEG compression
+> B. Point -like dead pixels
+> C. Motion blur
+> D. No distortion
+> A. No
+> B. Yes
+> A. No
+> B. Yes
+
+Figure 10: Examples of L-2 distortions within the L-1 dimension of Image Missing. 
+
+Missing. This category models data-loss patterns occurring across the acquisition–transmission chain, comprising 3 L-2 distortions that jointly cover the dominant operational dropout mechanisms. In Figure 10, we present some visualization examples for this dimension. • Tile Missing : This distortion produces contiguous rectangular voids caused by packet loss during downlink transmission, where entire data blocks are dropped and replaced with zero-valued regions that disrupt the spatial continuity of the scene. • Point-like Dead Pixels : This distortion introduces sparsely distributed isolated zero-valued pixels arising from random detector failures, manifesting as scattered point-wise voids that perturb local image statistics without affecting global structure. • Linear Blindness : This distortion produces strip-shaped voids caused by systematic detector-array malfunction in push-broom imaging geometries, where the failure of one or more detector elements yields continuous missing lines aligned with the scanning direction. 
+
+A.2 Statistics of SenseBench 
+
+All RS images in SenseBench are collected from globally distributed satellite imagery, public remote sensing datasets, and map platforms, covering diverse geographic regions and sensor modalities. To support balanced and comprehensive evaluation, we ensure an even distribution across distortion categories and task types during dataset construction, with dedicated subsets for both optical and SAR imagery. A detailed breakdown of data sources, distortion categories, and task-specific sample counts is provided in Table 5. 
+
+B Dataset Construction Details 
+
+B.1 Data Collection and Geographic Sampling 
+
+To construct a geographically diverse remote sensing image pool, we adopted a continent-balanced sampling strategy rather than collecting images from a small number of commonly used benchmark regions. Since low-level degradations may interact with scene content, land-cover patterns, imaging 19 Table 5: The detailed statistics for SenseBench, a low-level perception benchmark for remote sensing VLMs. Abbreviations adopted: GEE for Google Earth Engine; W/W/H/D for Whether, What, How, and Description questions, respectively.                                                                                   
+
+> Modality Level-1 Level-2 Data Source Resolution Image Size Attributes (W/W/H/D)
+> RGB Missing Missing tiles GEE 0.3 ∼10m 512 ×512 155 / 155 / –/ 60 Blind flickering 155 / 155 / –/ 60 Linear dead pixels 155 / 155 / –/ 60 Noise Stripe noise GEE 0.3 ∼10m 512 ×512 155 / 155 / 155 / 60 Impulse noise 155 / 155 / 155 / 60 Deadline noise 155 / 155 / 155 / 60 Gaussian noise 155 / 155 / 155 / 60 Spatially correlated noise 155 / 155 / 155 / 60 Correction Color band attenuation GEE 0.3 ∼10m 512 ×512 155 / 155 / –/ 60 Geometric compression 155 / 155 / –/ 60 Geometric stretch 155 / 155 / –/ 60 Color band switch 155 / 155 / –/ 60 Compression Jpeg2000 GEE 0.3 ∼10m 512 ×512 155 / 155 / 155 / 60 Webp 155 / 155 / 155 / 60 Jpeg 155 / 155 / 155 / 60 Spiht 155 / 155 / 155 / 60 Cloud Haze GEE 0.3 ∼10m 512 ×512 155 / 155 / 155 / 60 RICE Dataset N/A 512 ×512 Cloud GEE 0.3 ∼10m 512 ×512 155 / 155 / 155 / 60 Sentinel-2 10m 982 ×982 RICE Dataset N/A 512 ×512 Multi-dist. Multiple distortions ––512 ×512 300 / 300 / –/–Blur Gaussian blur GEE 0.3 ∼10m 512 ×512 155 / 155 / 155 / 60 Motion blur 155 / 155 / 155 / 60 SAR Sidelobe Sidelobe noise Multiple Datasets 0.5 ∼3m 214 ×241 200 / 200 / –/–Speckle Speckle noise Multiple Datasets 0.5 ∼3m 2048 ×2048 200 / 200 / –/–
+> Total 10815
+
+geometry, and regional characteristics, a globally distributed image pool is necessary to reduce regional bias in evaluating the low-level visual perception ability of VLMs. We first used continent-level vector boundaries from Natural Earth 4 to define the global sampling regions. For each continent, a predefined sampling quota was assigned, and clustering-based spatial sampling was performed within the corresponding boundary to encourage spatially dispersed coverage. The resulting continent-level distribution of sampled cities is summarized in Table 6. We then collected candidate cities from the world-cities database and filtered out cities with populations below 100,000, as cities with very small populations were empirically found to have limited availability of suitable high-quality imagery. The remaining cities were selected by jointly considering population scale and geographic location, so that the final city set covers representative urban regions across different continents while maintaining spatial diversity. Table 6: Continent-level distribution of sampled cities. 
+
+Continent Africa Asia Europe North America Oceania South America Total Numbers 130 210 160 160 29 120 809 
+
+For each selected city, we obtained its urban boundary from OpenStreetMap 5 and randomly sampled points within the boundary. Remote sensing image patches centered at these points were downloaded 
+
+> 4https://www.naturalearthdata.com
+> 5https://www.openstreetmap.org
+
+20 Evaluation Question Template 
+
+Distorted image Information file 
+
+Image Address L1 distortion 
+
+L2 distortion Severity Level 
+
+Construction of SensePerception                 
+
+> Question
+> Template
+> Information
+> File
+> Answer
+> Generation
+> Evaluation Q&A
+> Data
+> Ø“Does this image contain {L1_distortion}?” ，A. Yes B. No Answer: A
+> A. Yes B. No Ø“Is {L2_distortion} visible in the image?” ，Answer: B
+> Ø“What distortion is present in the image?“ A. Distortion Name B. random pick
+> C. random pick D. random pick Answer: A
+> Ø“On a scale of 1 to 5, how would you rate the distortion in this image?
+> A. No/Slight distortion B. Moderate distortion C. Severe distortion Answer: C
+
+Figure 11: Details of the construction of SensePerception .from Google Earth 6. All collected image patches were finally cropped or resized to a unified spatial size of 512 × 512 for subsequent distortion synthesis and benchmark construction. This process yielded 26,493 RS image patches, which formed the initial source image pool for the subsequent filtering and benchmark construction pipeline. 
+
+B.2 Data Filtering and Cleaning 
+
+After image collection, we applied a three-stage filtering procedure to refine the source image pool 
+
+before distortion synthesis. The filtering process was designed to remove invalid files, low-information samples, and visually unsuitable images. • File-level filtering. We first checked the basic file properties of the collected images. Non-TIFF files were discarded to maintain a consistent data format. Files with abnormally small storage sizes were removed, as they usually indicate failed downloads or incomplete files. We also excluded images with insufficient spatial resolution and removed duplicated image patches to avoid redundant samples in the source pool. • Information-level filtering. We then filtered the images according to their effective visual content. Pure-white images were removed because they contain little or no usable scene information. Images dominated by ocean coverage or snow coverage were also excluded. Although these images may be valid remote sensing observations, they provide limited structural and land-cover details, making them less suitable for evaluating low-level visual degradations. • Human filtering. Finally, the remaining images were manually inspected. Samples with abnormal visual content, severe acquisition artifacts, or other obvious quality issues were removed. This final screening step further improved the reliability of the clean image pool used for subsequent degradation synthesis. Through the above filtering process, the initial source pool was reduced from 26,493 to 19,768 image patches, with approximately 25.38% of the collected images removed. The remaining images formed the clean source image pool for subsequent benchmark construction. 
+
+B.3 Distortion Synthesis and Benchmark Construction 
+
+Based on the cleaned image pool , we synthesized distorted remote sensing images according to the distortion taxonomy described in Appendix A. For each degradation type, distorted samples 
+
+> 6https://earth.google.com
+
+21 Reference  
+
+> image
+> Distorted
+> image
+> Language
+> Prompt Information
+
+{severity_level 
+
+{L 1_distortion} 
+
+}
+
+{L2_distortion} 
+
+## Description Language             
+
+> Prompt
+> You will see two remote sensing images: one distorted and one high -quality reference.
+> The distortion type is {L2_distortion} in {L 1_distortion} , and the severity level is {severity_level} .
+> Please write three sentences, each on a separate line, based on the content of the images:
+> Describe how the {L2_distortion} at the {severity_level} level affects the visual appearance of the distorted image and human
+> perception (for example: “Slight blurring softens building edges” or “Severe color patches divide uniform farmland into distinct
+> blocks”).
+> Explain how the {severity_level} level of {L2_distortion} reduces the interpretability or analytical value of the distorted image, pointing
+> out specific visual effects (for example: “Road centerlines are unclear” or “Vegetation texture is lost”).
+> Summarize the overall image quality (for example: “The image quality is poor” or “The image quality is good”).Although you may u se
+> the reference image to understand the distortion, do not mention, refer to, or imply the existence of a reference image in your
+> response.
+
+Construction of Sense Descriptio nFigure 12: Details of the construction of SenseDescription .were generated with predefined parameter settings so that the corresponding distortion category and severity level could be explicitly recorded. Each distorted image was paired with an information file, which contains the Image Address , L1_distortion , L2_distortion , and Severity Level .These image–metadata pairs were then used as the basic data units for constructing the subsequent 
+
+SensePerception and SenseDescription tasks. 
+
+Construction of SensePerception. As illustrated in Fig. 11, SensePerception is constructed by combining each distorted image with its associated information file. The information file records the image address, L2 distortion category, L3 distortion type, and severity level, which are used to instantiate predefined multiple-choice question templates and automatically derive the corresponding answers. Specifically, we design three types of questions: whether-type, what-type, and how-type questions. Whether-type questions evaluate whether a model can determine the presence or absence of a specified L2 or L3 degradation, such as “Does this image contain haze?” or “Is Gaussian noise visible in the image?” What-type questions assess whether a model can identify the correct distortion category or fine-grained distortion type from several candidate options, where distractors are randomly sampled from other distortion types. How-type questions evaluate whether a model can judge the degradation severity according to predefined quality levels, such as no/slight, moderate, and severe distortion. Through this template-based generation process, the distorted images and their metadata are converted into standardized evaluation Q&A pairs for low-level visual perception assessment. 
+
+Construction of SenseDescription. As shown in Figure 12, we further construct description-based diagnostic tasks to evaluate whether VLMs can generate faithful and informative quality descriptions beyond MCQ-style perception. For each selected distorted image, we provide the LVLM-assisted annotation pipeline with its corresponding high-quality reference image, a structured language prompt, and the associated distortion metadata, including L2_distortion , L3_distortion , and 
+
+severity_level . The reference image is used only to help the annotator identify the visual effect introduced by the distortion, while the metadata constrains the generated description to the intended distortion category and severity level. The annotator is instructed to generate a three-sentence diagnostic report. The first sentence describes the visible characteristics of the L3_distortion under the given severity level and its effect on human visual perception. The second sentence explains how the distortion reduces the interpretability or analytical value of the remote sensing image, with concrete visual consequences such as blurred road boundaries, lost texture, or corrupted object structures. The third sentence summarizes the overall image quality. Although the reference image is used during annotation, the final description is 22 Table 7: Details of the evaluated open-source vision-language models. 
+
+Model Vision Backbone Language Backbone Overall Parameters General-domain Large Vision-Language Models 
+
+Ovis1.6-9B SigLIP-400M Gemma2-9B-It 9B Ovis2.5-9B SigLIP2-400M Qwen2.5-7B-Instruct 9B Llama-3.2-11B – Llama 3.1 10.6B Molmo-7B-D CLIP ViT-L/14 Qwen2-7B 7B Phi4-vision SigLIP2-400M Phi-4 14B SenseNova-SI-1.1-8B CLIP ViT-L/14 Qwen3-8B 8B DeepSeekVL-7B SigLIP-400M DeepSeek-7B 7.3B LLaVA1.6-7B CLIP ViT-L/14 Vicuna-v1.5-7B 7.1B LLaVA1.6-13B CLIP ViT-L/14 Vicuna-v1.5-13B 13.4B LLaVA2-ov-7B SigLIP-400M Qwen2-7B 8B InternVL3.5-8B InternViT-300M Qwen3-8B 8B InternVL3.5-14B InternViT-300M Qwen3-14B 14B InternVL3.5-38B InternViT-6B Qwen3-32B 38B InternVL3.5-30B-A3B InternViT-300M Qwen3-30B-A3B 30B/A3B Qwen3VL-8B SigLIP2-400M Qwen3-8B 8B Qwen3VL-32B SigLIP2-400M Qwen3-32B 32B Qwen3VL-30B-A3B SigLIP2-400M Qwen3-30B-A3B 30B/A3B KimiVL-A3B ViT (MoonViT) Moonshot-MoE-A3B 16B/A3B 
+
+Remote Sensing Large Vision-Language Models 
+
+GeoChat CLIP ViT-L/14 Vicuna-v1.5-7B 7B TEOChat CLIP ViT-L/14 LLaMA2-7B 7B EarthDial InternViT-300M Phi-3-mini 7B LHRS-Bot CLIP ViT-L/14 LLaMA2-7B 7B LHRS-Bot-nova SigLIP-L/14 LLaMA3-8B 8B 
+
+required to describe only the distorted image and must not mention, refer to, or imply the existence of a reference image. After generation, we further check the descriptions to remove unsupported speculation, incorrect distortion descriptions, and vague quality assessments. This human-LVLM collaborative process enables SenseDescription to provide detailed diagnostic labels while maintaining consistency across different distortion categories and severity levels. 
+
+C Evaluation Details 
+
+C.1 Evaluation Settings 
+
+Table 7 provides details of all open-source VLMs evaluated in our work. 
+
+Implementation Details. All general-domain open-source VLMs are deployed with the ms-swift framework 7 from ModelScope, using vLLM 8 as the inference backend whenever supported. Remote sensing VLMs and IQA-oriented VLMs are evaluated using their official open-source implementations and are integrated into the same evaluation pipeline to ensure consistent data loading, prompting, answer parsing, and metric computation. Closed-source models are evaluated through their official APIs with the same zero-shot prompts and deterministic decoding settings whenever exposed by the API. 
+
+Generation Configuration. To ensure consistency and reproducibility, we use a unified genera-tion configuration across models whenever supported: temperature=0.0 , max_new_tokens=128 ,
+
+truncation_strategy=right , and enable_thinking=False . For models or APIs that do not expose a specific option, we keep the official default setting and record the corresponding backend configuration. Each sample is evaluated once. For SensePerception , model outputs are parsed by the 
+
+> 7https://github.com/modelscope/ms-swift
+> 8https://github.com/vllm-project/vllm
+
+23 deterministic extraction pipeline described in Appendix C.2; invalid, empty, or unparseable responses are counted as incorrect. For SenseDescription , generated reports are scored by the LLM-as-a-Judge protocol described in Appendix C.3. 
+
+Input Formatting. For single-image tasks, each model receives one remote sensing image together with the corresponding zero-shot prompt. For paired-image tasks, models with native multi-image support receive the two images as separate visual inputs in a fixed Image 1 /Image 2 order. Models without a compatible multi-image inference interface are not evaluated under paired-image settings, which are marked as “–” in the result tables. All prompts explicitly refer to Image 1 and Image 2 for paired-image questions to avoid ambiguity. 
+
+Computational Cost. All open-source inference experiments are conducted on up to eight NVIDIA RTX 3090 GPUs, with the number of devices allocated according to the parameter scale of each VLM. Each complete model evaluation takes approximately 1.5 wall-clock hours on its allocated devices, resulting in about 34.5 hours of total wall-clock inference time for all evaluated open-source models. The total GPU-hours scale with the number of allocated devices. No additional large-scale training or unreported compute-intensive experiments are conducted. 
+
+C.2 Evaluation Protocol for SensePerception 
+
+The SensePerception task is formulated as a MCQ answering problem, where each sample consists of one or more remote sensing images, a perception-oriented question, and a set of candidate options with exactly one correct answer. This formulation enables an objective and reproducible evaluation across heterogeneous VLMs, while avoiding the ambiguity inherent in open-ended generation. 
+
+Prompt Design. To eliminate prompt-induced bias across models, we adopt a unified instruction template for all evaluated VLMs. The template is composed of three components arranged in a fixed order: the question, the image token(s), and the list of candidate options. For multi-image samples, all image tokens are inserted sequentially at the same position, while the rest of the template remains unchanged. In the examples below, we use gray to denote the format-constraining prompt, black for the question itself, and within the candidate options, green indicates the correct answer(s) while orange indicates the incorrect ones. These colors are used only for illustration in the manuscript and are not included in the actual model input. Two representative examples are shown below:       
+
+> User Prompt:
+> Please select the two correct answers for the following question from the given options. Respond only with the two letters in alphabetical order, separated by a comma with no space (e.g., A,B). Do not include any additional text. Select all types of distortions affecting this image. [IMAGE_TOKEN]
+> Answer:
+> A. Missing tiles B. Motion blur C. Gaussian noise D. Cloud
+> User Prompt:
+> Please select the most appropriate answer for the following single-choice question from the given options. Only respond with the corresponding letter (A, B, C or D). Do not include any additional text. Based on the paired images, what is the dominant degradation in Image 2? [IMAGE1_TOKEN] [IMAGE2_TOKEN]
+> Answer:
+> A. Color distortion B. Image stretching C. Dead pixel D. Haze
+
+Answer Parsing. The trailing instruction constrains the model to respond only with option letter(s), reducing output-format variance and enabling deterministic parsing. To accommodate diverse model outputs, both the ground-truth answer and the model response are normalized into sets of option letters, and a prediction is considered correct only when the two sets are identical. We first apply case-insensitive regular-expression matching to extract valid option letters from the response, tolerating common variants such as “A.”, “A)”, or “The answer is A”. If no valid letter is detected, we perform a deterministic content-level match between the normalized response and the textual content of each candidate option, and map the matched option back to its corresponding letter. Responses that fail both stages are counted as incorrect. Representative parsing cases are shown in Table 8. 
+
+Stratification Protocol. We adopt exact-match accuracy as the primary metric. A prediction is considered correct only when the parsed option-letter set is identical to the ground-truth option 24 Table 8: Representative examples of robust option extraction for MCQ evaluation. Minor formatting variations in model responses do not affect answer parsing.                               
+
+> GT Model Response Parsed Case
+> AAAStandard BThe answer is B. BNatural language Canswer: CCColon format DI think it is D. DInformal answer A(A) The image shows visible blur. AParenthesized option BB. Moderate distortion. BWith explanation CMy choice is option C because the image contains compression artifacts.
+> CWith rationale BbBLowercase option AThe image has severe Gaussian blur. AText fallback
+
+set. Beyond the overall average accuracy, we report task-specific stratified results for both single-image and paired-image evaluations. For the single-image evaluation , degradation types are grouped into General and RS-centric categories according to their domain specificity, as summarized in Table 9. Samples are further divided into single-distortion and multi-distortion cases, depending on whether one or multiple degradation types are present in the input image. These results characterize model performance across different degradation domains and distortion compositions. For the 
+
+paired-image evaluation , we adopt the same General and RS-centric degradation grouping. Paired-image samples are further categorized into intra-image and inter-temporal settings, corresponding to comparisons within the same source image and across different acquisition times, respectively. These results characterize the pairwise discriminative ability of VLMs under domain-specific and temporal/contextual variations. 
+
+C.3 Evaluation Protocol for SenseDescription 
+
+The SenseDescription task is formulated as an open-ended caption generation problem, where each sample consists of one or more remote sensing images and a description-oriented instruction, and the model is required to produce a free-form natural language description of the visual content. Unlike the MCQ formulation adopted in SensePerception , this task evaluates a model’s ability to articulate fine-grained low-level degradation characteristics, their visual manifestations, and their impact on image interpretability in fluent natural language. 
+
+Prompt Design. To eliminate prompt-induced bias across models, we adopt a unified instruction template for all evaluated VLMs. The template is composed of two components arranged in a fixed order: the description instruction and the image tokens. For multi-image samples, all image tokens are inserted sequentially at the same position, while the rest of the template remains unchanged. green indicates the reference label description. Each dimension is evaluated independently using a dedicated prompt. Two representative example is shown below: 
+
+> User Prompt:
+> You are shown a single distorted remote sensing image. Write exactly three concise sentences that describe the scene and its quality: 1. Identify the dominant type of distortion (e.g., haze, motion blur, compression artifacts, sensor noise) and describe its visible characteristics. 2. Explain how this distortion impairs interpretability or analytical utility, citing concrete visual consequences. 3. Provide an overall assessment of the image quality.Your response must contain exactly three sentences, with no numbering, and must not speculate about how the image ’should’ look. [IMAGE1_TOKEN]
+> Answer:
+> Moderate gaussian blur softens the edges of buildings and roads, making structural details less distinct. The blurring reduces interpretability by obscuring fine textures and diminishing clarity in densely packed urban areas. The image quality is moderately degraded, affecting its usefulness for detailed analysis.
+> User Prompt:
+> You will see two remote sensing images Image 1 and Image 2. Respond with a single paragraph containing exactly three concise sentences. Sentence one must describe the observable distortions in Image 1 and how they appear visually. Sentence two must describe the observable distortions in Image 2 and how they appear visually
+
+25 Table 9: Split of distortion types in SenseBench. Distortions are divided into General distortions and RS-centric distortions for fine-grained result analysis. 
+
+General Distortions RS-centric Distortions Category Distortion Types Category Distortion Types 
+
+Blur Gaussian blur; Motion blur Cloud Cloud 
+
+Noise Gaussian noise; Impulse noise; Spatially correlated noise 
+
+Noise Deadline noise; Stripe noise; Sidelobe noise; Speckle noise 
+
+Compression JPEG; JPEG2000; WebP; SPIHT 
+
+Correction Color band attenuation; Color band switch; Geometric compression; Geometric stretching 
+
+Cloud Haze Missing Blind flickering; Linear dead pixels; Missing tiles 
+
+. Sentence three must determine which image has higher overall quality (or if they are equal) and briefly explain the reason. [IMAGE1_TOKEN] [IMAGE2_TOKEN] 
+
+Answer: 
+
+Image 1 has no observable distortions and appears visually clean and sharp. Image 2 contains severe Gaussian blur artifacts, making the details appear smudged and less distinct. Therefore, Image 1 has higher overall quality due to its clarity and lack of distortions. 
+
+Evaluation Rubric. Following the LLM-as-a-Judge evaluation protocol described in the main text, each generated diagnostic report is evaluated against the corresponding reference description along three dimensions: (1) Completeness , which rewards the coverage of key diagnostic elements in the reference; (2) Correctness , which measures semantic consistency with the reference in terms of distortion type, severity, visual effects, and quality judgment; and (3) Faithfulness , which penalizes hallucinated objects, unsupported assumptions, and speculative explanations beyond the observable image content. Each dimension is scored in {0, 1, 2}, corresponding to failure, partial success, and full success, respectively. The prompts used for the LLM-as-a-Judge evaluator are listed below: 
+
+#System: You are a helpful assistant. 
+
+Completeness. #User: Evaluate whether the description [RESPONSE] fully covers the low-level degradation factors mentioned in the reference description [LABEL]. Focus specifically on degradation factors such as blur, noise, compression artifacts, exposure issues, color distortion, etc. Rate the completeness as follows: - Score 2: The description includes all or almost all degradation factors present in the reference. - Score 1: The description misses some key degradation factors but captures others. - Score 0: The description misses most or all of the key degradation factors mentioned in the reference. Provide only the score, without additional explanations or formatting (e.g., 0, 1, or 2). 
+
+Correctness. #User: Evaluate whether the description [RESPONSE] is factually aligned with the reference description [LABEL] and free from contradictions regarding visual quality. The correctness metric strictly penalizes contradictory descriptions (e.g., saying "sharp" when the reference says "blur", or "clean" when the reference says "noisy"). Rate the correctness as follows: - Score 2: The description is factually aligned with the reference and contains no contradictions. - Score 1: The description contains minor contradictions or ambiguities regarding the visual attributes. - Score 0: The description contains strong or direct contradictions to the reference (e.g., opposite attributes). Provide only the score, without additional explanations or formatting (e.g., 0, 1, or 2). 
+
+Faithfulness. #User: Evaluate whether the description [RESPONSE] is faithful to the low-level visual quality, avoiding hallucinations and irrelevant high-level semantics. Reference description: [LABEL]. The faithfulness metric verifies that the generated claims are visually grounded. - It strictly penalizes "hallucinations" (mentioning artifacts or flaws not present in the reference). - It penalizes irrelevant high-level semantics (describing the image content/scene rather than its qual-ity/degradation). Rate the faithfulness as follows: - Score 2: The description is strictly grounded in low-level visual quality, with no hallucinations or irrelevant 
+
+26 Figure 13: SenseBench Annotation System used for human evaluator baseline collection and evalua-tion quality control. 
+
+> high-level content descriptions. - Score 1: The description contains minor hallucinations or mixes in some irrelevant high-level semantics. - Score 0: The description is dominated by hallucinations or focuses entirely on high-level content (e.g., describing objects) instead of visual quality. Provide only the score, without additional explanations or formatting (e.g., 0, 1, or 2).
+
+D Quality Control 
+
+D.1 Quality Control Procedure 
+
+To improve the reliability of SenseBench , we implemented a multi-stage quality control procedure during benchmark construction. Twelve evaluators with backgrounds in remote sensing or computer vision participated in the annotation and verification process. Following a team-based inspection protocol, the evaluators were divided into four groups, denoted as Group A, B, C, and D, with three members in each group. In each inspection stage, a sample was approved only when all three members of the assigned group confirmed its visual validity, task relevance, and internal consistency. Samples with any identified issue were returned for revision and further review, while unresolved cases were removed from the benchmark. 
+
+Perceptual Validity and Metadata Alignment. Since most degraded samples in SenseBench 
+
+are generated through controlled synthesis , Group A and B verified the perceptual validity of the synthesized distortions and their alignment with the associated metadata. Evaluators checked whether each sample contained clear and recognizable visual evidence consistent with the intended degradation mechanism, such as edge softening for blur, block or coding artifacts for compression, contrast attenuation for haze, directional structures for stripe noise, and missing regions for data loss. They further verified whether the L2 distortion category, L3 fine-grained distortion type, and severity label recorded in the information file were consistent with the observed degradation. Samples with imperceptible, excessive, or visually inconsistent distortions, as well as samples with mismatched metadata or unstable severity judgments, were corrected, re-synthesized, or removed. 
+
+SensePerception Verification. For SensePerception , Group C inspected the generated MCQ samples from both visual and semantic perspectives. A sample was approved only when the distorted image, metadata, question, candidate options, and ground-truth answer were mutually consistent. The 27 Table 10: Results on the LLM-As-Judge Reliability on Assessing Description Ability of MLLMs.                                                        
+
+> Dimensions/Model Completeness Correctness Faithfulness Average Rank
+> Reliability performance for single image description
+> Qwen3-VL-8B 0.930/0.945 0.911/0.979 0.945/0.998 0.929/0.974 1 / 1 InternVL3.5-8B 0.903/0.951 0.913/0.984 0.915/0.992 0.910/0.976 2 / 2 InternVL3.5-30B-A3B 0.919/0.944 0.927/0.992 0.949/0.995 0.932/0.977 4 / 4 DepictQA 0.901/0.924 0.922/0.981 0.935/0.948 0.919/0.951 3 / 3 TEOChat 0.952/0.991 0.933/0.992 0.928/0.955 0.938/0.979 5 / 5
+> Reliability performance for paired image description
+> Qwen3-VL-8B 0.908/0.945 0.931/0.993 0.931/0.985 0.923/0.974 1 / 1 InternVL3.5-8B 0.900/0.954 0.922/0.994 0.940/0.968 0.921/0.972 4 / 4 InternVL3.5-30B-A3B 0.903/0.941 0.932/0.994 0.940/0.958 0.925/0.964 3 / 3 DepictQA 0.925/0.946 0.928/0.995 0.912/0.974 0.922/0.972 2 / 2 TEOChat 0.913/0.948 0.982/0.999 0.933/0.984 0.943/0.977 5 / 5
+
+Whether , What , and How questions were respectively checked for degradation presence, distortion-type correctness, and severity-level consistency. Samples with incorrect labels, ambiguous distractors, or mismatched question-answer pairs were returned for revision and further review; unresolved cases were removed. 
+
+SenseDescription Verification. For SenseDescription , Group D manually reviewed the LVLM-assisted diagnostic annotations to ensure their factuality, specificity, and task alignment. A description was approved only when it correctly identified the dominant distortion, provided concrete visual evidence, explained its impact on interpretability or analytical utility, and gave a consistent overall quality assessment. Descriptions with incorrect distortion claims, vague or unsupported assessments, hallucinated content, or reference-image leakage were revised, regenerated, or removed. 
+
+D.2 Human Evaluation Human Evaluator Baseline. To provide a human reference baseline, we conducted human eval-uation with annotators from Group A and Group B . For each evaluation task, we constructed a distortion-stratified human-evaluation subset by sampling 5% of benchmark instances from each distortion category, with category-level sample counts rounded up when necessary to ensure coverage of all distortion categories. Each sampled instance was independently completed by every annotator, so each question received six human responses. The human evaluation followed the same protocols described in Sec. C, and the evaluation interface is illustrated in Fig. 13. The HUMAN EVALUATOR rows in Tables 2, 3, and 4 report the mean performance averaged over all annotators and sampled instances. 
+
+D.3 Evaluation Quality Control Reliability of LLM-as-judge Evaluation. To verify the reliability of LLM-as-judge for description-quality evaluation, we selected five representative MLLMs and evaluated them under both single-image and paired-image settings. Human evaluation was conducted by Group A and Group C , each consisting of three annotators, and the average score within each group was used as the corresponding human score. The two groups performed the evaluation independently, and their scores were used to assess the consistency between human judgments and LLM-as-judge scores. We then measured this consistency across the evaluation dimensions using SRCC/PLCC. As shown in Table 10, the results demonstrate strong agreement between LLM-as-judge scores and human judgments. 
+
+D.4 Information of the Human Annotators 
+
+We enlisted twelve human annotators with academic backgrounds in remote sensing, computer vision, and electronic information engineering to participate in the annotation, verification, and quality control of SenseBench . Following the team-based protocol described in Sec. D, the annotators were organized into four groups, denoted as Groups A, B, C, and D, with three annotators in each group. The same grouping was used consistently across the benchmark construction and evaluation-quality-control procedures. 28 Table 11: Complete quantitative results of VLMs on low-level perception for single images. 
+
+Sub-categories Question Type Domain Context Average ↑
+
+Model Whether ↑ What ↑ How ↑ General ↑ RS ↑ Single ↑ Multi ↑
+
+HUMAN EVALUATOR 90.58% 88.62% 90.26% 90.11% 89.32% 89.75% 90.00% 89.82% GPT-5.4 68.46% 60.43% 58.54% 64.83% 62.87% 64.23% 41.50% 62.48% Qwen3.5-Plus 71.32% 60.62% 57.92% 68.10% 60.39% 64.87% 42.67% 63.29% Gemini-3.1-pro-preview 87.17% 80.17% 59.92% 79.47% 80.06% 79.68% 41.17% 75.75% 
+
+Ovis1.6-9B[60] 68.54% 60.88% 50.38% 65.43% 57.80% 62.36% 54.17% 59.93% Ovis2.5-9B[53] 50.39% 41.48% 37.31% 46.33% 41.48% 43.87% 29.50% 43.06% Llama3.2-11B[54] 54.17% 42.21% 38.62% 49.70% 42.02% 45.57% 46.67% 45.00% Molmo-7B-D[61] 49.30% 41.59% 53.15% 52.57% 41.17% 46.87% 46.50% 48.01% Phi4-vision[55] 51.75% 37.33% 38.38% 43.97% 42.19% 42.42% 44.83% 42.49% SenseNova-SI-1.1-8B[62] 58.94% 50.72% 33.77% 48.03% 53.74% 50.36% 34.67% 47.81% DeepseekVL-7B[63] 60.31% 38.48% 33.46% 47.50% 44.98% 45.17% 33.83% 44.08% LLaVA1.6-7B[33] 50.90% 37.06% 49.54% 49.30% 40.63% 44.85% 45.50% 45.83% LLaVA1.6-13B[33] 50.04% 38.53% 35.08% 45.50% 38.26% 41.32% 47.50% 41.22% LLaVA2-ov-7B[56] 70.58% 67.57% 54.31% 71.07% 61.46% 67.26% 46.00% 64.15% InternVL3.5-8B[32] 56.59% 40.70% 42.38% 48.89% 44.52% 47.19% 46.83% 46.56% InternVL3.5-14B[32] 53.14% 41.77% 42.23% 46.47% 44.64% 46.47% 39.67% 45.71% InternVL3.5-38B[32] 57.70% 50.27% 25.46% 49.92% 50.52% 46.43% 36.67% 44.48% InternVL3.5-30B-A3B[32] 58.99% 47.96% 47.77% 53.30% 51.61% 52.26% 44.17% 51.57% Qwen3VL-8B[31] 64.35% 54.20% 52.38% 59.80% 53.29% 58.02% 50.33% 56.98% Qwen3VL-32B[31] 69.94% 63.65% 60.15% 70.06% 56.40% 65.92% 58.33% 64.58% Qwen3VL-30B-A3B[31] 65.66% 54.75% 50.46% 60.93% 54.83% 57.13% 58.50% 56.96% KimiVL-A3B[57] 66.11% 51.73% 49.31% 58.82% 55.89% 56.85% 47.17% 55.72% DepictQA[10] 50.06% 31.49% 21.00% 39.00% 33.20% 35.87% 41.00% 34.18% Q-instruct-llava-7b[9] 47.17% 28.11% 34.31% 37.40% 36.31% 36.57% 37.50% 36.53% Q-instruct-llava-13b[9] 53.95% 36.41% 48.69% 45.37% 46.98% 46.11% 40.83% 46.35% GeoChat[21] 46.13% 29.80% 20.92% 34.60% 33.83% 33.57% 33.50% 32.28% TEOChat[58] 54.57% 29.99% 27.38% 37.70% 41.52% 38.51% 24.50% 37.31% EarthDial[37] 58.96% 48.06% 30.31% 46.23% 52.87% 48.89% 20.50% 45.78% LHRS-Bot[20] 54.96% 27.01% 26.15% 35.47% 40.56% 37.40% 33.17% 36.04% LHRS-Bot-nova[59] 47.83% 23.54% 21.54% 30.83% 33.85% 30.85% 41.33% 30.97% 
+
+Education and Research Background. Among the twelve annotators, 2 were at the bachelor’s level, 7 were at the master’s level, and 3 were at the doctoral level. In terms of research background, 7 annotators specialized in photogrammetry and remote sensing, 3 specialized in computer science or related areas, and 2 specialized in electronic information engineering. These backgrounds ensured that the annotators were familiar with remote sensing image interpretation, visual degradation analysis, and vision-related annotation tasks. 
+
+Age Distribution. The annotators were between 21 and 32 years old. Specifically, 6 annotators were aged 21–25, 5 were aged 26–29, and 1 was aged 30–32. 
+
+Ethical Considerations. All annotators were informed of the purpose and intended use of 
+
+SenseBench before participating in the annotation and quality-control process. Their participa-tion was voluntary and appropriately compensated. Specifically, each annotator received an hourly compensation of 60 RMB for part-time annotation and inspection work, which is consistent with the compensation level for comparable academic assistance tasks in our local context. The annotators were instructed to focus on low-level visual quality factors in remote sensing images and to flag samples with ambiguous labels, unsupported descriptions, or other annotation-quality issues for revision or removal. 
+
+E Additional Results 
+
+E.1 Complete SensePerception Results 
+
+To further expand the scale of our evaluation and the coverage of tested models, we conduct a comprehensive analysis on a broader set of VLMs. This section reports the complete SensePerception 
+
+results and provides additional analysis of model behavior under different input settings and evaluation dimensions. In contrast to the averaged results presented in Sec. 4, Table 11 and Table 12 offer a fine-grained breakdown across question types, distortion categories, and input conditions. 29 Table 12: Complete quantitative results of VLMs on low-level perception for paired images.                                                                                                                                                                                                     
+
+> Sub-categories Question Type Domain Context Average ↑
+> Model Whether ↑What ↑How ↑General ↑RS ↑Intra. ↑Inter. ↑
+> HUMAN EVALUATOR 95.28% 89.44% 82.05% 89.81% 89.87% 81.92% 89.62% 88.92% GPT-5.4 85.64% 80.45% 62.36% 76.73% 75.58% 77.50% 78.00% 76.15% Qwen3.5-PLUS 87.00% 78.00% 65.64 %77.21% 76.55% 77.50% 79.78% 76.88% Gemini-3.1-pro-preview 89.64% 90.00% 64.21% 81.94% 80.63% 82.55% 84.33% 81.28%
+> Ovis1.6-9B[60] 73.55% 45.82% 30.91% 54.12% 50.67% 54.43% 47.80% 50.09% Ovis2.5-9B[53] 58.36% 60.55% 36.64% 51.52% 56.92% 51.13% 61.13% 51.85% Llama3.2-11B[54] 72.73% 32.82% 31.33% 46.00% 49.49% 45.42% 53.08% 45.63% Molmo-7B-D[61] 94.82% 37.91% 29.93% 54.55% 61.19% 53.30% 68.43% 54.22% Phi4-vision[55] 83.73% 34.64% 36.36% 52.24% 55.34% 52.64% 56.10% 51.58% SenseNova-SI-1.1-8B[62] 45.45% 58.55% 54.83% 50.55% 55.49% 49.34% 61.64% 52.94% DeepseekVL-7B[63] 76.73% 34.00% 33.43% 50.85% 48.85% 49.01% 52.58% 48.05% LLaVA2-ov-7B[56] 69.00% 52.09% 37.62% 57.21% 51.94% 51.70% 63.52% 52.90% InternVL3.5-8B[32] 51.27% 57.55% 63.92% 52.61% 62.13% 56.37% 57.74% 57.58% InternVL3.5-14B[32] 56.91% 61.27% 56.64% 54.85% 63.24% 57.92% 60.00% 58.27% InternVL3.5-38B[32] 56.00% 62.73% 52.73% 51.94% 65.30% 59.62% 52.70% 57.15% InternVL3.5-30B-A3B[32] 68.73% 66.64% 62.80% 63.58% 70.28% 65.52% 69.06% 66.06% Qwen3VL-8B[31] 72.00% 66.55% 51.33% 63.64% 66.48% 63.25% 69.18% 63.29% Qwen3VL-32B[31] 79.27% 75.82% 57.62% 70.30% 75.73% 70.57% 78.24% 70.90% Qwen3VL-30B-A3B[31] 91.55% 60.55% 54.69% 69.82% 72.09% 66.60% 82.01% 68.93% KimiVL-A3B[57] 71.45% 53.73% 49.51% 58.18% 60.95% 54.95% 71.19% 58.23% DepictQA[10] 60.18% 23.09% 23.55% 41.82% 29.39% 37.03% 42.44% 35.61% TEOChat[58] 34.55% 30.00% 37.06% 31.64% 35.81% 35.33% 28.43% 33.87% EarthDial[37] 26.91% 50.73% 40.28% 38.06% 40.63% 43.92% 26.54% 39.31%
+
+Question-type difficulty reveals a perception hierarchy. As defined in Sec. 3.1.1, SensePerception 
+
+evaluates distortion existence, distortion category, and distortion severity through Whether , What ,and How questions, respectively. The complete results show a consistent performance decrease from 
+
+Whether to What and then to How , suggesting that current VLMs are generally more capable of detecting whether a visible degradation exists than identifying its category or estimating its severity. For example, Table 11 shows that Gemini-3.1-pro-preview drops from 87.17% on Whether to 80.17% on What and 59.92% on How in the single-image setting, while Table 12 shows a similar pattern for GPT-5.4 in the paired-image setting, decreasing from 85.64% and 80.45% on Whether and What to 62.36% on How .This trend indicates that low-level remote-sensing perception is not a single ability, but a hierarchy from anomaly detection to degradation diagnosis and severity calibration. While 
+
+Whether questions mainly rely on salient visual abnormalities, What questions require distinguishing visually similar degradation patterns, and How questions further require a stable quality scale, making severity estimation the most challenging and exposing the limitations of current VLMs in fine-grained visual calibration. 
+
+Model categories reveal mismatched capability biases. Using open-source general-domain VLMs as a reference, closed-source commercial models achieve a higher overall upper bound, suggesting that stronger general visual representations and instruction-following ability benefit low-level degradation perception. For example, Table 11 shows that Gemini-3.1-pro-preview achieves an average score of 75.75%, outperforming most open-source models, while Table 12 shows that the three commercial models remain within a relatively high average range of 76%–81% in the paired-image setting. However, this advantage does not fully resolve fine-grained degradation diagnosis. RS-VLMs exhibit a certain remote-sensing bias, as EarthDial improves from 46.23% on the General subset to 52.87% on the RS subset in Table 11, with TEOChat and LHRS-Bot showing similar tendencies, but their overall averages remain low. This indicates that remote-sensing semantic adaptation helps models understand “what is in the image”, but does not necessarily transfer to identifying “what degradation is present” or “how severe it is”. Similarly, IQA-VLMs do not show a stable advantage despite being trained for image-quality assessment: Table 11 reports only 34.18%, 36.53%, and 46.35% average scores for DepictQA, Q-instruct-llava-7b, and Q-instruct-llava-13b, respectively. These results suggest that natural-image quality priors do not fully generalize to remote-sensing degradation scenarios, and that SensePerception requires a joint capability of general visual perception, remote-sensing domain understanding, and fine-grained degradation calibration. 30 Table 13: Complete Quantitative results of VLMs on low-level description for single images.                                                                                                                                                                                                                                                                                                                                                                                                                       
+
+> Dimensions Completeness Correctness Faithfulness Sum ↑
+> Model P0 P1 P2 Score ↑P0 P1 P2 Score ↑P0 P1 P2 Score ↑
+> Human Evaluator 4.58% 21.25% 74.17% 1.70 15.42% 12.08% 72.50% 1.57 0.83% 6.25% 92.92% 1.92 5.19 GPT-5.4 3.33% 9.50% 87.17% 1.84 25.17% 2.67% 72.17% 1.47 18.83% 6.00% 75.17% 1.56 4.87
+> Qwen3.5-Plus 10.50% 7.83% 81.67% 1.71 35.33% 0.67% 64.00% 1.29 28.17% 5.83% 66.00% 1.38 4.38 Gemini-3.1-pro-preview 8.67% 9.50% 81.83% 1.73 27.17% 0.83% 72.00% 1.45 20.33% 6.67% 73.00% 1.53 4.71 Ovis1.6-9B[60] 5.00% 52.67% 42.33% 1.37 32.33% 2.83% 64.83% 1.32 3.83% 3.83% 92.33% 1.89 4.58 Ovis2.5-9B[53] 8.17% 45.33% 46.50% 1.38 18.67% 18.67% 62.67% 1.44 0.00% 7.50% 92.50% 1.93 4.75 Llama-3.2-11B[54] 33.33% 54.17% 12.50% 0.79 67.00% 3.17% 29.83% 0.63 39.33% 10.00% 50.67% 1.11 2.53 Molmo-7B-D[61] 30.67% 46.17% 23.17% 0.93 59.00% 1.00% 40.00% 0.81 5.33% 1.00% 93.67% 1.88 3.62 Phi4-vision[55] 19.67% 55.67% 24.67% 1.05 62.33% 0.67% 37.00% 0.75 11.33% 4.17% 84.50% 1.73 3.53 SenseNova-SI-1.1-8B[62] 13.67% 59.67% 26.67% 1.13 63.33% 0.33% 36.33% 0.73 17.67% 2.67% 79.67% 1.62 3.48 DeepseekVL-7B[63] 18.50% 63.00% 18.50% 1.00 70.17% 0.83% 29.00% 0.59 23.83% 9.00% 67.17% 1.43 3.02 LLaVA1.6-7B[33] 38.83% 58.33% 2.83% 0.64 90.83% 0.50% 8.67% 0.18 71.33% 16.00% 12.67% 0.41 1.23 LLaVA1.6-13B[33] 17.00% 68.83% 14.17% 0.97 58.17% 2.83% 39.00% 0.81 7.50% 5.50% 87.00% 1.79 3.57 LLaVA2-ov-7B[56] 28.67% 50.67% 20.67% 0.92 39.17% 2.67% 58.17% 1.19 9.33% 5.00% 85.67% 1.76 3.87 InternVL3.5-8B[32] 9.50% 61.67% 28.83% 1.19 56.67% 1.17% 42.17% 0.85 10.33% 5.83% 83.83% 1.74 3.78 InternVL3.5-14B[32] 8.00% 63.67% 28.33% 1.20 59.17% 1.00% 39.83% 0.81 4.17% 4.00% 91.83% 1.88 3.89 InternVL3.5-38B[32] 17.83% 63.67% 18.50% 1.01 64.17% 0.83% 35.00% 0.71 10.00% 6.67% 83.33% 1.73 3.45 InternVL3.5-30B-A3B[32] 24.50% 53.50% 22.00% 0.97 66.83% 0.33% 32.83% 0.66 18.00% 3.83% 78.17% 1.60 3.23 Qwen3VL-8B[31] 20.50% 35.17% 44.33% 1.24 50.00% 0.50% 49.50% 0.99 7.50% 0.17% 92.33% 1.85 4.08 Qwen3VL-32B[31] 19.17% 29.17% 51.67% 1.32 46.50% 0.83% 52.67% 1.06 4.33% 0.33% 95.33% 1.91 4.29 Qwen3VL-30B-A3B[31] 22.50% 25.50% 52.00% 1.29 45.50% 0.00% 54.50% 1.09 9.00% 0.33% 90.67% 1.82 4.20 KimiVL-A3B[57] 40.83% 42.67% 16.50% 0.76 59.83% 2.50% 37.67% 0.78 43.83% 3.83% 52.33% 1.08 2.62 GeoChat[21] 24.00% 69.33% 6.67% 0.83 81.83% 4.67% 13.50% 0.32 47.83% 14.17% 38.00% 0.90 2.05 TEOChat[58] 16.17% 83.50% 0.33% 0.84 76.67% 7.50% 15.83% 0.39 14.33% 33.00% 52.67% 1.38 2.61 EarthDial[37] 78.17% 21.83% 0.00% 0.22 81.00% 3.33% 15.67% 0.35 70.17% 7.50% 22.33% 0.52 1.09 LHRS-Bot[20] 40.83% 58.67% 0.50% 0.60 89.00% 4.00% 7.00% 0.18 24.00% 43.83% 32.17% 1.08 1.86 LHRS-Bot-nova[59] 87.67% 11.67% 0.67% 0.13 93.33% 1.17% 5.50% 0.12 74.67% 6.00% 19.33% 0.45 0.70 DepictQA[10] 4.17% 41.83% 54.00% 1.50 49.33% 3.83% 46.83% 0.97 23.17% 34.67% 42.17% 1.19 3.66 Q-Instruct-LLaVA1.5-13B[9] 15.83% 62.17% 22.00% 1.06 43.17% 6.50% 50.33% 1.07 2.67% 76.33% 21.00% 1.18 3.31 Q-Instruct-LLaVA1.5-7B[9] 17.83% 59.83% 22.33% 1.04 44.50% 3.83% 51.67% 1.07 6.33% 66.17% 27.50% 1.21 3.32
+
+Paired-image context reveals different cross-image attribution behaviors. Model performance in the paired-image setting depends not only on the availability of a reference image, but also on the contextual relationship between the reference and degraded images. Intra-image comparison emphasizes fine-grained degradation comparison, whereas Inter-temporal comparison may involve both degradation differences and temporal or scene-level changes. Note as expected, as shown in Table 12, Inter-temporal comparison is not consistently harder than Intra-image comparison: Qwen3VL-30B-A3B improves from 66.60% to 82.01%, and KimiVL-A3B increases from 54.95% to 71.19%. This suggests that some models may benefit from salient global changes in cross-temporal pairs, rather than relying purely on fine-grained degradation evidence. In contrast, Intra-image pairs share nearly identical semantic content, making them better suited to exposing models’ ability to compare low-level degradations such as noise, blur, compression artifacts, and missing regions. Thus, paired-image evaluation is not merely a test of whether a reference image is provided, but a test of whether models can establish controllable cross-image visual attribution by separating degradation-induced changes from scene or temporal variation. 
+
+E.2 Complete SenseDescription Results 
+
+To better interpret how models obtain their diagnostic description scores, we report the complete 
+
+SenseDescription results in Table 13 and Table 14 for the single-image and paired-image settings, respectively. Beyond the averaged scores, these tables provide the full distributions over P0, P1, and 
+
+P2, corresponding to failure, partial alignment, and full alignment for each evaluation dimension. This distributional view is important for open-ended evaluation, because similar average scores may reflect different response patterns: a model may be consistently partially correct, or alternate between fully grounded descriptions and complete failures. Thus, the complete results provide a clearer view of the reliability and failure modes of VLMs in low-level diagnostic description. 
+
+Distributional results reveal a partial-diagnosis pattern. The complete distributions show that many models concentrate on P1 rather than consistently reaching P2, indicating that they often capture partial visual evidence but fail to complete the full degradation diagnosis. For example, in the single-image setting,Table 13 shows that InternVL3.5-8B obtains 61.67% on P1 but only 28.83% on 
+
+P2 for Completeness; in the paired-image setting, Table 14 shows that Ovis1.6-9B reaches 83.83% on P1 but only 4.33% on P2. This suggests that current VLMs are not simply unable to describe 31 Table 14: Complete Quantitative results of VLMs on low-level description for paired images. 
+
+Dimensions Completeness Correctness Faithfulness Sum ↑
+
+Model P0 P1 P2 Score ↑ P0 P1 P2 Score ↑ P0 P1 P2 Score ↑
+
+Human Evaluator 3.92% 21.25% 74.83% 1.70 22.17% 11.00% 66.83% 1.45 8.75% 18.33% 72.92% 1.64 4.79 GPT-5.4 1.83% 21.33% 76.83% 1.75 42.33% 2.50% 55.17% 1.13 36.83% 4.33% 58.83% 1.22 4.10 Qwen3.5-Plus 5.83% 16.17% 78.00% 1.72 31.00% 0.33% 68.67% 1.38 29.50% 1.50% 69.00% 1.40 4.50 Gemini-3.1-pro-preview 2.50% 24.83% 72.67% 1.70 25.33% 0.17% 74.50% 1.49 24.17% 1.33% 74.50% 1.50 4.69 
+
+Ovis1.6-9B[60] 11.83% 83.83% 4.33% 0.93 65.33% 0.67% 34.00% 0.69 49.33% 10.83% 39.83% 0.91 2.53 Ovis2.5-9B[53] 26.04% 37.56% 36.39% 1.10 15.33% 34.67% 50.00% 1.35 0.00% 23.50% 76.50% 1.76 4.21 Llama-3.2-11B[54] 12.83% 76.83% 10.33% 0.97 65.00% 2.83% 32.17% 0.67 48.67% 8.67% 42.67% 0.94 2.58 Molmo-7B-D[61] 33.17% 66.67% 0.17% 0.67 96.83% 0.67% 2.50% 0.06 63.50% 29.50% 7.00% 0.43 1.16 Phi4-vision[55] 18.00% 81.17% 0.83% 0.83 94.83% 1.33% 3.83% 0.09 46.33% 44.83% 8.83% 0.62 1.54 SenseNova-SI-1.1-8B[62] 71.33% 28.67% 0.00% 0.29 91.50% 0.17% 8.33% 0.17 67.50% 18.67% 13.83% 0.46 0.92 DeepseekVL-7B[63] 47.00% 52.67% 0.33% 0.53 93.17% 1.00% 5.83% 0.13 60.67% 17.50% 21.83% 0.61 1.27 LLaVA2-ov-7B[56] 8.33% 82.33% 9.33% 1.01 76.33% 1.17% 22.50% 0.46 46.33% 11.83% 41.83% 0.95 2.42 InternVL3.5-8B[32] 27.33% 65.33% 7.33% 0.80 81.00% 1.33% 17.67% 0.37 50.50% 24.00% 25.50% 0.75 1.92 InternVL3.5-14B[32] 38.33% 52.83% 8.83% 0.70 81.83% 0.83% 17.33% 0.35 53.83% 18.33% 27.83% 0.74 1.79 InternVL3.5-38B[32] 33.17% 49.83% 17.00% 0.84 66.67% 3.00% 30.33% 0.64 48.50% 13.83% 37.67% 0.89 2.37 InternVL3.5-30B-A3B[32] 29.83% 58.67% 11.50% 0.82 77.00% 4.00% 19.00% 0.42 44.33% 25.17% 30.50% 0.86 2.10 Qwen3VL-8B[31] 9.83% 57.33% 32.83% 1.23 66.83% 0.17% 33.00% 0.66 34.67% 6.67% 58.67% 1.24 3.13 Qwen3VL-32B[31] 13.17% 27.33% 59.50% 1.46 43.33% 2.50% 54.17% 1.11 16.83% 5.33% 77.83% 1.61 4.18 Qwen3VL-30B-A3B[31] 21.33% 42.00% 36.67% 1.15 58.67% 1.67% 39.67% 0.81 35.50% 7.00% 57.50% 1.22 3.18 KimiVL-A3B[57] 27.00% 48.83% 24.17% 0.97 56.50% 2.67% 40.83% 0.84 37.17% 16.50% 46.33% 1.09 2.90 TEOChat[58] 63.00% 36.67% 0.33% 0.37 88.50% 3.83% 7.67% 0.19 67.67% 19.83% 12.50% 0.45 1.01 EarthDial[37] 100.00% 0.00% 0.00% 0.00 99.83% 0.00% 0.17% 0.00 88.50% 0.00% 11.50% 0.23 0.23 DepictQA[10] 19.17% 50.83% 30.00% 1.11 83.83% 1.17% 15.00% 0.31 11.83% 71.00% 17.17% 1.05 2.47 
+
+Table 15: Distortion-wise quantitative results of VLMs on low-level perception for single images. 
+
+Model Blur ↑ Cloud ↑ Compre. ↑ Correct. ↑ Missing ↑ Noise ↑ Avg. ↑
+
+GPT-5.4 0.710 0.652 0.563 0.606 0.578 0.677 0.631 Qwen3.5-Plus 0.708 0.573 0.631 0.630 0.580 0.666 0.631 Gemini-3.1-pro-preview 0.752 0.675 0.812 0.814 0.840 0.819 0.785 
+
+Ovis1.6-9B[60] 0.720 0.610 0.579 0.561 0.498 0.653 0.604 Ovis2.5-9B[53] 0.553 0.368 0.371 0.369 0.433 0.522 0.436 Llama-3.2-11B[54] 0.558 0.343 0.443 0.468 0.387 0.503 0.450 Molmo-7B-D[61] 0.508 0.367 0.561 0.464 0.338 0.487 0.454 Phi4-vision[55] 0.465 0.310 0.343 0.388 0.365 0.549 0.403 SenseNova-SI-1.1-8B[62] 0.413 0.395 0.473 0.513 0.502 0.587 0.480 DeepseekVL-7B[63] 0.542 0.388 0.418 0.463 0.313 0.551 0.446 LLaVA1.6-7B[33] 0.493 0.303 0.491 0.475 0.312 0.496 0.428 LLaVA2-ov-7B[56] 0.712 0.612 0.663 0.651 0.550 0.686 0.646 InternVL3.5-8B[32] 0.495 0.327 0.477 0.461 0.473 0.509 0.457 InternVL3.5-14B[32] 0.445 0.465 0.460 0.519 0.420 0.468 0.463 InternVL3.5-38B[32] 0.513 0.512 0.407 0.521 0.485 0.526 0.494 InternVL3.5-30B-A3B[32] 0.510 0.432 0.564 0.533 0.508 0.540 0.514 Qwen3VL-8B[31] 0.663 0.513 0.487 0.561 0.518 0.647 0.565 Qwen3VL-32B[31] 0.718 0.588 0.663 0.575 0.597 0.689 0.638 Qwen3VL-30B-A3B[31] 0.613 0.437 0.602 0.565 0.497 0.647 0.560 KimiVL-A3B[57] 0.570 0.465 0.540 0.633 0.483 0.624 0.553 GeoChat[21] 0.358 0.310 0.322 0.396 0.270 0.373 0.338 TEOChat[58] 0.412 0.412 0.336 0.445 0.310 0.445 0.393 EarthDial[37] 0.457 0.518 0.479 0.534 0.595 0.476 0.510 LHRS-Bot[20] 0.322 0.430 0.290 0.451 0.362 0.417 0.379 LHRS-Bot-nova[59] 0.305 0.265 0.240 0.324 0.353 0.410 0.316 
+
+degradations, but often remain partially correct: they identify some visible cues while failing to jointly cover degradation type, severity, and impact on remote-sensing interpretation. 
+
+Similar aggregate scores can hide different error structures. The full distributions show that a single Sum score cannot fully characterize diagnostic behavior. For example, Table 14 shows that GPT-5.4 and Ovis2.5-9B obtain comparable Sum scores of 4.10 and 4.21, but with different distributions: GPT-5.4 achieves higher P2 in Completeness (76.83%), whereas Ovis2.5-9B achieves higher P2 in Faithfulness (76.50%) but much lower P2 in Completeness (36.39%). This suggests that similar aggregate scores may reflect different bottlenecks, making the P0/P 1/P 2 distributions necessary for interpreting open-ended diagnostic performance. 32 Table 16: Distortion-wise quantitative results of VLMs on low-level perception for paired images.                                                                                                                                                           
+
+> Model Blur ↑Cloud ↑Compre. ↑Correct. ↑Missing ↑Noise ↑Avg. ↑
+> GPT-5.4 0.764 0.852 0.689 0.806 0.709 0.834 0.776 Qwen3.5-Plus 0.752 0.824 0.715 0.776 0.755 0.846 0.778 Gemini-3.1-pro-preview 0.752 0.876 0.794 0.830 0.861 0.861 0.829
+> Ovis1.6-9B[60] 0.609 0.467 0.495 0.470 0.439 0.606 0.515 Ovis2.5-9B[53] 0.576 0.503 0.448 0.570 0.567 0.582 0.541 Llama-3.2-11B[54] 0.536 0.473 0.405 0.593 0.382 0.482 0.479 Molmo-7B-D[61] 0.542 0.515 0.580 0.739 0.630 0.496 0.584 Phi4-vision[55] 0.509 0.515 0.442 0.564 0.494 0.632 0.526 SenseNova-SI-1.1-8B[62] 0.397 0.542 0.524 0.475 0.467 0.627 0.505 DeepseekVL-7B[63] 0.524 0.536 0.508 0.502 0.403 0.507 0.497 LLaVA2-ov-7B[56] 0.621 0.524 0.558 0.459 0.439 0.616 0.536 InternVL3.5-8B[32] 0.497 0.633 0.506 0.577 0.506 0.638 0.560 InternVL3.5-14B[32] 0.530 0.697 0.544 0.652 0.512 0.588 0.587 InternVL3.5-38B[32] 0.494 0.682 0.539 0.536 0.667 0.585 0.584 InternVL3.5-30B-A3B[32] 0.579 0.712 0.692 0.632 0.748 0.642 0.668 Qwen3VL-8B[31] 0.658 0.691 0.559 0.673 0.627 0.696 0.651 Qwen3VL-32B[31] 0.727 0.803 0.620 0.700 0.736 0.792 0.730 Qwen3VL-30B-A3B[31] 0.700 0.727 0.680 0.750 0.742 0.690 0.715 KimiVL-A3B[57] 0.548 0.591 0.594 0.557 0.570 0.642 0.584 TEOChat[58] 0.336 0.430 0.308 0.364 0.255 0.333 0.338 EarthDial[37] 0.336 0.539 0.400 0.348 0.400 0.368 0.399
+
+E.3 Distortion-wise Analysis 
+
+This section provides a distortion-wise analysis of low-level perception performance. Table 15 and Table 16 report results under the single-image and paired-image settings, respectively, across six major distortion categories: blur , cloud , compression , correction , missing , and noise . We include this breakdown because averaged scores can obscure category-specific weaknesses, where a model may perform well on salient distortions but fail on subtle or domain-specific artifacts. This analysis therefore helps determine whether model performance reflects general low-level perception or sensitivity to particular degradation patterns. 
+
+Distortion categories show uneven difficulty. The distortion-wise results show that VLMs per-ceive different degradation categories unevenly. Overall, blur and noise are relatively easier for strong models, especially in the single-image setting. For example, Table 15 shows that Qwen3VL-32B achieves 0.718 and 0.689 on blur and noise , respectively, while GPT-5.4 obtains 0.710 and 0.677. In contrast, cloud , missing , and some compression /correction degradations more often reduce perfor-mance, as they involve occlusion, structural loss, compression artifacts, or remote-sensing-specific imaging changes. Although paired images alleviate part of this difficulty, e.g., Gemini-3.1-pro-preview reaches 0.876, 0.861, and 0.861 on cloud , missing , and noise in Table 16, clear gaps remain across categories. This indicates that low-level degradation perception is not a uniform capability, but is strongly affected by the visual form and comparability of each distortion type. 
+
+Reference gain is distortion-dependent. The performance gain brought by paired images is not uniform across distortion categories, but strongly depends on the specific degradation type. As shown in Table 15 and Table 16, Qwen3VL-32B improves from 0.638 in the single-image setting to 0.730 in the paired-image setting, with large gains on cloud (0.588 to 0.803), missing (0.597 to 0.736), and noise (0.689 to 0.792), but only a small gain on blur (0.718 to 0.727). Similarly, InternVL3.5-30B-A3B improves from 0.432 to 0.712 on cloud and from 0.508 to 0.748 on missing . These results suggest that reference images are more helpful for degradations with clear spatial discrepancies or structural changes, such as cloud occlusion, missing regions, and noise, while providing more limited gains for blur , which relies more on edge sharpness and fine-grained texture comparison. Thus, the advantage of the paired setting does not simply come from additional visual input, but depends on whether models can attribute cross-image differences to specific degradation types. 
+
+F Limitations & Solutions 
+
+SenseBench provides a systematic framework for evaluating low-level visual perception in remote sensing vision-language models. Nevertheless, its benchmark construction and evaluation protocol inevitably involve several practical constraints and potential sources of bias. We therefore discuss the 33 main limitations below, along with the mitigation strategies adopted to improve the reliability of the benchmark. 
+
+F.1 Biases in synthetic degradations. Limitation. Part of SenseBench is constructed using algorithmically synthesized degradations. We acknowledge that such synthetic degradations may not fully match the distribution of real degraded remote sensing images. In particular, degradation algorithms may introduce systematic biases ,causing synthesized samples to deviate from real-world degradation patterns. Incidental biases 
+
+may also arise from parameter sampling, scene content, or unsuccessful synthesis cases, resulting in unnatural, ambiguous, or low-quality samples. These biases may affect benchmark data quality and, consequently, the reliability of model evaluation. 
+
+Current Solution. In real-world remote sensing scenarios, degradations are diverse, irregular, and difficult to exhaustively annotate at scale. It is therefore challenging to manually collect a large-scale benchmark that simultaneously covers broad geographic regions, diverse degradation types, and multiple severity levels. Controlled degradation synthesis has thus been widely adopted in prior IQA benchmarks, such as LIVE[ 64 ], TID2013[ 65 ], and KADID-10k[ 66 ]. SenseBench follows this common practice while avoiding exclusive reliance on synthetic data . For degradation types that can be reliably collected, such as cloud occlusion, SAR speckle noise, and SAR sidelobe artifacts, we manually collect real degraded samples. For synthesized degradation types, we design the generation procedures according to standard image degradation mechanisms, including noise, blur, compression, missing regions, cloud or haze contamination, and geometric or radiometric correction errors, thereby reducing potential systematic bias . To further mitigate incidental bias , we conduct human inspection, remove abnormal samples, and re-synthesize invalid cases, as described in Section D. Although these measures cannot fully close the gap between synthetic and real degradations, controlled synthesis provides a practical, reproducible, and scalable solution under the current difficulty of large-scale real degradation annotation. 
+
+F.2 Annotation bias in diagnostic descriptions Limitation. The open-ended diagnostic description task in SenseBench involves LLM-assisted annotation during data construction. Specifically, we use GPT-5.2 to assist in generating diagnostic descriptions. While this improves annotation efficiency, it may also introduce model-specific writing patterns , prompt sensitivity , or annotation errors if the generated outputs are used without verification. 
+
+Current solution. Our annotation process is not a fully automatic generation pipeline. During data construction, the LLM is provided with the clean image, the degraded image, and structured ground-truth metadata, including the degradation type, degradation name, and severity level. Therefore, the descriptions are generated under explicit visual and semantic grounding , rather than through unconstrained generation. We further adopt a human–LLM collaborative workflow: the LLM is used to improve annotation efficiency and linguistic consistency, while human annotators review, correct, and filter the generated descriptions. This design enables scalable annotation while reducing the cost of fully manual writing and mitigating both LLM-induced bias and the subjective bias of individual annotators. 
+
+F.3 Judge-model bias in open-ended evaluation Limitation. SenseBench evaluates open-ended diagnostic responses using Prometheus, a model de-signed for LLM-as-judge evaluation, rather than relying entirely on human scoring. We acknowledge that such judge-based evaluation may inherit evaluator-model biases and cannot fully substitute expert human assessment. 
+
+Current solution. Exhaustive human evaluation is impractical at the scale of our benchmark. With more than 20 evaluated models, 1,200 open-ended questions per model, and three scoring dimensions per response, the evaluation requires tens of thousands of scalar judgments, approaching 100k scores when repeated trials and invalid runs are included. Assuming one minute per score, this would require approximately 1,667 person-hours. We therefore adopt an LLM-as-judge protocol, which has 34 also been used in prior open-ended multimodal evaluation benchmarks, such as Q-Bench [ 67 ], MM-Vet [ 68 ], and LLaVA-Bench [ 33 ]. To assess its reliability, we conduct a sampled human-alignment study in Section D.3. The results show that the LLM judge achieves high correlation with human scores, and that the sampled model ranking is consistent between human evaluation and LLM-based evaluation. These results suggest that our judge-based protocol provides a scalable and sufficiently reliable approximation to human evaluation. 
+
+G Broader impacts 
+
+SenseBench may contribute positively to the development of more reliable VLMs for low-level visual perception and diagnostic description in remote sensing. By providing a systematic evaluation protocol for image degradations, it can support image selection, quality control, and reliability assessment in Earth observation workflows. As SenseBench is an evaluation benchmark rather than a deployed decision-making system, its direct negative societal impact is limited. Nevertheless, VLM-generated diagnostic descriptions may be misused if treated as authoritative quality assessments. Such over-reliance could affect downstream image selection or interpretation, especially in applications requiring expert domain knowledge. Therefore, SenseBench should be used as an assistive evaluation tool and combined with human expert judgment, rather than used for autonomous decision-making. 35 NeurIPS Paper Checklist 
+
+1. Claims 
+
+Question: Do the main claims made in the abstract and introduction accurately reflect the paper’s contributions and scope? Answer: [Yes] Justification: We present the contribution and scope of the SenseBench benchmark, and summarize the main experimental findings in the abstract and introduction. Guidelines: • The answer [N/A] means that the abstract and introduction do not include the claims made in the paper. • The abstract and/or introduction should clearly state the claims made, including the contributions made in the paper and important assumptions and limitations. A [No] or [N/A] answer to this question will not be perceived well by the reviewers. • The claims made should match theoretical and experimental results, and reflect how much the results can be expected to generalize to other settings. • It is fine to include aspirational goals as motivation as long as it is clear that these goals are not attained by the paper. 2. Limitations 
+
+Question: Does the paper discuss the limitations of the work performed by the authors? Answer: [Yes] Justification: The paper discuss the limitations of the work in F. Guidelines: • The answer [N/A] means that the paper has no limitation while the answer [No] means that the paper has limitations, but those are not discussed in the paper. • The authors are encouraged to create a separate “Limitations” section in their paper. • The paper should point out any strong assumptions and how robust the results are to violations of these assumptions (e.g., independence assumptions, noiseless settings, model well-specification, asymptotic approximations only holding locally). The authors should reflect on how these assumptions might be violated in practice and what the implications would be. • The authors should reflect on the scope of the claims made, e.g., if the approach was only tested on a few datasets or with a few runs. In general, empirical results often depend on implicit assumptions, which should be articulated. • The authors should reflect on the factors that influence the performance of the approach. For example, a facial recognition algorithm may perform poorly when image resolution is low or images are taken in low lighting. Or a speech-to-text system might not be used reliably to provide closed captions for online lectures because it fails to handle technical jargon. • The authors should discuss the computational efficiency of the proposed algorithms and how they scale with dataset size. • If applicable, the authors should discuss possible limitations of their approach to address problems of privacy and fairness. • While the authors might fear that complete honesty about limitations might be used by reviewers as grounds for rejection, a worse outcome might be that reviewers discover limitations that aren’t acknowledged in the paper. The authors should use their best judgment and recognize that individual actions in favor of transparency play an impor-tant role in developing norms that preserve the integrity of the community. Reviewers will be specifically instructed to not penalize honesty concerning limitations. 3. Theory assumptions and proofs 
+
+Question: For each theoretical result, does the paper provide the full set of assumptions and a complete (and correct) proof? Answer: [N/A] 36 Justification: The paper does not include theoretical results, theorems, or formal proofs; it focuses on benchmark construction and empirical evaluation. Guidelines: • The answer [N/A] means that the paper does not include theoretical results. • All the theorems, formulas, and proofs in the paper should be numbered and cross-referenced. • All assumptions should be clearly stated or referenced in the statement of any theorems. • The proofs can either appear in the main paper or the supplemental material, but if they appear in the supplemental material, the authors are encouraged to provide a short proof sketch to provide intuition. • Inversely, any informal proof provided in the core of the paper should be complemented by formal proofs provided in appendix or supplemental material. • Theorems and Lemmas that the proof relies upon should be properly referenced. 4. Experimental result reproducibility 
+
+Question: Does the paper fully disclose all the information needed to reproduce the main ex-perimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)? Answer: [Yes] Justification: The paper provides the necessary information for reproducing the main experi-mental results. Specifically, the dataset construction process is described in Appendix B, and the evaluation settings, prompts, answer parsing rules, and implementation details are provided in Appendix C. Guidelines: • The answer [N/A] means that the paper does not include experiments. • If the paper includes experiments, a [No] answer to this question will not be perceived well by the reviewers: Making the paper reproducible is important, regardless of whether the code and data are provided or not. • If the contribution is a dataset and/or model, the authors should describe the steps taken to make their results reproducible or verifiable. • Depending on the contribution, reproducibility can be accomplished in various ways. For example, if the contribution is a novel architecture, describing the architecture fully might suffice, or if the contribution is a specific model and empirical evaluation, it may be necessary to either make it possible for others to replicate the model with the same dataset, or provide access to the model. In general. releasing code and data is often one good way to accomplish this, but reproducibility can also be provided via detailed instructions for how to replicate the results, access to a hosted model (e.g., in the case of a large language model), releasing of a model checkpoint, or other means that are appropriate to the research performed. • While NeurIPS does not require releasing code, the conference does require all submis-sions to provide some reasonable avenue for reproducibility, which may depend on the nature of the contribution. For example (a) If the contribution is primarily a new algorithm, the paper should make it clear how to reproduce that algorithm. (b) If the contribution is primarily a new model architecture, the paper should describe the architecture clearly and fully. (c) If the contribution is a new model (e.g., a large language model), then there should either be a way to access this model for reproducing the results or a way to reproduce the model (e.g., with an open-source dataset or instructions for how to construct the dataset). (d) We recognize that reproducibility may be tricky in some cases, in which case authors are welcome to describe the particular way they provide for reproducibility. In the case of closed-source models, it may be that access to the model is limited in some way (e.g., to registered users), but it should be possible for other researchers to have some path to reproducing or verifying the results. 37 5. Open access to data and code 
+
+Question: Does the paper provide open access to the data and code, with sufficient instruc-tions to faithfully reproduce the main experimental results, as described in supplemental material? Answer: [Yes] Justification: The dataset and code are provided here. We provide detailed evaluation protocols, implementation settings, and reproduction details in Appendix C. Guidelines: • The answer [N/A] means that paper does not include experiments requiring code. • Please see the NeurIPS code and data submission guidelines ( https://neurips.cc/ public/guides/CodeSubmissionPolicy ) for more details. • While we encourage the release of code and data, we understand that this might not be possible, so [No] is an acceptable answer. Papers cannot be rejected simply for not including code, unless this is central to the contribution (e.g., for a new open-source benchmark). • The instructions should contain the exact command and environment needed to run to reproduce the results. See the NeurIPS code and data submission guidelines ( https: //neurips.cc/public/guides/CodeSubmissionPolicy ) for more details. • The authors should provide instructions on data access and preparation, including how to access the raw data, preprocessed data, intermediate data, and generated data, etc. • The authors should provide scripts to reproduce all experimental results for the new proposed method and baselines. If only a subset of experiments are reproducible, they should state which ones are omitted from the script and why. • At submission time, to preserve anonymity, the authors should release anonymized versions (if applicable). • Providing as much information as possible in supplemental material (appended to the paper) is recommended, but including URLs to data and code is permitted. 6. Experimental setting/details 
+
+Question: Does the paper specify all the training and test details (e.g., data splits, hyperpa-rameters, how they were chosen, type of optimizer) necessary to understand the results? Answer: [Yes] Justification: We provide the experimental settings in Section 4, and more details are provided in Appendix C. Guidelines: • The answer [N/A] means that the paper does not include experiments. • The experimental setting should be presented in the core of the paper to a level of detail that is necessary to appreciate the results and make sense of them. • The full details can be provided either with the code, in appendix, or as supplemental material. 7. Experiment statistical significance 
+
+Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments? Answer: [No] Justification: The experiments are conducted under a fixed benchmark, fixed prompts, and fixed inference configurations to reduce evaluation variability, so repeated evaluations under the same setting yield identical results. Guidelines: • The answer [N/A] means that the paper does not include experiments. • The authors should answer [Yes] if the results are accompanied by error bars, confidence intervals, or statistical significance tests, at least for the experiments that support the main claims of the paper. 38 • The factors of variability that the error bars are capturing should be clearly stated (for example, train/test split, initialization, random drawing of some parameter, or overall run with given experimental conditions). • The method for calculating the error bars should be explained (closed form formula, call to a library function, bootstrap, etc.) • The assumptions made should be given (e.g., Normally distributed errors). • It should be clear whether the error bar is the standard deviation or the standard error of the mean. • It is OK to report 1-sigma error bars, but one should state it. The authors should preferably report a 2-sigma error bar than state that they have a 96% CI, if the hypothesis of Normality of errors is not verified. • For asymmetric distributions, the authors should be careful not to show in tables or figures symmetric error bars that would yield results that are out of range (e.g., negative error rates). • If error bars are reported in tables or plots, the authors should explain in the text how they were calculated and reference the corresponding figures or tables in the text. 8. Experiments compute resources 
+
+Question: For each experiment, does the paper provide sufficient information on the com-puter resources (type of compute workers, memory, time of execution) needed to reproduce the experiments? Answer: [Yes] Justification: We report the compute resources and approximate inference cost in Ap-pendix C. Guidelines: • The answer [N/A] means that the paper does not include experiments. • The paper should indicate the type of compute workers CPU or GPU, internal cluster, or cloud provider, including relevant memory and storage. • The paper should provide the amount of compute required for each of the individual experimental runs as well as estimate the total compute. • The paper should disclose whether the full research project required more compute than the experiments reported in the paper (e.g., preliminary or failed experiments that didn’t make it into the paper). 9. Code of ethics 
+
+Question: Does the research conducted in the paper conform, in every respect, with the NeurIPS Code of Ethics https://neurips.cc/public/EthicsGuidelines ?Answer: [Yes] Justification: We have reviewed the NeurIPS Code of Ethics and confirm that the research conforms to it. The annotators’ remuneration is described in Section D; the data mainly come from open data sources in Google Earth Engine, whose Terms of Service 9 allow use for non-commercial activities and research or educational publications. Guidelines: • The answer [N/A] means that the authors have not reviewed the NeurIPS Code of Ethics. • If the authors answer [No], they should explain the special circumstances that require a deviation from the Code of Ethics. • The authors should make sure to preserve anonymity (e.g., if there is a special consid-eration due to laws or regulations in their jurisdiction). 10. Broader impacts 
+
+Question: Does the paper discuss both potential positive societal impacts and negative societal impacts of the work performed? 
+
+> 9https://earthengine.google.com/terms/
+
+39 Answer: [Yes] Justification: We discuss the positive societal impact and potential negative impact of SenseBench in Section G. Guidelines: • The answer [N/A] means that there is no societal impact of the work performed. • If the authors answer [N/A] or [No], they should explain why their work has no societal impact or why the paper does not address societal impact. • Examples of negative societal impacts include potential malicious or unintended uses (e.g., disinformation, generating fake profiles, surveillance), fairness considerations (e.g., deployment of technologies that could make decisions that unfairly impact specific groups), privacy considerations, and security considerations. • The conference expects that many papers will be foundational research and not tied to particular applications, let alone deployments. However, if there is a direct path to any negative applications, the authors should point it out. For example, it is legitimate to point out that an improvement in the quality of generative models could be used to generate Deepfakes for disinformation. On the other hand, it is not needed to point out that a generic algorithm for optimizing neural networks could enable people to train models that generate Deepfakes faster. • The authors should consider possible harms that could arise when the technology is being used as intended and functioning correctly, harms that could arise when the technology is being used as intended but gives incorrect results, and harms following from (intentional or unintentional) misuse of the technology. • If there are negative societal impacts, the authors could also discuss possible mitigation strategies (e.g., gated release of models, providing defenses in addition to attacks, mechanisms for monitoring misuse, mechanisms to monitor how a system learns from feedback over time, improving the efficiency and accessibility of ML). 11. Safeguards 
+
+Question: Does the paper describe safeguards that have been put in place for responsible release of data or models that have a high risk for misuse (e.g., pre-trained language models, image generators, or scraped datasets)? Answer: [N/A] Justification: The paper does not release high-risk models, image generators, or scraped personal datasets; it only releases a remote sensing evaluation benchmark and code. Guidelines: • The answer [N/A] means that the paper poses no such risks. • Released models that have a high risk for misuse or dual-use should be released with necessary safeguards to allow for controlled use of the model, for example by requiring that users adhere to usage guidelines or restrictions to access the model or implementing safety filters. • Datasets that have been scraped from the Internet could pose safety risks. The authors should describe how they avoided releasing unsafe images. • We recognize that providing effective safeguards is challenging, and many papers do not require this, but we encourage authors to take this into account and make a best faith effort. 12. Licenses for existing assets 
+
+Question: Are the creators or original owners of assets (e.g., code, data, models), used in the paper, properly credited and are the license and terms of use explicitly mentioned and properly respected? Answer: [Yes] Justification: We use several publicly available assets in this work, including 29 vision-language models, remote sensing datasets, and open-source software libraries. The evaluated models are obtained from their official releases, and we follow their corresponding licenses and usage terms, such as MIT, Apache-2.0, or other model-specific licenses. For data 40 construction, we use publicly accessible satellite imagery, including Sentinel-2 and Landsat-8, which are provided under open-access data policies. We respect the terms of use of all data providers and provide proper attribution to the original sources. We also use open-source implementation frameworks and libraries, including MS-SWiFT and Vllm, and credit them according to their respective licenses. Guidelines: • The answer [N/A] means that the paper does not use existing assets. • The authors should cite the original paper that produced the code package or dataset. • The authors should state which version of the asset is used and, if possible, include a URL. • The name of the license (e.g., CC-BY 4.0) should be included for each asset. • For scraped data from a particular source (e.g., website), the copyright and terms of service of that source should be provided. • If assets are released, the license, copyright information, and terms of use in the package should be provided. For popular datasets, paperswithcode.com/datasets 
+
+has curated licenses for some datasets. Their licensing guide can help determine the license of a dataset. • For existing datasets that are re-packaged, both the original license and the license of the derived asset (if it has changed) should be provided. • If this information is not available online, the authors are encouraged to reach out to the asset’s creators. 13. New assets 
+
+Question: Are new assets introduced in the paper well documented and is the documentation provided alongside the assets? Answer: [Yes] Justification: We introduce SenseBench as a new benchmark and provide documentation for its taxonomy, dataset construction, statistics, evaluation protocols, and quality control in Appendix B, Appendix C, and Section D. Guidelines: • The answer [N/A] means that the paper does not release new assets. • Researchers should communicate the details of the dataset/code/model as part of their submissions via structured templates. This includes details about training, license, limitations, etc. • The paper should discuss whether and how consent was obtained from people whose asset is used. • At submission time, remember to anonymize your assets (if applicable). You can either create an anonymized URL or include an anonymized zip file. 14. Crowdsourcing and research with human subjects 
+
+Question: For crowdsourcing experiments and research with human subjects, does the paper include the full text of instructions given to participants and screenshots, if applicable, as well as details about compensation (if any)? Answer: [Yes] Justification: The paper provides the annotation and quality-control instructions, annotator information, compensation details, and screenshots of the annotation interface in Section D. Guidelines: • The answer [N/A] means that the paper does not involve crowdsourcing nor research with human subjects. • Including this information in the supplemental material is fine, but if the main contribu-tion of the paper involves human subjects, then as much detail as possible should be included in the main paper. • According to the NeurIPS Code of Ethics, workers involved in data collection, curation, or other labor should be paid at least the minimum wage in the country of the data collector. 41 15. Institutional review board (IRB) approvals or equivalent for research with human subjects 
+
+Question: Does the paper describe potential risks incurred by study participants, whether such risks were disclosed to the subjects, and whether Institutional Review Board (IRB) approvals (or an equivalent approval/review based on the requirements of your country or institution) were obtained? Answer: [N/A] Justification: This paper does not involve research with human subjects. Guidelines: • The answer [N/A] means that the paper does not involve crowdsourcing nor research with human subjects. • Depending on the country in which research is conducted, IRB approval (or equivalent) may be required for any human subjects research. If you obtained IRB approval, you should clearly state this in the paper. • We recognize that the procedures for this may vary significantly between institutions and locations, and we expect authors to adhere to the NeurIPS Code of Ethics and the guidelines for their institution. • For initial submissions, do not include any information that would break anonymity (if applicable), such as the institution conducting the review. 16. Declaration of LLM usage 
+
+Question: Does the paper describe the usage of LLMs if it is an important, original, or non-standard component of the core methods in this research? Note that if the LLM is used only for writing, editing, or formatting purposes and does not impact the core methodology, scientific rigor, or originality of the research, declaration is not required. Answer: [Yes] Justification: We describe the use of LLMs as part of the core benchmark construction and evaluation process, including GPT-assisted diagnostic description generation and LLM-as-a-Judge evaluation, in Appendix B and Appendix C. Guidelines: • The answer [N/A] means that the core method development in this research does not involve LLMs as any important, original, or non-standard components. • Please refer to our LLM policy in the NeurIPS handbook for what should or should not be described. 42
