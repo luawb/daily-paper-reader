@@ -25,3 +25,65 @@ subscriptions:
     stage: A
     diff_threshold_pct: 15
   keyword_recall_mode: or
+  intent_profiles:
+    - tag: XIQA
+      description: 图像质量评价与推理方法
+      enabled: true
+      paper_sources:
+        - arxiv
+      keywords:
+        - keyword: image quality assessment
+          keyword_cn: 图像质量评价
+          query: assessing the quality of images
+        - keyword: explainable image quality assessment
+          keyword_cn: 可解释图像质量评价
+          query: image quality assessment with explanations
+        - keyword: multimodal large language model
+          keyword_cn: 多模态大语言模型
+          query: large language model that processes images and text
+        - keyword: quality description generation
+          keyword_cn: 质量描述生成
+          query: generating natural language descriptions of image quality
+        - keyword: image quality description
+          keyword_cn: 图像质量描述
+          query: describing the quality of images
+        - keyword: image quality evaluation
+          keyword_cn: 图像质量评估
+          query: evaluating the quality of images
+      intent_queries:
+        - query: image quality reasoning and explanation generation via multimodal large models
+          query_cn: 通过多模态大模型进行图像质量推理与解释生成
+          enabled: true
+          source: manual
+          note: ''
+        - query: multimodal large language models for image quality reasoning and explanation generation
+          query_cn: 用于图像质量推理和解释生成的多模态大语言模型
+          enabled: true
+          source: manual
+          note: ''
+        - query: reinforcement learning for image quality assessment and description
+          query_cn: 用于图像质量评价和描述的强化学习
+          enabled: true
+          source: manual
+          note: ''
+        - query: reasoning based perceptual image quality evaluation with explanations
+          query_cn: 基于推理的感知图像质量评估与解释
+          enabled: true
+          source: manual
+          note: ''
+      updated_at: '2026-06-01T13:39:50.715Z'
+source_backends:
+  arxiv:
+    papers_table: arxiv_papers
+    use_vector_rpc: true
+    vector_rpc: match_arxiv_papers
+    vector_rpc_exact: match_arxiv_papers_exact
+    use_bm25_rpc: true
+    bm25_rpc: match_arxiv_papers_bm25
+    sync_table: arxiv_sync_status
+    sync_success_value: success
+    schema: public
+    kind: supabase
+    enabled: true
+    url: https://lyucdwgefyfbmaiopjbk.supabase.co
+    anon_key: sb_publishable_lX-oi64Uxyd7SIVv3_w2Uw_MTOojeKq
