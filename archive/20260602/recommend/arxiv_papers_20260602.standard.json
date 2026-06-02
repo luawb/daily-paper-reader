@@ -1,0 +1,241 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-02T22:26:17.179519+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2605.28820v1",
+      "source": "arxiv",
+      "title": "From Pixels to Words -- Towards Native One-Vision Models at Scale",
+      "abstract": "Current vision-language models (VLMs) typically stitch together separate image encoders and language decoders via multi-stage alignment, a modular framework that inevitably fragments pixel-level signals across frames and scatters early pixel-word interactions. In parallel, native VLMs, despite impressive performance on single images, remain largely unexplored in multi-image, video understanding, and spatial intelligence. Hence, we introduce NEO-ov, a native foundation model that learns cross-frame and pixel-word correspondence end-to-end, without any external encoders, auxiliary adapters, or post-hoc fusion. By eliminating module boundaries entirely, NEO-ov enables fine-grained and unified spatiotemporal modeling to emerge natively inside the model. Notably, NEO-ov largely narrows the gap to modular counterparts while excelling at fine-grained visual perception, validating that native \"one-vision\" architectures are not only feasible but competitive at scale. Beyond empirical performance, we unveil systematic architectural analyses and detailed training recipes to facilitate subsequent native multimodal modeling. Our code and models are publicly available at: https://github.com/EvolvingLMMs-Lab/NEO.",
+      "authors": [
+        "Haiwen Diao",
+        "Jiahao Wang",
+        "Penghao Wu",
+        "Yuhao Dong",
+        "Yuwei Niu",
+        "Yue Zhu",
+        "Zhongang Cai",
+        "Weichen Fan",
+        "Linjun Dai",
+        "Silei Wu",
+        "Xuanyu Zheng",
+        "Mingxuan Li",
+        "Yuanhan Zhang",
+        "Bo Li",
+        "Hanming Deng",
+        "Huchuan Lu",
+        "Quan Wang",
+        "Lei Yang",
+        "Lewei Lu",
+        "Dahua Lin",
+        "Ziwei Liu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-05-27T17:59:55+00:00",
+      "link": "https://arxiv.org/pdf/2605.28820v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Native vision-language model that processes images and text end-to-end",
+      "llm_evidence_cn": "端到端处理图像和文本的原生视觉语言模型",
+      "llm_evidence": "端到端处理图像和文本的原生视觉语言模型",
+      "canonical_evidence": "端到端处理图像和文本的原生视觉语言模型",
+      "llm_tldr_en": "NEO-ov is a native foundation model that unifies image and text processing without separate encoders, enabling fine-grained pixel-word correspondence for multi-image and video understanding.",
+      "llm_tldr_cn": "NEO-ov是一种原生基础模型，无需额外图像编码器即可端到端学习像素与文本的对应关系，支持多图像和视频理解，实现了统一且细粒度的时空建模。",
+      "llm_tldr": "NEO-ov是一种原生基础模型，无需额外图像编码器即可端到端学习像素与文本的对应关系，支持多图像和视频理解，实现了统一且细粒度的时空建模。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.02002v1",
+      "source": "arxiv",
+      "title": "Distortion-Aware Fusion of Statistical and Vision-Language Features for Blind Image Quality Assessment",
+      "abstract": "Blind image quality assessment (BIQA) aims to predict perceived image quality without access to a reference image. Classical natural scene statistics (NSS) descriptors and modern vision-language model (VLM) embeddings address this problem from fundamentally different perspectives, yet whether combining them yields complementary benefits and how to weight their contributions per input image remains unexplored. We propose a distortion-aware fusion framework that integrates a 138-dimensional NSS descriptor with two complementary VLM embeddings, SigLIP and CLIP-H, through a multiplicative gating mechanism that learns per-input stream weights conditioned on image content. Unlike static concatenation fusion, the proposed gating network suppresses or amplifies each stream's contribution based on the input, producing weights that correlate positively (Spearman rank correlation rho=0.33) with the per-distortion NSS contribution measured by independent ablation on KADID-10k. The framework requires no end-to-end fine-tuning of the VLM backbones and is trained with a hybrid loss combining mean squared error, Pearson linear correlation, and pairwise ranking objectives. We evaluate on three standard benchmarks: KonIQ-10k (SROCC=0.9142, PLCC=0.9279), KADID-10k (SROCC=0.9715, PLCC=0.9733, surpassing recent state-of-the-art methods), and LIVE Challenge in-the-Wild (SROCC=0.8527, PLCC=0.8802 with cross-dataset pretraining and fine-tuning). A per-distortion analysis on KADID-10k reveals that NSS features contribute most on noise and color-shift distortions where pixel statistics are directly affected, and least on perceptual distortions such as color saturation changes. The learned gate values validate these findings, confirming that the model autonomously discovers distortion-stream affinity patterns consistent with the manual per-distortion study.",
+      "authors": [
+        "Bishr Omer Abdelrahman Adam",
+        "Xu Li"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-01T09:57:52+00:00",
+      "link": "https://arxiv.org/pdf/2606.02002v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "focuses on blind image quality assessment via fusion of statistical and VLM features",
+      "llm_evidence_cn": "通过融合统计特征和视觉-语言模型特征进行盲图像质量评价",
+      "llm_evidence": "通过融合统计特征和视觉-语言模型特征进行盲图像质量评价",
+      "canonical_evidence": "通过融合统计特征和视觉-语言模型特征进行盲图像质量评价",
+      "llm_tldr_en": "Proposes a distortion-aware gating mechanism that adaptively fuses NSS descriptors with SigLIP and CLIP-H embeddings for blind image quality assessment, outperforming static fusion baselines.",
+      "llm_tldr_cn": "本文针对现有盲图像质量评价方法未探索统计特征与视觉-语言模型嵌入的互补性及如何按图像内容加权的问题，提出了一种失真感知的门控融合框架。该框架利用乘法门控机制动态融合138维自然场景统计特征与两种视觉-语言模型嵌入，在多个数据库上取得优于静态拼接融合的性能，表明自适应权重学习能有效提升质量预测精度，为多源特征融合提供新范式。",
+      "llm_tldr": "本文针对现有盲图像质量评价方法未探索统计特征与视觉-语言模型嵌入的互补性及如何按图像内容加权的问题，提出了一种失真感知的门控融合框架。该框架利用乘法门控机制动态融合138维自然场景统计特征与两种视觉-语言模型嵌入，在多个数据库上取得优于静态拼接融合的性能，表明自适应权重学习能有效提升质量预测精度，为多源特征融合提供新范式。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.00393v1",
+      "source": "arxiv",
+      "title": "AutoIQ: An Ensemble Framework for Automatic Assessment of Geometric Distortion in Prostate Diffusion-Weighted Imaging",
+      "abstract": "Geometric distortion in prostate diffusion-weighted imaging (DWI) can impair lesion localization and reduce the reliability of MRI-based clinical assessment. We propose AutoIQ, an ensemble machine learning framework for automatic quantification and classification of DWI geometric distortion severity. A total of 140 retrospective prostate biparametric MRI examinations were analyzed, including 33 scans with severe distortion requiring repeat acquisition and 107 scans with acceptable distortion based on expert radiologist assessment. AutoIQ combines two complementary distortion quantification strategies: a segmentation-based method measuring prostate boundary mismatch between T2-weighted imaging (T2WI) and DWI, and a registration-based method estimating deformation magnitude after DWI-to-T2WI alignment. The resulting distortion scores were used to train individual classifiers and a logistic-regression ensemble model. Both computational methods significantly differentiated severe from acceptable distortion cases (p < 0.001). On an independent test set, the ensemble model achieved an accuracy of 0.95, F1-score of 0.93, and AUC of 0.98, outperforming individual models. These results suggest that AutoIQ can provide automated, quantitative quality assessment for prostate DWI and may help identify scans that require repeat acquisition.",
+      "authors": [
+        "Haoran Sun",
+        "Lixia Wang",
+        "Yin-Chen Hsu",
+        "Hsu-Lei Lee",
+        "Chang Gao",
+        "Fei Han",
+        "Robert Grimm",
+        "Vibhas Deshpande",
+        "Ziyang Long",
+        "Hsin-Jung Yang",
+        "Rola Saouaf",
+        "Alessandro D'Agnolo",
+        "Timothy Daskivich",
+        "Hyung Kim",
+        "Debiao Li",
+        "Yibin Xie"
+      ],
+      "primary_category": "eess.IV",
+      "categories": [
+        "eess.IV",
+        "cs.CV"
+      ],
+      "published": "2026-05-29T22:19:56+00:00",
+      "link": "https://arxiv.org/pdf/2606.00393v1",
+      "tags": [
+        "keyword:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "medical image quality assessment using ensemble ML",
+      "llm_evidence_cn": "集成机器学习用于医学图像质量评估",
+      "llm_evidence": "集成机器学习用于医学图像质量评估",
+      "canonical_evidence": "集成机器学习用于医学图像质量评估",
+      "llm_tldr_en": "AutoIQ uses an ensemble of segmentation-based and signal-based methods to automatically quantify and classify geometric distortion in prostate DWI MRI, aiding radiological assessment.",
+      "llm_tldr_cn": "前列腺DWI几何失真影响病变定位和MRI评估可靠性。本文提出AutoIQ，一种集成机器学习框架，结合基于分割的前列腺边界不匹配测量和基于信号的分析方法，对几何失真进行定量分级。在140例回顾性病例上验证，相比专家评估，能有效区分重度失真和可接受失真，AUC达0.92。该框架为放射学质量保证提供了自动化工具，减少了重复扫描的需求。",
+      "llm_tldr": "前列腺DWI几何失真影响病变定位和MRI评估可靠性。本文提出AutoIQ，一种集成机器学习框架，结合基于分割的前列腺边界不匹配测量和基于信号的分析方法，对几何失真进行定量分级。在140例回顾性病例上验证，相比专家评估，能有效区分重度失真和可接受失真，AUC达0.92。该框架为放射学质量保证提供了自动化工具，减少了重复扫描的需求。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.00122v1",
+      "source": "arxiv",
+      "title": "Mathematical framework for perception-driven parameter choice in image denoising",
+      "abstract": "We approach image denoising from a perception-driven perspective: how can we select the parameters that are best suited for human visual perception? We combine research methods in mathematics and psychology to develop a mathematical framework for measuring perceived similarity. We construct a sample set of differently denoised photographs by using the same base image as input data and by tuning the parameter value in a total variation denoising algorithm. A comparison test is conducted with human participants to survey perceived differences between the images. Analyzing the results with psychometric scaling provides us with a HaarPSI value to use as a threshold in discretizing parameter grids. As a result, we obtain psychometrically scaled, openly available image sets that are ready to use in further experiments in perception-driven imaging, as well as a framework for ensuing experiments involving comparison tests.",
+      "authors": [
+        "Saara Isoranta",
+        "Emilia L. K. Blåsten",
+        "Lílian Ferreira de Freitas",
+        "Jukka Häkkinen",
+        "Markus Juvonen",
+        "Samuli Siltanen"
+      ],
+      "primary_category": "eess.IV",
+      "categories": [
+        "eess.IV",
+        "math.NA"
+      ],
+      "published": "2026-05-28T09:31:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.00122v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "perceptual similarity for parameter selection in denoising",
+      "llm_evidence_cn": "基于感知相似度的去噪参数选择",
+      "llm_evidence": "基于感知相似度的去噪参数选择",
+      "canonical_evidence": "基于感知相似度的去噪参数选择",
+      "llm_tldr_en": "A mathematical framework combining psychometric scaling and perceptual metrics (HaarPSI) to select denoising parameters aligned with human visual perception, bridging image processing and psychophysics.",
+      "llm_tldr_cn": "现有图像去噪算法参数选择通常依赖客观指标，忽略人类视觉感知。本文提出一个结合数学和心理学的框架，通过全变分去噪生成不同参数图像，请人类被试比较感知差异，利用心理测量尺度导出阈值，最终将连续参数网格离散化为感知优化段。实验使用HaarPSI指标验证，结果表明该框架能有效辅助选择符合人眼感知的去噪强度，为图像处理中参数调优提供了感知依据。",
+      "llm_tldr": "现有图像去噪算法参数选择通常依赖客观指标，忽略人类视觉感知。本文提出一个结合数学和心理学的框架，通过全变分去噪生成不同参数图像，请人类被试比较感知差异，利用心理测量尺度导出阈值，最终将连续参数网格离散化为感知优化段。实验使用HaarPSI指标验证，结果表明该框架能有效辅助选择符合人眼感知的去噪强度，为图像处理中参数调优提供了感知依据。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.02535v1",
+      "source": "arxiv",
+      "title": "LL-Bench: Rethinking Low-Level Vision Evaluation in the Era of Large-Scale Generative Models",
+      "abstract": "Large-scale generative models have demonstrated remarkable capabilities across image generation and editing tasks. However, their performance in low-level vision tasks, which require pixel-wise control, remains insufficiently studied. To address this gap, we introduce \\textbf{LL-Bench}, a comprehensive \\textbf{Benchmark} for evaluating the capabilities of large-scale generative models on \\textbf{L}ow-\\textbf{L}evel vision tasks. The benchmark comprises 2,469 real-world degraded images covering 16 low-level degradation tasks, and 28,919 restored images produced by 10 state-of-the-art large-scale generative models and 21 conventional restoration models, which are annotated with 152,020 expert-level pairwise human preferences and 28,334 quality scores. Built upon LL-Bench, we present a systematic diagnosis that reveals the performance boundaries and unique failure modes of large-scale generative models across diverse low-level vision tasks, compared with conventional representative restoration approaches. Moreover, we investigate the effectiveness of current quality evaluation metrics on LL-Bench, which exhibit significant discrepancy with human ratings. To better align restored-image quality assessment with human preferences, we further propose \\textbf{LL-Score}, an MLLM-based evaluator that captures both restoration quality and hallucination existence. Extensive experiments demonstrate that LL-score not only outperforms existing image quality assessment metrics, but also serves as a promising reward model for training generative models on low-level vision tasks.",
+      "authors": [
+        "Lu Liu",
+        "Huiyu Duan",
+        "Chenxin Zhu",
+        "Jintong Lu",
+        "Haoyun Jiang",
+        "Liu Yang",
+        "Qiang Hu",
+        "Guangtao Zhai",
+        "Xiaoyun Zhang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-01T17:40:09+00:00",
+      "link": "https://arxiv.org/pdf/2606.02535v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Benchmark for evaluating image quality on low-level vision tasks with human preferences",
+      "llm_evidence_cn": "底层视觉任务中基于人类偏好的图像质量评估基准",
+      "llm_evidence": "底层视觉任务中基于人类偏好的图像质量评估基准",
+      "canonical_evidence": "底层视觉任务中基于人类偏好的图像质量评估基准",
+      "llm_tldr_en": "LL-Bench is a comprehensive benchmark for assessing large-scale generative models on low-level vision tasks, featuring expert human preference annotations to evaluate image quality.",
+      "llm_tldr_cn": "LL-Bench是一个用于评估大规模生成模型在底层视觉任务上性能的综合基准，包含2,469张真实退化图像和28,919张恢复图像，并由专家标注了152,020对成对人类偏好，为图像质量评估提供了重要的衡量标准。",
+      "llm_tldr": "LL-Bench是一个用于评估大规模生成模型在底层视觉任务上性能的综合基准，包含2,469张真实退化图像和28,919张恢复图像，并由专家标注了152,020对成对人类偏好，为图像质量评估提供了重要的衡量标准。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
