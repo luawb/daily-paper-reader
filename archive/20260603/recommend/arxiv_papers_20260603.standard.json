@@ -1,0 +1,97 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-03T22:41:42.749491+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2605.26656v1",
+      "source": "arxiv",
+      "title": "DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding",
+      "abstract": "Multimodal large language models are typically trained end-to-end to predict ground-truth answers, yet supervision signals are applied exclusively to text tokens. Visual tokens, the core carriers of visual information, are optimized only implicitly as part of the context, leading to coarse-grained visual understanding. Prior works attempt to supervise visual inputs but inevitably rely on auxiliary components such as additional decoders or forward passes, because visual tokens lack readily interpretable labels. This limits their practical applicability. In this work, we propose \\textbf{D}irect \\textbf{V}ision \\textbf{S}upervised \\textbf{F}ine-\\textbf{T}uning (DV-SFT), which constructs explicit, token-level supervision for visual tokens and trains them through the same next-token prediction objective used for text. Specifically, we exploit the direct vision--text correspondence in OCR-related scenarios and automatically label each visual token with the word in its corresponding image patch. DV-SFT treats the MLLM as a black box, requiring no architectural modifications or additional forward passes. Extensive experiments demonstrate the superiority of direct vision supervision. DV-SFT consistently outperforms standard SFT across three in-domain and four out-of-domain benchmarks. Further analyses show that vision supervision effectively enhances fine-grained visual understanding and achieves higher multimodal alignment efficiency.",
+      "authors": [
+        "Jianfei Zhao",
+        "Feng Zhang",
+        "Xin Sun",
+        "Chong Feng",
+        "Bing Wang",
+        "Zhixing Tan"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-05-26T07:41:48+00:00",
+      "link": "https://arxiv.org/pdf/2605.26656v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Proposes direct supervision on visual tokens in MLLMs to improve fine-grained visual understanding, enabling better image-text processing.",
+      "llm_evidence_cn": "提出对MLLM视觉标记直接监督以提升细粒度视觉理解，增强图像文本处理。",
+      "llm_evidence": "提出对MLLM视觉标记直接监督以提升细粒度视觉理解，增强图像文本处理。",
+      "canonical_evidence": "提出对MLLM视觉标记直接监督以提升细粒度视觉理解，增强图像文本处理。",
+      "llm_tldr_en": "DV-SFT constructs explicit token-level supervision for visual tokens in MLLMs using the model's own hidden states as pseudo-labels, significantly improving fine-grained perception without extra modules.",
+      "llm_tldr_cn": "针对多模态大语言模型（MLLM）训练中视觉标记仅作为上下文间接优化，导致模型细粒度视觉理解能力受限的问题，本文提出直接视觉监督微调方法（DV-SFT）。该方法利用模型自身的隐藏状态构造视觉标记的伪标签，在无需额外解码器和前向传播的条件下对视觉表示进行显式监督。在多个细粒度识别、属性定位和计数任务上的实验结果显示，DV-SFT显著提升了现有MLLM的感知精度，缩小了标准微调与理想监督之间的差距，为MLLM的视觉表示学习提供了一种简单高效的增强方案。这一方法证明了在MLLM中直接优化视觉标记的可行性，为未来多模态模型训练提供了新方向。",
+      "llm_tldr": "针对多模态大语言模型（MLLM）训练中视觉标记仅作为上下文间接优化，导致模型细粒度视觉理解能力受限的问题，本文提出直接视觉监督微调方法（DV-SFT）。该方法利用模型自身的隐藏状态构造视觉标记的伪标签，在无需额外解码器和前向传播的条件下对视觉表示进行显式监督。在多个细粒度识别、属性定位和计数任务上的实验结果显示，DV-SFT显著提升了现有MLLM的感知精度，缩小了标准微调与理想监督之间的差距，为MLLM的视觉表示学习提供了一种简单高效的增强方案。这一方法证明了在MLLM中直接优化视觉标记的可行性，为未来多模态模型训练提供了新方向。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.03871v1",
+      "source": "arxiv",
+      "title": "Visual Instruction Tuning Aligns Modalities through Abstraction",
+      "abstract": "Visual instruction tuning effectively adapts a pre-trained Large Language Model (LLM) to process image information alongside text. Yet, it remains unclear how visual features are embedded into the layer-wise hierarchy of abstractions of the LLM backbone. Across a diverse set of vision-language architectures, we show that instruction tuning primarily serves as a bridge, embedding visual features directly into the intermediate semantic layers of the LLM, bypassing the early layers devoted to unimodal processing. With probing analyses and causal interventions, we show that these intermediate layers are the semantic core of vision-language processing and play a critical role in the performance on a broad set of multimodal benchmarks. In addition, by comparing the geometry of semantically equivalent visual and textual representations, we find that fine-tuning extends and strengthens the existing abstraction phase, aligning visual features with pre-existing textual ones. Finally, we confirm the functional role of this localized alignment by restricting fine-tuning to intermediate layers alone: this strategy preserves the performance of full fine-tuning on vision-centric benchmarks while reducing training time. Our results suggest that multimodal integration is a localized phenomenon driven by the repurposing of the internal abstraction engine of the LLM.",
+      "authors": [
+        "Luis Palacios",
+        "Lorenzo Basile",
+        "Diego Doimo",
+        "Alberto Cazzaniga"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.CL",
+        "cs.LG"
+      ],
+      "published": "2026-06-02T16:42:21+00:00",
+      "link": "https://arxiv.org/pdf/2606.03871v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Analyzes how multimodal LLMs embed visual features into layer-wise abstractions",
+      "llm_evidence_cn": "分析多模态大语言模型如何将视觉特征嵌入逐层抽象中",
+      "llm_evidence": "分析多模态大语言模型如何将视觉特征嵌入逐层抽象中",
+      "canonical_evidence": "分析多模态大语言模型如何将视觉特征嵌入逐层抽象中",
+      "llm_tldr_en": "This paper reveals that visual instruction tuning embeds visual features into intermediate semantic layers of LLMs, making these layers critical for vision-language tasks.",
+      "llm_tldr_cn": "本文研究了视觉指令微调如何将视觉信息嵌入大语言模型的抽象层次。通过探测分析和因果干预，发现微调在LLM的中间语义层直接嵌入视觉特征，这些层是多模态处理的核心。该发现有助于理解多模态模型的内部机制，为设计更高效的解释性图像质量评价模型提供依据。",
+      "llm_tldr": "本文研究了视觉指令微调如何将视觉信息嵌入大语言模型的抽象层次。通过探测分析和因果干预，发现微调在LLM的中间语义层直接嵌入视觉特征，这些层是多模态处理的核心。该发现有助于理解多模态模型的内部机制，为设计更高效的解释性图像质量评价模型提供依据。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

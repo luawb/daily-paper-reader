@@ -1,0 +1,39 @@
+{
+  "label": "2026-06-03",
+  "date": "2026-06-03",
+  "generated_at": "2026-06-03T22:44:20",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202606/03/2605.26656v1-dv-sft-direct-vision-supervision-for-fine-grained-visual-understanding",
+      "section": "quick",
+      "title_en": "DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding",
+      "authors": "Jianfei Zhao, Feng Zhang, Xin Sun, Chong Feng, Bing Wang, Zhixing Tan",
+      "date": "2026-05-26",
+      "pdf": "https://arxiv.org/pdf/2605.26656v1",
+      "score": "7.0",
+      "evidence": "提出对MLLM视觉标记直接监督以提升细粒度视觉理解，增强图像文本处理。",
+      "tldr": "多模态大语言模型通常只在文本端施加监督，导致视觉理解粗粒化。DV-SFT通过利用OCR场景中视觉-文本对应关系，直接为视觉标记构建标记级监督，无需修改模型结构。在三个域内和四个域外基准上，DV-SFT一致优于标准SFT，并提升了细粒度视觉理解与多模态对齐效率。",
+      "tags": "query:xiqa",
+      "abstract_en": "Multimodal large language models are typically trained end-to-end to predict ground-truth answers, yet supervision signals are applied exclusively to text tokens. Visual tokens, the core carriers of visual information, are optimized only implicitly as part of the context, leading to coarse-grained visual understanding. Prior works attempt to supervise visual inputs but inevitably rely on auxiliary components such as additional decoders or forward passes, because visual tokens lack readily interpretable labels. This limits their practical applicability. In this work, we propose \\textbf{D}irect \\textbf{V}ision \\textbf{S}upervised \\textbf{F}ine-\\textbf{T}uning (DV-SFT), which constructs explicit, token-level supervision for visual tokens and trains them through the same next-token prediction objective used for text. Specifically, we exploit the direct vision--text correspondence in OCR-related scenarios and automatically label each visual token with the word in its corresponding image patch. DV-SFT treats the MLLM as a black box, requiring no architectural modifications or additional forward passes. Extensive experiments demonstrate the superiority of direct vision supervision. DV-SFT consistently outperforms standard SFT across three in-domain and four out-of-domain benchmarks. Further analyses show that vision supervision effectively enhances fine-grained visual understanding and achieves higher multimodal alignment efficiency.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/03/2606.03871v1-visual-instruction-tuning-aligns-modalities-through-abstraction",
+      "section": "quick",
+      "title_en": "Visual Instruction Tuning Aligns Modalities through Abstraction",
+      "authors": "Luis Palacios, Lorenzo Basile, Diego Doimo, Alberto Cazzaniga",
+      "date": "2026-06-02",
+      "pdf": "https://arxiv.org/pdf/2606.03871v1",
+      "score": "7.0",
+      "evidence": "分析多模态大语言模型如何将视觉特征嵌入逐层抽象中",
+      "tldr": "视觉指令微调广泛应用于使大语言模型处理图像信息，但视觉特征如何嵌入逐层抽象层次尚不清楚。本研究在多种视觉语言架构上，通过探测与因果干预，发现微调将视觉特征直接嵌入中间语义层，绕过早期单模态处理层。这些中间层是多模态语义核心，关键影响多模态基准性能。几何分析表明微调对齐视觉与文本表征。仅微调中间层即保持全微调性能并缩短训练时间，揭示多模态集成为LLM内部抽象引擎的局部重利用。",
+      "tags": "query:xiqa",
+      "abstract_en": "Visual instruction tuning effectively adapts a pre-trained Large Language Model (LLM) to process image information alongside text. Yet, it remains unclear how visual features are embedded into the layer-wise hierarchy of abstractions of the LLM backbone. Across a diverse set of vision-language architectures, we show that instruction tuning primarily serves as a bridge, embedding visual features directly into the intermediate semantic layers of the LLM, bypassing the early layers devoted to unimodal processing. With probing analyses and causal interventions, we show that these intermediate layers are the semantic core of vision-language processing and play a critical role in the performance on a broad set of multimodal benchmarks. In addition, by comparing the geometry of semantically equivalent visual and textual representations, we find that fine-tuning extends and strengthens the existing abstraction phase, aligning visual features with pre-existing textual ones. Finally, we confirm the functional role of this localized alignment by restricting fine-tuning to intermediate layers alone: this strategy preserves the performance of full fine-tuning on vision-centric benchmarks while reducing training time. Our results suggest that multimodal integration is a localized phenomenon driven by the repurposing of the internal abstraction engine of the LLM.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
