@@ -1,0 +1,94 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-04T21:56:00.051210+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2605.27959v1",
+      "source": "arxiv",
+      "title": "ROVER: Routing Object-Centric Visual Evidence for Grounded Multi-Image Reasoning",
+      "abstract": "Multimodal Large Language Models (MLLMs) have increasingly localized and interleaved visual evidence for deliberative reasoning. Grounding-based approaches typically focus on regions of interest (RoIs) by injecting cropped image patches or RoI-specific features into the reasoning context. However, such designs can weaken holistic scene understanding and inter-object relations, while incurring decoding costs that scale with the number and size of RoIs. Alternatively, adaptive visual feature selection often requires fine-grained supervision or complex heuristics. To address these limitations, we propose ROVER (Routing Object-centric Visual Evidence for grounded multi-image Reasoning), a lightweight, learnable plugin for efficient global visual evidence routing. Upon each object grounding prediction, ROVER injects a step-specific token triplet to synergistically: (i) aggregate the ongoing reasoning context, (ii) distill intra-image cues into a visual working space via object-centric differential attention, and (iii) route and integrate history-aware evidence across objects and images within this space for subsequent reasoning. We integrate ROVER into Qwen2.5-VL-7B and develop an interleaved SFT-to-GRPO training pipeline. Strictly adhering to the original datasets and evaluation protocols, our method achieves the best performance on MM-GCoT (+4.8% answer accuracy, +14.6% grounding accuracy) and VideoEspresso (+8.6% answer accuracy). The VideoEspresso-trained model demonstrates strong transferability, outperforming the base model by +4.7% on average across diverse benchmarks.",
+      "authors": [
+        "Guannan Lv",
+        "Ren Nie",
+        "Hongjian Dou"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-05-27T04:52:42+00:00",
+      "link": "https://arxiv.org/pdf/2605.27959v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Lightweight plugin for efficient global visual routing in multimodal LLMs, improving grounded reasoning",
+      "llm_evidence_cn": "轻量插件，为多模态大模型提供高效全局视觉路由，提升基于证据的推理",
+      "llm_evidence": "轻量插件，为多模态大模型提供高效全局视觉路由，提升基于证据的推理",
+      "canonical_evidence": "轻量插件，为多模态大模型提供高效全局视觉路由，提升基于证据的推理",
+      "llm_tldr_en": "ROVER is a learnable plugin that enables efficient global visual routing in multimodal LLMs, maintaining holistic scene understanding while achieving strong multi-image reasoning.",
+      "llm_tldr_cn": "针对现有多模态大模型在多图像推理中区域兴趣方法破坏全局理解且解码成本高的问题，提出ROVER插件，通过可学习的全局视觉路由高效整合对象中心证据，在保持整体场景理解的同时实现高效推理，为多模态模型的复杂任务提供了轻量化方案。",
+      "llm_tldr": "针对现有多模态大模型在多图像推理中区域兴趣方法破坏全局理解且解码成本高的问题，提出ROVER插件，通过可学习的全局视觉路由高效整合对象中心证据，在保持整体场景理解的同时实现高效推理，为多模态模型的复杂任务提供了轻量化方案。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "multimodal large language models for image quality reasoning and explanation generation",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2605.27959v2",
+      "source": "arxiv",
+      "title": "ROVER: Routing Object-Centric Visual Evidence for Grounded Multi-Image Reasoning",
+      "abstract": "Multimodal Large Language Models (MLLMs) have increasingly localized and interleaved visual evidence for deliberative reasoning. Grounding-based approaches typically focus on regions of interest (RoIs) by injecting cropped image patches or RoI-specific features into the reasoning context. However, such designs can weaken holistic scene understanding and inter-object relations, while incurring decoding costs that scale with the number and size of RoIs. Alternatively, adaptive visual feature selection often requires fine-grained supervision or complex heuristics. To address these limitations, we propose ROVER (Routing Object-centric Visual Evidence for grounded multi-image Reasoning), a lightweight, learnable plugin for efficient global visual evidence routing. Upon each object grounding prediction, ROVER injects a step-specific token triplet to synergistically: (i) aggregate the ongoing reasoning context, (ii) distill intra-image cues into a visual working space via object-centric differential attention, and (iii) route and integrate history-aware evidence across objects and images within this space for subsequent reasoning. We integrate ROVER into Qwen2.5-VL-7B and develop an interleaved SFT-to-GRPO training pipeline. Strictly adhering to the original datasets and evaluation protocols, our method achieves the best performance on MM-GCoT (+4.8% answer accuracy, +14.6% grounding accuracy) and VideoEspresso (+8.6% answer accuracy). The VideoEspresso-trained model demonstrates strong transferability, outperforming the base model by +4.7% on average across diverse benchmarks.",
+      "authors": [
+        "Guannan Lv",
+        "Ren Nie",
+        "Hongjian Dou",
+        "Tingting Gao"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-05-27T04:52:42+00:00",
+      "link": "https://arxiv.org/pdf/2605.27959v2",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Lightweight plugin for efficient global visual routing in multimodal LLMs, improving grounded reasoning",
+      "llm_evidence_cn": "轻量插件，为多模态大模型提供高效全局视觉路由，提升基于证据的推理",
+      "llm_evidence": "轻量插件，为多模态大模型提供高效全局视觉路由，提升基于证据的推理",
+      "canonical_evidence": "轻量插件，为多模态大模型提供高效全局视觉路由，提升基于证据的推理",
+      "llm_tldr_en": "ROVER is a learnable plugin that enables efficient global visual routing in multimodal LLMs, maintaining holistic scene understanding while achieving strong multi-image reasoning.",
+      "llm_tldr_cn": "针对现有多模态大模型在多图像推理中区域兴趣方法破坏全局理解且解码成本高的问题，提出ROVER插件，通过可学习的全局视觉路由高效整合对象中心证据，在保持整体场景理解的同时实现高效推理，为多模态模型的复杂任务提供了轻量化方案。",
+      "llm_tldr": "针对现有多模态大模型在多图像推理中区域兴趣方法破坏全局理解且解码成本高的问题，提出ROVER插件，通过可学习的全局视觉路由高效整合对象中心证据，在保持整体场景理解的同时实现高效推理，为多模态模型的复杂任务提供了轻量化方案。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "multimodal large language models for image quality reasoning and explanation generation",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

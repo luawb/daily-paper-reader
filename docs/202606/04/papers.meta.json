@@ -1,0 +1,39 @@
+{
+  "label": "2026-06-04",
+  "date": "2026-06-04",
+  "generated_at": "2026-06-04T21:59:07",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202606/04/2605.27959v1-rover-routing-object-centric-visual-evidence-for-grounded-multi-image-reasoning",
+      "section": "quick",
+      "title_en": "ROVER: Routing Object-Centric Visual Evidence for Grounded Multi-Image Reasoning",
+      "authors": "Guannan Lv, Ren Nie, Hongjian Dou",
+      "date": "2026-05-27",
+      "pdf": "https://arxiv.org/pdf/2605.27959v1",
+      "score": "6.0",
+      "evidence": "轻量插件，为多模态大模型提供高效全局视觉路由，提升基于证据的推理",
+      "tldr": "当前多模态推理常依赖区域特征注入，损害整体场景理解且增加计算开销。ROVER提出可学习的全局视觉证据路由策略，通过步骤特定token三元组聚合上下文、基于对象中心的差分注意力蒸馏视觉线索、跨对象历史证据路由，实现高效推理。集成于Qwen2.5-VL-7B并采用交错SFT-GRPO训练，在MM-GCoT和VideoEspresso上分别获得4.8%和8.6%答案提升及14.6%定位提升，并在多基准上平均提升4.7%，展现强迁移性。",
+      "tags": "query:xiqa",
+      "abstract_en": "Multimodal Large Language Models (MLLMs) have increasingly localized and interleaved visual evidence for deliberative reasoning. Grounding-based approaches typically focus on regions of interest (RoIs) by injecting cropped image patches or RoI-specific features into the reasoning context. However, such designs can weaken holistic scene understanding and inter-object relations, while incurring decoding costs that scale with the number and size of RoIs. Alternatively, adaptive visual feature selection often requires fine-grained supervision or complex heuristics. To address these limitations, we propose ROVER (Routing Object-centric Visual Evidence for grounded multi-image Reasoning), a lightweight, learnable plugin for efficient global visual evidence routing. Upon each object grounding prediction, ROVER injects a step-specific token triplet to synergistically: (i) aggregate the ongoing reasoning context, (ii) distill intra-image cues into a visual working space via object-centric differential attention, and (iii) route and integrate history-aware evidence across objects and images within this space for subsequent reasoning. We integrate ROVER into Qwen2.5-VL-7B and develop an interleaved SFT-to-GRPO training pipeline. Strictly adhering to the original datasets and evaluation protocols, our method achieves the best performance on MM-GCoT (+4.8% answer accuracy, +14.6% grounding accuracy) and VideoEspresso (+8.6% answer accuracy). The VideoEspresso-trained model demonstrates strong transferability, outperforming the base model by +4.7% on average across diverse benchmarks.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/04/2605.27959v2-rover-routing-object-centric-visual-evidence-for-grounded-multi-image-reasoning",
+      "section": "quick",
+      "title_en": "ROVER: Routing Object-Centric Visual Evidence for Grounded Multi-Image Reasoning",
+      "authors": "Guannan Lv, Ren Nie, Hongjian Dou, Tingting Gao",
+      "date": "2026-05-27",
+      "pdf": "https://arxiv.org/pdf/2605.27959v2",
+      "score": "6.0",
+      "evidence": "轻量插件，为多模态大模型提供高效全局视觉路由，提升基于证据的推理",
+      "tldr": "多模态大语言模型在多图像接地推理中，基于区域裁剪的视觉注入削弱全局理解且解码成本高。ROVER提出对象中心证据路由，通过步骤令牌三元组聚合上下文并高效整合多图像视觉信息。在MM-GCoT和VideoEspresso上大幅提升回答与接地准确率，并展现强迁移性。该轻量插件为多图像推理提供了一种高效、可迁移的全局证据整合方案。",
+      "tags": "query:xiqa",
+      "abstract_en": "Multimodal Large Language Models (MLLMs) have increasingly localized and interleaved visual evidence for deliberative reasoning. Grounding-based approaches typically focus on regions of interest (RoIs) by injecting cropped image patches or RoI-specific features into the reasoning context. However, such designs can weaken holistic scene understanding and inter-object relations, while incurring decoding costs that scale with the number and size of RoIs. Alternatively, adaptive visual feature selection often requires fine-grained supervision or complex heuristics. To address these limitations, we propose ROVER (Routing Object-centric Visual Evidence for grounded multi-image Reasoning), a lightweight, learnable plugin for efficient global visual evidence routing. Upon each object grounding prediction, ROVER injects a step-specific token triplet to synergistically: (i) aggregate the ongoing reasoning context, (ii) distill intra-image cues into a visual working space via object-centric differential attention, and (iii) route and integrate history-aware evidence across objects and images within this space for subsequent reasoning. We integrate ROVER into Qwen2.5-VL-7B and develop an interleaved SFT-to-GRPO training pipeline. Strictly adhering to the original datasets and evaluation protocols, our method achieves the best performance on MM-GCoT (+4.8% answer accuracy, +14.6% grounding accuracy) and VideoEspresso (+8.6% answer accuracy). The VideoEspresso-trained model demonstrates strong transferability, outperforming the base model by +4.7% on average across diverse benchmarks.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
