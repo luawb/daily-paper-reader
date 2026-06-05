@@ -1,0 +1,872 @@
+Title: Beyond Absolute Scores: Relative Edit-induced Difference for Generalizable Image Aesthetic Assessment
+
+URL Source: https://arxiv.org/pdf/2606.05778v1
+
+Published Time: Fri, 05 Jun 2026 00:43:39 GMT
+
+Number of Pages: 32
+
+Markdown Content:
+# Beyond Absolute Scores: Relative Edit-induced Difference for Generalizable Image Aesthetic Assessment 
+
+Qifei Jia ⋆1, Xintong Yao ⋆1, Minghao Li 1, Yajie Chai 1, Qiming Lu 1, Baoyue Shen 1, Yasen Zhang †1, Runyu Shi 1, Ying Huang 1, and Yue Zhang 1
+
+Xiaomi Corporation, Beijing, China 
+
+Abstract. Traditional Image Aesthetic Assessment (IAA) methods mainly rely on regressing absolute Mean Opinion Scores (MOS). However, such a paradigm overlooks the inherently dynamic nature of human aesthetic perception, which relies on subconscious comparison against implicit visual references. Consequently, the lack of causal reasoning regarding aesthetic differences prevents models from learning generalizable aes-thetic principles, thus limiting their generalization across diverse scenar-ios. In this work, we rethink the IAA task and propose Relative Edit-induced Difference Aes thetic learning ( RED-Aes ), a novel framework that leverages controllable image editing models to simulate the human aesthetic reasoning process. Instead of fitting absolute score distribu-tions, RED-Aes explicitly learns the visual factors that drive aesthetic changes. To support this paradigm, we construct the RED-20k dataset, which comprises editing-based image pairs, quantitative aesthetic differ-ences, and Chain-of-Thought (CoT) reasoning. Furthermore, we intro-duce a three-stage training strategy guided by a relative ranking consis-tency reward, optimizing the model solely via relative supervision. Ex-tensive experiments demonstrate that RED-Aes achieves state-of-the-art performance on multiple public benchmarks, exhibiting superior gener-alization capabilities. 
+
+Keywords: Image Aesthetic Assessment · Image Editing · Post Training 
+
+1 Introduction 
+
+Image Aesthetic Assessment (IAA) aims to quantify the aesthetic appeal of im-ages. It underpins a growing range of real-world applications. In computational photography, on-device aesthetic models power best-shot selection and intelli-gent photo curation on modern smartphones [39]. Similarly, in the era of AI-generated content (AIGC), aesthetic scores serve as training-data filters [34] and reward signals for aligning text-to-image generative models [45]. Although re-cent works leverage Vision-Language Models (VLMs) [3, 28] for aesthetic assess-ment [27,42,43,47], existing methods typically rely on crowdsourced Mean Opin-ion Scores (MOS) as supervision to regress absolute scores on limited datasets.  
+
+> ⋆
+
+Equal contribution.  
+
+> †
+
+Corresponding author. 
+
+> arXiv:2606.05778v1 [cs.CV] 4 Jun 2026
+
+2 Q. Jia, X. Yao et al. The image commands attention with a stark, silhouetted tree … The choice of monochrome … is masterful, stripping away color distractions to strictly emphasize texture, form, and geometry. The composition is anchored by the tree‘s dramatic, reaching branches, creating a powerful visual focal point …     
+
+> Visual Analysis
+> The aesthetic strength lies in its exceptional tonal management. The deep blacks of the tree cut sharply through the atmospheric mid-tones … creating a high-contrast aesthetic … The distant hills provide necessary spatial depth … The processing is cinematic, intentionally enhancing the cloud structure …
+> Aesthetic Reasoning
+> This is a prime example of stylistic intervention elevating a simple subject into art. What might be seen as "artificial" is actually adeliberate choice to prioritize mood... over documentary realism . The "theatrical" intensity of the sky and the intricate silhouette interact to form a visually arresting narrative … fully justifying the high aesthetic score.
+> Conclusion
+> Evaluate the aesthetic of this image
+
+8.0638 
+
+Edit 
+
+> The addition of a black-and-white filter results in an improvement in aesthetics.
+
+Edit  Transferring the same filter to this tree image...  8.1        
+
+> (a) Human aesthetic reasoning process
+> (b) Edit-based image pairs in RED-20k
+> (c) Chain-of-Thought with causal reasoning
+> coherence. While the color treatment is stylistic … it elevates the image’s artistic intent and emotional impact …The sharpness and lighting appear unchanged, so no regressions occur … The trade-off is a loss of color harmony in the periphery, but … this is a deliberate and effective compositional choice. Overall, the aesthetic quality is improved due to stronger visual hierarchy … all of which justify a positive relative score change.
+> Image B applies a selective color effect … preserving the color of the central bush. This creates a strong visual hierarchy …Compared to Image A … Image B enhances subject emphasis and visual clarity . The desaturation of the background reduces distraction … improving background cleanliness and overall
+> RED-20k
+
+Fig. 1: Relative Difference Learning for Aesthetics. (a) Human aesthetic reasoning process: Illustration of how humans rely on implicit comparison to judge aesthetics. (b) Edit-based image pairs in RED-20k: An example of source-edit pairs where edit operations induce quantifiable aesthetic shifts. (c) CoT with causal reasoning: The model produces detailed textual explanations covering visual analysis and aesthetic reasoning to justify the predicted score. 
+
+This paradigm overlooks a critical aspect of human aesthetic cognition. In practice, a human annotator rarely assigns an absolute score directly but in-stead relies on a reference anchor. This anchor is either an explicitly provided sample or an implicitly recalled image of similar content [24, 32] which allows the annotator to reason about differences to arrive at a score. While recent VLM-based approaches assess aesthetics from multiple dimensions [27, 43, 47], the causal link between reasoning and scores remains weak. Forcing models to fit score distributions without comparative knowledge constrains generalization. Human aesthetic judgment is thus a dynamic comparative process involving causal reasoning about aesthetic differences rather than an instantaneous abso-lute measurement, as illustrated in Fig. 1(a). This insight has been validated in the Image Quality Assessment (IQA) do-main where RankIQA [29] constructs quality ranking pairs by applying synthetic distortions of varying severity to source images to improve generalization. How-ever, aesthetics is a high-level attribute dependent on content and semantics that cannot be manipulated through simple pixel-level operations. With the advance-ment of controllable image editing models [6, 48, 49], this idea can now be trans-ferred to IAA. Targeted edits such as composition adjustments, color harmony enhancements, or lighting modifications create source-edit pairs (Fig. 1(b)). The aesthetic differences within these pairs encode explicit causal relationships where specific modifications directly induce quantifiable aesthetic shifts. This mecha-Relative Edit-Induced Difference for Image Aesthetic Assessment 3
+
+nism provides far stronger supervision than statistical correlations derived solely from absolute scores. Building on this insight, we propose Relative Edit-induced Difference Aes-thetic learning (RED-Aes), a framework that simulates how humans establish aesthetic concepts through comparison. RED-Aes explicitly learns relative aes-thetic differences between source images and their edited counterparts to ac-quire generalizable principles that transfer across visual domains. To support this paradigm, we construct the RED-20k dataset through a fully automated data engine that leverages VLM reasoning models and controllable editing mod-els to generate edited variants for each source image and obtain pairwise aesthetic difference scores with chain-of-thought (CoT) reasoning. We design a three-stage training strategy. The first stage injects aesthetic difference knowledge via supervised fine-tuning (SFT) on source-edit pairs to endow the model with rich and attributable aesthetic representations. The sec-ond stage performs a lightweight score calibration. To fully leverage the aesthetic knowledge acquired from pre-training, the third stage employs Group Relative Policy Optimization (GRPO) [37] combined with a novel Relative Ranking Con-sistency Reward. This approach drives the model to produce predictions that are ordinally consistent within each source-edit group. This reinforcement learn-ing stage enables the model to apply the causal aesthetic knowledge (Fig. 1(c)) acquired during pre-training more reliably, achieving superior generalization. Our contributions are as follows: 
+
+– We construct RED-20k, an editing-based dataset of image pairs with quanti-tative aesthetic differences and CoT reasoning supported by a scalable data engine with multi-model ensemble and consensus-based quality control. 
+
+– We propose RED-Aes, a novel IAA framework that shifts from absolute score regression to relative edit-induced difference learning using a three-stage pipeline that progresses from comparative SFT to score calibration and GRPO-based reinforcement learning to optimize the model solely via relative supervision. 
+
+– Extensive experiments demonstrate state-of-the-art performance on five pub-lic benchmarks where our method outperforms both specialist and generalist models by significant margins. 
+
+2 Related Work 
+
+2.1 Image Aesthetic Assessment 
+
+Existing IAA datasets map single images to absolute aesthetic scores. AVA [31] provides approximately 250k crowdsourced ratings; TAD66K [15] offers theme-aware annotations; AADB [20] and PARA [46] enrich the space with multi-attribute labels and personalized preferences. On the modeling side, IAA has evolved from hand-crafted features [9, 30] to deep learning. NIMA [39] popular-ized CNN-based MOS regression, followed by TANet [15], MUSIQ [19], and Aes-Mamba [10] that improved architectures while retaining the same objective. More 4 Q. Jia, X. Yao et al. 
+
+recently, VLMs have been applied to IAA. Q-Align [43] and Q-Instruct [42] lever-age instruction tuning for visual scoring; AesExpert [16] generates expert-style descriptions; UNIAA [50] and ArtiMuse [8] combine scoring with fine-grained textual analysis. Despite these advances, the fundamental paradigm remains un-changed: mapping individual images to absolute scores via supervised training on limited datasets. 
+
+2.2 Controllable Image Editing 
+
+The rapid development of diffusion-based generative models has enabled pre-cise controllable image editing, serving as the foundation of our data engine. InstructPix2Pix [6] pioneered instruction-guided editing by training a condi-tional diffusion model on synthetic paired data. Qwen-Image-Edit [41] is a 20B-parameter Multi-Modal Diffusion Transformer with outstanding semantic under-standing capabilities. FLUX.1 Kontext [23] achieves high-fidelity editing through flow matching in latent space. LongCat-Image [40] is a 6B-parameter bilingual diffusion model trained with reward-model-guided reinforcement learning. See-dream [36] and Nano-Banana [12] are powerful closed-source models that deliver high-quality editing with robust performance. Using multiple architecturally dis-tinct models ensures that aesthetic variations in our dataset reflect genuine visual changes rather than artifacts of any single pipeline. 
+
+2.3 Post-Training with Reinforcement Learning 
+
+DeepSeek-R1 [13] introduced a post-training paradigm combining supervised fine-tuning with reinforcement learning via GRPO [37], eliciting superior logi-cal reasoning capabilities with significantly reduced computational costs. This paradigm has been rapidly adopted in VLM-based image assessment tasks. Q-Insight [26] applies GRPO for joint score regression and degradation perception. VisualQuality-R1 [44] trains an NR-IQA model with GRPO-based learning to rank under the Thurstone model. Aes-R1 [27] uses reinforcement learning to en-courage more detailed aesthetic critiques. While these methods demonstrate the effectiveness of RL for assessment, they typically optimize for individual response quality or absolute score accuracy. In contrast, our approach employs GRPO with a Relative Ranking Consistency Reward that optimizes ordinal consistency within groups of aesthetically related images, directly enforcing comparative rea-soning over causal aesthetic differences. 
+
+3 Methods 
+
+Our approach comprises two core components: (i) the RED-20k dataset, con-structed through a fully automated pipeline leveraging VLMs and controllable editing models to produce relative aesthetic score differences with causal reason-ing (Sec. 3.1), and (ii) RED-Aes, a three-stage learning framework progressing from comparative learning to anchor calibration and GRPO-based optimization Relative Edit-Induced Difference for Image Aesthetic Assessment 5From Source Images (500K)                                
+
+> Stage 1: Absolute Score Pre-training Data Construction Absolute Score Data
+> Generate
+> only one
+> instruction
+> Stage 2: Relative Score Pre-training Data Construction Judgment
+> Qwen3VL
+> 235B
+> 𝑒𝑒
+> Edit quality verification
+> VIE Score ≥7.5
+> VIE Score
+> ＜7.5
+> ≥4All +
+> Relative Score Data
+> 𝑒𝑒
+> 𝑇𝑇
+> 𝜹𝜹
+> 𝐼𝐼 𝑉𝑉
+> Seedream FLUX2 Qwen-Image-Edit
+> Nano-Banana Longcat-Image GPT5
+> Qwen2.5VL
+> 72B
+> Qwen3VL
+> 235B
+> +1.25 +0.75 +1.25 +1.5
+> +1.75 +1.65 +1.0 +1.15
+> +1.45 +0.75 +1.25 +1.25
+> Increase color saturation and warmth, apply … emotional tone.
+> Construction
+> Generate Seven
+> Instructions All
+> Stage 3: RL Training Data Construction
+> Qwen3VL
+> 235B
+> 𝑒𝑒 𝑑𝑑 𝑑𝑑=1 7
+> or or
+> or
+> or
+> or
+> Pick one model randomly for each instruction
+> Judgment All + / -Others RL Training Data
+> +0.97 +1.2
+> +0.65
+> +0.32 +1.12
+> -2.05 +0.35
+> 𝑉𝑉 𝑑𝑑 𝑑𝑑=1 7
+> 𝐼𝐼
+> GPT5
+> Qwen3VL
+> 235B
+> -1.45
+> -2.0
+> -2.7
+> +0.9
+> +1.0
+> +1.0
+> +0.25
+> +0.85
+> +0.85
+> +0.95
+> +1.25
+> +1.15
+> +0.5
+> +0.25
+> +0.3
+> +0.85
+> +1.0
+> +1.75
+> +0.9
+> +1.05
+> +1.1
+> GPT5
+> Qwen2.5VL
+> 72B
+> 𝐼𝐼
+> 𝐼𝐼
+> 𝐼𝐼
+> Increase color saturation and warmth, apply … tone.
+> Image B exhibits a clear aesthetic improvement over Image A ……dimensions.
+> <answer> +1.25 </answer>
+> The image immediately draws the eye with its layered …unmoored.
+> <answer> 9.03 </answer>
+> 𝜹𝜹
+> Multiple-Expert Scoring
+> Qwen3VL
+> 235B
+> 9.42
+> Qwen2.5VL
+> 72B
+> 8.95
+> GPT5
+> 8.73
+> Scoring Aggregation
+> Qwen2.5VL
+> 72B
+
+Fig. 2: Overview of the data construction pipeline. (1) Absolute Score Data Construction, utilizing multi-expert scoring combined with score aggregation strategies to obtain absolute scores; (2) Relative Score Data Construction, utilizing diverse editing models to generate source-edited pairs, filtering via VIEScores, and employing VLM judges for consistency verification; and (3) RL Training Data Construction, which scales up to group-wise samples by generating multiple instructions and applying random editors to create comprehensive preference datasets for reinforcement learning. 
+
+(Sec. 3.2).The detailed prompts used for VLMs throughout the data construction and training pipeline are provided in the supplementary material. 
+
+3.1 RED-20k: An Edit-based Aesthetic Difference Dataset Source Data Collection. The dataset construction pipeline is illustrated in Fig. 2. We collect 500k images from photography websites spanning diverse qual-ity levels and content categories. Three VLMs (Qwen3-VL-235B, Qwen2.5-VL-72B, and GPT-5) independently score each image, and a multi-expert voting protocol produces a consensus score si for each image Ii, yielding a source pool 
+
+O = {(Ii, s i)}ni=1 . These scores serve only as anchors for computing relative dif-ferences and generating editing instructions. The multi-expert scoring strategy utilizes MAD-based robust z-scores to detect outliers and adaptively selects a fusion method that employs weighted averaging under high consensus. Further details are provided in the supplementary material. 
+
+Pre-training Data. The construction proceeds in three steps. For each source image I with score s from O, Qwen3-VL-235B first analyzes its aesthetic defi-ciencies and generates a targeted editing instruction e. We apply e to I using five editing models M = {m1, . . . , m 5} (Qwen-Image-Edit, FLUX2, Longcat-Image, Nano-Banana, and Seedream-4.5), producing five edited variants {Vj }5
+
+j=1 , where 
+
+Vj = mj (I, e ).6 Q. Jia, X. Yao et al. 
+
+Second, we employ the VIEScore [22] to verify edit quality. Two VLMs (Qwen2.5-VL-72B and GPT-5) compute VIEScores, and we apply a strict thresh-old of 7.5 on a [0,10] scale. A source image is retained only when at least four of five models produce successful edits: 
+
+V = {I, s, {V ∗ 
+
+> j
+
+}j∈S }, |S| ≥ 4, (1) where S ⊆ { 1, . . . , 5} denotes the subset passing the quality threshold. Finally, three judgment models J = {J1, J 2, J 3} (Qwen3-VL-235B, Qwen2.5-VL-72B, and GPT-5) independently assess every source-edit pair in V, predicting the direction and magnitude of aesthetic change with CoT reasoning: 
+
+(δjk , T jk ) = Jk(I, V ∗ 
+
+> j
+
+, s ), j ∈ S , k ∈ { 1, 2, 3}. (2) A pair is retained only when all three judges unanimously agree on improved aesthetics. The final δj is computed via the voting protocol over {δjk }3
+
+> k=1
+
+. This strict consensus filters out noisy or ambiguous pairs. Among all valid variants, we randomly select one to form the final pre-training sample: 
+
+P = {I, s, V ∗, δ, T, e }, (3) where V ∗ is uniformly sampled from {V ∗ 
+
+> j
+
+}j∈S and δ, T are the corresponding annotations. 
+
+RL Training Data. We uniformly sample 1k images from O. For each source image I, Qwen3-VL-235B generates seven diverse editing instructions {ed}7
+
+> d=1
+
+,including arbitrary modifications ( e.g ., style transfer, object removal, color grad-ing). One editing model is randomly selected from M per instruction. The same multi-judge consensus is applied, retaining pairs only when all judges agree on the aesthetic change direction. The final RL group is: 
+
+G = {(I, s )} ∪ (V d, s + δd) d∈R , (4) where V d is the edited variant, δd the consensus difference, and R ⊆ { 1, . . . , 7}
+
+the valid subset. Each group contains eight images (one source and seven vari-ants) forming a comparison graph for GRPO. 
+
+3.2 RED-Aes: A Three-Stage Learning Framework Stage 1: Edit-Causal Pre-training. The first stage injects aesthetic knowl-edge via supervised fine-tuning on RED-20k. As shown in Fig. 3, we focus on two optimization targets, contrastive comparison and edit-causal reasoning. 
+
+Contrastive Comparison (PT-O1). Given a source-edit pair (I, V ), the model compares their aesthetic qualities, generates CoT reasoning describing the visual differences, and predicts the aesthetic difference δ.
+
+Edit-Causal Reasoning (PT-O2). Given only the source image I and the editing instruction e (without the edited image), the model predicts the aesthetic difference δ that would result from the edit. This forces the model to internalize the causal relationship between visual modifications and aesthetic changes. Relative Edit-Induced Difference for Image Aesthetic Assessment 7Stage 1: Edit-Causal Pre-training  Stage 2: Cold-Start          
+
+> 𝒄𝒄 =𝑩𝑩
+> 𝒄𝒄 =𝟐𝟐
+> 𝐼𝐼 𝑉𝑉
+> Compare the aesthetic scores (0-10) of the two images and analyze the changes from the first to the second …
+> <think> Image B exhibits a clear aesthetic improvement over Image A …yielding a moderate yet consistent gain across all aesthetic dimensions. </think>
+> <answer> +1.25 </answer>
+> 𝐼𝐼
+> If the image is modified based on the instruction: ..., how will the aesthetic score change?
+> 𝜹𝜹 : +0.35
+> Increase color saturation and warmth, apply a subtle vignette, and soften the background foliage to enhance subject prominence and emotional tone.
+> What is your overall rating on the aesthetic of this picture?
+> The rating should be a float between 0 and 10…
+> The image immediately draws the eye with its composition…where emotional resonance is prioritized over compositional rigor, resulting in a scene that feels beautiful but slightly unmoored.
+> <answer> 9.03 </answer>
+> 𝐼𝐼
+
+Stage 3: Reinforcement Learning     
+
+> …What is your overall rating on the aesthetic of this picture?...
+> 𝒄𝒄 =𝟏𝟏
+> 𝒄𝒄 =𝒃𝒃
+> ⋮̂𝑠𝑠 𝐵𝐵 1̂𝑠𝑠 𝐵𝐵 2̂𝑠𝑠 𝐵𝐵 𝑘𝑘
+> ⋮̂𝑠𝑠 𝑏𝑏 1̂𝑠𝑠 𝑏𝑏 2̂𝑠𝑠 𝑏𝑏 𝑘𝑘
+> ⋮̂𝑠𝑠 21̂𝑠𝑠 22̂𝑠𝑠 2𝑘𝑘 ̂𝑠𝑠 11̂𝑠𝑠 12
+> ⋮̂𝑠𝑠 1𝑘𝑘
+> ⋮
+> 𝛿𝛿 𝐵𝐵1 1
+> 𝛿𝛿 𝐵𝐵1 2
+> 𝛿𝛿 𝐵𝐵1 𝑘𝑘
+> ⋮
+> 𝛿𝛿 𝑏𝑏1 1
+> 𝛿𝛿 𝑏𝑏1 2
+> 𝛿𝛿 𝑏𝑏1 𝑘𝑘
+> ⋮
+> 𝛿𝛿 21 1
+> 𝛿𝛿 21 2
+> 𝛿𝛿 21 𝑘𝑘 ̅𝑠𝑠 1
+> 𝑒𝑒
+
+Contrastive Comparison  Edit-Causal Reasoning            
+
+> VLM
+> 𝛿𝛿 21 ∗
+> 𝛿𝛿 𝑏𝑏 1
+> ∗
+> 𝛿𝛿 𝐵𝐵 1
+> ∗
+> 𝑅𝑅 𝑏𝑏 𝑘𝑘 =1
+> 𝐵𝐵 − 1�𝑐𝑐=1 ,𝑐𝑐𝑐≠𝑏𝑏
+> 𝐵𝐵
+> 𝜙𝜙 ��𝛿𝛿 𝑏𝑏 𝑐𝑐
+> 𝑘𝑘 ,𝛿𝛿 𝑏𝑏 𝑐𝑐
+> ∗;𝜏𝜏
+> <think> CoT </think>
+> <answer> �𝒔𝒔 </answer>
+> 𝐼𝐼
+> 𝑉𝑉 𝑑𝑑
+> GRPO VLM
+> VLM
+> VLM
+
+Fig. 3: The RED-Aes training pipeline. Stage 1 injects aesthetic knowledge through two SFT targets: PT-O1 compares source-edit pairs to predict aesthetic dif-ferences with CoT reasoning, while PT-O2 predicts the aesthetic impact of editing instructions without observing the edited image. Stage 2 aligns the model to output absolute aesthetic scores using only 200 anchor samples from the source pool. Stage 3 optimizes the policy through a relative ranking consistency reward that enforces ordi-nal agreement with ground-truth rankings. 
+
+PT-O1 develops relative judgment from visual evidence, while PT-O2 extends this to causal prediction from textual instructions. Given the pre-training set P
+
+(Eq. (3)), we minimize: 
+
+LSFT = −E(I, s, V ∗, δ, T, e )∼P [log pθ (δ, T | X )] , (5) where X = ( I, V ∗) for PT-O1 and X = ( I, e ) for PT-O2. Both objectives are mixed and trained jointly for 3 epochs. 
+
+Stage 2: Cold-Start Calibration. After pre-training, the model possesses rich aesthetic knowledge through relative comparisons but cannot yet produce absolute scores. This stage bridges the gap via format alignment on 200 samples uniformly sampled from the source pool, each annotated with a standardized absolute score and CoT reasoning. It serves as a lightweight calibration preparing for reinforcement learning. We use the same hyperparameters as Stage 1 and train for 1 epoch. 
+
+Stage 3: Reinforcement Learning. The final stage employs GRPO [37] with a novel reward operating entirely on relative supervision (Fig. 3). Consider a batch of B images from the same group G. For each image Ib, the policy πθ
+
+samples K outputs with predicted score ˆskb . Let δ∗
+
+bc denote the ground-truth relative score difference between Ib and Ic. Each image serves as a comparison anchor: we compute the mean prediction ¯sc = (1 /K ) PKk′=1 ˆsk′
+
+c for every other 8 Q. Jia, X. Yao et al. 
+
+image Ic and compare against the ground-truth difference: 
+
+Rkb = 1
+
+B − 1
+
+> B
+
+X
+
+> c=1 ,c ̸=b
+
+ϕ ˆskb − ¯sc, δ ∗
+
+> bc
+
+; τ  , (6) where ϕ(δpred , δ gt ; τ ) = tanh( |δgt |) · σ(δpred · δgt /τ ) is a soft Kendall concordance function, σ(·) the sigmoid, and τ a temperature. The tanh term serves as a gap-aware weight emphasizing pairs with large aesthetic differences while sup-pressing near-ties, and the sigmoid measures soft agreement between predicted and ground-truth ordinal directions. The advantage is computed relative to group statistics: 
+
+Akb = Rkb − mean ({Rk′ 
+
+> b
+
+}Kk′=1 )
+
+std ({Rk′ 
+
+> b
+
+}Kk′=1 ) , (7) and the policy is updated by maximizing the following GRPO objective: 
+
+LGRPO = Eq∼D , {okb }Kk=1 ∼πθold 
+
+"
+
+1
+
+K
+
+> K
+
+X
+
+> k=1
+
+min  rkb Akb , ˆrkb Akb
+
+ − β D KL (πθ ∥πref )
+
+#
+
+,
+
+(8) where ˆrkb = clip (rkb , 1−ϵ, 1+ ϵ), rkb = πθ (okb | q) / π θold (okb | q) is the importance sampling ratio, ϵ is the clipping range, and β controls the strength of the KL di-vergence penalty against the reference policy πref . This optimization encourages the model to produce scores that are ordinally consistent within each source-edit group, without requiring any absolute score supervision during the RL stage. In our implementation, we use B = 8 , K = 6 , and τ = 0 .1.
+
+4 Experiments 
+
+We begin by demonstrating the zero-shot generalization of our model on five benchmarks where it outperforms both supervised aesthetic methods and gen-eralist VLMs without accessing target training data. We subsequently conduct ablation studies to validate that source-consistent comparative learning effec-tively decouples aesthetic assessment from semantic biases. We also verify the synergy between content-oriented and quality-oriented editing instructions while determining the optimal ensemble trade-off for our data engine. We further con-firm that our edit-causal learning objective and Relative Consistency Reward substantially surpass standard contrastive objectives and reasoning-based base-lines. We finally investigate the impact of reinforcement learning group size and show that a contrastive context involving one source image against seven edited variants is essential for learning fine-grained rankings. 
+
+4.1 Experiment Settings Datasets and Metrics. We evaluate our method on five public benchmarks in-cluding TAD66K [15], AVA [31], FLICKR-AES [33], PARA [46], and AADB [20]. Relative Edit-Induced Difference for Image Aesthetic Assessment 9
+
+Table 1: Quantitative evaluation on multiple public benchmarks. † Results are repro-duced by us using the official open-source models as the original papers did not report performance on these specific datasets.                                                                                                                                                                                          
+
+> Model TAD66K AVA FLICKR PARA AADB Average
+> PLCC SRCC PLCC SRCC PLCC SRCC PLCC SRCC PLCC SRCC PLCC SRCC
+> Vanilla VLM
+> Qwen2.5-VL-7B [3] 0.2282 0.2242 0.3518 0.3684 0.5179 0.5696 0.5966 0.6252 0.4480 0.5076 0.4285 0.4589 Qwen2.5-VL-32B [3] 0.2300 0.2715 0.3893 0.4170 0.5800 0.6527 0.7176 0.7118 0.5060 0.5138 0.4846 0.5134 Qwen3-VL-8B [2] 0.2642 0.2464 0.4663 0.4599 0.6258 0.6190 0.6050 0.6127 0.6934 0.6460 0.5309 0.5168 Qwen3-VL-32B [2] 0.3042 0.2816 0.5057 0.4955 0.6651 0.6545 0.7176 0.7118 0.7147 0.6782 0.5815 0.5643 Seed1.5-VL-thinking [14] 0.2908 0.2974 0.4533 0.4871 0.5837 0.6374 0.6134 0.6364 0.5279 0.5577 0.4938 0.5232 GPT-4o [17] 0.2686 0.2979 0.4687 0.4939 0.5469 0.5507 0.6916 0.6719 0.5209 0.5314 0.4993 0.5092 GPT-5 [38] 0.2973 0.3347 0.4852 0.5447 0.6218 0.6260 0.7433 0.7352 0.6001 0.5989 0.5495 0.5679
+> Deep-Learning Based
+> NIMA [39] 0.3885 0.3654 0.6120 0.6361 0.5130 0.4796 0.5868 0.5709 0.3886 0.3904 0.4978 0.4885
+> VLM Based
+> ArtiMuse-8B [8] 0.2320 0.2300 0.3850 0.3970 0.3340 0.3490 0.6057 †0.5624 †0.4836 †0.5130 †0.4081 0.4103 Aes-R1-7B [27] 0.4513 0.4248 0.6702 0.6619 0.7243 0.6973 0.7842 0.7666 0.5386 0.5423 0.6337 0.6186 UniPercept-8B [7] 0.3460 0.3360 0.5770 0.5890 0.6810 0.6880 0.7006 †0.5869 †0.4285 †0.4237 †0.5466 0.5247 RED-Aes-7B (Ours) 0.5406 0.5322 0.7713 0.7700 0.7524 0.7252 0.8846 0.8591 0.7722 0.7746 0.7442 0.7322
+> RED-Aes-3B (Ours) 0.5275 0.5297 0.7518 0.7514 0.7292 0.7089 0.8547 0.8413 0.7365 0.7509 0.7199 0.7164 RED-Aes-2B (Ours) 0.4784 0.4778 0.7235 0.7148 0.7565 0.7401 0.8616 0.8360 0.7426 0.7523 0.7125 0.7042
+
+All experiments operate under a cross-domain setting where the model is trained exclusively on our proposed dataset. We normalize the ground-truth Mean Opin-ion Scores from their original ranges of 1-10 for TAD66K and AVA or 1-5 for others to the [0, 1] interval. We utilize Pearson Linear Correlation Coefficient (PLCC) [5] to measure prediction accuracy and Spearman Rank-Order Correla-tion Coefficient (SRCC) [35] to assess monotonicity. 
+
+Evaluation Settings. We report results on all five datasets for main compar-isons and conduct ablation studies on the larger TAD66K, AVA, and FLICKR-AES benchmarks to ensure statistical robustness. All models function in a zero-shot manner without fine-tuning on target datasets. We run open-source models using recommended inference settings for baselines that lack public results. The prompts used for all evaluated models are provided in the supplementary mate-rial to ensure reproducibility. 
+
+Implementation Details. We implement the RED-Aes using Qwen2.5-VL-7B [3], Qwen2.5-VL-3B [3], and Qwen3-VL-2B [2] backbones with frozen vision encoders and a fine-tuned language component. The training pipeline utilizes the AdamW optimizer with β1 = 0 .9 and β2 = 0 .999 plus weight decay 0.01 and resizes images to 448 × 448 . We first conduct supervised fine-tuning on our synthesized dataset for 3 epochs with a batch size of 16 and a learning rate of 1e-5. We subsequently execute a format alignment stage for 1 epoch using 200 samples to standardize scalar output. We finally employ reinforcement learning via GRPO to optimize ranking consistency by constructing training groups of 8 images and generating 6 sampled outputs per prompt. 
+
+4.2 Comparison with State-of-the-Art 
+
+We evaluate our method on five benchmarks including TAD66K, AVA, FLICKR, PARA, and AADB under a rigorous zero-shot cross-dataset setting. Our model is 10 Q. Jia, X. Yao et al. 
+
+trained exclusively on the proposed dataset. As shown in Tab. 1, our model based on Qwen2.5-VL-7B achieves state-of-the-art performance with an average PLCC of 0.7442 and SRCC of 0.7322. It substantially surpasses UniPercept [7] and GPT-5, which represent the leading generalist aesthetic models. Furthermore, it outperforms Aes-R1 which serves as the strongest specialist model trained di-rectly on in-domain data. This performance is particularly notable considering that our approach generalizes from synthesized comparative pairs, whereas base-lines rely heavily on fitting target-domain absolute scores. Remarkably, even our lightweight variant based on Qwen3-VL-2B outperforms all baselines to demon-strate exceptional efficiency. We attribute these gains to the comparative supervision provided by our rig-orously constructed dataset. First, the relative-score pre-training stage injects comparative reasoning capabilities that allow the model to learn universal aes-thetic gradients rather than overfitting to absolute scalar values. Second, the reinforcement learning stage utilizes our relative ranking consistency reward to enforce ordinal relationships among images. This design aligns with the inher-ently comparative nature of human perception. The consistent improvements observed across Qwen2.5-VL and Qwen3-VL backbones further validate that our method is architecture-agnostic and generalizes effectively across different VLM families. 
+
+4.3 Efficacy of Dataset and Group-wise Consistency 
+
+To disentangle the contributions of our dataset from our training paradigm, we conduct a progressive ablation study as presented in Tab. 2. 
+
+Dataset Superiority. We first validate the quality of our collected dataset by replicating the training pipeline of the Aes-R1 baseline but substituting their original data with our proposed dataset. As indicated in the comparison be-tween the first two rows, merely transitioning to our dataset yields a substantial performance gain where the average SRCC increases from 0.5947 to 0.6465. This significant margin confirms that our dataset provides supervision signals of su-perior quality and robustness compared to prior benchmarks. 
+
+Importance of Consistent Context. Next, we investigate the impact of group-wise consistency. We compare our strategy against a baseline that shuffles images within the batch while preserving the pairing between each image and its original editing instruction, thereby forcing comparisons between unrelated con-tent. Results demonstrate that the shuffled setting underperforms our consistent approach with an average SRCC of 0.6532 versus 0.6758. We attribute this gap to content-dependent biases, as comparing disparate images leads the model to learn spurious correlations such as category preferences instead of genuine aes-thetic improvements. By contrast, our strategy isolates aesthetic changes from the content so that the model focuses purely on the relative quality of edits. Relative Edit-Induced Difference for Image Aesthetic Assessment 11 
+
+Table 2: Ablation Study on Dataset Quality and Training Consistency. We progres-sively evaluate the contribution of our collected dataset (Rows 1-2) and the impact of the group-wise consistent training strategy (Rows 3-4) across three benchmarks.                                         
+
+> Configuration AVA FLICKR TAD66K Average
+> PLCC SRCC PLCC SRCC PLCC SRCC PLCC SRCC Aes-R1 w/ AesCoT-15k 0.6702 0.6619 0.7243 0.6973 0.4513 0.4248 0.6153 0.5947 Aes-R1 w/ RED-20k 0.7506 0.7381 0.7270 0.6983 0.5107 0.5032 0.6628 0.6465 Ours (Shuffled Batch) 0.7564 0.7423 0.7281 0.7038 0.5184 0.5134 0.6676 0.6532 Ours (Consistent Batch) 0.7713 0.7700 0.7524 0.7252 0.5406 0.5322 0.6881 0.6758
+
+Table 3: Ablation study on editing instruction types. We report PLCC and SRCC across three benchmarks. “Cont.” and “Qual.” denote content-oriented and quality-oriented editing instructions, respectively. “PT” refers to Pre-training and “RL” to Reinforcement Learning. “Mixed” implies using both instruction types.                                    
+
+> Method Setting AVA FLICKR TAD66K Average
+> PLCC SRCC PLCC SRCC PLCC SRCC PLCC SRCC Cont. Only PT & RL 0.7050 0.6939 0.7234 0.6987 0.5144 0.5020 0.6476 0.6315 Qual. Only PT & RL 0.7152 0.7130 0.7221 0.6944 0.5238 0.5188 0.6537 0.6421 Mixed PT + Qual. RL 0.7426 0.7379 0.7450 0.7047 0.5317 0.5202 0.6731 0.6543 Mixed PT & RL 0.7713 0.7700 0.7524 0.7252 0.5406 0.5322 0.6881 0.6758
+
+4.4 Impact of Edit Types 
+
+We categorize editing instructions into content-oriented tasks (e.g., inpainting) and quality-oriented tasks (e.g., color enhancements). Tab. 3 presents the eval-uation of models trained on various combinations of these types. 
+
+Synergy between Content and Quality. We observe that neither content-only nor quality-only training yields optimal performance. The full model in-tegrates both types during pre-training and reinforcement learning stages and consistently outperforms the ablated variants. For instance, it increases the av-erage SRCC from 0.6421 in the quality-only setting to 0.6758. This confirms that robust assessment benefits from understanding both low-level perceptual attributes and high-level semantic composition. 
+
+Necessity of Diverse RL Supervision. We further compare the full model against the variant using mixed pre-training with quality-only reinforcement learning. Excluding content edits from the alignment stage leads to a distinct performance drop across all datasets. Specifically, the SRCC on AVA falls from 0.7700 to 0.7379. These results demonstrate that reinforcing ranking consistency across diverse edit types is crucial for generalization. 
+
+4.5 Impact of Ensemble Size Number of Editing Models ( NE ). We conducted a pilot study on 5k raw images to determine the optimal configuration. We first investigated editing di-12 Q. Jia, X. Yao et al. 
+
+Table 4: Ablation study on the ensemble size of editing and judgment models. We denote NE as the number of editing models and NJ as the number of aesthetic judgment models. The chosen setting ( 5+3 ) achieves the best trade-off between performance and computational cost.                                                               
+
+> Number Setting AVA FLICKR TAD66K Average
+> NENJPLCC SRCC PLCC SRCC PLCC SRCC PLCC SRCC 110.6940 0.6834 0.6327 0.6106 0.4917 0.4876 0.6061 0.5939 310.7379 0.7165 0.6800 0.6477 0.5159 0.4969 0.6446 0.6204 510.7442 0.7309 0.7055 0.6667 0.5224 0.5029 0.6574 0.6335 710.7459 0.7346 0.7089 0.6630 0.5214 0.5073 0.6587 0.6350 530.7713 0.7700 0.7524 0.7252 0.5406 0.5322 0.6881 0.6758 550.7735 0.7722 0.7531 0.7234 0.5383 0.5330 0.6883 0.6762
+
+versity by varying NE from 1 to 7. Tab. 4 shows that increasing NE to 5 yields substantial PLCC and SRCC gains and effectively captures diverse aesthetic causality. A further increase to 7 offers only marginal improvements. This indi-cates that five editing models sufficiently cover the variation space. 
+
+Number of Judgment Models ( NJ ). We subsequently analyzed the consen-sus mechanism with NE fixed at 5. Transitioning from 1 to 3 judgment models significantly enhances performance by filtering label noise. Increasing NJ to 5 yields negligible average gains and even slight degradation on generalization benchmarks. The configuration with 5 editing and 5 judgment models imposes a higher computational burden without meaningful benefits. We therefore adopted the strategy of 5 editing and 3 judgment models as the optimal trade-off. 
+
+4.6 Component Analysis Effectiveness of Pre-training. We first examine pre-training objectives by training the model on the full dataset with supervised fine-tuning (SFT). Our dataset provides absolute aesthetic scores for all images, derived from expert ratings and relative comparisons, enabling standard SFT on the entire data. As shown in Phase 1 of Tab. 5, the SFT only baseline achieves an average SRCC of only 0.5577. Adding our contrastive objective (PT-O1) raises SRCC to 0.5809. Further incorporating edit causal learning (PT-O2) boosts it to 0.6218. This improvement validates that combining static representation learning with dynamic causal modeling outperforms vanilla SFT. 
+
+Superiority of Our RL. In Phase 2, we evaluate RL strategies starting from a cold-start base. This base is constructed by first pre-training the model on the full dataset with PT-O1 & PT-O2 to learn comparative aesthetic knowledge, followed by a cold-start supervised fine-tuning (SFT) on only 200 samples with absolute score annotations to enable calibrated absolute score output (see Sec. 4.1). Due to limited data, its SRCC drops to 0.5907, which is expected and provides a controlled starting point for RL comparison. On this base, Aes-R1 improves SRCC to 0.6465. Our RL method further pushes it to 0.6758, surpassing both Relative Edit-Induced Difference for Image Aesthetic Assessment 13 
+
+Table 5: Component ablation study. We evaluate the incremental effectiveness of pre-training objectives (Phase 1) and reinforcement learning strategies (Phase 2) on three aesthetic benchmarks.                                                            
+
+> Method Setting AVA FLICKR TAD66K Average
+> PLCC SRCC PLCC SRCC PLCC SRCC PLCC SRCC
+> Phase 1: Pre-training Strategies (Full SFT)
+> SFT only 0.6612 0.6332 0.6618 0.6390 0.4344 0.4009 0.5858 0.5577 SFT w/ PT-O1 0.6849 0.6685 0.6878 0.6456 0.4550 0.4287 0.6092 0.5809 SFT w/ PT-O1 & PT-O2 0.7398 0.7129 0.7159 0.6733 0.4906 0.4791 0.6488 0.6218
+> Phase 2: RL Strategies (Few-shot Cold Start)
+> Cold Start Base 0.7023 0.6790 0.6911 0.6510 0.4719 0.4421 0.6218 0.5907 Cold Start w/ Aes-R1 0.7506 0.7381 0.7270 0.6983 0.5107 0.5032 0.6628 0.6465 Cold Start w/ Our RL 0.7713 0.7700 0.7524 0.7252 0.5406 0.5322 0.6881 0.6758
+
+Table 6: Ablation on the Group Size (Batch Size) in RL. In our framework, a “batch” consists of 1 source image and B − 1 edited variants. We study how the number of edited candidates per image affects the optimization. B = 8 (1 source + 7 edits) provides the most effective contrastive context. 
+
+Batch Size ( B) AVA FLICKR TAD66K Average PLCC SRCC PLCC SRCC PLCC SRCC PLCC SRCC 
+
+4 (1+3) 0.7579 0.7483 0.7325 0.7110 0.5205 0.5160 0.6703 0.6584 6 (1+5) 0.7676 0.7599 0.7434 0.7240 0.5347 0.5246 0.6819 0.6695 
+
+8 (1+7) 0.7713 0.7700 0.7524 0.7252 0.5406 0.5322 0.6881 0.6758 
+
+10 (1+9) 0.7701 0.7688 0.7576 0.7257 0.5361 0.5267 0.6879 0.6737 
+
+Aes-R1 and the fully-supervised Phase 1 model (0.6218). This demonstrates that our relative-aesthetic reward aligns better with human preferences than general-purpose reasoning RL. 
+
+4.7 Impact of RL Group Size Effect of Contrastive Diversity. We investigate the impact of the group size 
+
+B (comprising one source image and B − 1 edited variants) on the optimiza-tion process. As shown in Tab. 6, a small group size ( B = 4 ) yields suboptimal performance, achieving an average SRCC of only 0.6584, because the model observes limited aesthetic variations, restricting its ability to distinguish subtle improvements from noise. Increasing B to 8 brings significant gains, boosting the average SRCC to 0.6758. This richer contrastive context enables the model to compare the source against a diverse set of superior and inferior variants, facil-itating the learning of fine-grained ranking signals. However, further expanding the size to B = 10 leads to performance saturation and a slight decline in the average SRCC. This suggests that 7 edited variants are sufficient to estimate the local aesthetic gradient, while adding excessive candidates may introduce redundancy or increase optimization difficulty. We therefore adopt B = 8 as the default setting. 14 Q. Jia, X. Yao et al. GPT-5 
+
+9.05 
+
+8.22 
+
+Aes-R1 
+
+7.18 
+
+3.11 
+
+RED-Aes (Ours) 
+
+8.75 
+
+7.85 
+
+8.05 
+
+8.06 
+
+3.17 
+
+1.72 
+
+8.30 
+
+2.17 
+
+6.82 
+
+Minimalist composition with ample negative space; delicate leaves against a smooth green background create pleasing color harmony and contrast . Dappled light adds gentle texture and mood. Minor drawbacks include slightly soft focus and visible marks on the background … Overall, calm and visually appealing .
+
+Slender leaves against a uniform gradient, attempting minimalism. Dominated by an excessive soft focus that severely blurs edges … making the subject fail to pop out … Heavy-handed color treatment results in a mono-chromatic green wash … The artificial saturation and loss of definition create a visually dull and synthetic effect .
+
+Golden retriever with a warm, pleasant expression. Subject is clear and in focus, with natural lighting. Composition centers the dog nicely, capturing a friendly, authentic moment. There are no major technical flaws ; colors are natural, background is softly blurred. Overall, the aesthetic quality is high, warranting a strong rating. 
+
+Close-up of a golden retriever, showcasing its expressive face and warm, golden fur . Composition is centered on the dog. Lighting is natural … However, the background is out of focus, which creates a sense of visual clutter. The image does not exhibit a high level of sharpness or clarity ,particularly in the fur and details around the mouth. 
+
+Close-up of a green fern against a softly blurred background, creating a serene atmosphere. Composition is well-balanced, with delicate leaves prominently displayed. Natural lighting highlights vibrant green tones … Bokeh enhances focus and adds dreamy quality. There are no technical flaws , and the overall aesthetic is visually pleasing and harmonious. 
+
+… foliage against a soft bokeh background. The shallow depth of field creates a strong organic rhythm , isolating leaves to emphasize tactile texture … The color palette is harmonious … The exposure is precise, capturing the delicate details … While the lighting is somewhat flat and lacks dramatic directionality , the overall visual coherence and professional execution are impressive. 
+
+Tree placed off-center draws the eye to its intricate branches. Black and white enhances mood, lending a timeless and emotional quality. Lighting is soft, with clouds diffusing natural light … However, the scene feels somewhat empty, lacking a clear focal point beyond the tree itself. The image could benefit from a bit more dynamic range or contrast .
+
+Composition is severely unbalanced , subject pushed to the left with unresolved dead space. The golden tones are pushed to a garish level of saturation, washing out natural hues and flattening contrast into a muddy orange tint. The 
+
+lighting lacks dimension, resulting in loss of texture in the fur — it appears muddled rather than crisp. Shallow depth of field feels accidental rather than artistic. 
+
+Stark, silhouetted tree against a vast, overcast sky. The 
+
+choice of monochrome is masterful , stripping away color distractions to emphasize texture … Deep blacks cut sharply through atmospheric mid-tones, creating a high-contrast aesthetic reminiscent of classic fine-art photography . The 
+
+lone bird introduces a poetic dynamic element — a fleeting moment of life in a frozen landscape. 
+
+Close-up of a branch with needle-like leaves, set against a soft, out-of-focus background. Composition is well-considered, with the subject placed off-center … The color harmony is rather flat and lacks the contrast or vibrancy that could elevate the mood. The image does not demonstrate exceptional sharpness or detail … a pleasant but unremarkable photograph.  4.10 
+
+Slender leaves against a bright green background. Minimalistic composition with the leaves gracefully curving downward, creating a sense of natural movement and rhythm . Color harmony is pleasing and evokes a fresh, summery mood . However, the background does not provide much visual interest. The focus is soft, and the image could benefit from sharper detail.  3.70 
+
+Black and white photograph with minimalist composition and evocative mood . The tree's intricate branches create a complex, web-like silhouette. Composition utilizes negative space effectively ; the vast, cloudy sky occupies the upper two-thirds … The monochromatic palette enhances textural details and the dramatic nature of the clouds, lending a timeless, contemplative atmosphere.  8.25 
+
+Fig. 4: Qualitative comparison of RED-Aes against baselines. Each column displays the input images with Ground Truth score, and the predicted scores from each model, along with the CoT reasoning. 
+
+4.8 Case Study 
+
+As illustrated in Fig. 4, both generic VLMs and absolute-score baselines struggle to decouple semantic content from aesthetic quality. In the second row, GPT-5 and Aes-R1 assign inflated scores of 8.22 and 3.70 to a heavily blurred image (GT 1.72), failing to penalize degradation. RED-Aes predicts 3.11 by explicitly critiquing the “excessive soft focus” and “synthetic effect”. In the fourth row, despite severe artifacts (GT 2.17), Aes-R1 and GPT-5 still predict 8.05 and 8.75, misled by semantic content such as the dog’s “expressive face”. RED-Aes correctly identifies the “garish saturation” and “muddled texture,” yielding 3.17. These results confirm that our relative edit-induced learning effectively diagnoses the specific visual factors that influence aesthetic scores. 
+
+5 Conclusion 
+
+We propose RED-Aes, a framework that shifts IAA from absolute score regres-sion to relative edit-induced difference learning. By constructing source-edit pairs via controllable editing models, our approach enables the model to learn causal factors underlying aesthetic perception. The accompanying RED-20k dataset provides the first resource of editing-based aesthetic pairs with quantitative dif-ferences and CoT reasoning, built through a fully automated pipeline without human annotation. To progressively build aesthetic reasoning capabilities, we employ a three-stage training strategy comprising edit-causal pre-training, for-mat alignment, and GRPO with a relative ranking consistency reward. Experi-ments on five benchmarks under zero-shot cross-domain evaluation demonstrate state-of-the-art performance, with even a lightweight 2B variant surpassing all existing baselines. Relative Edit-Induced Difference for Image Aesthetic Assessment 15 
+
+References 
+
+1. Achiam, J., Adler, S., Agarwal, S., Ahmad, L., Akkaya, I., Aleman, F.L., Almeida, D., Altenschmidt, J., Altman, S., Anadkat, S., et al.: Gpt-4 technical report. arXiv preprint arXiv:2303.08774 (2023) 2. Bai, S., Cai, Y., Chen, R., Chen, K., Chen, X., Cheng, Z., Deng, L., Ding, W., Gao, C., Ge, C., et al.: Qwen3-vl technical report. arXiv preprint arXiv:2511.21631 (2025) 3. Bai, S., Chen, K., Liu, X., Wang, J., Ge, W., Song, S., Dang, K., Wang, P., Wang, S., Tang, J., Zhong, H., Zhu, Y., Yang, M., Li, Z., Wan, J., Wang, P., Ding, W., Fu, Z., Xu, Y., Ye, J., Zhang, X., Xie, T., Cheng, Z., Zhang, H., Yang, Z., Xu, H., Lin, J.: Qwen2.5-vl technical report. ArXiv abs/2502.13923 (2025), https: //api.semanticscholar.org/CorpusID:276449796 
+
+4. Beers, T.C., Flynn, K., Gebhardt, K.: Measures of location and scale for velocities in clusters of galaxies-a robust approach. Astronomical Journal (ISSN 0004-6256), vol. 100, July 1990, p. 32-46. 100 , 32–46 (1990) 5. Benesty, J., Chen, J., Huang, Y., Cohen, I.: Pearson correlation coefficient. In: Noise reduction in speech processing, pp. 1–4. Springer (2009) 6. Brooks, T., Holynski, A., Efros, A.A.: Instructpix2pix: Learning to follow image editing instructions. In: Proceedings of the IEEE/CVF conference on computer vision and pattern recognition. pp. 18392–18402 (2023) 7. Cao, S., Li, J., Li, X., Pu, Y., Zhu, K., Gao, Y., Luo, S., Xin, Y., Qin, Q., Zhou, Y., et al.: Unipercept: Towards unified perceptual-level image understanding across aesthetics, quality, structure, and texture. arXiv preprint arXiv:2512.21675 (2025) 8. Cao, S., Ma, N., Li, J., Li, X., Shao, L., Zhu, K., Zhou, Y., Pu, Y., Wu, J., Wang, J., et al.: Artimuse: Fine-grained image aesthetics assessment with joint scoring and expert-level understanding. arXiv preprint arXiv:2507.14533 (2025) 9. Datta, R., Joshi, D., Li, J., Wang, J.Z.: Studying aesthetics in photographic images using a computational approach. In: European conference on computer vision. pp. 288–301. Springer (2006) 10. Gao, F., Lin, Y., Shi, J., Qiao, M., Wang, N.: Aesmamba: Universal image aesthetic assessment with state space models. In: Proceedings of the 32nd ACM International Conference on Multimedia. pp. 7444–7453 (2024) 11. Gomez, R., Gomez, L., Gibert, J., Karatzas, D.: Learning to learn from web data through deep semantic embeddings. In: Proceedings of the European conference on computer vision (eccv) workshops. pp. 0–0 (2018) 12. Google: Nano Banana Pro: Gemini 3 Pro Image model from Google DeepMind. 
+
+https://blog.google/innovation- and- ai/products/nano- banana- pro/ (11 2025), accessed: 2026-03-19 13. Guo, D., Yang, D., Zhang, H., Song, J., Wang, P., Zhu, Q., Xu, R., Zhang, R., Ma, S., Bi, X., et al.: Deepseek-r1: Incentivizing reasoning capability in llms via reinforcement learning. arXiv preprint arXiv:2501.12948 (2025) 14. Guo, D., Wu, F., Zhu, F., Leng, F., Shi, G., Chen, H., Fan, H., Wang, J., Jiang, J., Wang, J., et al.: Seed1. 5-vl technical report. arXiv preprint arXiv:2505.07062 (2025) 15. He, S., Zhang, Y., Xie, R., Jiang, D., Ming, A.: Rethinking image aesthetics as-sessment: Models, datasets and benchmarks. In: IJCAI. vol. 6, p. 22 (2022) 16. Huang, Y., Sheng, X., Yang, Z., Yuan, Q., Duan, Z., Chen, P., Li, L., Lin, W., Shi, G.: Aesexpert: Towards multi-modality foundation model for image aesthetics perception. In: Proceedings of the 32nd ACM International Conference on Multi-media. pp. 5911–5920 (2024) 16 Q. Jia, X. Yao et al. 17. Hurst, A., Lerer, A., Goucher, A.P., Perelman, A., Ramesh, A., Clark, A., Os-trow, A., Welihinda, A., Hayes, A., Radford, A., et al.: Gpt-4o system card. arXiv preprint arXiv:2410.21276 (2024) 18. Iglewicz, B., Hoaglin, D.C.: Volume 16: how to detect and handle outliers. Quality Press (1993) 19. Ke, J., Wang, Q., Wang, Y., Milanfar, P., Yang, F.: Musiq: Multi-scale image quality transformer. In: Proceedings of the IEEE/CVF international conference on computer vision. pp. 5148–5157 (2021) 20. Kong, S., Shen, X., Lin, Z., Mech, R., Fowlkes, C.: Photo aesthetics ranking net-work with attributes and content adaptation. In: European conference on computer vision. pp. 662–679. Springer (2016) 21. Krasin, I., Duerig, T., Alldrin, N., Ferrari, V., Abu-El-Haija, S., Kuznetsova, A., Rom, H., Uijlings, J., Popov, S., Veit, A., et al.: Openimages: A public dataset for large-scale multi-label and multi-class image classification. Dataset available from https://github. com/openimages 2(3), 18 (2017) 22. Ku, M., Jiang, D., Wei, C., Yue, X., Chen, W.: Viescore: Towards explainable metrics for conditional image synthesis evaluation. In: Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers). pp. 12268–12290 (2024) 23. Labs, B.F., Batifol, S., Blattmann, A., Boesel, F., Consul, S., Diagne, C., Dock-horn, T., English, J., English, Z., Esser, P., et al.: Flux. 1 kontext: Flow match-ing for in-context image generation and editing in latent space. arXiv preprint arXiv:2506.15742 (2025) 24. Leder, H., Belke, B., Oeberst, A., Augustin, D.: A model of aesthetic appreciation and aesthetic judgments. British journal of psychology 95 (4), 489–508 (2004) 25. Leys, C., Ley, C., Klein, O., Bernard, P., Licata, L.: Detecting outliers: Do not use standard deviation around the mean, use absolute deviation around the median. Journal of experimental social psychology 49 (4), 764–766 (2013) 26. Li, W., Zhang, X., Zhao, S., Zhang, Y., Li, J., Zhang, L., Zhang, J.: Q-insight: Understanding image quality via visual reinforcement learning. arXiv preprint arXiv:2503.22679 (2025) 27. Liu, B., Hu, Y., Jin, S., Dou, S., Shi, G., Shao, J., Gui, T., Huang, X.: Unlocking the essence of beauty: Advanced aesthetic reasoning with relative-absolute policy optimization. arXiv preprint arXiv:2509.21871 (2025) 28. Liu, H., Li, C., Wu, Q., Lee, Y.J.: Visual instruction tuning. Advances in neural information processing systems 36 , 34892–34916 (2023) 29. Liu, X., van de Weijer, J., Bagdanov, A.D.: Rankiqa: Learning from rankings for no-reference image quality assessment. In: Proceedings of the IEEE International Conference on Computer Vision (ICCV) (Oct 2017) 30. Marchesotti, L., Perronnin, F., Larlus, D., Csurka, G.: Assessing the aesthetic quality of photographs using generic image descriptors. In: 2011 international con-ference on computer vision. pp. 1784–1791. IEEE (2011) 31. Murray, N., Marchesotti, L., Perronnin, F.: Ava: A large-scale database for aes-thetic visual analysis. In: 2012 IEEE conference on computer vision and pattern recognition. pp. 2408–2415. IEEE (2012) 32. Reber, R., Schwarz, N., Winkielman, P.: Processing fluency and aesthetic plea-sure: Is beauty in the perceiver’s processing experience? Personality and social psychology review 8(4), 364–382 (2004) 33. Ren, J., Shen, X., Lin, Z., Mech, R., Foran, D.J.: Personalized image aesthetics. In: Proceedings of the IEEE international conference on computer vision. pp. 638–647 (2017) Relative Edit-Induced Difference for Image Aesthetic Assessment 17 34. Schuhmann, C., Beaumont, R., Vencu, R., Gordon, C., Wightman, R., Cherti, M., Coombes, T., Katta, A., Mullis, C., Wortsman, M., et al.: Laion-5b: An open large-scale dataset for training next generation image-text models. Advances in neural information processing systems 35 , 25278–25294 (2022) 35. Sedgwick, P.: Spearman’s rank correlation coefficient. Bmj 349 (2014) 36. Seedream, T., Chen, Y., Gao, Y., Gong, L., Guo, M., Guo, Q., Guo, Z., Hou, X., Huang, W., Huang, Y., et al.: Seedream 4.0: Toward next-generation multimodal image generation. arXiv preprint arXiv:2509.20427 (2025) 37. Shao, Z., Wang, P., Zhu, Q., Xu, R., Song, J., Bi, X., Zhang, H., Zhang, M., Li, Y., Wu, Y., et al.: Deepseekmath: Pushing the limits of mathematical reasoning in open language models. arXiv preprint arXiv:2402.03300 (2024) 38. Singh, A., Fry, A., Perelman, A., Tart, A., Ganesh, A., El-Kishky, A., McLaughlin, A., Low, A., Ostrow, A., Ananthram, A., et al.: Openai gpt-5 system card (2025) 39. Talebi, H., Milanfar, P.: Nima: Neural image assessment. IEEE transactions on image processing 27 (8), 3998–4011 (2018) 40. Team, M.L., Ma, H., Tan, H., Huang, J., Wu, J., He, J.Y., Gao, L., Xiao, S., Wei, X., Ma, X., et al.: Longcat-image technical report. arXiv preprint arXiv:2512.07584 (2025) 41. Wu, C., Li, J., Zhou, J., Lin, J., Gao, K., Yan, K., Yin, S.m., Bai, S., Xu, X., Chen, Y., et al.: Qwen-image technical report. arXiv preprint arXiv:2508.02324 (2025) 42. Wu, H., Zhang, Z., Zhang, E., Chen, C., Liao, L., Wang, A., Xu, K., Li, C., Hou, J., Zhai, G., et al.: Q-instruct: Improving low-level visual abilities for multi-modality foundation models. In: Proceedings of the IEEE/CVF conference on computer vision and pattern recognition. pp. 25490–25500 (2024) 43. Wu, H., Zhang, Z., Zhang, W., Chen, C., Liao, L., Li, C., Gao, Y., Wang, A., Zhang, E., Sun, W., et al.: Q-align: Teaching lmms for visual scoring via discrete text-defined levels. arXiv preprint arXiv:2312.17090 (2023) 44. Wu, T., Zou, J., Liang, J., Zhang, L., Ma, K.: Visualquality-r1: Reasoning-induced image quality assessment via reinforcement learning to rank. arXiv preprint arXiv:2505.14460 (2025) 45. Xu, J., Liu, X., Wu, Y., Tong, Y., Li, Q., Ding, M., Tang, J., Dong, Y.: Imagere-ward: Learning and evaluating human preferences for text-to-image generation. Advances in Neural Information Processing Systems 36 , 15903–15935 (2023) 46. Yang, Y., Xu, L., Li, L., Qie, N., Li, Y., Zhang, P., Guo, Y.: Personalized im-age aesthetics assessment with rich attributes. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. pp. 19861–19869 (2022) 47. You, Z., Gu, J., Li, Z., Cai, X., Zhu, K., Dong, C., Xue, T.: Descriptive image quality assessment in the wild. arXiv e-prints pp. arXiv–2405 (2024) 48. Zhang, K., Mo, L., Chen, W., Sun, H., Su, Y.: Magicbrush: A manually annotated dataset for instruction-guided image editing. Advances in Neural Information Pro-cessing Systems 36 , 31428–31449 (2023) 49. Zhao, H., Ma, X., Chen, L., Si, S., Wu, R., An, K., Yu, P., Zhang, M., Li, Q., Chang, B.: Ultraedit: Instruction-based fine-grained image editing at scale. Advances in Neural Information Processing Systems 37 , 3058–3093 (2024) 50. Zhou, Z., Wang, Q., Lin, B., Su, Y., Chen, R., Tao, X., Zheng, A., Yuan, L., Wan, P., Zhang, D.: Uniaa: A unified multi-modal image aesthetic assessment baseline and benchmark. arXiv preprint arXiv:2404.09619 (2024) 18 Q. Jia, X. Yao et al. 
+
+A Multi-expert Voting Protocol 
+
+As described in the main paper, we employ a multi-expert voting protocol to produce consensus aesthetic scores for the source pool O. Given N expert models, each image receives N independent scores {s1, s 2, . . . , s N }. The protocol proceeds in three steps: outlier detection, consensus-level classification, and adaptive score fusion. 
+
+Step 1: Outlier Detection via Robust Z-Scores. We adopt the Median Absolute Deviation (MAD) to identify anomalous scores that deviate signifi-cantly from the expert consensus. For each image, we compute the median score 
+
+˜s = median ({sn}Nn=1 ) and the MAD: 
+
+MAD = median 
+
+
+
+{| sn − ˜s|} Nn=1 
+
+
+
+. (9) The modified z-score [18] for each expert n is then: 
+
+zn = 0.6745 · (sn − ˜s)
+
+MAD , (10) where the constant 0.6745 ensures consistency with the standard normal distri-bution. An expert score is flagged as an outlier if |zn| > λ , where λ = 1 .5 is the outlier threshold. This MAD-based approach is more robust than standard deviation-based methods [25], as it is resistant to the influence of extreme values. 
+
+Step 2: Consensus-Level Classification. We classify the agreement among experts into three levels based on the standard deviation σ of the N scores: 
+
+Consensus Level =
+
+
+
+High , if σ < τ h,
+
+Medium , if τh ≤ σ < τ m,
+
+Low , if σ ≥ τm,
+
+(11) where τh = 0 .5 and τm = 1 .0. The consensus level reflects the degree of inter-expert agreement and directly determines the fusion strategy applied in the next step. 
+
+Step 3: Adaptive Score Fusion. We design a strategy matrix indexed by the consensus level and the outlier situation (no outliers, one outlier, or multiple outliers), as shown in Tab. 7. Each cell specifies a fusion method selected from the following: 
+
+– Weighted Average : ˆs = P 
+
+> n
+
+wnsn/ P 
+
+> n
+
+wn, where w is a consensus-level-dependent weight vector. 
+
+– Normal Average : The arithmetic mean of non-outlier scores. 
+
+– Weighted Median : The median computed with consensus-level-dependent weights, which reduces sensitivity to skewed distributions. 
+
+– Median : The standard median of all scores. 
+
+– Conservative Average : A blend of 70% weighted average and 30% median, balancing central tendency with robustness. Relative Edit-Induced Difference for Image Aesthetic Assessment 19                    
+
+> Table 7: Adaptive fusion strategy matrix. Each cell specifies the fusion method selected based on the consensus level and the number of detected outliers.
+> Consensus Level No Outliers One Outlier Multiple Outliers
+> High ( σ < 0.5)Weighted Average Normal Average Weighted Median Medium ( 0.5≤σ < 1.0)Weighted Average Normal Average Median Low ( σ≥1.0)Conservative Average Median Robust Median
+
+– Robust Median : A Tukey’s biweight estimator [4] that down-weights scores far from the median, providing strong resistance to outliers. In our experiments, we employ N = 3 expert models (Qwen3-VL-235B [2], Qwen2.5-VL-72B [3], and GPT-5 [1]). For both the Weighted Average and Weighted Median fusion methods, the weight vector w = ( w1, w 2, w 3) is set uniformly as 
+
+w1 : w2 : w3 = 1 : 1 : 1 across all consensus levels, reflecting the assumption that each expert contributes equally reliable aesthetic judgments. This uniform weighting avoids introducing additional hyperparameters and ensures that the adaptive behavior of the protocol is driven entirely by the consensus-level clas-sification and outlier detection, rather than by pre-assigned expert preferences. The underlying principle is intuitive: when experts exhibit high agreement, we trust the weighted average to preserve fine-grained score distinctions; as dis-agreement increases, we progressively shift toward median-based estimators that are more resistant to noise. When outliers are present under high consensus, we exclude them and average the remaining scores; under low consensus with mul-tiple outliers, we resort to the robust median to ensure stability. This adaptive protocol ensures that the consensus scores in O are both accu-rate under agreement and stable under disagreement, providing reliable anchors for the subsequent relative difference computation. 
+
+B Prompt Template 
+
+This section provides the complete prompt templates used throughout our pipeline, as referenced in the main paper. We organize them into three groups according to their roles: (1) Data Construction Prompts (i.e ., prompts for aesthetic scoring and editing instruction generation, VIEScore-based edit quality verifica-tion, pairwise aesthetic comparison, and diverse editing instruction generation for the RL phase), which drive the automated RED-20k data engine; (2) Train-ing Stage Prompts , which define the question templates for constructing Q&A pairs across the three training stages (Stage 1 SFT with PT-O1 and PT-O2, Stage 2 cold-start calibration, and Stage 3 GRPO); and (3) Inference Prompt ,which specifies the evaluation prompt used by RED-Aes at test time. For base-line models, we adopt the inference prompts provided in their respective original papers or open-source repositories. 20 Q. Jia, X. Yao et al. 
+
+Data Construction Prompts. The following four prompts drive the auto-mated RED-20k data construction pipeline. The first prompt instructs the ex-pert model to perform aesthetic analysis, assign a numeric score, and generate a targeted editing instruction for each source image. The second prompt is adopted from VIEScore [22] to verify edit quality by evaluating editing success and the degree of over-editing. The third prompt elicits pairwise aesthetic comparison, asking the model to estimate the score difference between an original and its edited counterpart. The fourth prompt generates diverse editing instructions for the RL phase by sampling from a predefined set of edit categories. 
+
+Prompt for Aesthetic Scoring and Editing Instruction Generation 
+
+You are a professional visual aesthetics analyst and image editing expert, specializing in evaluating image aesthetics and improving visual quality through image editing operations. You must strictly follow the workflow and output format below. Any deviation from the required format is not allowed. ==================== Part 1: Aesthetic Analysis (Outside Tags) ==================== 1. Analyze the image from an aesthetic perspective and identify the key factors that affect its visual quality. Focus on high−level aesthetic aspects such as: − Composition and visual balance − Subject prominence and depth relationships − Semantic clarity and narrative coherence − Mood, emotion, and visual tension Avoid limiting the analysis to low−level parameter adjustments. Output the aesthetic analysis in natural natural language outside of any tags. ==================== Part 2: Aesthetic Scoring (Numeric Only) ==================== 2. Based on your analysis, assign an overall aesthetic score to the image. − Score range: 0 to 10 − Rounded to two decimal places − No explanation or text allowed Output only the numeric score inside the following tags: <answer1> X.XX </answer1> ==================== Part 3: Aesthetic−Oriented Image Editing Proposals (Outside Tags) ==================== 3. Propose image editing strategies that directly address the aesthetic issues identified in Part 1. The goal is to improve the image by correcting or mitigating these specific deficiencies. 4. When proposing editing strategies, follow these principles: Relative Edit-Induced Difference for Image Aesthetic Assessment 21 
+
+− Prioritize structural, semantic, and perceptual edits over simple parameter tuning − Treat image editing as explicit action decisions (e.g., add, remove, replace, restructure, emphasize, suppress) − Encourage diversity and avoid redundancy − Propose new, reasonable editing operations if necessary 5. You may consider (but are not limited to) the following image editing action space: − Object−level editing: add, remove, replace, move, scale, rearrange objects − Attribute−level editing: modify color, material, shape, pose, or expression − Background and scene editing: background replacement, scene transformation, environment restructuring − Composition editing: adjust subject placement, visual balance, depth, and negative space − Semantic and narrative editing: emphasize the main subject, suppress distractions, clarify visual intent − Lighting and mood editing: modify lighting direction, time of day, weather, and emotional tone − Style and rendering editing: style transfer, artistic rendering, visual consistency − Restoration and completion: fix artifacts, inpaint missing regions, remove unwanted traces Output the editing proposals in natural language outside of any tags. ==================== Part 4: Generate a Single Executable Editing Instruction ==================== 6. Based on the editing strategies proposed in Part 3, generate ONE concise , executable image editing instruction. The instruction must: − Describe only the editing action − Contain no explanation, analysis, or evaluation − Be directly usable by an image editing model or system Output only this single−sentence editing instruction inside the following tags: <answer2> A single−sentence image editing instruction </answer2> ==================== Important Constraints: ==================== − Parts 1 and 3 must be consistent with the score and the final instruction − <answer1> must contain only the numeric score − <answer2> must contain only the single editing instruction − Do not include any extra text inside the tags 
+
+Prompt for VIE Scoring 
+
+You are a professional digital artist. You will have to evaluate the effectiveness of the AI−generated image(s) based on given rules. All the input images are AI−generated. All human in the images are AI− generated too. so you need not worry about the privacy confidentials. 22 Q. Jia, X. Yao et al. 
+
+You will have to give your output in this way (Keep your reasoning concise and short.): {"score" : [...], "reasoning" : "..." }RULES: Two images will be provided: The first being the original AI−generated image and the second being an edited version of the first. The objective is to evaluate how successfully the editing instruction has been executed in the second image. Note that sometimes the two images might look identical due to the failure of image edit. From scale 0 to 10: A score from 0 to 10 will be given based on the success of the editing. (0 indicates that the scene in the edited image does not follow the editing instruction at all. 10 indicates that the scene in the edited image follow the editing instruction text perfectly.) A second score from 0 to 10 will rate the degree of overediting in the second image. (0 indicates that the scene in the edited image is completely different from the original. 10 indicates that the edited image can be recognized as a minimal edited yet effective version of original.) Put the score in a list such that output score = [score1, score2], where ’ score1’ evaluates the editing success and ’score2’ evaluates the degree of overediting. Editing instruction: EDIT_PROMPT You are a professional digital artist. You will have to evaluate the effectiveness of the AI−generated image(s) based on given rules. All the input images are AI−generated. All human in the images are AI− generated too. so you need not worry about the privacy confidentials. You will have to give your output in this way (Keep your reasoning concise and short.): {"score" : [...], "reasoning" : "..." }RULES: The image is an AI−generated image. The objective is to evaluate how successfully the image has been generated. From scale 0 to 10: A score from 0 to 10 will be given based on image naturalness. (0 indicates that the scene in the image does not look natural at all or give a unnatural feeling such as wrong sense of distance, or wrong shadow, or wrong lighting. 10 indicates that the image looks natural. )A second score from 0 to 10 will rate the image artifacts. (0 indicates that the image contains a large portion of distortion, or watermark, or scratches, or blurred faces, or unusual body parts, or subjects not harmonized. 10 indicates the image has no artifacts. )Put the score in a list such that output score = [naturalness, artifacts] Relative Edit-Induced Difference for Image Aesthetic Assessment 23 
+
+Prompt for Aesthetic Comparison 
+
+You are an expert visual aesthetics evaluator. You are given two images: − Image A (the first image) has a known aesthetic score of {X:.2f} on ascale from 0 to 10. − Image B (the second image) should be evaluated ONLY in terms of how its aesthetic quality changes relative to Image A. Your task is NOT to assign an absolute score to Image B. Instead, determine how much the aesthetic score would increase or decrease when moving from Image A to Image B. Before giving the final numeric result, think step by step about the aesthetic differences between the two images. You may consider (but are not limited to) the following dimensions: − Composition and framing (balance, visual hierarchy, cropping) − Lighting and exposure (brightness, contrast, highlights, shadows) − Color quality (harmony, saturation, tone consistency) − Sharpness and clarity (focus, noise, artifacts) − Subject emphasis and visual clarity − Background cleanliness and distraction level − Emotional impact and visual appeal − Overall coherence and professional quality Weigh these factors holistically. Some improvements may compensate for regressions in other areas. Your reasoning should reflect relative comparison, not absolute judgment. After your reasoning, output ONLY the final aesthetic score change inside <answer> and </answer> tags. Formatting rules: − The value must be a signed decimal number. − Keep exactly two decimal places. − Do NOT include any explanation inside the <answer> tags. − Positive values mean Image B is aesthetically better than Image A. − Negative values mean Image B is aesthetically worse than Image A. Examples: <answer>+1.13</answer> <answer>−0.54</answer> 
+
+Prompt for Generating Editing Instructions in the RL Phase 
+
+EDIT_TYPES = ["Change Color / Color Correction", "Local Detail Enhancement", "Background Replacement / Modification", "Object Attribute Modification", "Add or Remove Specific Element", "Text Editing", "Style Transfer / Artistic Re−render", "Pose or Layout Adjustment", "Multi−Reference Composition", "Lighting / Shadow Adjustment", "Perspective / Viewpoint Change", "Texture Alteration", "Semantic Object Replacement", 24 Q. Jia, X. Yao et al. 
+
+"Environmental / Weather Change", "Fine−Grained Human Attribute Edit", "Precise Color Match from Reference", ]You are an image editing instruction writer. The required edit category is: <EDIT_TYPE>random {edit_type}</EDIT_TYPE> Your task is to write exactly ONE image editing instruction. Rules: 1. The instruction must describe an image EDIT operation (modifying an existing image, not generating a new image from scratch). 2. The instruction must clearly and substantially involve the given edit category. 3. The edit can be free−form and creative, including adding or removing objects, changing layout or composition, or altering style and environment. 4. The edit must be feasible for modern image editing models. Output rules: − Output ONLY the instruction text. − No explanations. − No formatting. 
+
+Training Stage Prompts. This section details the prompt templates designed for the question part of the training data used in our method. These templates are employed across different stages to construct the Q&A pairs for model training (including SFT and RL). The following three prompts correspond to the specific tasks in each stage. 
+
+Stage 1 PT-O1: Question Prompt for Comparative Comparison 
+
+<image><image>Compare the aesthetic scores (0−10) of the two images and analyze the changes from the first to the second. Provide your reasoning and output the final score difference (second minus first) within <answer> and </answer> tags. For example: <answer>+1.51</answer> or <answer>−1.27</ answer>. 
+
+Stage 1 PT-O2: Question Prompt for Editing Causal Reasoning 
+
+<image> If the image is modified based on the instruction: EDIT_PROMPT, how will the aesthetic score change? 
+
+Stages 2 & 3: Question Prompt for Cold-Start and GRPO Training 
+
+<image>You are doing the image aesthetic assessment task. Here is the question: What is your overall rating on the aesthetic of this picture? The rating should be a float between 0 and 10, rounded to four decimal places, with 0 representing very poor aesthetic and 10 representing excellent aesthetic. First conduct the thinking process from three separate perspectives: overall aesthetic evaluation, defect−focused analysis, and Relative Edit-Induced Difference for Image Aesthetic Assessment 25             
+
+> causal editing analysis, and then output the final answer with only one score in <answer> </answer> tags.
+
+Prompt Template for Model Inference. For other models, we directly reuse the inference prompts provided in their original papers or open-source code. Therefore, in this section, we only present the inference prompt designed for our proposed RED-Aes. 
+
+Inference Prompt for RED-Aes                                                   
+
+> You are doing the image aesthetic assessment task. Here is the question: What is your overall rating on the aesthetic of this picture? The rating should be afloat between 0 and 10, rounded to four decimal places, with 0 representing very poor aesthetic and 10 representing excellent aesthetic. First conduct the thinking process from three separate perspectives: overall aesthetic evaluation, defect−focused analysis, and causal editing analysis, and then output the final answer with only one score in <answer> </answer> tags.
+
+C Editing Quality Control Details 
+
+To ensure the reliability of the constructed RED-20k dataset, we established strict quality control criteria to validate the pseudo-labels generated by our fully automated data engine. This section provides a quantitative analysis of the data construction process, specifically focusing on verifying the fidelity of editing op-erations and the consensus behavior of the aesthetic judgment models. 
+
+VIEScore Threshold Selection. In the image editing filtering stage, we set the VIEScore threshold at 7.5 on a [0,10] scale. It is important to note that this value is not a hyperparameter tuned specifically for our dataset. Instead, it follows the standard evaluation protocol established in the image editing literature [22], where a score above 7.5 is generally recognized as the criterion for a successful edit that aligns well with the text instruction while preserving visual fidelity. 
+
+Statistics of Editing Models. We employed five state-of-the-art controllable editing models to ensure diversity in aesthetic variations for pre-training. As shown in Tab. 8, the success rates (passing the VIEScore ≥ 7.5 threshold) vary across different models due to their architectural differences. Nano-Banana and Seedream-4.5 demonstrate superior stability, while other models contribute unique editing styles. The average success rate across all models is approximately 63.7%, necessitating the redundancy of using multiple models to ensure at least four valid edits per source image. 
+
+Consistency of Aesthetic Judgment. Following the VIEScore filtering, we employed three powerful VLMs (Qwen3-VL-235B, Qwen2.5-VL-72B, and GPT-5) as judges to determine the direction of aesthetic change ( δ). A strict consensus mechanism was adopted, requiring unanimous agreement among all three judges to filter out ambiguous or noisy pairs. Tab. 9 reports the pairwise agreement rates calculated on the candidate pool prior to consensus filtering. The moderate 26 Q. Jia, X. Yao et al.                 
+
+> Table 8: Success rate statistics of the five editing models used in pre-training data construction. “Success” is defined as VIEScore ≥7.5.Editing Model VIEScore (Mean) Success Rate (%) Qwen-Image-Edit 7.42 58.3% FLUX2 7.64 64.2% Longcat-Image 7.35 55.8% Nano-Banana 7.89 71.5%
+> Seedream-4.5 7.82 68.9% Average 7.62 63.7%
+
+agreement rates (averaging 67.8%) reflect the inherent subjectivity and ambigu-ity in aesthetic assessment. Consequently, requiring unanimous consensus results in a significant discard rate, ensuring that only samples with unambiguous and high-confidence aesthetic shifts are retained.            
+
+> Table 9: Pairwise agreement rates on the direction of aesthetic change among the three judgment models. Judge Pair Qwen3-VL Qwen2.5-VL GPT-5 Qwen3-VL -68.4% 66.2% Qwen2.5-VL 68.4% -68.9% GPT-5 66.2% 68.9% -
+
+D RED-20k Dataset Examples 
+
+Source images in RED-20k are collected from OpenImages [21], InstaCities1M [11], and several in-house datasets, spanning diverse content categories and aesthetic quality levels. For all evaluation datasets, we follow the official test splits. 
+
+PT-O1: Contrastive Comparison Pairs. Fig. 5–Fig. 8 illustrate represen-tative PT-O1 samples. Each sample consists of a source image I and an edited counterpart V ∗ produced by one of the five editing models. The editing in-struction e targets a specific aesthetic deficiency identified by Qwen3-VL-235B (e.g ., rebalancing composition, adjusting lighting, or removing distracting back-ground elements). The annotation includes the consensus aesthetic difference δ
+
+and a Chain-of-Thought (CoT) reasoning trace T jointly produced by three VLM judges. During Stage 1 SFT, the model is trained to compare the two images, generate the CoT reasoning, and predict δ (PT-O1 objective). 
+
+PT-O2: Edit-Causal Reasoning Samples. Fig. 9 shows a representative PT-O2 sample. Unlike PT-O1, only the source image I and the editing instruction 
+
+e are provided as input—the edited image is withheld. The model must predict Relative Edit-Induced Difference for Image Aesthetic Assessment 27 A: Original image 
+
+B: Edited image 
+
+<image><image>Compare the aesthetic scores (0-10) of the two images and analyze the changes from the first to the second. Provide your reasoning and output the final score difference (second minus first) within <answer> and </answer> tags. For example: <answer>+1.51</answer> or <answer>-1.27</answer>. 
+
+Image pairs  CoT with relative score 
+
+Prompt 
+
+Upon comparing Image A and Image B, the primary difference lies in the color grading and lighting treatment. Image B exhibits a warmer, more saturated color palette, particularly in the golden reflections on the water and the glowing facades of the buildings. This enhances the emotional impact and visual appeal, evoking a stronger sense of sunset serenity and charm. 
+
+The contrast in Image B is slightly more pronounced, deepening shadows and enriching the highlights, which adds depth and dimensionality to the scene. The overall tonal harmony is improved, with the warm tones unifying the sky, water, and architecture into a more cohesive visual experience. 
+
+There is no discernible loss in sharpness or clarity; both images appear equally crisp. The composition and framing remain identical, so no changes in balance or visual hierarchy are introduced. 
+
+The background elements — including the boats, trees, and buildings — are unchanged in terms of distraction level. The subject emphasis remains consistent, with the canal and reflected light continuing to anchor the viewer’s attention. 
+
+While the warmer tones could risk over-saturation, they are applied subtly and enhance rather than overwhelm the scene. The professional quality of Image B feels elevated due to the more deliberate and atmospheric color grading. 
+
+Overall, the aesthetic improvements in color harmony, emotional resonance, and tonal depth outweigh any neutral or unchanged aspects, resulting in a perceptible enhancement in visual appeal. 
+
+<answer>+0.35</answer> 
+
+Fig. 5: PT-O1 data example in RED-20k (1/4). Each sample shows a source im-age A paired with an edited counterpart B produced by a controllable editing model. The editing instruction targets a specific aesthetic deficiency of the source. The anno-tation includes the consensus aesthetic difference δ and a CoT reasoning trace jointly produced by three VLM judges. The model is trained to compare the pair, generate the reasoning, and predict δ.
+
+the aesthetic difference δ that would result from applying e to I, forcing it to internalize the causal relationship between visual modifications and aesthetic changes. This objective complements PT-O1 by extending relative judgment from visual evidence to causal prediction from textual instructions. 
+
+RL Training Groups. Fig. 10 illustrates a representative RL training group G.Each group contains one source image and up to seven edited variants generated by randomly selected editing models under diverse editing instructions ( e.g ., style transfer, object removal, color grading, lighting adjustment). All variants pass the three-judge consensus filter, ensuring unambiguous aesthetic change directions. During Stage 3 GRPO training, the model receives each image inde-pendently and predicts its absolute aesthetic score; the Relative Ranking Consis-tency Reward then enforces ordinal agreement across the entire group, directly optimizing comparative reasoning over causal aesthetic differences. 28 Q. Jia, X. Yao et al. A: Original image 
+
+B: Edited image 
+
+<image><image>Compare the aesthetic scores (0-10) of the two images and analyze the changes from the first to the second. Provide your reasoning and output the final score difference (second minus first) within <answer> and </answer> tags. For example: <answer>+1.51</answer> or <answer>-1.27</answer>. 
+
+Prompt 
+
+Image pairs  CoT with relative score 
+
+Step-by-step aesthetic comparison: 
+
+1. Composition and framing: 
+
+- Image A is framed from under a large structure (hangar or bridge), which creates a dramatic, slightly constrained perspective. The overhead structure dominates the top half, which may feel heavy or obstructive. 
+
+- Image B removes the overhead structure, offering a cleaner, more open composition. The aircraft is centered and fully visible, with a more balanced relationship between subject and sky. This improves visual hierarchy and reduces visual tension. 
+
+2. Lighting and exposure: 
+
+- Image A has strong contrast due to the shadowed foreground and bright sky. While dramatic, this creates harsh transitions and potentially lost detail in shadows. 
+
+- Image B has more even lighting. The sky is brighter and more evenly exposed, with softer shadows on the aircraft. This enhances detail visibility and reduces harshness. 
+
+3. Color quality: 
+
+- Both images have similar color palettes (silver aircraft, blue sky, white clouds). However, Image B’s sky appears more vibrant and saturated without being oversaturated, enhancing the overall color harmony and visual richness. 
+
+4. Sharpness and clarity: 
+
+- Both images are sharp, but Image B’s removal of the overhead structure eliminates potential visual clutter and allows the viewer’s eye to focus more directly on the aircraft. No loss of detail is observed. 
+
+5. Subject emphasis and visual clarity: 
+
+- Image B places the aircraft more prominently in the frame, with no competing overhead elements. The subject is clearer and more immediately recognizable. 
+
+6. Background cleanliness and distraction level: 
+
+- Image A’s overhead structure is a significant distraction, pulling attention away from the aircraft and creating a visually busy upper frame. 
+
+- Image B’s background is cleaner, with unobstructed sky and distant buildings that provide context without competing for attention. 
+
+7. Emotional impact and visual appeal: 
+
+- Image A feels more industrial and moody due to the shadowed framing. 
+
+- Image B feels more open, airy, and celebratory of the aircraft’s design, enhancing its visual appeal and emotional resonance. 
+
+8. Overall coherence and professional quality:- Image B presents a more polished, gallery-ready image. The removal of the distracting overhead structure and the improved lighting balance contribute to a more cohesive and professional aesthetic. 
+
+Conclusion: 
+
+Image B improves upon Image A in nearly every aesthetic dimension: composition, lighting, color vibrancy, subject emphasis, and emotional appeal. The removal of the obstructive overhead structure is the single most impactful change, leading to a cleaner, more balanced, and more visually engaging image. While Image A has a dramatic quality, Image B’s enhancements outweigh any potential loss of moodiness. 
+
+<answer>+0.92</answer> 
+
+Fig. 6: PT-O1 data example in RED-20k (2/4). Another source-edit pair il-lustrating a different type of aesthetic intervention ( e.g ., composition rebalancing or background simplification). The CoT reasoning explicitly attributes the predicted score change to the specific visual modifications introduced by the edit. Relative Edit-Induced Difference for Image Aesthetic Assessment 29 A: Original image 
+
+B: Edited image 
+
+<image><image>Compare the aesthetic scores (0-10) of the two images and analyze the changes from the first to the second. Provide your reasoning and output the final score difference (second minus first) within <answer> and </answer> tags. For example: <answer>+1.51</answer> or <answer>-1.27</answer>. 
+
+Prompt 
+
+Image pairs  CoT with relative score 
+
+Step-by-step aesthetic comparison: 
+
+1. Composition and framing: Both images are nearly identical in framing and subject placement. No significant change. 
+
+2. Lighting and exposure: Image B exhibits slightly higher contrast and more pronounced highlights on the subjects’ faces and clothing. The shadows are deeper, which adds drama but may slightly reduce detail in dark areas. This is a subtle enhancement in mood but a slight regression in tonal balance. 
+
+3. Color quality: Image B has marginally more saturated colors — the purple shirt and red lipstick appear slightly richer. However, the overall color temperature feels marginally cooler, which may reduce the warmth and intimacy conveyed. Net effect is a slight improvement in vibrancy but a slight loss in tonal harmony. 
+
+4. Sharpness and clarity: Image B appears marginally sharper, especially in the hair strands and fabric textures. There is no noticeable increase in noise or artifacts. This is a clear improvement. 
+
+5. Subject emphasis and visual clarity: The increased contrast and sharpness in Image B make the subjects “pop” more against the background. The emotional connection between the couple feels more intense due to the heightened visual clarity. This is a positive change. 
+
+6. Background cleanliness and distraction level: The background (Ferris wheel) is equally clean and blurred in both images. No change. 
+
+7. Emotional impact and visual appeal: The slight increase in contrast and sharpness in Image B enhances the romantic, cinematic mood. The subjects’ expressions and pose feel more impactful. This is a clear improvement in emotional resonance. 
+
+8. Overall coherence and professional quality: Image B feels slightly more polished — the enhancements in sharpness and contrast contribute to a more “finished” look. There is no loss in coherence; if anything, it’s slightly more refined. 
+
+Holistic assessment: 
+
+While Image B has a minor regression in tonal harmony due to increased contrast and cooler temperature, this is outweighed by improvements in sharpness, subject emphasis, and emotional impact. The overall aesthetic quality is slightly elevated. 
+
+<answer>+0.28</answer> 
+
+Fig. 7: PT-O1 data example in RED-20k (3/4). A source-edit pair where the editing model applies a lighting or color-harmony adjustment. The annotation captures the direction and magnitude of the resulting aesthetic shift, verified by unanimous consensus among all three VLM judges. 30 Q. Jia, X. Yao et al. A: Original image 
+
+B: Edited image 
+
+<image><image>Compare the aesthetic scores (0-10) of the two images and analyze the changes from the first to the second. Provide your reasoning and output the final score difference (second minus first) within <answer> and </answer> tags. For example: <answer>+1.51</answer> or <answer>-1.27</answer>. 
+
+Prompt 
+
+Image pairs  CoT with relative score 
+
+Step-by-step aesthetic comparison: 
+
+1. Sharpness and clarity: Image B is significantly blurrier than Image A. The foreground cocktail, which is the focal point in Image A, loses texture and detail in Image B. This is a major regression. 
+
+2. Subject emphasis: In Image A, the cocktail is crisp and draws the eye immediately. In Image B, the blur reduces its visual dominance and makes the scene feel less intentional or polished. 
+
+3. Background cleanliness: Image B’s blur softens the background, which might reduce distraction — but it also flattens the depth and removes the intricate details of the lamp, curtains, and decor that contribute to the luxurious atmosphere in Image A. 
+
+4. Lighting and exposure: The lighting appears similar, but the blur in Image B reduces contrast and makes highlights (like the lampshade and glass reflections) appear washed out. This diminishes the dynamic range and visual richness. 
+
+5. Color quality: Colors in Image B appear slightly desaturated and muted due to the blur, reducing the warmth and richness present in Image A’s golden tones and white drapes. 
+
+6. Emotional impact: Image A feels intimate, luxurious, and carefully composed — like a high-end magazine shot. Image B feels more casual, almost accidental, reducing its aspirational or elegant appeal. 
+
+7. Overall coherence: Image A has a clear visual hierarchy and professional polish. Image B’s blur introduces a sense of amateurishness or technical error, undermining its perceived quality. 
+
+While the blur in Image B slightly reduces background distraction, this is vastly outweighed by the loss of sharpness, subject emphasis, and atmospheric detail. The overall aesthetic quality is diminished. 
+
+<answer>-1.42</answer> 
+
+Fig. 8: PT-O1 data example in RED-20k (4/4). A source-edit pair demonstrating a semantic or subject-level edit ( e.g ., object removal or subject emphasis). Only pairs where all three judges unanimously agree on the direction of aesthetic change are retained, ensuring high annotation quality. Relative Edit-Induced Difference for Image Aesthetic Assessment 31 <image> If the image is modified based on the instruction: \"Add a solitary figure browsing books on the lower level to create narrative focus and emotional warmth.\", how will the aesthetic score change? 
+
++0.87 
+
+Prompt 
+
+<image> If the image is modified based on the instruction: \"Increase the hiker’s visual prominence by selectively scaling them up and enhancing contrast, while subtly desaturating and blurring the foreground rocks to reduce visual noise and guide focus toward the peaks.\", how will the aesthetic score change? 
+
+<image> If the image is modified based on the instruction: \"Reduce the density of foreground foliage to reveal more of the midground valley and building, increase the contrast and saturation of the building to establish it as a focal point, and enhance the sky with dynamic cloud texture and warm ambient lighting to elevate mood and depth.\", how will the aesthetic score change? 
+
+<image> If the image is modified based on the instruction: \"Enhance the central sculptural relief with warm golden highlights and directional lighting from the upper left, while desaturating surrounding ornamentation and adding a subtle atmospheric haze to deepen spatial perception and elevate emotional resonance.\", how will the aesthetic score change? 
+
+-0.42 
+
++1.87 
+
++1.25 
+
+Original image  Answer 
+
+Fig. 9: PT-O2 data example in RED-20k. Unlike PT-O1, only the source im-age and the editing instruction are provided as input; the edited image is withheld. The model must predict the aesthetic difference δ that would result from applying the instruction, internalizing the causal relationship between visual modifications and aesthetic changes without direct visual evidence of the outcome. 32 Q. Jia, X. Yao et al. <image>You are doing the image aesthetic assessment task. Here is the question: What is your overall rating on the aesthetic of this picture? The rating should be a float between 0 and 10, rounded to four decimal places, with 0 representing very poor aesthetic and 10 representing excellent aesthetic. First conduct the thinking process from three separate perspectives: overall aesthetic evaluation, defect-focused analysis, and causal editing analysis, and then output the final answer with only one score in <answer> </answer> tags. 
+
+-1.13  -1.75  +0.18  +0.71  +0.1  -2.71  +0.72 
+
++1.12  -1.87  -3.0  -0.03  -1.98  -0.23  -1.02 
+
+-0.13  -0.59  +0.09  +0.29  -0.16  -0.11  -0.08 
+
+Original image 
+
+-2.63  -2.11  -2.8  -2.09  +0.56  -0.36  +0.19 
+
+Edited images 
+
+Prompt 
+
+Fig. 10: RL training group example in RED-20k. Each group G consists of one source image and up to seven edited variants generated by randomly selected editing models under diverse editing instructions ( e.g ., style transfer, object removal, color grading, lighting adjustment, background replacement). All variants pass the three-judge consensus filter. During Stage 3 GRPO training, the Relative Ranking Consis-tency Reward enforces ordinal agreement across the group, directly optimizing the model’s comparative aesthetic reasoning over causal edit-induced differences.

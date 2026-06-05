@@ -1,0 +1,932 @@
+Title: Towards Characterizing Scientific Image Utility and Upgradability
+
+URL Source: https://arxiv.org/pdf/2606.03401v1
+
+Published Time: Wed, 03 Jun 2026 01:09:11 GMT
+
+Number of Pages: 27
+
+Markdown Content:
+## Towards Characterizing Scientific Image Utility and Upgradability 
+
+Wenzhe Li 1, Qihang Yan 2, Liang Chen 2,3 , Junying Wang 2, Yijing Guo 2,Farong Wen 2, Chunyi Li 2, Zicheng Zhang 2† , Guangtao Zhai 2,3† 
+
+> 1
+
+TongJi University 
+
+> 2
+
+Shanghai Artificial Intelligence Laboratory 
+
+> 3
+
+Shanghai Jiao Tong University 
+
+> †
+
+Corresponding authors 
+
+acharkq@gmail.com , luoyanchen@mail.ustc.edu.cn acharkq@gmail.com xiangwang1223@gmail.com 
+
+Abstract 
+
+Scientific images function as critical evidence in research communication, yet their integrity faces unprecedented threats from AI-generated content that intro-duces subtle but consequential errors. Existing evaluation paradigms prove inad-equate: perceptual quality metrics poorly correlate with scientific validity, while language models lack domain-specific verification capabilities. To address this gap, we propose the Scientific Image Utility and Upgradability Assessment ( SIU 2A)framework, which introduces two complementary dimensions for scientific image evaluation. Utility encompasses error detection (identifying scientific inaccura-cies) and correction feasibility (assessing whether errors can be reliably repaired). 
+
+Upgradability measures the quality of correction. We categorize scientific image corruption into four fundamental types: Detail Distortion, Incompleteness, False Content, and Entity Confusion. Based on this taxonomy, we construct SIU 2A-Benchmark, a dataset with expert annotations for error identification and repair. The framework implements a two-stage evaluation protocol: the Utility stage evaluates error detection capability and repair instruction generation, while the 
+
+Upgradability stage assesses whether corrections faithfully restore scientific valid-ity without compromising existing accurate information. Experiments reveal that current multimodal systems exhibit significant limitations in both scientific error assessment and faithful correction, exposing a fundamental gap between visual perception and scientific usability. 
+
+Keywords: Scientific Image Utility, Multimodal Scientific Reasoning, AI-Generated Image Evaluation 
+
+1 Introduction 
+
+Scientific images serve not merely as illustrations, but as primary carriers of experimental evidence and scientific claims. Their value lies in their functional role in conveying scientific evidence rather than plausible appearance. Even subtle defects, such as missing scale bars, mislabeled axes, or distorted data curves, can invalidate conclusions. The widespread adoption of image editing tools and generative AI has made such corruptions increasingly prevalent, underscoring the critical need for vigilance in scientific communication. Existing approaches remain limited as shown in Fig. 1. Traditional image quality assessment (IQA) methods focus on low-level distortions such as noise or blur, which are weakly correlated with                   
+
+> arXiv:2606.03401v1 [cs.CV] 2 Jun 2026 This image is overall credible and
+> consistent with current mainstream understanding, but model it represent is still being refined.
+> LLM as Judge Scientific IQA SIU 2A Framework
+> It looks nice, the quality is good
+> Perception Quality: 4.13
+> Knowledge Quality: 3.52
+> Right
+> should be
+> Error Detection: True
+> the PLB lacks in panel (a).
+> Correction Feasibility: True
+> add a semi-arc orange PLB.
+> Image Edit
+> Utility Upgradity
+> Correction Instruction
+> It looks Nice! I fully trust it! It must be reliable!
+> No! Tha image is wrong:
+> In (a), the phospholipid bilayer (PLB) misses.
+> Here is the wrong part
+> Response
+> It is reliable ❌
+> Visual Plausibility Does Not Guarantee Scientific Utility
+> Response
+> ❌It is reliable
+> Response
+> It is unreliable ,
+> but we can update it
+
+Figure 1: Visual plausibility is not scientific validity. Traditional assessors (LLM/S-IQA) are fooled by stealthy errors, but SIU 2A grounded in utility and upgradability is built to detect and correct them. scientific validity [ 23 , 2, 36 , 41 ]. Multimodal models, while capable of describing image content, lack explicit mechanisms to assess scientific correctness or reason about domain-specific plausibility [42 , 40 ]. More importantly, current methods are largely diagnostic: they can identify anomalies but do not provide a pathway for correcting them, limiting their usefulness in real scientific workflows where many errors are accidental and potentially recoverable. To address this gap, the Scientific Image Utility and Upgradability Assessment (SIU 2A) framework is proposed. Scientific image utility is defined as a joint function of two properties: (i) utility , which evaluates the two-stage capability: first, to reliably detect, precisely localize, and structurally describe scientific errors in images; and second, to generate actionable correction instructions that enable accurate restoration of corrupted content. (ii) upgradability , which measures whether the image can be faithfully restored through corrective actions while preserving existing valid scientific content and maintaining consistency of underlying scientific knowledge. SIU 2A thus shifts image evaluation from passive assessment toward actionable and consistency-preserving restoration. Formally, SIU 2A is instantiated through four types of scientific image corruption: Detail Distortion, Incompleteness, False Content, and Entity Confusion. Each type is simulated using a corresponding primitive corruption operation (modify, remove, add, and swap), which enables controlled construc-tion of realistic scientific image failures. Based on this formulation, SIU 2A-Benchmark is constructed as a curated dataset of scientific images spanning multiple disciplines as shown in Table 1, including biology, chemistry, and physics. Each sample is paired with controlled corruptions that simulate realistic scientific errors while preserving ground-truth recoverability. Expert annotations further determine whether each case is diagnosable and upgradable, enabling systematic evaluation of both error understanding and restoration feasibility. A two-stage evaluation protocol is further defined, aligned with real scientific workflows: error detection, structured diagnosis, and image restoration. This pipeline moves beyond static evaluation toward an interactive loop of error identification and correction. The main contributions are summarized as follows: • (1) SIU 2A is proposed as a unified framework that models scientific image utility as a combi-nation of structured error diagnosability (detection, localization, and instruction generation) and consistency-preserving upgradability (faithful restoration of scientific validity without compromising existing correct information). • (2) SIU 2A-Benchmark is constructed as a structured dataset that enables systematic evalua-tion of scientific image corruption under controlled operations, with annotations for both utility and upgradability. • (3) Extensive experiments demonstrate that current multimodal understanding and image editing models fail to reliably perform structured scientific error localization and consistency-preserving restoration, revealing a fundamental gap in utility-aware visual reasoning. 2Table 1: Comparison of existing multimodal scientific reasoning and image editing benchmarks. SIU 2A uniquely supports both error-aware diagnosis and image restoration within a unified frame-work. Dataset Domain Reason Edit Error-Aware Task GeoTrust Geometric ✓ ✗ ✗ VQA ChemVLM Chemical ✓ ✗ ✗ VQA ScienceQA Science ✓ ✗ ✗ VQA I2EBench Natural ✗ ✓ ✗ Edit Ebench Natural ✗ ✓ ✗ Edit GRADE Science ✗ ✓ ✗ Edit 
+
+SIU 2A (Ours) Science ✓ ✓ ✓ VQA & Edit 
+
+2 Related Work 
+
+2.1 MLLMs for Scientific Understanding 
+
+Recent advances in multimodal large language models (MLLMs) have established a unified paradigm for scientific knowledge understanding and task execution, enabling a shift from isolated capabilities toward system-level scientific intelligence. Scientific foundation models such as Galactica [ 25 ], Kosmos-2.5 [ 15 ], ChemDFM [ 43 ], and InstructMol [ 5] demonstrate strong cross-modal scientific representation and reasoning abilities in domains such as molecular modeling and scientific inference. At a higher level, recent efforts like DeepScientist [ 33 ] extend MLLMs toward scientific agents for workflow automation, including literature analysis, hypothesis generation, and scientific assistance. Meanwhile, benchmarks such as SciBench [ 30 ] evaluate structured scientific reasoning capabilities. Despite these advances, existing methods remain largely focused on semantic and textual reasoning, with limited explicit modeling of errors in scientific visual data. As AIGC systems increasingly generate and modify scientific images, visually plausible but scientifically incorrect artifacts become more frequent and harder to detect. This highlights the need for systematic evaluation of scientific image inconsistencies and their potential for correction, which motivates SIU 2A-Utility for assessing error identification and correction reasoning in MLLMs. 
+
+2.2 Image Editing Models and Evaluation 
+
+Image editing has evolved from diffusion-based generation frameworks to instruction-driven and multimodal editing systems, significantly improving controllability and visual quality. Stable Diffu-sion [ 22 ] and InstructPix2Pix [ 3 ] provide foundational capabilities, while recent multimodal editing systems (e.g., GPT-Image [ 17 , 18 ], Qwen-Image [ 34 ], Gemini-Image [ 6 , 7]) further enhance natural image editing performance, though their effectiveness in scientific domains remains underexplored. Evaluation methods include pixel-level metrics (PSNR, SSIM), perceptual metrics (LPIPS, FID), and recent benchmarks such as I2I-Bench [ 28 ] and LMM4Edit [ 39 ], which evaluate instruction following and multi-dimensional editing quality. GRADE [ 12 ] further introduces scientific image editing evaluation, but remains focused on instruction adherence and knowledge consistency, without explicitly modeling scientific correctness or error correction. Overall, existing methods emphasize visual quality and instruction alignment, but lack systematic modeling of scientific error correction and validity restoration. This motivates viewing scientific image editing as a structured problem involving error identification, correction reasoning, and faithful execution of corrective instructions to restore scientific validity. 
+
+3 SIU 2A Framework 
+
+The utility of a scientific image is fundamentally determined by whether its underlying scientific validity can be reliably preserved or restored. An image remains useful if its errors are both detectable and correctable through grounded reasoning. Otherwise, it may lead to unreliable scientific conclusions although it looks plausible. Based on this principle, we introduce the Scientific Image Utility and Upgradability Assessment (SIU 2A) framework, which jointly models scientific image diagnosis, correction, and edit validation under realistic corruption conditions. As shown in Fig. 2, SIU 2A explicitly evaluates whether scientific validity can be identified, reasoned about, and faithfully restored through structured intervention, thereby shifting image evaluation from passive assessment to actionable restoration. 3(a)Utility It appears visually plausible, but is it reliable?  
+
+> Utility1 Error Detection Utility2 Correction Feasibility
+> Can Correct: True
+> Panel d: Top layer uniform blue; bottom 3 layers red with fading. Keep geometry. Change I=4 to I=3.
+> Has Error: True
+> Panel d: Swapped standing-wave modes; both layers show dense alternating blue/red nodes; incorrect layer count on lower side.
+> GT GT
+> Judge: True
+> Error Description
+> Judge: True Is Wrong? If, where is wrong?
+> Correct Instrcution
+> ACC
+> ACC
+> Similarity
+> Similarity
+> Can Correct? If, how to Correct?
+> IU 2A
+
+(b)Upgradability 
+
+> Low
+> High
+
+?        
+
+> Correct Instrcution
+> SIU 2A:
+> High
+> Low
+> High
+> It is right originally!
+> SIU 2A:
+> High
+> Low
+> High
+> I have corrected it! It is right now!
+> SIU 2A:
+> Middle
+> Low
+> High
+> It's Wrong! But I know how to fix it! Similarity
+> In panel d, what is the top and bottom layer patterns? A. Top: uniform blue, Bottom: uniform red B. Top: ...... C. All: alternating blue/red lobes D. The image is insufficient
+> Fail :C
+> Pass :A
+> Pass :A
+> Corrected Image GT Image
+
+(c)Model Peformance Figure 2: The SIU 2A framework for scientific image assessment: (a) utility via error detection and correction feasibility, (b) upgradability through a diagnosis-to-correction pipeline, and (c) comparative model performance. 
+
+3.1 SIU 2A Definition Scientific Images Failure Summary We summarize the common failure modes in scientific images into four structurally distinct categories: (i) Detail Distortion , where low-level visual signals are corrupted and local structures become inconsistent, leading to unreliable perception of fine-grained scientific patterns such as curves, boundaries, or measurement markings; (ii) Incompleteness , where essential scientific elements are missing, resulting in partial observations that prevent correct inference of the underlying scientific phenomenon; (iii) False Content , where spurious or scientifically invalid elements are introduced, potentially inducing incorrect evidence interpretation and misleading causal or quantitative reasoning; (iv) Entity Confusion , where semantic mappings between visual regions and scientific entities are misassigned or swapped, causing incorrect association between visual evidence and its scientific meaning, and thus breaking the consistency of downstream reasoning. These error categories are instantiated through four primitive entity-level corruption operations: 
+
+Modify , Remove , Add , and Swap , providing a controllable mechanism to simulate realistic scientific failure cases. 
+
+Evaluation along Utility and Upgradability Given the above error space, we define scientific image usability along two complementary dimensions that jointly characterize the full lifecycle of error understanding and correction. Utility quantifies a model’s ability to ground and structure scientific errors in images through two sequential capabilities: Error Detection: The model first identifies whether scientific inconsistencies exist and, when present, provides accurate, grounded error descriptions. Correction Feasibility: Conditioned on detected errors, the model assesses their repairability and, if feasible, generates grounded correction instructions that specify how scientific validity can be restored. Upgradability measures the ability to realize corrections from given instructions. Formally, given an image and its correction instruction, the model must generate a restored image that resolves the original error while preserving valid scientific structures and semantic consistency. This dimension therefore evaluates whether scientific validity can be effectively recovered through intervention rather than only described. Together, Utility and Upgradability form a unified evaluation of scientific image reliability under corruption, where the former captures error understanding and specification, and the latter captures execution of error recovery. 4Expert  Annotate 
+
+ChemVLM        
+
+> OpenData High Quality LLM
+> Filter
+> Selected Image
+> ❌Points
+> 1
+> 2
+> 3
+> 4
+> Low Quality SIQA Judger
+> ······
+> ······
+> ······
+> ······ Auto Restore
+> Auto Error
+> Can Fix? Can Fix? Can Fix? Can Correct?
+> Can Fix? Can Fix? Can Fix? Is it Wrong?
+> Goledn Error
+> Golden Restore
+> Bool: False
+> Bool: True
+> Auto Restore Auto Restore Auto Correction Instruction
+> Auto Error Auto Error Auto Error
+> Description
+> Goledn Error Goledn Error Golden Error Description
+> Golden Restore
+> Select Image Human Annotation
+
+BMMR    
+
+> Find
+> Editable Object Make Degradation Plans
+> ①add: ......
+> ②swap: ......
+> ③modify:......
+> ④remove:......
+> Instruction Degraded Images
+> Golden Restore Golden Correction Instruction
+> Build Data
+> Image Edit
+
+Figure 3: Pipeline for constructing the SIU 2A-Benchmark dataset, including high-quality scientific image filtering, controlled degradation generation, and expert annotation. 
+
+3.2 SIU 2A-Benchmark Construction. Base Image Collection To support the above formulation, we construct SIU 2A-Benchmark , a dataset that jointly evaluates diagnosis, instruction generation, and editing under controlled scientific corruptions as shown in Fig. 3. Scientific images are collected from multiple public sources, including ScienceQA [ 14 ], GenExam [ 31 ], BMMR [ 38 ], ChemVLM [ 10 ], and OmniScience [ 24 ]. To ensure both quality and editability, a two-stage filtering process is applied: a scientific image quality assessment model (SIQA [ 11 ]) first removes low-quality or ambiguous samples, followed by MLLMs verification to retain images containing explicit and structurally editable scientific elements such as charts, annotations, and labeled components. This yields 600 high-quality base images. 
+
+Structured Perturbation Controlled perturbations are then generated for each image according to the four SIU 2A error types. Editable regions are identified automatically, and candidate perturbations are proposed to simulate realistic scientific errors (e.g., missing annotations, incorrect values, or entity mismatches). One perturbation per error type is selected and applied using an image editing model, resulting in approximately 2,100 corrupted–clean image pairs that cover diverse scientific failure modes. 
+
+Expert Annotation To ensure scientific validity and annotation consistency, an expert-in-the-loop protocol is adopted. The dataset is first partitioned into Advanced and Simple subsets using LLM-assisted difficulty assessment, where Advanced samples require multi-step reasoning or cross-entity understanding. A total of 600 Advanced samples are selected for full expert annotation, includ-ing perturbation validation, utility labeling(binary assessment of error detectability and correction feasibility), and the error descriptions and correction instructions. The remaining 1,800 Simple samples undergo lightweight expert verification, with invalid or infeasible cases removed. The final dataset consists of 400 Advanced and 1,200 Simple instances, annotated by ten domain experts across multiple scientific disciplines under a unified guideline. The details can refer to Fig. 4. 
+
+3.3 Evaluation Protocol. 
+
+We define a unified evaluation framework that jointly measures decision correctness and semantic fidelity across SIU 2A-Diagnose and SIU 2A-Edit. Metrics are organized under two complementary paradigms: (i) no-reference evaluation , which assesses outputs independently, and (ii) full-reference evaluation , which measures consistency with ground truth. For Utility , (1) Diagnosis Accuracy 
+
+evaluates whether the model correctly predicts image diagnosability as a binary classification task based on expert-annotated labels, and (2) Text Consistency measures semantic alignment between generated error descriptions and expert annotations using BERTScore and LLM-as-a-Judge. For 
+
+Upgradability , (1) Problem Resolution Rate evaluates whether the edited image restores scientific utility without access to the original image, implemented via QA-based probes, and (2) Scientific Semantic Consistency measures whether the edited result preserves semantic consistency with the original image using structured LLM-based comparison. Overall, this framework explicitly 5Delete the vertical single line added inside the rightmost benzene ring (to the right of the COO group). Remove the entire line from above the top vertex of the ring to below the bottom vertex, so that no line passes through the interior of the ring. Keep all ring edges and substituents unchanged." 
+
+In panel b’s lower-right, replace the bell-shaped blue curve (between the two curved arrows above “Periodic wave function in θ”) with a constant-amplitude sinusoidal wave of the same width, preserving the original blue color and line thickness. Add a black bidirectional arrow above the title pointing to the wave’s troughs. 
+
+Draw a blue dashed box in the region labeled “Reservoir” in the upper-right corner, enclosing the waveform component below. Meanwhile, add a “Readout” enclosed by a red dashed box to the upper-right of this “Reservoir”, and add an “Output” enclosed by a blue dashed box to the lower-right. Add two thick blue arrows: one pointing from “Reservoir” to “Readout”, and one pointing from “Readout” to “Output”. 
+
+Swap the leftmost circle (purple phage icons) and rightmost stack (“Assembled synthetic phage genome”) in the lower flowchart, relabeling the moved circle as “Synthetic phage population.” Add a conical tube (dark orange cap, light orange liquid) to its left, with two gray-to-black gradient lines from the liquid tangent to the circle’s top and bottom edges. Keep the three central “Rebooting” panels unchanged. 
+
+The flowchart’s direction is reversed: it starts (left) with purple “bacteriophage” icons labeled “Synthetic synthetic population” (typo), and ends (right) with circular “assembled phage genomes”. In reality, the circular genomes should be the input, processed through intermediate steps, to produce the phage population as the output—not the other way around. 
+
+In the figure's upper-right corner, the elements to the right of "Reservoir" are missing. This includes the red dashed "Readout" box, the blue dashed "Output" box, the vertical arrow between them, and the arrow from "Reservoir" to the "Readout" box, leaving a blank space. 
+
+In panel b’s lower-right, replace the single bell-shaped blue curve (between the two curved arrows above “Periodic wave function in θ”) with a constant-amplitude sinusoidal wave of the same width, keeping the original blue color and line thickness. Add a black bidirectional arrow above the title, aligned with the spatial wave function and pointing to its troughs. 
+
+At the center of the rightmost benzene ring, there is a vertical straight line passing through from the top vertex to the bottom vertex." 
+
+> ADD  Modify  Swap Remove
+
+Scientific Image Utility —— Diagnose 
+
+Error Detection:  True Correction Feasibility:  True 
+
+Error Detection:  True Correction Feasibility:  False 
+
+Error Detection:  True Correction Feasibility:  False 
+
+Error Detection:  True Correction Feasibility:  True 
+
+Degrade Image Error Detection Correction Feasibility 
+
+Scientific Image  Upgraditity —— Edit 
+
+GT Image Examine Question 
+
+A: Location A shows stacked multicolored genome rings; Location B shows a conical tube with a magnified circle packed with purple phage icons. B: Location A shows a conical tube with a phage-filled magnified circle; Location B shows stacked multicolored genome rings. C: Both locations show genome rings, suggesting the output is genomes, not phages. D: Insufficient image data to conclude. 
+
+A:  A thick blue vertical arrow with a filled triangular head points downward from the Readout box to the top edge of the Output box. B:  No connector is shown between the Readout and Output boxes; the space between them is empty. C:  A thick blue vertical arrow points upward from the Output box to the Readout box. D: Image data is insufficient  to conclude. 
+
+A: Periodic: repeating sinusoidal waveform with nearly constant amplitude across the domain. B: Non-periodic and localized: single bell-shaped peak vanishing at both ends. C: Decaying envelope: tapers to zero at edges, indicating confinement rather than periodicity. D: Image data is insufficient  to conclude. 
+
+A:  No internal chord is present; the ring shows only perimeter bonds with three alternating double lines. B:  Yes; a single straight bond is drawn across the ring interior from the top vertex to the bottom vertex. C:  Yes; a double bond is drawn across the ring interior from the top vertex to the bottom vertex. D: Image data is insufficient  to conclude. 
+
+What elements are shown before the rebooting panels at the lower-left (Location A) and at the far-right final output (Location B)? 
+
+What connector and direction are depicted between the red dashed Readout block and the small blue dashed Output block on the right side of panel a? 
+
+What does the blue curve in panel b reveal about the wave function’s behavior in the superconducting phase variable  θ over the displayed domain? 
+
+Is there a bond drawn across the rightmost phenyl ring (attached to the –O–CH₂– tether) connecting its top and bottom vertices? 
+
+> SIU 2A
+
+Figure 4: Overview of the SIU 2A data structure. Each instance contains a ground-truth image, a corrupted image, error detection and correction feasibility labels, structured error descriptions, correction instructions, and a corresponding scientific QA pair. disentangles functional correctness (task completion) from semantic faithfulness (scientific validity preservation), enabling a comprehensive evaluation of both error understanding and correction quality. 
+
+4 Experiments 
+
+4.1 Experimental Setup 
+
+We evaluate state-of-the-art MLLMs on the SIU 2A-Utility and SIU 2A-Upgradability tasks. For SIU 2A-Utility, we assess a set of recent proprietary and open-source MLLMs, including Qwen3.6-Plus [ 21 ], Doubao-Seed-2-Pro [ 4 ], Gemini-3.1-Pro-Preview [ 8], Kimi-K2.5 [ 26 ], Claude-Opus-4.6 [ 1], GLM-4.6V [ 27 ], Grok-4.20 [ 37 ], GPT-5.4 [ 19 ],LLaMa-3.2-90B [ 16 ], Qwen3.5 [ 20 ], and InternVL3.5 [ 29 ]. All MLLMs are prompted to output in a standardized JSON format, explicitly indicating whether they can perform the diagnosis task and providing the corresponding error de-scription text when applicable. For SIU 2A-Upgradability, we evaluate existing image editing models including GPT-Image-1.5 [ 17 ],GPT-Image-2 [ 18 ], Gemini-2.5-Image [ 7], Gemini-3-Image-Pro [ 6], Flux2-Dev [ 9 ], Step1X-Edit [ 13 ], UniPic3 [ 32 ], Qwen-Image-Edit-2511 [ 34 ], and OmniGen2 [ 35 ] by directly feeding them the degraded image along with the editing instruction to produce the repaired output, without requiring intermediate diagnostic judgments. 
+
+4.2 Findings of Utility Performance Analysis Detection is largely solved, but precise error description and correction instruction remain fundamental challenges. Table 2 reveals a cascading degradation in multimodal scientific rea-soning under the SIU 2A framework. Across all models, Error-ACC (error detection accuracy) consistently outperforms both Error-Text (textual description quality) and downstream correction metrics, indicating that identifying visual anomalies is significantly easier than articulating them as structured scientific statements. For instance, Qwen3.6-plus achieves strong Error-ACC (82.5%), but its Error-Text score drops to 21.8%, while further declining to 18.2% in Correction-Text, highlighting a progressive degradation from detection to structured description and downstream correction. Across error categories, a stable ordering is observed, with Remove-type errors consistently being the most 6Table 2: Performance comparison on Utility tasks. Models are evaluated in a two-stage pipeline where they first detect and localize scientific errors in images, and then generate correction instructions conditioned on the predicted errors for downstream restoration. Best and second-best results are highlighted in bold and underlined, respectively. 
+
+Error Detection Error-ACC Error-Text Model Add Swap Mod. Rem. All Add Swap Mod. Rem. All 
+
+Closed-source 
+
+Qwen3.6-plus [21] 84.5 83.8 83.5 78.0 82.5 24.9 23.9 23.4 14.3 21.8 Doubao-Seed-2.0-Pro [4] 79.4 78.4 79.4 73.7 77.8 24.3 21.8 23.5 15.3 21.4 Gemini-3.1-Pro [8] 79.0 79.4 74.3 72.6 76.3 26.1 21.9 23.8 16.2 22.2 
+
+Claude-Opus-4.6 [1] 55.5 58.8 55.9 55.5 56.4 9.17 13.0 13.7 5.63 10.4 Grok-4.20 [37] 52.6 59.3 53.0 47.8 53.2 13.6 13.7 15.9 7.37 12.7 GPT-5.4 [19] 43.8 43.6 44.4 40.4 43.1 5.62 8.64 8.21 3.25 6.46 
+
+Open-source 
+
+Qwen3.5-397B [20] 75.6 77.5 77.0 71.4 76.3 20.8 22.4 23.3 13.6 23.4 Kimi-K2.5 [26] 62.4 65.5 62.4 63.7 63.4 15.2 13.9 18.6 11.9 15.0 LLaMa-3.2-90B-Vision [16] 80.0 82.3 79.1 79.0 79.4 3.71 4.82 4.07 2.51 3.28 GLM-4.6V [27] 46.7 51.3 50.6 47.8 49.1 6.93 7.83 8.87 3.22 6.77 InternVL3.5-241B [29] 27.6 26.1 28.3 24.8 31.4 1.50 1.14 1.94 0.74 2.17 
+
+Correction Feasibility Correction-ACC Correction-Text Model Add Swap Mod. Rem. All Add Swap Mod. Rem. All 
+
+Closed-source 
+
+Qwen3.6-plus [21] 77.3 73.1 73.6 62.6 71.8 20.8 17.2 22.3 11.2 18.2 Doubao-Seed-2.0-Pro [4] 72.3 69.5 70.5 58.2 67.7 23.5 18.7 24.1 13.9 20.4 
+
+Gemini-3.1-Pro [8] 69.6 64.1 64.2 57.4 63.9 24.1 14.8 22.3 12.2 18.8 Claude-Opus-4.6 [1] 52.4 53.2 53.0 52.3 52.7 7.51 10.0 12.7 4.86 8.92 Grok-4.20 [37] 49.8 48.3 48.4 44.4 47.8 13.1 10.4 14.8 5.27 11.2 GPT-5.4 [19] 40.4 41.1 44.6 42.1 42.0 5.68 7.04 8.72 2.45 6.12 
+
+Open-source 
+
+Qwen3.5-397B [20] 68.1 71.3 69.0 61.0 70.8 18.1 19.3 22.6 11.1 18.1 Kimi-K2.5 [26] 57.2 60.5 59.6 55.4 58.2 14.5 11.6 18.3 10.2 13.8 LLaMa-3.2-90B-Vision [16] 66.8 71.5 67.8 61.0 66.4 4.53 4.17 6.20 2.84 4.63 GLM-4.6V [27] 43.8 47.6 52.8 44.6 47.2 7.00 4.49 8.66 2.14 5.77 InternVL3.5-241B [29] 32.8 28.0 33.7 36.7 33.1 1.91 1.32 2.75 0.86 2.60 challenging. This suggests that Remove-type errors are inherently more challenging, as they require reasoning over structural completeness and missing scientific entities. Overall, the results reveal a cascading failure in SIU 2A reasoning. While models can reliably detect errors, they fail to produce high-quality textual descriptions that accurately ground visual evidence into structured scientific statements. Since Correction Feasibility is conditioned on both the image and the generated error description, deficiencies in this intermediate representation propagate to the second stage, leading to degraded feasibility judgments and correction instructions. These results identify a key bottleneck in SIU 2A reasoning: the construction of accurate intermediate textual representations, a finding further validated by ablation studies showing that improving textual grounding consistently enhances correction performance. 
+
+Decisive Impact of Error Description Quality on Correction Feasibility Performance The Fig. 5 shows that correction feasibility performance is strongly influenced by the quality of generated error descriptions, with clear differences across model capabilities. For high-capability models such as Qwen3.6-plus, correction feasibility accuracy remain stable between ground-truth (GT) and predicted error descriptions, indicating that their correction judgments is insensitive to variations in error description quality. In contrast, lower-capability models like GPT-5.4 exhibit sensitivity to error description quality: accuracy improves substantially when provided with GT. This dependence reveals that their limitations stem primarily from inaccurate error descriptions rather than inherent correction reasoning deficiencies. This tendecy about description quality is further reflected in the convergence of text score under GT, where all models reach a similar higher level, reducing performance differences in the correction stage. Furthermore, we uncover how model prediction biases can artificially inflate 7Figure 5: Ablation study on the impact of error description quality on correction performance. We compare ground-truth (GT) and model-predicted (Pred) error descriptions. accuracy metrics. LLaMA-3.2-90B-Vision exhibits an absolute bias toward predicting “True”. Under predicted error descriptions, despite extremely poor 4.5 text similarity , it achieves 65.7 accuracy. Under ground-truth error, it predicts “True” for nearly all cases with relatively moderate 50 text similarity , resulting in an accuracy of 75.1 that closely approximates the true positive ratio in the dataset. This indicates complete failure of LLaMA as a Judge, as it uniformly defaults to the majority class without meaningful discrimination. In contrast, InternVL3.5-241B demonstrates an opposite bias toward “False” predictions under predicted conditions, with accuracy 33.6 approximately equal to 1 − True rate . However, as text quality improves under GT error descriptions, the model’s true positive prediction rate normalizes. Consequently, the accuracy rises to 71.0, demonstrating its latent capability, revealing the model’s underlying capability when guided by accurate error Under comparable error description quality, such differences are largely driven by prediction bias rather than reasoning capability. Overall, these results identify error description generation as the primary bottleneck in SIU 2A, limiting the effective utilization of downstream repair models. 
+
+4.3 Findings of Upgradability Performance Analysis Fundamental Challenge in Upgradability: Performance Disparity and Non-Saturation Even under ideal correction conditions using ground-truth expert annotations, current image editing models exhibit substantial performance disparities and remain far from saturation in both scientific correctness and semantic consistency. As shown in Table 3, closed-source models consistently outperform open-source alternatives. The best closed-source systems (Gemini-3-Image-Pro and GPT-Image-2) achieving similarity scores above 78, nearly doubling their predecessors’ performance. However, high semantic similarity does not guarantee targeted scientific correction: while the latest models excel in visual reconstruction, their Question-ACC remains below 70. But earlier closed-source models with limited similarity scores (around or below 50) achieve Question-ACC exceeding 70. This discrepancy reveals that current frameworks prioritize global visual fidelity over localized knowledge integration, where similarity metrics may reflect pattern reproduction rather than accurate scientific content restoration. Many open-source models exhibit low semantic consistency below 40, while maintaining moderate Question-ACC around 50, further underscoring the decoupling between visual reconstruction and scientific reasoning. Nevertheless, the latest models demonstrate 8Table 3: Upgradability results under ground-truth (GT) correction instructions. All models are evaluated using expert-annotated correction instructions to measure upper-bound editing performance under idealized guidance. Best and second-best results are highlighted in bold and underlined, respectively. 
+
+Upgradability Similarity (Full) Question-ACC (None) Model Add Swap Mod. Rem. All Add Swap Mod. Rem. All 
+
+Closed-source 
+
+Gemini-3-Image-Pro [6] 76.8 76.4 86.0 87.9 81.6 73.9 62.2 67.7 67.1 68.1 GPT-Image-2 [18] 80.2 66.7 82.5 83.5 78.6 63.2 65.2 67.6 69.6 66.3 GPT-Image-1.5 [17] 54.9 45.0 46.7 51.8 49.8 81.4 67.8 76.0 80.4 76.7 
+
+Gemini-2.5-Flash [7] 36.8 34.8 29.5 42.2 35.7 70.8 65.6 70.2 75.8 70.6 
+
+Open-source 
+
+Flux2-Dev [9] 39.4 26.5 26.0 27.2 30.2 64.6 56.7 65.4 66.3 63.4 UniPic3 [32] 19.7 16.1 12.3 12.2 15.2 69.9 46.7 59.6 51.1 57.6 Qwen-Edit [34] 16.7 10.6 6.59 7.40 10.5 56.6 53.3 53.9 52.2 54.1 Step1X-Edit [13] 12.8 8.67 11.1 7.41 10.2 65.5 64.4 58.7 48.9 59.7 OmniGen2 [35] 6.23 3.61 3.91 2.23 4.11 32.7 34.4 36.5 25.0 32.3 partial usability for scientific applications, as their enhanced visual fidelity combined with moderate accuracy provides a foundation for refinement. These findings highlight the necessity for specialized generation frameworks that explicitly couple visual generation with scientific knowledge verification to achieve truly precise and controllable scientific image editing. 
+
+Figure 6: Ablation study on upgradability: com-paring ground-truth versus predicted correction instructions to assess their impact on editing per-formance. 
+
+Upgradability Dependence on Correction In-struction Quality for Advanced Model The ablation results in Fig. 6 reveal two distinct bottle-neck regimes in how correction instruction quality impacts editing performance. For high-performing models like Gemini-3-Image-Pro and GPT-Image-2, replacing predicted instructions (Pred) with human-annotated ground-truth instructions (GT) leads to dramatic improvements in semantic con-sistency, with Gemini-3-Image-Pro jumping from 18.1 to 81.6 and GPT-Image-2 surging from 15.7 to 78.6. This indicates that instruction quality serves as the primary bottleneck for these models, whose strong intrinsic generation capacity remains unrealized under imperfect guidance. In contrast, low-performing models such as OmniGen2 exhibit only marginal improvements under GT instruc-tions, climbing merely from 2.46 to 4.11. This suggests their performance is fundamentally con-strained by limited editing capability rather than instruction quality. The divergence underscores a structural dependency in the editing pipeline: stronger models are bottlenecked by input instruction quality, while weaker models are bottlenecked by intrinsic generation capacity. 
+
+5 Conclusion 
+
+We introduce SIU 2A, a unified framework for scientific image reliability assessment through utility and upgradability, accompanied by SIU 2A-Benchmark for systematic evaluation. Our experiments reveal that current multimodal models struggle with grounded scientific error reasoning, and that restoration performance is fundamentally constrained by diagnostic quality. Through SIU 2A, we expose critical bottlenecks in existing approaches, highlighting the gap between error detection and correction capabilities. We believe this framework will serve as a foundational tool for developing more trustworthy AI in scientific applications, with potential extensions to domains requiring rigorous visual verification. 9References 
+
+[1] Anthropic. Introducing claude opus 4.6, Feb. 2026. URL https://www.anthropic.com/ news/claude-opus-4-6 . Accessed: 2026-04-23. [2] S. Bosse, D. Maniry, K.-R. Müller, T. Wiegand, and W. Samek. Deep neural networks for no-reference and full-reference image quality assessment. IEEE Transactions on Image Processing ,27(1):206–219, 2018. doi: 10.1109/TIP.2017.2760518. [3] T. Brooks, A. Holynski, and A. A. Efros. Instructpix2pix: Learning to follow image editing instructions. arXiv preprint arXiv:2211.09800 , 2022. [4] ByteDance. Seed2.0 Model Card: Towards Intelligence Frontier for Real-World Complexity ,Feb. 2026. URL https://lf3-static.bytednsdoc.com/obj/eden-cn/lapzild-tss/ ljhwZthlaukjlkulzlp/seed2/0214/Seed2.0%20Model%20Card.pdf . Official model card. Accessed: 2026-04-23. [5] H. Cao, Z. Liu, X. Lu, Y. Yao, and Y. Li. Instructmol: Multi-modal integration for building a versatile and reliable molecular assistant in drug discovery. In Proceedings of the 31st International Conference on Computational Linguistics , pages 354–379, 2025. [6] Google. Gemini 3 pro image generation model. https://aistudio.google.com/models/ gemini-3-pro-image , 2026. Accessed: 2026-04-30. [7] Google DeepMind. Gemini 2.5 flash image, 2025. URL https://ai.google.dev/ gemini-api/docs/models/gemini . Accessed: 2026-04-23. [8] Google DeepMind. Gemini 3.1 pro preview, 2026. URL https://ai.google.dev/ gemini-api/docs/models/gemini-3.1-pro-preview . Accessed: 2026-04-23. [9] B. F. Labs. FLUX.2: Frontier Visual Intelligence. https://bfl.ai/blog/flux-2 , 2025. [10] J. Li, D. Zhang, X. Wang, Z. Hao, J. Lei, Q. Tan, C. Zhou, W. Liu, Y. Yang, X. Xiong, et al. Chemvlm: Exploring the power of multimodal large language models in chemistry area. In 
+
+Proceedings of the AAAI Conference on Artificial Intelligence , volume 39, pages 415–423, 2025. [11] W. Li, L. Chen, J. Wang, Y. Guo, Y. Shen, F. Wen, C. Li, Z. Zhang, and G. Zhai. Siqa: Toward reliable scientific image quality assessment. arXiv preprint arXiv:2603.06700 , 2026. [12] M. Liu, Z. Fan, Z. Wang, L. Gu, Z. Zhu, Y. He, Y. Yang, C. Tian, X. Zhao, N. Liao, et al. Grade: Benchmarking discipline-informed reasoning in image editing. arXiv preprint arXiv:2603.12264 , 2026. [13] S. Liu, Y. Han, P. Xing, F. Yin, R. Wang, W. Cheng, J. Liao, Y. Wang, H. Fu, C. Han, G. Li, Y. Peng, Q. Sun, J. Wu, Y. Cai, Z. Ge, R. Ming, L. Xia, X. Zeng, Y. Zhu, B. Jiao, X. Zhang, G. Yu, and D. Jiang. Step1x-edit: A practical framework for general image editing. arXiv preprint arXiv:2504.17761 , 2025. [14] P. Lu, S. Mishra, T. Xia, L. Qiu, K.-W. Chang, S.-C. Zhu, O. Tafjord, P. Clark, and A. Kalyan. Learn to explain: Multimodal reasoning via thought chains for science question answering. In 
+
+The 36th Conference on Neural Information Processing Systems (NeurIPS) , 2022. [15] T. Lv, Y. Huang, J. Chen, Y. Zhao, Y. Jia, L. Cui, S. Ma, Y. Chang, S. Huang, W. Wang, et al. Kosmos-2.5: A multimodal literate model. arXiv preprint arXiv:2309.11419 , 2023. [16] Meta. Llama 3.2 model cards and prompt formats. https://www.llama.com/docs/ model-cards-and-prompt-formats/llama3$_$2/ , 2025. [17] OpenAI. Introducing gpt-image-1.5, Dec. 2025. URL https://openai.com/zh-Hans-CN/ index/new-chatgpt-images-is-here/ . Accessed: 2026-04-23. [18] OpenAI. Gpt-image-2: A multimodal image generation model. https://openai.com , 2025. Proprietary model, accessed 2026. 10 [19] OpenAI. Introducing gpt-5.4, 2026. URL https://openai.com/zh-Hans-CN/index/ introducing-gpt-5-4/ . Accessed: 2026-04-23. [20] Qwen Team. Qwen3.5: Towards native multimodal agents, February 2026. URL https: //qwen.ai/blog?id=qwen3.5 .[21] Qwen Team. Qwen3.6-Plus: Towards real world agents, April 2026. URL https://qwen.ai/ blog?id=qwen3.6 .[22] R. Rombach, A. Blattmann, D. Lorenz, P. Esser, and B. Ommer. High-resolution image synthesis with latent diffusion models, 2021. [23] S. Su, Q. Yan, Y. Zhu, C. Zhang, X. Ge, J. Sun, and Y. Zhang. Blindly assess image quality in the wild guided by a self-adaptive hyper network. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) , June 2020. [24] H. Tao, C. Huang, N. Wang, H. Lyu, L. Zhang, G. Ke, and X. Fang. Omniscience: A large-scale multi-modal dataset for scientific image understanding. arXiv preprint arXiv:2602.13758 , 2026. [25] R. Taylor, M. Kardas, G. Cucurull, T. Scialom, A. Hartshorn, E. Saravia, A. Poulton, V. Kerkez, and R. Stojnic. Galactica: A large language model for science. arXiv preprint arXiv:2211.09085 ,2022. [26] K. Team, T. Bai, Y. Bai, Y. Bao, S. Cai, Y. Cao, Y. Charles, H. Che, C. Chen, G. Chen, et al. Kimi k2. 5: Visual agentic intelligence. arXiv preprint arXiv:2602.02276 , 2026. [27] V. Team, W. Hong, W. Yu, X. Gu, G. Wang, G. Gan, H. Tang, J. Cheng, J. Qi, J. Ji, L. Pan, S. Duan, W. Wang, Y. Wang, Y. Cheng, Z. He, Z. Su, Z. Yang, Z. Pan, A. Zeng, B. Wang, B. Chen, B. Shi, C. Pang, C. Zhang, D. Yin, F. Yang, G. Chen, J. Xu, J. Zhu, J. Chen, J. Chen, J. Chen, J. Lin, J. Wang, J. Chen, L. Lei, L. Gong, L. Pan, M. Liu, M. Xu, M. Zhang, Q. Zheng, S. Yang, S. Zhong, S. Huang, S. Zhao, S. Xue, S. Tu, S. Meng, T. Zhang, T. Luo, T. Hao, T. Tong, W. Li, W. Jia, X. Liu, X. Zhang, X. Lyu, X. Fan, X. Huang, Y. Wang, Y. Xue, Y. Wang, Y. Wang, Y. An, Y. Du, Y. Shi, Y. Huang, Y. Niu, Y. Wang, Y. Yue, Y. Li, Y. Zhang, Y. Wang, Y. Wang, Y. Zhang, Z. Xue, Z. Hou, Z. Du, Z. Wang, P. Zhang, D. Liu, B. Xu, J. Li, M. Huang, Y. Dong, and J. Tang. Glm-4.5v and glm-4.1v-thinking: Towards versatile multimodal reasoning with scalable reinforcement learning, 2025. URL https://arxiv.org/abs/2507.01006 .[28] J. Wang, J. Wang, H. Duan, J. Kang, G. Zhai, and X. Min. I2i-bench: A comprehensive benchmark suite for image-to-image editing models. arXiv preprint arXiv:2512.04660 , 2025. [29] W. Wang, Z. Gao, L. Gu, H. Pu, L. Cui, X. Wei, Z. Liu, L. Jing, S. Ye, J. Shao, et al. Internvl3. 5: Advancing open-source multimodal models in versatility, reasoning, and efficiency. arXiv preprint arXiv:2508.18265 , 2025. [30] X. Wang, Z. Hu, P. Lu, Y. Zhu, J. Zhang, S. Subramaniam, A. R. Loomba, S. Zhang, Y. Sun, and W. Wang. SciBench: Evaluating College-Level Scientific Problem-Solving Abilities of Large Language Models. In Proceedings of the Forty-First International Conference on Machine Learning , 2024. [31] Z. Wang, P. Yin, X. Zhao, C. Tian, Y. Qiao, W. Wang, J. Dai, and G. Luo. Genexam: A multidisciplinary text-to-image exam. arXiv preprint arXiv:2509.14232 , 2025. [32] H. Wei, H. Liu, Z. Wang, Y. Peng, B. Xu, S. Wu, X. Zhang, X. He, Z. Liu, P. Wang, X. Song, Y. Li, Y. Liu, and Y. Zhou. Skywork unipic 3.0: Unified multi-image composition via sequence modeling, 2026. URL https://arxiv.org/abs/2601.15664 .[33] Y. Weng, M. Zhu, Q. Xie, Q. Sun, Z. Lin, S. Liu, and Y. Zhang. Deepscientist: Advancing frontier-pushing scientific findings progressively. In The Fourteenth International Conference on Learning Representations , 2026. URL https://openreview.net/forum?id=cZFgsLq8Gs .[34] C. Wu, J. Li, J. Zhou, J. Lin, K. Gao, K. Yan, S. ming Yin, S. Bai, X. Xu, Y. Chen, Y. Chen, Z. Tang, Z. Zhang, Z. Wang, A. Yang, B. Yu, C. Cheng, D. Liu, D. Li, H. Zhang, H. Meng, H. Wei, J. Ni, K. Chen, K. Cao, L. Peng, L. Qu, M. Wu, P. Wang, S. Yu, T. Wen, W. Feng, X. Xu, Y. Wang, Y. Zhang, Y. Zhu, Y. Wu, Y. Cai, and Z. Liu. Qwen-image technical report, 2025. URL https://arxiv.org/abs/2508.02324 .11 [35] C. Wu, P. Zheng, R. Yan, S. Xiao, X. Luo, Y. Wang, W. Li, X. Jiang, Y. Liu, J. Zhou, Z. Liu, Z. Xia, C. Li, H. Deng, J. Wang, K. Luo, B. Zhang, D. Lian, X. Wang, Z. Wang, T. Huang, and Z. Liu. Omnigen2: Exploration to advanced multimodal generation. arXiv preprint arXiv:2506.18871 , 2025. [36] H. Wu, Z. Zhang, W. Zhang, C. Chen, L. Liao, C. Li, Y. Gao, A. Wang, E. Zhang, W. Sun, et al. Q-align: Teaching lmms for visual scoring via discrete text-defined levels. arXiv preprint arXiv:2312.17090 , 2023. [37] xAI. Grok-4.20-0309-reasoning. https://docs.x.ai/developers/models/grok-4. 20-0309-reasoning , 2026. Accessed: 2026-04-24. [38] Z. Xi, G. Li, Y. Fan, H. Guo, Y. Liu, X. Fan, J. Liu, J. Ding, W. Zuo, Z. Yin, L. Bai, T. Ji, T. Gui, Q. Zhang, and X. Huang. Bmmr: A large-scale bilingual multimodal multi-discipline reasoning dataset, 2025. URL https://arxiv.org/abs/2507.03483 .[39] Z. Xu, H. Duan, B. Liu, G. Ma, J. Wang, L. Yang, S. Gao, X. Wang, J. Wang, X. Min, et al. Lmm4edit: Benchmarking and evaluating multimodal image editing with lmms. In Proceedings of the 33rd ACM International Conference on Multimedia , pages 6908–6917, 2025. [40] Z. Zhang, H. Wu, C. Li, Y. Zhou, W. Sun, X. Min, Z. Chen, X. Liu, W. Lin, and G. Zhai. A-bench: Are lmms masters at evaluating ai-generated images? arXiv preprint arXiv:2406.03070 ,2024. [41] Z. Zhang, T. Kou, S. Wang, C. Li, W. Sun, W. Wang, X. Li, Z. Wang, X. Cao, X. Min, et al. Q-eval-100k: Evaluating visual quality and alignment level for text-to-vision content. In 
+
+Proceedings of the Computer Vision and Pattern Recognition Conference , pages 10621–10631, 2025. [42] Z. Zhang, J. Wang, F. Wen, Y. Guo, et al. Large multimodal models evaluation: A survey. 
+
+SCIENCE CHINA Information Sciences , 68(12):221301–221369, 2025. doi: https://doi.org/10. 1007/s11432-025-4676-4. [43] Z. Zhao, D. Ma, L. Chen, L. Sun, Z. Li, Y. Xia, B. Chen, H. Xu, Z. Zhu, S. Zhu, et al. Chemdfm: a large language foundation model for chemistry. arXiv preprint arXiv:2401.14818 , 2024. 
+
+A Limitations 
+
+This work introduces a novel evaluation framework (SIU2A), formulates a new task, and constructs a corresponding benchmark dataset. However, it does not propose dedicated methods to explicitly address or resolve the deficiencies identified through the evaluation (e.g., improving model robustness or editing capability). Instead, the primary goal is to systematically diagnose and quantify such limitations in current multimodal systems. In addition, the effectiveness of the framework depends on the quality of generated instructions and error descriptions, which may introduce variability across different models or prompting strategies. While we attempt to standardize this process, residual noise may still affect evaluation outcomes. Finally, although the benchmark covers diverse scientific image perturbations, it may not fully capture all real-world error distributions or domain-specific edge cases. We hope this work can serve as a foundation for future research on both more comprehensive benchmarks and targeted methods to address the identified limitations. 
+
+B Compute Resources 
+
+All experiments were conducted using 4 × NVIDIA H200 GPUs. For proprietary large models, we accessed them via their official APIs under standard usage conditions. The computational cost mainly arises from large-scale evaluation across multiple models and benchmark instances. While individual inference calls are lightweight, the overall cost accumulates due to the multi-stage evaluation pipeline (diagnosis, instruction generation, and editing). 12 Based on our internal measurements under representative settings, the approximate API cost for standard utility evaluation using GPT-5.4 with GPT-5.2 as the evaluator is around $12 per run. For upgradability evaluation, which involves image generation using GPT-Image-2 combined with evaluation using GPT-5.2 on advanced part, the cost is approximately $40 per full evaluation run. These estimates may vary depending on API pricing, prompt length, and evaluation scale. We note that the framework is designed to be modular and operates entirely in an evaluation-only setting without requiring any training of large models. However, reproducing the full benchmark results may still incur non-trivial compute or API costs due to large-scale inference. 
+
+C Open Access to Data and Code 
+
+To support reproducibility and facilitate future research, the SIU 2A-Benchmark dataset and the evaluation toolkit are publicly available at the following locations. 
+
+Dataset. The dataset is hosted on Hugging Face: 
+
+https://huggingface.co/datasets/commusim-hf/SIUA 
+
+Croissant Metadata. The dataset ships with a Croissant 1.1 metadata file augmented with the Responsible AI (RAI) fields required by the NeurIPS 2026 Evaluations and Datasets Track, available at: 
+
+https: //huggingface.co/datasets/commusim-hf/SIUA/resolve/main/croissant.json 
+
+The minimal auto-generated Croissant record is also accessible via the Hub API at https:// huggingface.co/api/datasets/commusim-hf/SIUA/croissant .
+
+Evaluation Toolkit. The evaluation toolkit is available on GitHub: 
+
+https://github.com/commusim/SIUA-Eval 
+
+D Prompt Design in the SIU 2A Framework 
+
+The SIU 2A framework employs a three-stage evaluation pipeline to systematically assess scientific figure understanding and correction capabilities. This section provides the complete prompts used in each stage to ensure reproducibility of all experimental results. 
+
+D.1 Utility 1: Error Detection 
+
+The first stage focuses on identifying whether a scientific figure contains a visually identifiable error. The prompt instructs the model to act as a senior scientist reviewing the figure and requires precise localization of any detected error. The output format is strictly constrained to a JSON object to enable automated evaluation.        
+
+> You are a senior scientist reviewing a scientific figure. The figure may or may not contain a deliberate visual error. Carefully examine the figure. If a specific and visually identifiable error exists (e.g., incorrect label, inconsistent trend, missing or swapped element), describe it precisely. The description must include both the location and the issue. If no concrete and localizable error can be identified, indicate that no error is found. Output only a valid JSON object in one of the following formats: • Error detected:
+> {"found": true, "error_description": "<location>: <issue>"}
+> • No error:
+> {"found": false, "error_description": null}
+
+13 D.2 Utility 2: Correction Feasibility 
+
+Upon error detection, the second stage evaluates whether a definitive and unambiguous correction can be prescribed. This stage operationalizes the concept of correction feasibility by requiring the model to assess three critical conditions: precise error localization, high-confidence knowledge of the correct state, and the ability to express the correction as a single explicit instruction. The prompt filters out fundamentally indeterminate corrections that depend on unavailable information or have multiple plausible solutions.                   
+
+> You are a scientific expert analyzing a figure that contains a known error. Reported error: {error_description}
+> Determine whether a definitive and unambiguous correction can be prescribed. Output {"can_instruct": true, "instruction": "<correction>"} if all of the following condi-tions are satisfied: • The erroneous region can be precisely located in the figure •The correct state (value, label, structure, or trend) is known with high confidence, based on visual evidence or scientific knowledge • The correction can be expressed as a single, explicit, and unambiguous instruction specifying both the current error and the target state Output {"can_instruct": false, "instruction": null} if any of the following conditions hold: • The error location cannot be identified • The correct state is fundamentally indeterminate (multiple plausible solutions exist) • The correct value depends on unavailable or author-specific information Output only a valid JSON object.
+
+D.3 Upgradability: Image Restoration 
+
+The final stage executes the actual image editing based on the instruction generated in Utility 2. The prompt is minimal by design, consisting solely of the repair instruction followed by a constraint that ensures localized modification. This constraint prevents unintended alterations to unrelated regions of the figure, preserving the overall scientific integrity of the visualization.  
+
+> <instruction>
+> Constraint: Modify only the specified region. All other parts of the figure must remain unchanged.
+
+D.4 Pipeline Integration 
+
+The three-stage design creates a cascading evaluation framework where each stage builds upon the output of the previous one. Stage 1 establishes the foundation by detecting concrete visual errors, Stage 2 ensures scientific rigor by filtering for well-defined corrections, and Stage 3 validates practical utility through precise image editing. This decomposition enables fine-grained analysis of model capabilities across perception, reasoning, and execution dimensions while maintaining strict control over error propagation throughout the pipeline. 
+
+E Data Construction Details 
+
+Our dataset is constructed through a meticulously designed, three-stage pipeline that ensures the scientific validity, visual plausibility, and logical coherence of the generated perturbations. This process transforms high-quality base images into strictly paired (correct, erroneous) samples grounded in real-world scientific fallacies. 14 Stage a: High-Quality Base Image Selection. We begin by curating raw scientific figures from authoritative public sources, including ScienceQA, GenExam, BMMR, ChemVLM, and OmniScience. To guarantee both high visual fidelity and rich, editable content, we apply a two-step filtering protocol: (1) Automated Quality Screening using SIQA [ 11 ], a no-reference model trained on scientific imagery, to assess visual clarity, compositional structure, and information density; and (2) 
+
+Editability Rescreening via an LLM to confirm the presence of identifiable, modifiable scientific elements (e.g., data series, labels, structural components). This yields a pool of 600 high-fidelity base images as our ground-truth references. 
+
+Stage b: Perturbation Generation & Curation. For each image, an LLM identifies “Critical Visual Logic Anchors” using this prompt: 
+
+Role: Senior Scientific Image Forensic Expert. Task: Identify ’Critical Visual Logic Anchors’—elements (Geometric Structure or Functional Text) defining the scientific logic. Logical Coherence Gate (all must be YES): • Q1. FUNDAMENTAL: Is it a core logic carrier? (Not a generic label) • Q2. CONTRADICTION: Does altering it create a fundamental scientific contradiction? • Q3. RECOVERABILITY: Can an expert restore it from visual context alone? Rules: Prioritize geometry over text. Text is valid only as a logic switch (e.g., ’D/A’). Exclude descriptive labels. Output: JSON with ’context’ and ’targets’. Each target has: ’category’, ’description’, ’location’, ’origi-nal_content’, ’significance’. 
+
+This produces 4–8 anchors per image. For each anchor and SIU 2A defect type (A DD , M ODIFY , R EMOVE , S WAP ), we generate and curate perturbations. 
+
+Plan Generation. An LLM creates candidate plans using this prompt: 
+
+Context: {context}. Anchors: {targets_str}. Generate {N} plans for {op_type} that create a scientifically illogical but visually plausible error. Constraints: • Focus on geometric elements; functional text only if a logic switch. • Error must be a LOGIC ERROR (narrative collapse), not just renaming. • Must be DETECTABLE and RESTORABLE. Output: JSON list. Keys include ’target_description’, ’location’ (or ’location_a/b’), ’surgical_instruction’, ’gt_restoration_instruction’. ONLY JSON. 
+
+Plan Selection. The best plan is selected by an LLM evaluator using the FDRS criteria: 
+
+Role: Scientific Image IUA Benchmark Constructor. Task: Select the ONE best plan for ’{op_type}’ that creates a Scientific Logical Error. FDRS Criteria (ALL required): • F: Feasible (visually locatable/executable, no text rendering) • D: Detectable (obvious, describable, scientific) • R: Restorable (via visual context or domain knowledge) • S: Substantive (alters core info, is misleading) Output ONLY: an integer index (e.g., 0) or NONE. 
+
+The final pipeline generates 2,100 validated image pairs. 15 F Annotation 
+
+To ensure the highest quality and scientific validity of our dataset, we implemented a rigorous expert-driven annotation pipeline. The process began by recruiting a panel of domain experts, including PhD candidates, postdoctoral researchers, and faculty members, with specialized knowledge in medicine, chemistry, biology, and physics. Each expert was assigned figures strictly within their area of expertise to guarantee accurate and au-thoritative judgments. Prior to the main annotation phase, all experts participated in a comprehensive training session. This session covered the core error taxonomy (A DD , M ODIFY , R EMOVE , S WAP ), provided detailed examples for each category, and established clear guidelines for writing precise, actionable repair instructions. The annotation task was performed through a custom-built web interface, shown in Figure 7. The interface was designed to streamline the two-stage annotation process: first, experts identified and localized any visual errors in the figure, and second, they authored a concise, unambiguous instruction to correct the error. To maintain consistency and address edge cases, we established a continuous feedback loop. Experts were encouraged to engage in real-time discussions with the research team throughout the annotation process. This collaborative dialogue allowed us to clarify ambiguous scenarios, refine the annotation guidelines as needed, and ultimately achieve a high standard of expert-level annotations across the entire dataset. 
+
+G Appendix Case Study Visualizations 
+
+To complement the quantitative results presented in the main paper, this section provides a quali-tative analysis through a curated set of case studies. We select four representative examples, each corresponding to one of the core error types (A DD , M ODIFY , R EMOVE , S WAP ) and drawn from distinct advanced scientific domains (medicine, chemistry, biology, and physics). These same four cases are consistently used across all visualizations to enable end-to-end tracking of model behavior throughout the SIU 2A pipeline. 
+
+G.1 Utility 1: Error Detection 
+
+The visualizations are structured into a series of figures, each corresponding to a stage of our framework and designed with a consistent case-major grid layout. In this layout, the four cases form the horizontal super-columns, while rows represent different data sections or model outputs. 
+
+G.2 Utility 2: Correction Feasiblity 
+
+Building upon the detection results, the structured diagnosis stage is illustrated across two paginated figures. Each case super-column is split into two sub-columns to compare instruction generation under two conditions: gold-conditioned (using the human-authored ground-truth error description) and pred-conditioned (using the model’s own predicted error). This direct comparison visually demonstrates how errors in the initial detection stage propagate into the quality and feasibility of the generated repair instructions. 16 Figure 7: Our custom annotation interface. The tool presents the scientific figure to the expert annotator and provides dedicated fields for (1) describing the detected error with its location and (2) authoring a precise, executable instruction for its correction. 17 ADD 
+
+False Content 
+
+MODIFY 
+
+Detail Distortion 
+
+REMOVE 
+
+Incompleteness 
+
+SWAP 
+
+Entity Confusion 
+
+> I N P U T
+
+Original Degraded 
+
+(perturbed) 
+
+> E X P E R T
+
+GT-Error 
+
+(human anchor) 
+
+> M O D E L D I A G N O S E S
+
+Qwen3.6-Plus GPT-5.4 Claude-Opus-4.6 Gemini-3.1-Pro Doubao-Seed-2-Pro GLM-4.6V Grok-4.20 Kimi-K2.5 Qwen3.5-397B InternVL-3.5 LLaMA-3.2-90B-V 
+
+In panel C, a thin horizontal white channel appears at the midline, connecting the embryonic intraembryonic coelomic spaces on the left and right sides, located just above the yolk sac side and above the paired dorsal aortae. This white channel is abnormally conspicuous. 
+
+DETECT YES 
+
+Panel C: The label 'Paired dorsal aortae' points to two small circles located ventral to (below) the gut tube. Anatomically, the dorsal aortae are dorsal structures and should be located dorsal to the gut tube, typically between the somites and the gut. 
+
+DETECT NO 
+
+(predicted no error) 
+
+DETECT NO 
+
+(predicted no error) 
+
+DETECT YES 
+
+In panel C, the label 'Intermediate mesoderm' incorrectly points to the large white space (the intraembryonic coelom) rather than the solid intermediate mesoderm tissue located between the somite and the lateral plate mesoderm. 
+
+DETECT YES 
+
+Panel C: The label for "Intermediate mesoderm" is incorrectly pointing to a paired dorsal aorta (the same vascular structure that one of the "Paired dorsal aortae" labels identifies), rather than the mesodermal tissue located between the somite (paraxial mesoderm) and lateral plate mesoderm where intermediate mesoderm is positioned. 
+
+DETECT YES 
+
+Part C: 'Paired dorsal' label is incomplete (should be 'Paired dorsal aortae') 
+
+DETECT NO 
+
+(predicted no error) 
+
+DETECT YES 
+
+Panel C: The 'Paired dorsal aortae' are incorrectly shown in a ventral position near the yolk sac. Anatomically, the paired dorsal aortae are dorsal blood vessels that flank the notochord and are located dorsal to the gut, near the somites and intermediate mesoderm, not ventral to the coelom near the yolk sac. 
+
+DETECT YES 
+
+Panel A: The label 'Embryonic mesoderm' points to the blue layer (which is the ectoderm/neural plate), and the label 'Endoderm' points to the reddish-brown layer (which is the mesoderm). The actual endoderm is the yellow layer at the bottom. 
+
+DETECT NO 
+
+(predicted no error) 
+
+DETECT YES 
+
+The label for the 'lateral plate mesoderm with early coelomic vesicles' is misplaced and should be placed on the right side of the figure, not the left. 
+
+In the lower (late transition metal) panel, the two opposing green t2g lobes between the central red/orange spheres have been merged into a single smooth green ribbon that spans the TM–TM gap. 
+
+DETECT YES 
+
+The labels 'Early transition metal' and 'Late transition metal' are swapped. Early transition metals typically have more extended d-orbitals which leads to greater orbital overlap and delocalization (depicted in the bottom panel), while late transition metals have more contracted orbitals due to higher effective nuclear charge, leading to localization (depicted in the top panel). 
+
+DETECT NO 
+
+(predicted no error) 
+
+DETECT YES 
+
+The t_2g orbital sizes are swapped: early transition metals should have smaller/less extended t_2g orbitals compared to late transition metals, but the figure shows early transition metals with more spread-out orbitals (multiple lobes across several sites) and late transition metals with a large single bonding lobe, which is the opposite of the expected trend where early TMs have more extended/delocalized d orbitals due to larger spatial extent. 
+
+DETECT YES 
+
+Left labels: The labels 'Early transition metal' and 'Late transition metal' are swapped. Early transition metals have more diffuse d-orbitals which lead to stronger metal-metal overlap (depicted in the bottom structure), whereas late transition metals have more contracted d-orbitals resulting in less overlap (depicted in the top structure). 
+
+DETECT YES 
+
+Left side labels and corresponding orbital panels: The upper panel with localized, non-overlapping t2g orbitals on individual transition metal centers is incorrectly assigned to early transition metals, while the lower panel with delocalized, overlapping t2g orbitals between adjacent transition metals is incorrectly assigned to late transition metals. This labeling is reversed: early transition metals have more diffuse d orbitals that exhibit greater inter-metal overlap, while late transition metals have more contracted d orbitals that remain localized on individual metal centers. 
+
+DETECT NO 
+
+(predicted no error) 
+
+DETECT YES 
+
+Top/bottom panels: 'Early transition metal' and 'Late transition metal' labels are swapped (early TM have more extended/diffuse t2g orbitals; bottom depiction with continuous large orbital matches early TM) 
+
+DETECT YES 
+
+Bottom panel (Late transition metal): The t2g orbitals are incorrectly depicted as large and strongly overlapping between metal centers. Late transition metals have more contracted d orbitals due to higher effective nuclear charge and exhibit poorer orbital overlap compared to early transition metals. The figure reverses the correct trend—early transition metals should have the more diffuse, strongly overlapping orbitals. 
+
+DETECT YES 
+
+The label '$t_{2g}$ orbitals' has a lower red arrow pointing to the bottom structure ('Late transition metal'). However, the orbital depicted in the bottom structure shows lobes pointing directly along the bond axis (characteristic of $e_g$ orbitals), whereas the top structure shows lobes pointing between the axes (characteristic of $t_{2g}$ orbitals). The bottom structure incorrectly implies the orbital shown is $t_{2g}$. 
+
+DETECT NO 
+
+(predicted no error) 
+
+DETECT YES 
+
+The figure shows a transition metal with the label 'Early transition metal' and 'Late transition metal'. However, the labels are swapped. The early transition metal should be on the left side of the figure, and the late transition metal should be on the right side. 
+
+The figure lacks the step in which ubiquitinated Ino80 subsequently undergoes proteasomal degradation, and in the replication fork region it is missing the text “H2Aub” and the line connecting the text to the Ub protein on the right side. 
+
+DETECT YES 
+
+Bottom right text: The word 'stability' is truncated/misspelled as 'stabilit'. 
+
+DETECT NO 
+
+(predicted no error) 
+
+DETECT NO 
+
+(predicted no error) 
+
+DETECT YES 
+
+Right side text: The word 'stability' is misspelled as 'stabilit' in the phrase 'Normal replication and genome stabilit'. 
+
+DETECT YES 
+
+Left panel, the line from BAP1 pointing to the downward reaction arrow (between ubiquitinated Ino80 and the Ino80-BAP1 complex) uses an inhibitory T-bar symbol: BAP1 is a deubiquitinase that *catalyzes/promotes* this deubiquitination reaction, so the symbol should be an activating arrowhead instead of an inhibitory T-bar. 
+
+DETECT YES 
+
+In the replication fork, Ino80 (blue) lacks ubiquitin tags present on Ino80 in the top panel, while BAP1 (teal) has ubiquitin tags instead (misplaced ubiquitin attachment) 
+
+DETECT NO 
+
+(predicted no error) 
+
+DETECT NO 
+
+(predicted no error) 
+
+DETECT YES 
+
+Right side text: The word 'stability' is misspelled as 'stabilit' (missing the letter 'y'). 
+
+DETECT NO 
+
+(predicted no error) 
+
+DETECT YES 
+
+The arrow pointing to 'Normal replication and genome stability' should be pointing to the right, not the left. 
+
+In the lower-right panel, the intense red semi-transparent halo closely surrounding the central trefoil-shaped ring cluster is missing, while a red glow appears on the left rear upper surface of that panel. 
+
+DETECT YES 
+
+Top left label: The label 'Embedding sSMO NRs in polymer' uses the abbreviation 'NRs' which typically stands for Nanorods, but the visual clearly depicts nanorings (toroidal structures). 
+
+DETECT YES 
+
+Bottom-right label: the phrase 'Visible and infrared light-absorbed' is grammatically incorrect/mislabeled; it should indicate absorption, e.g. 'Visible and infrared light absorbed' or 'Visible and infrared light absorption'. 
+
+DETECT NO 
+
+(predicted no error) 
+
+DETECT NO 
+
+(predicted no error) 
+
+DETECT NO 
+
+(predicted no error) 
+
+DETECT YES 
+
+Bottom right figure: Arrow direction is incorrect (pointing down instead of up) for light absorption 
+
+DETECT NO 
+
+(predicted no error) 
+
+DETECT YES 
+
+The green nanostructures are depicted as ring-shaped (circular loop and figure-8 morphologies), but the label identifies them as 'NRs' (Nanorods), which are characteristically elongated, rod-like cylindrical structures, not rings 
+
+DETECT YES 
+
+Top-left label: The text 'Embedding sSMO NRs in polymer' uses the abbreviation 'NRs' which typically stands for 'Nanorods'. However, the visual depiction in all panels (top-left, top-right, bottom-right) clearly shows ring-shaped or loop-shaped structures (Nanorings), not rod-shaped structures. 
+
+DETECT NO 
+
+(predicted no error) 
+
+DETECT YES 
+
+The figure shows a 3D representation of the embedding process of sSMO NRs in polymer. The left side of the figure shows the embedding process, and the right side shows the plasma frequencies. However, the right side of the figure is labeled as 'Visible and infrared light-absorbed', which seems to be incorrect. The correct label should be 'Plasma frequencies' as shown on the top right corner of the figure. Figure 8: Utility 1 — Error Detection. The figure displays the input images alongside the ground-truth expert annotations and the outputs from eleven diagnostic VLMs. Each model’s prediction is encoded with a color bar (green for Detect: YES , red for Detect: NO ), allowing for immediate assessment of detection accuracy against the known ground truth. 18 ADD 
+
+False Content 
+
+MODIFY 
+
+Detail Distortion 
+
+REMOVE 
+
+Incompleteness 
+
+SWAP 
+
+Entity Confusion 
+
+from-GT from-Pred from-GT from-Pred from-GT from-Pred from-GT from-Pred 
+
+> I N P U T
+
+Original Degraded 
+
+(perturbed) 
+
+> E X P E R T
+
+GT-Instruction 
+
+(human anchor) 
+
+> I N S T R U C T I O N S
+
+Qwen3.6-Plus GPT-5.4 Claude-Opus-4.6 Gemini-3.1-Pro Doubao-Seed-2-Pro 
+
+In panel C, remove the added horizontal white channel spanning the midline of the two intraembryonic coelomic spaces (located above the paired dorsal aortae). Replace it with the surrounding brown mesodermal color and contour so that the left and right coelomic chambers remain separated, with no midline connection. Remove the thin horizontal white channel at the midline that connects the left and right intraembryonic coelomic spaces. This region should instead be occupied by the closing gut tube (composed of endoderm and splanchnic mesoderm), which separates the intraembryonic coeloms at the midline. The label 'Paired dorsal aortae' should point to the two brown circular structures located dorsal to the gut tube (between the somites and the gut), instead of the structures ventral to the gut tube. In panel C, remove the thin horizontal white channel at the midline that bridges the left and right intraembryonic coelomic spaces above the paired dorsal aortae, and replace it with continuous intervening tissue so the left and right intraembryonic coeloms remain separate and do not communicate across the midline at this stage. 
+
+predicted no-error 
+
+In panel C, remove the thin horizontal white channel at the midline that abnormally connects the left and right intraembryonic coelomic spaces above the paired dorsal aortae. The left and right intraembryonic coeloms should remain separate at this stage, divided by the midline mesodermal tissue (splanchnic and somatic mesoderm), with no open white connection between them at that location. 
+
+predicted no-error 
+
+Remove the artificial horizontal white rectangle crossing the midline in panel C. Restore the solid red mesoderm in this area to reconnect the medial edges of the somatic and splanchnic mesoderm layers to the intermediate mesoderm, ensuring the intraembryonic coelom is confined to the left and right lateral regions and does not cross the midline. In panel C, move the pointer line for the label 'Intermediate mesoderm' so that it points to the solid red tissue located between the somite and the lateral plate mesoderm, rather than pointing into the white space (intraembryonic coelom). In panel C, remove the abnormally conspicuous thin horizontal white midline channel connecting the left and right intraembryonic coelomic spaces above the paired dorsal aortae and yolk sac, replace this region with contiguous reddish-brown mesodermal tissue matching the adjacent somatic and splanchnic mesoderm, such that the left and right intraembryonic coelomic spaces are not connected across the midline at this location. In Panel C, reposition the 'Intermediate mesoderm' label to point to the mesodermal tissue located between the somite (paraxial mesoderm) and lateral plate mesoderm, instead of the paired dorsal aorta vascular structure it is currently incorrectly pointing to. 
+
+In the lower panel, between the two central red/orange TM spheres (approx. x:550–870, y:345–455), remove the connecting green ribbon. Split it into two distinct dumbbell-shaped green lobes centered on each TM, leaving a visible gap between them to match the upper panel’s spacing and the original lower-panel lobes. Keep lobe thickness and color consistent with the other lobes and smooth the edges. In the lower panel, separate the single continuous green ribbon connecting the two central red/orange spheres into two distinct, separate green lobes facing each other across the gap, mirroring the separate lobes depicted in the upper panel. Swap the labels 'Early transition metal' and 'Late transition metal': change the top label to 'Late transition metal' and the bottom label to 'Early transition metal'. In the lower (late transition metal) panel, replace the single continuous green ribbon spanning the gap between the two central TM spheres with two separate opposing t2g lobes: one green lobe protruding inward from the left TM and one green lobe protruding inward from the right TM, with a clear separation/nodal gap between them rather than any merged connection across the TM–TM space. 
+
+predicted no-error 
+
+In the lower (late transition metal) panel, replace the single smooth green ribbon connecting the two central TM atoms with two separate green t2g orbital lobes — one lobe centered on each TM site — with a visible gap or node between them in the TM–TM interstitial region, matching the style of the distinct individual lobes shown in the upper (early transition metal) panel. This reflects that for late transition metals the t2g orbitals are more contracted and do not merge into a continuous bonding overlap across the TM–TM gap. Swap the t_2g orbital depictions between the two panels: the early transition metal panel (top) should show the large, extended/delocalized t_2g orbitals (the single large bonding lobe spanning multiple sites, currently shown in the bottom panel), and the late transition metal panel (bottom) should show the smaller, more localized t_2g orbitals (the multiple smaller lobes currently shown in the top panel). Early transition metals have more spatially extended d orbitals leading to greater direct d-d overlap, while late transition metals have more contracted/localized d orbitals. Replace the single smooth continuous green ribbon spanning the gap between the two central red/orange TM spheres in the lower panel with two separate, distinct green t2g lobes that point toward each other from their respective TM atoms, reflecting the more contracted orbitals of late transition metals. Swap the labels 'Early transition metal' and 'Late transition metal' on the left side of the figure, so that the top structure is labeled 'Late transition metal' and the bottom structure is labeled 'Early transition metal'. In the lower late transition metal panel, replace the single smooth continuous green ribbon spanning the gap between the two central red/orange TM spheres with two separate, opposing green t2g lobes (one extending right from the left TM, one extending left from the right TM) with a clear gap between the two lobes, matching the structure of individual TM-centered t2g orbitals shown in the upper early transition metal panel. Swap the left side text labels: change the upper left label next to the localized, non-overlapping t2g orbital panel from "Early transition metal" to "Late transition metal", and change the lower left label next to the delocalized, overlapping t2g orbital panel from "Late transition metal" to "Early transition metal". 
+
+Add an arrow to the right of ubiquitinated Ino80 pointing to the post-degradation protein, and add the text “Proteasomal degradation” to the right of the post-degradation protein; in the replication fork region, add the text “H2Aub” to the right of Ino80 and a line connecting the text to the Ub protein on the right Add a step indicating proteasomal degradation for the polyubiquitinated Ino80 at the top left, and in the replication fork region, add the text 'H2Aub' with a line connecting it to the Ubiquitin (Ub) molecule attached to the nucleosome on the right. Change the truncated text 'stabilit' at the bottom right to 'stability'. Add the missing pathway step showing polyubiquitinated Ino80 being targeted to and degraded by the proteasome: place a proteasome complex downstream of the ubiquitinated Ino80 in the upper-left pathway and connect it with an arrow indicating proteasomal degradation. Also, in the replication fork region, add the label "H2Aub" on the right side and draw a connector line from that label to the right-hand Ub moiety attached at the fork. 
+
+predicted no-error 
+
+Two changes are needed: (1) In the upper-left pathway, add an arrow from the polyubiquitinated Ino80 leading to a proteasome symbol (26S proteasome barrel) with the label 'Proteasomal degradation' to show that ubiquitinated Ino80 is degraded. (2) In the replication fork region on the right side, add the label 'H2Aub' with a line connecting it to the 'Ub' circle on the right-side nucleosome, indicating that the ubiquitin mark on the histone is H2A ubiquitination. 
+
+predicted no-error 
+
+Add an arrow originating from the polyubiquitinated Ino80 complex at the top left pointing to a new label 'Proteasomal degradation', and in the replication fork region, add the text 'H2Aub' with a line connecting it to the rightmost 'Ub' attached to the nucleosome. Change 'stabilit' to 'stability' in the phrase 'Normal replication and genome stabilit' on the right side of the figure. 1. Add an arrow originating from the polyubiquitinated Ino80 (the Ino80 molecule with the chain of 4 Ub moieties attached at the top left of the figure) pointing to a new label that reads 'Proteasomal degradation of ubiquitinated Ino80' to include the missing degradation step. 2. In the replication fork region, add the text label 'H2Aub' adjacent to each Ub protein attached to the nucleosomes, and add a connecting line between each 'H2Aub' label and its corresponding Ub protein. In the left panel, replace the inhibitory T-bar symbol at the end of the line extending from BAP1 that points to the downward reaction arrow between ubiquitinated Ino80 and the Ino80-BAP1 complex with an activating arrowhead, as BAP1 promotes this deubiquitination reaction rather than inhibiting it. 
+
+Add a tight semi-transparent red halo around the central trilobed ring cluster in the lower-right panel, and remove the small patch of red glow on the upper-left rear surface of that panel. Remove the red glow on the left rear upper surface and replace it with an intense red semi-transparent halo closely surrounding the central trefoil-shaped ring cluster. Change 'NRs' to 'Nanorings' in the label 'Embedding sSMO NRs in polymer'. In the lower-right panel, remove the misplaced red semi-transparent glow from the left rear upper surface of the polymer block, and add the intense red semi-transparent halo tightly surrounding the central trefoil-shaped ring cluster so the glow encircles that three-ring structure. Change the bottom-right label from 'Visible and infrared light-absorbed' to 'Visible and infrared light absorbed'. In the lower-right panel (Visible and infrared light-absorbed), remove the red glow from the left rear upper surface of the polymer slab, and instead add an intense red semi-transparent halo closely surrounding the central trefoil-shaped ring cluster of sSMO NRs, representing localized light absorption/heating at the nanostructure site. 
+
+predicted no-error 
+
+Remove the red glow from the left rear upper edge of the polymer block in the lower-right panel and add an intense, semi-transparent red halo closely surrounding the central trefoil-shaped ring cluster. 
+
+predicted no-error 
+
+In the lower-right panel, remove the red glow present on the left rear upper surface of the polymer block, and add an intense semi-transparent red halo that closely surrounds the central trefoil-shaped ring cluster on the polymer block. predicted no-error Figure 9: Utility 2 — Correction Feasiblity (page 1 of 2). Results for the first five diagnostic models. The full-width gold E XPERT row reproduces the human GT-Instruction as a reference. A 
+
+predicted no-error chip replaces a missing instruction when a model declined to flag an error. 19 ADD 
+
+False Content 
+
+MODIFY 
+
+Detail Distortion 
+
+REMOVE 
+
+Incompleteness 
+
+SWAP 
+
+Entity Confusion 
+
+from-GT from-Pred from-GT from-Pred from-GT from-Pred from-GT from-Pred 
+
+> I N P U T
+
+Original Degraded 
+
+(perturbed) 
+
+> E X P E R T
+
+GT-Instruction 
+
+(human anchor) 
+
+> I N S T R U C T I O N S
+
+GLM-4.6V Grok-4.20 Kimi-K2.5 Qwen3.5-397B InternVL-3.5 LLaMA-3.2-90B-V 
+
+In panel C, remove the added horizontal white channel spanning the midline of the two intraembryonic coelomic spaces (located above the paired dorsal aortae). Replace it with the surrounding brown mesodermal color and contour so that the left and right coelomic chambers remain separated, with no midline connection. Remove the thin horizontal white channel connecting the left and right intraembryonic coelomic spaces in panel C, as this channel is abnormally conspicuous and should not be present at that location. Change the label 'Paired dorsal' to 'Paired dorsal aortae' In panel C, remove the thin horizontal white channel at the midline that connects the left and right intraembryonic coelomic spaces just above the yolk sac and paired dorsal aortae; replace it with continuous splanchnic mesoderm (matching the color and texture of the adjacent splanchnic mesoderm layer) so the coelomic spaces remain separate. 
+
+predicted no-error 
+
+In panel C, fill the thin horizontal white channel at the midline (located just above the paired dorsal aortae) with splanchnic mesoderm color to eliminate the abnormal communication between the left and right intraembryonic coelomic cavities, restoring the continuous dorsal mesentery that should separate them. In Panel C, relocate the 'Paired dorsal aortae' label and the two vessel structures from their current ventral position near the splanchnic mesoderm and yolk sac region to a dorsal position flanking the notochord, placing them adjacent to the ventral aspect of the somites and medial to the intermediate mesoderm (dorsal to the intraembryonic coelom and gut). In Panel C, remove the thin horizontal white channel that connects the left and right intraembryonic coelomic spaces across the midline. The intraembryonic coelom should consist of two separate, isolated lateral cavities confined to the lateral plate mesoderm. The midline region between these cavities (located beneath the somites and intermediate mesoderm) should be filled with solid mesodermal tissue, consistent with the paraxial and intermediate mesoderm, rather than an open cavity. In Panel A, the label 'Embryonic mesoderm' should point to the reddish-brown layer (which is the mesoderm), and the label 'Endoderm' should point to the yellow layer at the bottom (which is the endoderm). Remove the thin horizontal white channel at the midline connecting the intraembryonic coelomic spaces, as it should not be present in this depiction of the embryonic structure. 
+
+predicted no-error 
+
+The white channel should be removed. Move the label 'lateral plate mesoderm with early coelomic vesicles' to the right side of the figure. 
+
+In the lower panel, between the two central red/orange TM spheres (approx. x:550–870, y:345–455), remove the connecting green ribbon. Split it into two distinct dumbbell-shaped green lobes centered on each TM, leaving a visible gap between them to match the upper panel’s spacing and the original lower-panel lobes. Keep lobe thickness and color consistent with the other lobes and smooth the edges. In the lower (late transition metal) panel, split the single smooth green ribbon spanning the TM–TM gap into two separate opposing green t2g lobes, matching the structure of the t2g orbitals in the upper (early transition metal) panel. 
+
+predicted no-error 
+
+In the lower (late transition metal) panel, replace the single continuous smooth green ribbon connecting the two central red/orange TM spheres with two separate, opposing green t2g lobes (one from each TM) facing each other across the TM–TM gap without merging. Swap the top 'Early transition metal' label with the bottom 'Late transition metal' label (top panel with localized/separate t2g lobes becomes Late TM; bottom panel with continuous/extended t2g orbital becomes Early TM) In the lower (late transition metal) panel, replace the single continuous green ribbon that spans the gap between the two central TM spheres with two distinct, separate green t2g orbital lobes—one centered on each transition metal atom and pointing toward each other—matching the representation of distinct atomic orbital lobes shown in the upper panel. Swap the t2g orbital depictions between the two panels: the early transition metal (top) should display large, diffuse orbitals with strong overlap between metal centers, and the late transition metal (bottom) should display small, contracted orbitals with minimal or no overlap between metal centers. In the lower panel, replace the single continuous green ribbon spanning the gap between the two central red/orange spheres with two distinct, separate green lobes (one attached to each sphere), mirroring the separated orbital depiction in the upper 'Early transition metal' panel. The lower red arrow points from the label '$t_{2g}$ orbitals' to the bottom structure ('Late transition metal'), but the orbital depicted has lobes pointing directly along the bond axis, which is characteristic of $e_g$ orbitals. The label pointing to the bottom structure should be changed to '$e_g$ orbitals'. In the lower (late transition metal) panel, replace the single smooth green ribbon spanning the TM-TM gap with two separate green t2g lobes between the central red/orange spheres. 
+
+predicted no-error 
+
+Change the single smooth green ribbon spanning the TM–TM gap to two opposing green t2g lobes. Swap the labels 'Early transition metal' and 'Late transition metal'. 
+
+Add an arrow to the right of ubiquitinated Ino80 pointing to the post-degradation protein, and add the text “Proteasomal degradation” to the right of the post-degradation protein; in the replication fork region, add the text “H2Aub” to the right of Ino80 and a line connecting the text to the Ub protein on the right Add a step depicting ubiquitinated Ino80 undergoing proteasomal degradation (e.g., a proteasome symbol with an arrow from ubiquitinated Ino80 to degradation) and in the replication fork region, add the text 'H2Aub' adjacent to the right Ub protein and a line connecting the text to that Ub protein. In the replication fork panel, add ubiquitin tags to Ino80 (blue) and remove the ubiquitin tag from BAP1 (teal) In the upper-left ubiquitination cascade, add a downward arrow from polyubiquitinated Ino80 to a new rectangular box labeled 'Proteasomal degradation'; at the replication-fork diagram, insert the label “H2Aub” to the right of the rightmost nucleosome and draw a connecting line from this label to the ubiquitin moiety attached to that nucleosome. 
+
+predicted no-error 
+
+Add a step depicting proteasomal degradation by drawing an arrow from the polyubiquitinated Ino80 (top left, with the Ub chain) to a label reading 'Proteasomal degradation' or a proteasome icon, and at the replication fork region, add the text label 'H2Aub' positioned near the right nucleosome with a line connecting this text to the ubiquitin (Ub) protein attached to that right nucleosome. 
+
+predicted no-error 
+
+Add a step indicating proteasomal degradation originating from the polyubiquitinated Ino80 at the top left, and in the replication fork region, add the text label 'H2Aub' with a leader line connecting it to the ubiquitin molecule on the right nucleosome. Change the text 'Normal replication and genome stabilit' to 'Normal replication and genome stability'. Add a step showing ubiquitinated Ino80 undergoing proteasomal degradation. In the replication fork region, add the text 'H2Aub' and connect it with a line to the Ub protein on the right side. 
+
+predicted no-error 
+
+Add a line connecting the text 'H2Aub' to the Ub protein on the right side and add the text 'H2Aub' next to the Ub protein on the right side. The arrow pointing to 'Normal replication and genome stability' should be pointing to the right, not the left. 
+
+Add a tight semi-transparent red halo around the central trilobed ring cluster in the lower-right panel, and remove the small patch of red glow on the upper-left rear surface of that panel. In the lower-right panel, add an intense red semi-transparent halo closely surrounding the central trefoil-shaped ring cluster and remove the red glow from the left rear upper surface Change the arrow direction in the bottom right figure from pointing down to pointing up In the lower-right panel, add the intense red semi-transparent halo closely surrounding the central trefoil-shaped ring cluster (to represent absorbed visible/infrared light) and remove the misplaced red glow from the left rear upper surface. 
+
+predicted no-error 
+
+In the lower-right panel, remove the red glow from the left rear upper surface and add an intense red semi-transparent halo closely surrounding the central trefoil-shaped ring cluster. Change the green nanostructures from ring-shaped morphologies (circular loops and figure-8 shapes) to elongated cylindrical rod-shaped morphologies to correctly represent nanorods (NRs) Remove the red glow from the left rear upper surface and instead render an intense red semi-transparent halo closely surrounding the central trefoil-shaped ring cluster. In the text label 'Embedding sSMO NRs in polymer', change the abbreviation 'NRs' to 'Nanorings' to accurately reflect the ring-shaped structures depicted in the figure. Add a red semi-transparent halo closely surrounding the central trefoil-shaped ring cluster in the lower-right panel, and remove the red glow from the left rear upper surface of that panel. 
+
+predicted no-error 
+
+The red glow on the left rear upper surface of the lower-right panel should be removed and replaced with a red semi-transparent halo closely surrounding the central trefoil-shaped ring cluster. Change 'Visible and infrared light-absorbed' to 'Plasma frequencies' Figure 10: Utility 2 — Correction Feasiblity (page 2 of 2). Results for the remaining six diagnostic models, with identical layout and semantics as Figure 9. 20 G.3 Upgradability: Image Restoration 
+
+Finally, the image restoration capabilities of Stage 3 are showcased in the following paginated figures. To isolate the performance of the editing models from upstream variance, the pred-conditioned sub-column uses a fixed repair instruction generated by the top-performing diagnostic model, Qwen3.6-Plus. The side-by-side comparison between gold-conditioned and pred-conditioned outputs pro-vides a qualitative measure of the performance gap attributable solely to instruction quality. ADD 
+
+False Content 
+
+MODIFY 
+
+Detail Distortion 
+
+REMOVE 
+
+Incompleteness 
+
+SWAP 
+
+Entity Confusion 
+
+GT-cond Pred-cond GT-cond Pred-cond GT-cond Pred-cond GT-cond Pred-cond 
+
+> I N P U T
+
+Original Degraded 
+
+(perturbed) 
+
+> P R O M P T
+
+Instruction 
+
+GT vs Qwen3.6-Plus 
+
+> E D I T S
+
+Flux2-Dev Gemini-2.5-FI Gemini-3-Pro-I GPT-Image-1.5 GPT-Image-2 
+
+In panel C, remove the added horizontal white channel spanning the midline of the two intraembryonic coelomic spaces (located above the paired dorsal aortae). Replace it with the surrounding brown mesodermal color and contour so that the left and right coelomic chambers remain separated, with no midline connection. The label 'Paired dorsal aortae' should point to the two brown circular structures located dorsal to the gut tube (between the somites and the gut), instead of the structures ventral to the gut tube. 
+
+In the lower panel, between the two central red/orange TM spheres (approx. x:550–870, y:345–455), remove the connecting green ribbon. Split it into two distinct dumbbell-shaped green lobes centered on each TM, leaving a visible gap between them to match the upper panel’s spacing and the original lower-panel lobes. Keep lobe thickness and color consistent with the other lobes and smooth the edges. Swap the labels 'Early transition metal' and 'Late transition metal': change the top label to 'Late transition metal' and the bottom label to 'Early transition metal'. 
+
+Add an arrow to the right of ubiquitinated Ino80 pointing to the post-degradation protein, and add the text “Proteasomal degradation” to the right of the post-degradation protein; in the replication fork region, add the text “H2Aub” to the right of Ino80 and a line connecting the text to the Ub protein on the right Change the truncated text 'stabilit' at the bottom right to 'stability'. 
+
+Add a tight semi-transparent red halo around the central trilobed ring cluster in the lower-right panel, and remove the small patch of red glow on the upper-left rear surface of that panel. Change 'NRs' to 'Nanorings' in the label 'Embedding sSMO NRs in polymer'. 
+
+Figure 11: Upgradability — Image Restoration (page 1 of 2). Results for the first five image editing models. The P ROMPT band surfaces both prompts side-by-side. The OmniGen-2 Pred-cond cell carries an instruction too long tag, indicating its sensitivity to instruction length. 
+
+H Additional Ablations 
+
+This section presents two key ablation studies that dissect the performance of our SIU 2A framework. The first study isolates the impact of the instruction source on the image editing stage, while the second evaluates the intrinsic capability of diagnostic models to generate feasible repair instructions. 21 ADD 
+
+False Content 
+
+MODIFY 
+
+Detail Distortion 
+
+REMOVE 
+
+Incompleteness 
+
+SWAP 
+
+Entity Confusion        
+
+> GT-cond Pred-cond GT-cond Pred-cond GT-cond Pred-cond GT-cond Pred-cond
+> I N P U T
+
+Original Degraded 
+
+> (perturbed)
+> P R O M P T
+
+Instruction 
+
+> GT vs Qwen3.6-Plus
+> E D I T S
+
+OmniGen-2 Qwen-Edit Step1X-Edit UniPic-3 
+
+In panel C, remove the added horizontal white channel spanning the midline of the two intraembryonic coelomic spaces (located above the paired dorsal aortae). Replace it with the surrounding brown mesodermal color and contour so that the left and right coelomic chambers remain separated, with no midline connection. The label 'Paired dorsal aortae' should point to the two brown circular structures located dorsal to the gut tube (between the somites and the gut), instead of the structures ventral to the gut tube. 
+
+> instruction too long
+
+In the lower panel, between the two central red/orange TM spheres (approx. x:550–870, y:345–455), remove the connecting green ribbon. Split it into two distinct dumbbell-shaped green lobes centered on each TM, leaving a visible gap between them to match the upper panel’s spacing and the original lower-panel lobes. Keep lobe thickness and color consistent with the other lobes and smooth the edges. Swap the labels 'Early transition metal' and 'Late transition metal': change the top label to 'Late transition metal' and the bottom label to 'Early transition metal'. 
+
+> instruction too long
+
+Add an arrow to the right of ubiquitinated Ino80 pointing to the post-degradation protein, and add the text “Proteasomal degradation” to the right of the post-degradation protein; in the replication fork region, add the text “H2Aub” to the right of Ino80 and a line connecting the text to the Ub protein on the right Change the truncated text 'stabilit' at the bottom right to 'stability'. 
+
+Add a tight semi-transparent red halo around the central trilobed ring cluster in the lower-right panel, and remove the small patch of red glow on the upper-left rear surface of that panel. Change 'NRs' to 'Nanorings' in the label 'Embedding sSMO NRs in polymer'. 
+
+> instruction too long
+
+Figure 12: Upgradability — Image Restoration (page 2 of 2). Results for the remaining four image editing models, with identical layout and semantics as Figure 11. 
+
+H.1 Ablation on Instruction Source (Predicted vs. Ground Truth) 
+
+Table 4 investigates the critical dependency of the structured diagnosis stage (Stage 2) on the quality of the upstream error detection. For each diagnostic model, we compare its performance when conditioned on its own predicted error description ( Pred ) versus the human-authored ground-truth error ( GT ). The results are reported across three metrics: Pred_True_Rate (the rate at which the generated instruction is deemed correct and executable), Binary_Acc (the accuracy of the binary decision on whether an instruction can be generated), and Avg_Text (the average length of the generated instruction in tokens). The data reveals a significant performance gap between the Pred and GT conditions, particularly for open-source models. This demonstrates that errors or ambiguities in the initial detection stage directly propagate into the instruction generation phase, leading to a substantial drop in the feasibility and correctness of the proposed repairs. Closed-source models like Qwen3.6-plus show greater robustness, maintaining a high Pred_True_Rate even with their own predictions, which underscores their superior diagnostic consistency. 
+
+H.2 Edit-only Ablation on Advanced Instructions 
+
+Table 5 isolates the performance of the image restoration stage (Stage 3) by controlling for the instruction source. We evaluate a suite of image editing models under two conditions: using the human ground-truth repair instruction ( GT ) and using a fixed prediction from the top-performing diagnostic model, Qwen3.6-plus ( Pred ). Performance is measured using Similarity (Full) , which 22 Table 4: Ablation Study on Instruction Source (Predicted vs. Ground Truth) 
+
+Model Src Pred True Rate Accuracy Text Similarity Sim. Adv. All Sim. Adv. All Sim. Adv. All 
+
+Closed-source 
+
+Qwen3.6-plus Pred 91.5 93.7 92.0 71.3 73.3 71.8 20.7 10.5 18.1 GT 94.9 86.7 92.9 73.7 69.5 72.7 61.4 53.0 59.3 Doubao-Seed-2.0-Pro Pred 85.7 80.5 84.4 68.2 66.4 67.7 23.8 9.8 20.3 GT 97.5 85.2 94.4 74.7 69.2 73.3 69.1 56.8 66.0 Gemini-3.1-Pro Pred 72.1 64.2 70.1 66.1 57.3 63.9 21.6 10.0 18.7 GT 88.7 70.0 84.0 72.4 69.0 71.5 59.4 49.3 56.9 Claude-Opus-4.6 Pred 54.5 50.4 53.5 52.9 52.2 52.7 10.3 4.6 8.9 GT 98.4 86.2 95.3 74.1 69.7 73.0 73.6 57.4 69.6 GLM-4.6V Pred 46.8 38.6 44.7 48.7 42.5 47.2 7.2 1.3 5.7 GT 93.5 71.9 88.1 72.4 63.4 70.1 62.9 48.7 59.3 Grok-4.20 Pred 44.2 45.4 44.5 47.6 48.4 47.8 13.4 4.4 11.1 GT 95.5 68.4 88.7 72.8 59.5 69.5 69.7 50.3 64.8 GPT-5.4 Pred 35.0 26.1 32.7 43.7 36.9 42.0 7.3 2.4 6.1 GT 95.6 69.2 89.0 73.6 63.6 71.1 70.7 52.0 66.0 
+
+Open-source 
+
+Qwen3.5-397B Pred 81.4 90.0 83.6 68.0 68.5 68.1 20.5 10.5 18.0 GT 92.2 88.2 91.2 72.4 69.7 71.7 62.1 54.4 60.2 Kimi-K2.5 Pred 63.2 62.7 63.0 58.9 55.7 58.1 16.5 5.6 13.8 GT 93.5 68.2 87.2 73.0 60.6 69.9 66.2 46.5 61.3 LLaMa-3.2-90B-Vision Pred 85.6 79.0 84.0 67.7 63.9 66.8 5.4 1.8 4.5 GT 99.4 92.0 97.6 75.1 75.1 75.1 61.1 54.3 59.4 InternVL3.5-241B Pred 17.2 8.0 14.9 33.6 30.3 32.8 2.5 0.2 1.9 GT 85.9 81.5 84.8 71.7 69.0 71.0 57.6 51.9 56.2 Table 5: Edit-only Ablation on Advanced Instructions 
+
+Model Src Similarity (Full) Question-ACC (None) All Add Mod Rem Swap All Add Mod Rem Swap 
+
+Closed-source 
+
+Gemini-3-Image-Pro Pred 18.1 20.8 18.4 15.3 17.2 63.5 57.8 70.0 59.8 66.3 GT 81.6 76.8 86.0 87.9 76.4 68.1 73.9 67.7 67.1 62.2 GPT-Image-2 Pred 15.7 15.8 12.8 12.6 21.7 60.8 57.8 65.0 55.6 64.4 GT 78.6 80.2 82.5 83.5 66.7 66.3 63.2 67.6 69.6 65.2 GPT-Image-1.5 Pred 14.2 16.2 11.0 15.5 14.3 60.4 53.0 65.0 59.3 65.1 GT 49.8 54.9 46.7 51.8 45.0 76.7 81.4 76.0 80.4 67.8 Gemini-2.5-Flash Pred 11.4 13.5 11.1 9.25 11.3 60.4 57.3 62.4 55.4 66.7 GT 35.7 36.8 29.5 42.2 34.8 70.6 70.8 70.2 75.8 65.6 
+
+Open-source 
+
+Flux2-dev Pred 9.14 10.8 8.83 6.33 10.2 59.4 55.3 61.4 56.6 64.4 GT 30.2 39.4 26.0 27.2 26.5 63.4 64.6 65.4 66.3 56.7 OmniGen2 Pred 2.46 2.50 3.00 1.25 3.25 35.2 31.3 53.3 30.0 30.0 GT 4.11 6.23 3.91 2.23 3.61 32.3 32.7 36.5 25.0 34.4 Step1X-Edit Pred 6.11 6.01 5.20 5.88 7.53 52.9 49.5 56.4 48.2 57.5 GT 10.2 12.8 11.1 7.41 8.67 59.7 65.5 58.7 48.9 64.4 Qwen-Edit Pred 5.75 5.50 4.87 5.65 7.16 56.7 52.4 52.5 57.8 65.5 GT 10.5 16.7 6.59 7.40 10.6 54.1 56.6 53.9 52.2 53.3 UniPic3 Pred 5.39 4.91 4.52 7.07 5.34 52.7 53.4 55.5 44.6 56.3 GT 15.2 19.7 12.3 12.2 16.1 57.6 69.9 59.6 51.1 46.7 23 quantifies the pixel-level fidelity of the edited image to the ground-truth corrected figure, and 
+
+Question-ACC (None) , which assesses the semantic correctness of the edit through VQA. The results highlight a stark contrast between closed-source and open-source editors. Leading closed-source models (e.g., Gemini-3-Image-Pro, GPT-Image-2) achieve high similarity scores under the GT condition, confirming their strong editing capabilities when provided with a perfect instruction. However, their performance degrades dramatically under the Pred condition, illustrating their sensitivity to instruction quality. In contrast, open-source models exhibit lower absolute performance in both conditions, with some models like OmniGen2 showing extreme sensitivity to instruction phrasing and length, as evidenced by its very low similarity scores. 24 NeurIPS Paper Checklist 
+
+The checklist is designed to encourage best practices for responsible machine learning research, addressing issues of reproducibility, transparency, research ethics, and societal impact. Do not remove the checklist: The papers not including the checklist will be desk rejected. The checklist should follow the references and follow the (optional) supplemental material. The checklist does NOT count towards the page limit. Please read the checklist guidelines carefully for information on how to answer these questions. For each question in the checklist: • You should answer [Yes], [No], or [N/A]. • [N/A] means either that the question is Not Applicable for that particular paper or the relevant information is Not Available. • Please provide a short (1–2 sentence) justification right after your answer (even for [N/A]). 
+
+The checklist answers are an integral part of your paper submission. They are visible to the reviewers, area chairs, senior area chairs, and ethics reviewers. You will also be asked to include it (after eventual revisions) with the final version of your paper, and its final version will be published with the paper. The reviewers of your paper will be asked to use the checklist as one of the factors in their evaluation. While [Yes] is generally preferable to [No], it is perfectly acceptable to answer [No] provided a proper justification is given (e.g., error bars are not reported because it would be too computationally expensive” or “we were unable to find the license for the dataset we used”). In general, answering [No] or [N/A] is not grounds for rejection. While the questions are phrased in a binary way, we acknowledge that the true answer is often more nuanced, so please just use your best judgment and write a justification to elaborate. All supporting evidence can appear either in the main paper or the supplemental material, provided in appendix. If you answer [Yes] to a question, in the justification please point to the section(s) where related material for the question can be found. IMPORTANT, please: • Delete this instruction block, but keep the section heading “NeurIPS Paper Checklist" ,• Keep the checklist subsection headings, questions/answers and guidelines below. 
+
+• Do not modify the questions and only use the provided macros for your answers .1. Claims 
+
+Question: Do the main claims made in the abstract and introduction accurately reflect the paper’s contributions and scope? Answer: [Yes] Justification: The abstract and introduction clearly state the SIU2A framework, its two core dimensions (utility and upgradability), the benchmark construction, and experimental findings, which are consistent with the methodology and results presented in Sections 1 and 4. 2. Limitations 
+
+Question: Does the paper discuss the limitations of the work performed by the authors? Answer: [Yes] Justification: The limitations of the work, including the focus on evaluation rather than solution development, are explicitly discussed in the Appendix (Section: Limitations). 3. Theory assumptions and proofs 
+
+Question: For each theoretical result, does the paper provide the full set of assumptions and a complete (and correct) proof? Answer: [N/A] Justification: The paper does not present formal theoretical results or proofs; it focuses on framework design, dataset construction, and empirical evaluation. 25 4. Open access to data and code 
+
+Question: Does the paper provide open access to the data and code, with sufficient instruc-tions to faithfully reproduce the main experimental results, as described in supplemental material? Answer: [Yes] Justification: The dataset and evaluation code is publicly released on Hugging Face and GitHub upon acceptance, with detailed instructions provided for reproducibility (see Ap-pendix: Open Access to Data and Code). 5. Experimental setting/details 
+
+Question: Does the paper specify all the training and test details (e.g., data splits, hyperpa-rameters, how they were chosen, type of optimizer) necessary to understand the results? Answer: [Yes] Justification: The experimental setup includes model lists, prompting format, evaluation metrics, and dataset construction details (Sections 3 and 4, Appendix A and B), sufficient to understand and replicate experiments. 6. Experiment statistical significance 
+
+Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments? Answer: [No] Justification: Each evaluation run in our setting involves both image generation and text generation across multiple models, leading to high computational and API costs. As a result, we do not perform repeated runs for statistical reporting such as error bars or confidence intervals, and instead report results from single-run evaluations. 7. Experiments compute resources 
+
+Question: For each experiment, does the paper provide sufficient information on the com-puter resources (type of compute workers, memory, time of execution) needed to reproduce the experiments? Answer: [Yes] Justification: The paper specifies the compute resources (4×H200 GPUs) and API-based evaluation for proprietary models in the Appendix (Section: Compute Resources). Guidelines: 8. Code of ethics 
+
+Question: Does the research conducted in the paper conform, in every respect, with the NeurIPS Code of Ethics https://neurips.cc/public/EthicsGuidelines ?Answer: [Yes] Justification: The research involves benchmark construction and model evaluation using publicly available datasets and models, with no identified ethical violations. 9. Broader impacts 
+
+Question: Does the paper discuss both potential positive societal impacts and negative societal impacts of the work performed? Answer: [Yes] Justification: This work contributes to improving the reliability and interpretability of multimodal systems in scientific domains by providing a structured evaluation framework for diagnosing and correcting image-level errors, which can benefit scientific research, education, and high-stakes applications. Potential negative impacts include over-reliance on automated evaluation signals, as well as possible misuse of editing capabilities to manipulate scientific images. We mitigate these risks by positioning the framework as a diagnostic and evaluation tool rather than a generative system, and by encouraging human oversight in downstream use. 10. Safeguards 
+
+26 Question: Does the paper describe safeguards that have been put in place for responsible release of data or models that have a high risk for misuse (e.g., pre-trained language models, image generators, or scraped datasets)? Answer: [N/A] Justification: The work focuses on evaluation and benchmarking; no high-risk generative model or sensitive dataset is released. 11. Licenses for existing assets 
+
+Question: Are the creators or original owners of assets (e.g., code, data, models), used in the paper, properly credited and are the license and terms of use explicitly mentioned and properly respected? Answer: [Yes] Justification: The paper exclusively uses publicly available datasets and models (e.g., ScienceQA, ChemVLM, OmniScience), all of which are properly cited. These resources are open-access or released for research use, and their usage complies with their respective terms. 12. New assets 
+
+Question: Are new assets introduced in the paper well documented and is the documentation provided alongside the assets? Answer: [Yes] Justification: The SIU2A-Benchmark dataset is thoroughly documented, including construc-tion pipeline, annotation process, and structure (Section 3 and Appendix B/C). 13. Crowdsourcing and research with human subjects 
+
+Question: For crowdsourcing experiments and research with human subjects, does the paper include the full text of instructions given to participants and screenshots, if applicable, as well as details about compensation (if any)? Answer: [Yes] Justification: Expert annotation is described in detail (Appendix C), including annotator qualifications and workflow. 14. Institutional review board (IRB) approvals 
+
+Question: Does the paper describe potential risks incurred by study participants, whether such risks were disclosed to the subjects, and whether Institutional Review Board (IRB) approvals (or an equivalent approval/review based on the requirements of your country or institution) were obtained? Answer: [Yes] Justification: The expert annotation process was conducted with informed consent from all annotators, and participation was voluntary. The study does not involve sensitive personal data or interventions, and all procedures comply with standard ethical guidelines for data annotation. 15. Declaration of LLM usage 
+
+Question: Does the paper describe LLM usage in core methods? Answer: [Yes] Justification: LLMs are central to dataset construction (anchor detection, perturbation planning), evaluation (LLM-as-a-judge), and prompting pipeline, and are explicitly described throughout Sections 3 and Appendix A/B. 27

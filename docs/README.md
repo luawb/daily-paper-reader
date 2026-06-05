@@ -6,29 +6,31 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-04
-- 运行时间：2026-06-04 21:58:57 UTC
+- 最新运行日期：2026-06-05
+- 运行时间：2026-06-05 22:00:06 UTC
 - 运行状态：成功
-- 本次总论文数：2
-- 精读区：0
-- 速读区：2
+- 本次总论文数：3
+- 精读区：2
+- 速读区：1
 
 ### 今日简报（AI）
-今日速读两篇同题研究，聚焦多图像推理中如何通过对象路由机制定位视觉证据。  
-核心方向：将多模态推理拆解为以物体为中心的路径选择，实现跨图可解释的视觉证据定位。  
-建议关注该框架如何平衡全局语义与局部物体线索，可尝试对比单图多图场景下的路由策略差异。
-- 详情：[/202606/04/README](/202606/04/README)
+今日精读两篇高分论文，聚焦图像美学评估的跨场景泛化与文生图缺陷的结构化解释，速读一篇科学图像质量研究。  
+值得关注：用相对编辑差异替代绝对评分，可提升美学模型泛化性；缺陷定位要同时回答“在哪、是什么、为什么、重不重要”，反馈更精准。  
+若你对AI绘画评测感兴趣，不妨从“相对比较”和“结构化缺陷描述”两个思路找差距，比单纯追求评分更有启发。
+- 详情：[/202606/05/README](/202606/05/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [Beyond Absolute Scores: Relative Edit-induced Difference for Generalizable Image Aesthetic Assessment](/202606/05/2606.05778v1-beyond-absolute-scores-relative-edit-induced-difference-for-generalizable-image-aesthetic-assessment)  
+   标签：评分：9.0/10、query:xiqa
+   evidence：利用相对编辑差异模拟人类审美推理进行图像质量评价
+2. [Where, What, Why, and Importance: Structured Defect Grounding for Text-to-Image Feedback](/202606/05/2606.06113v1-where-what-why-and-importance-structured-defect-grounding-for-text-to-image-feedback)  
+   标签：评分：9.0/10、query:xiqa
+   evidence：通过结构化缺陷定位提供图像质量诊断解释（何处、何事、为何、重要性）
 
 ### 速读区论文标签
-1. [ROVER: Routing Object-Centric Visual Evidence for Grounded Multi-Image Reasoning](/202606/04/2605.27959v1-rover-routing-object-centric-visual-evidence-for-grounded-multi-image-reasoning)  
+1. [Towards Characterizing Scientific Image Utility and Upgradability](/202606/05/2606.03401v1-towards-characterizing-scientific-image-utility-and-upgradability)  
    标签：评分：6.0/10、query:xiqa
-   evidence：轻量插件，为多模态大模型提供高效全局视觉路由，提升基于证据的推理
-2. [ROVER: Routing Object-Centric Visual Evidence for Grounded Multi-Image Reasoning](/202606/04/2605.27959v2-rover-routing-object-centric-visual-evidence-for-grounded-multi-image-reasoning)  
-   标签：评分：6.0/10、query:xiqa
-   evidence：轻量插件，为多模态大模型提供高效全局视觉路由，提升基于证据的推理
+   evidence：提出评估科学图像效用与可升级性的框架
 
 
 <div class="dpr-home-promo-card">

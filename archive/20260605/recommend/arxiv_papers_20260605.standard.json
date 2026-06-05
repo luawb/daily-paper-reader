@@ -1,0 +1,147 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-05T21:51:31.919696+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2606.05778v1",
+      "source": "arxiv",
+      "title": "Beyond Absolute Scores: Relative Edit-induced Difference for Generalizable Image Aesthetic Assessment",
+      "abstract": "Traditional Image Aesthetic Assessment (IAA) methods mainly rely on regressing absolute Mean Opinion Scores (MOS). However, such a paradigm overlooks the inherently dynamic nature of human aesthetic perception, which relies on subconscious comparison against implicit visual references. Consequently, the lack of causal reasoning regarding aesthetic differences prevents models from learning generalizable aesthetic principles, thus limiting their generalization across diverse scenarios. In this work, we rethink the IAA task and propose Relative Edit-induced Difference Aesthetic learning (RED-Aes), a novel framework that leverages controllable image editing models to simulate the human aesthetic reasoning process. Instead of fitting absolute score distributions, RED-Aes explicitly learns the visual factors that drive aesthetic changes. To support this paradigm, we construct the RED-20k dataset, which comprises editing-based image pairs, quantitative aesthetic differences, and Chain-of-Thought (CoT) reasoning. Furthermore, we introduce a three-stage training strategy guided by a relative ranking consistency reward, optimizing the model solely via relative supervision. Extensive experiments demonstrate that RED-Aes achieves state-of-the-art performance on multiple public benchmarks, exhibiting superior generalization capabilities.",
+      "authors": [
+        "Qifei Jia",
+        "Xintong Yao",
+        "Minghao Li",
+        "Yajie Chai",
+        "Qiming Lu",
+        "Baoyue Shen",
+        "Yasen Zhang",
+        "Runyu Shi",
+        "Ying Huang",
+        "Yue Zhang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-04T07:07:01+00:00",
+      "link": "https://arxiv.org/pdf/2606.05778v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Uses relative edit-induced differences to simulate human aesthetic reasoning for image quality assessment",
+      "llm_evidence_cn": "利用相对编辑差异模拟人类审美推理进行图像质量评价",
+      "llm_evidence": "利用相对编辑差异模拟人类审美推理进行图像质量评价",
+      "canonical_evidence": "利用相对编辑差异模拟人类审美推理进行图像质量评价",
+      "llm_tldr_en": "The paper introduces RED-Aes, a framework that uses controllable image editing models to compute relative aesthetic differences, enabling generalized image aesthetic assessment by mimicking human reasoning instead of relying on absolute scores.",
+      "llm_tldr_cn": "传统图像美学评估依赖绝对评分，忽略人类通过潜意识比较进行审美的动态过程。本文提出RED-Aes框架，借助可控图像编辑模型生成编辑变体，通过相对编辑差异模拟人类审美推理，从而学习可泛化的美学原理。实验表明该方法能提升跨场景泛化能力，为美学评估提供了基于推理的新范式。",
+      "llm_tldr": "传统图像美学评估依赖绝对评分，忽略人类通过潜意识比较进行审美的动态过程。本文提出RED-Aes框架，借助可控图像编辑模型生成编辑变体，通过相对编辑差异模拟人类审美推理，从而学习可泛化的美学原理。实验表明该方法能提升跨场景泛化能力，为美学评估提供了基于推理的新范式。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "advanced image quality assessment using reasoning methods",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.06113v1",
+      "source": "arxiv",
+      "title": "Where, What, Why, and Importance: Structured Defect Grounding for Text-to-Image Feedback",
+      "abstract": "Despite generating increasingly photorealistic images, text-to-image (T2I) models still exhibit localized, subtle, and structurally complex failures. Diagnosing these failures requires instance-level feedback that answers where a defect occurs, what type it is, why it is defective, and its importance to overall image quality. While recent dense-feedback methods move beyond scalar supervision, their heatmap-centric representations still formulate diagnosis as pixel-field regression, making it difficult to localize variable-cardinality defects and bind semantic reasons to individual failures. To address this representation bottleneck, we propose Structured Defect Grounding (SDG), which casts T2I diagnosis as structured set prediction by modeling each defect as a (location, type, reason, importance) tuple. To make this formulation trainable and measurable, we introduce SDG-30K, a 30K-image dataset with box-grounded annotations across four modern T2I generators, together with a dedicated evaluation protocol, SDG-Eval. Building on this structured representation, we further present a diagnosis-to-alignment framework in which a Vision-Language Model (VLM) serves as the SDG detector, and BoxFlow-GRPO converts predicted defect sets into box-derived, importance-weighted spatial rewards for diffusion model alignment. Extensive experiments show that our SDG detector outperforms leading proprietary VLMs on structured defect grounding, while SDG-guided rewards consistently improve T2I alignment and support localized image refinement. These results establish SDG as a unified, instance-level interface for diagnosing, evaluating, and enhancing modern generative models.",
+      "authors": [
+        "Huaisong Zhang",
+        "Hao Yu",
+        "Yuxuan Zhang",
+        "Jiahe Wang",
+        "Xinrui Chen",
+        "Haoxiang Cao",
+        "Feng Lu",
+        "Wendong Zhang",
+        "Changqian Yu",
+        "Chun Yuan"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-04T13:03:16+00:00",
+      "link": "https://arxiv.org/pdf/2606.06113v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Provides image quality diagnostic explanations via structured defect grounding (where, what, why, importance)",
+      "llm_evidence_cn": "通过结构化缺陷定位提供图像质量诊断解释（何处、何事、为何、重要性）",
+      "llm_evidence": "通过结构化缺陷定位提供图像质量诊断解释（何处、何事、为何、重要性）",
+      "canonical_evidence": "通过结构化缺陷定位提供图像质量诊断解释（何处、何事、为何、重要性）",
+      "llm_tldr_en": "Casts T2I diagnosis as structured set prediction, producing instance-level feedback with location, type, reason, and importance for each defect, enabling detailed image quality explanations.",
+      "llm_tldr_cn": "当前文生图模型虽逼真度提升，但仍存在局部、细微且复杂的失败，诊断需要实例级反馈（在何处、是何类型、为何缺陷、重要性）。但现有热力图式方法难以绑定语义原因并处理变数量缺陷。本文提出结构化缺陷定位（SDG），将T2I诊断形式化为结构化集合预测，同时预测缺陷的边界框、类别、原因描述和重要性分数。在多个基准上，SDG提供了更准确且可解释的缺陷定位，为图像质量诊断提供了可操作的工具。",
+      "llm_tldr": "当前文生图模型虽逼真度提升，但仍存在局部、细微且复杂的失败，诊断需要实例级反馈（在何处、是何类型、为何缺陷、重要性）。但现有热力图式方法难以绑定语义原因并处理变数量缺陷。本文提出结构化缺陷定位（SDG），将T2I诊断形式化为结构化集合预测，同时预测缺陷的边界框、类别、原因描述和重要性分数。在多个基准上，SDG提供了更准确且可解释的缺陷定位，为图像质量诊断提供了可操作的工具。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "image quality assessment with explanations",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.03401v1",
+      "source": "arxiv",
+      "title": "Towards Characterizing Scientific Image Utility and Upgradability",
+      "abstract": "Scientific images function as critical evidence in research communication, yet their integrity faces unprecedented threats from AI-generated content that introduces subtle but consequential errors. Existing evaluation paradigms prove inadequate: perceptual quality metrics poorly correlate with scientific validity, while language models lack domain-specific verification capabilities. To address this gap, we propose the \\textbf{S}cientific \\textbf{I}mage \\textbf{U}tility and \\textbf{U}pgradability \\textbf{A}ssessment (\\textbf{SIU$^2$A}) framework, which introduces two complementary dimensions for scientific image evaluation. \\textbf{Utility} encompasses \\textit{error detection} (identifying scientific inaccuracies) and \\textit{correction feasibility} (assessing whether errors can be reliably repaired). \\textbf{Upgradability} measures the quality of correction. We categorize scientific image corruption into four fundamental types: Detail Distortion, Incompleteness, False Content, and Entity Confusion. Based on this taxonomy, we construct SIU$^2$A-Benchmark, a dataset with expert annotations for error identification and repair. The framework implements a two-stage evaluation protocol: the \\textit{Utility} stage evaluates error detection capability and repair instruction generation, while the \\textit{Upgradability} stage assesses whether corrections faithfully restore scientific validity without compromising existing accurate information. Experiments reveal that current multimodal systems exhibit significant limitations in both scientific error assessment and faithful correction, exposing a fundamental gap between visual perception and scientific usability.",
+      "authors": [
+        "WenZhe Li",
+        "Qihang Yan",
+        "Liang Chen",
+        "Junying Wang",
+        "Farong Wen",
+        "Yijin Guo",
+        "Chunyi Li",
+        "Zicheng Zhang",
+        "Guangtao Zhai"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-02T09:42:29+00:00",
+      "link": "https://arxiv.org/pdf/2606.03401v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "proposes framework for evaluating scientific image utility and upgradability",
+      "llm_evidence_cn": "提出评估科学图像效用与可升级性的框架",
+      "llm_evidence": "提出评估科学图像效用与可升级性的框架",
+      "canonical_evidence": "提出评估科学图像效用与可升级性的框架",
+      "llm_tldr_en": "Introduces SIU2A framework to evaluate scientific images beyond perceptual quality, focusing on error detection and correction feasibility.",
+      "llm_tldr_cn": "针对AI生成内容威胁科学图像完整性问题，提出SIU2A框架，从错误检测和可修正性两个维度评估科学图像，弥补传统感知质量指标的不足，为科学图像可信度评估提供新范式。",
+      "llm_tldr": "针对AI生成内容威胁科学图像完整性问题，提出SIU2A框架，从错误检测和可修正性两个维度评估科学图像，弥补传统感知质量指标的不足，为科学图像可信度评估提供新范式。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
