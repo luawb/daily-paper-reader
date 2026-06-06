@@ -1,0 +1,252 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-06T21:14:48.396443+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 6,
+    "quick_skim_target": 11,
+    "quick_selected": 6
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2605.30915v2",
+      "source": "arxiv",
+      "title": "DiTTo: Scalable Order-aware All-in-One Image Restoration Agent",
+      "abstract": "Real-world images rarely suffer from a single degradation, and the order in which degradations are removed substantially affects the final restoration quality, motivating agent-based image restoration (IR), where a vision-language model schedules a pool of pre-built restoration-experts. However, existing training-based agents require $\\mathcal{O}((N^{\\mathbf{D}})^{2})$ restoration-expert calls per image to construct the Optimal Restoration-action Trajectory Dataset (ORTD), where $N^{\\mathbf{D}}$ denotes the number of degradation types in the universe $\\mathbf{D}$, and couple agent training to a fixed restoration-expert pool, preventing extension to newly introduced restoration-experts without full retraining. To overcome these efficiency and extensibility bottlenecks, we propose \\textbf{DiTTo}, a novel order-aware image restoration agent framework consisting of the DiTTo Simulator and the DiTTo Agent. The DiTTo Simulator combines $\\cup$S-IR for single-step restoration-action simulation and AiO-IQA for per-action quality prediction, reducing ORTD construction to $\\mathcal{O}(N^{\\mathbf{D}})$ simulator calls per image; the DiTTo Agent is trained by SFT on the simulator-generated ORTD, followed by \\textbf{Order-aware Restoration Alignment (ORA)} that aligns degradation identification, restoration-action-ordering, and output format along independent axes. This enables \\textbf{plug-and-play scalable extensibility}: adding a new restoration-expert requires updating only the lightweight ORA stage. On the MiO-100 evaluation set with up to five concurrent degradations, our DiTTo Agent achieves state-of-the-art multi-degradation restoration quality among previous agent-based IR methods.",
+      "authors": [
+        "Seungho Choi",
+        "Jihyong Oh"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-05-29T07:01:33+00:00",
+      "link": "https://arxiv.org/pdf/2605.30915v2",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Uses a vision-language model to schedule restoration experts for image restoration, processing images and text to decide restoration order.",
+      "llm_evidence_cn": "使用视觉-语言模型调度复原专家进行图像复原，处理图像和文本以决定复原顺序。",
+      "llm_evidence": "使用视觉-语言模型调度复原专家进行图像复原，处理图像和文本以决定复原顺序。",
+      "canonical_evidence": "使用视觉-语言模型调度复原专家进行图像复原，处理图像和文本以决定复原顺序。",
+      "llm_tldr_en": "This paper introduces DiTTo, an agent-based image restoration system that employs a vision-language model to plan the optimal order of applying restoration experts, overcoming scalability and extensibility issues of previous training-based agents.",
+      "llm_tldr_cn": "针对真实图像多种退化顺序影响复原质量的问题，现有训练型智能体构建最优轨迹数据集成本高且难以扩展，本文提出DiTTo，利用视觉-语言模型规划复原专家的应用顺序，避免了大量专家调用和固定专家池的限制。实验表明该方法在多种退化类型上实现了高效且可扩展的图像复原，提升了复原质量的鲁棒性。",
+      "llm_tldr": "针对真实图像多种退化顺序影响复原质量的问题，现有训练型智能体构建最优轨迹数据集成本高且难以扩展，本文提出DiTTo，利用视觉-语言模型规划复原专家的应用顺序，避免了大量专家调用和固定专家池的限制。实验表明该方法在多种退化类型上实现了高效且可扩展的图像复原，提升了复原质量的鲁棒性。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.00562v1",
+      "source": "arxiv",
+      "title": "DeepLatent: Think with Images via Parallel Latent Visual Reasoning",
+      "abstract": "The emerging paradigm of \"thinking with images\" embeds visual states into intermediate reasoning steps, defining a new frontier for Vision-Language Models. Existing approaches diverge along two lines. Tool-assisted methods apply explicit visual operations but suffer from high latency and restricted manipulation types. Latent reasoning methods autoregressively produce implicit visual states, but underperform tool-assisted methods, and their latent tokens fail to capture effective visual information. In this work, we propose DeepLatent, a parallel framework for latent visual reasoning. First, we introduce LatentFormer. It uses learnable 2D tokens to generate context-conditioned latent states in parallel, anchoring every visual update directly in the original image features. Second, we design a continuous-space reinforcement learning algorithm. It optimizes latent modulation parameters directly in the embedding space, significantly improving latent representation quality. The framework is trained via knowledge distillation followed by this continuous-space RL algorithm. Furthermore, we contribute DeepLatent-180K, a large-scale dataset tailored for latent visual reasoning. Extensive evaluations across multiple benchmarks demonstrate that DeepLatent achieves state-of-the-art performance.",
+      "authors": [
+        "Dongchen Lu",
+        "Zhimo Li",
+        "Mao Shu",
+        "Huo Cao"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.LG"
+      ],
+      "published": "2026-05-30T06:33:24+00:00",
+      "link": "https://arxiv.org/pdf/2606.00562v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "proposes a parallel latent visual reasoning framework for Vision-Language Models",
+      "llm_evidence_cn": "提出了一种用于视觉语言模型的并行潜在视觉推理框架",
+      "llm_evidence": "提出了一种用于视觉语言模型的并行潜在视觉推理框架",
+      "canonical_evidence": "提出了一种用于视觉语言模型的并行潜在视觉推理框架",
+      "llm_tldr_en": "Proposes DeepLatent, a parallel latent visual reasoning framework for VLMs that generates context-conditioned latent states, overcoming autoregressive limitations.",
+      "llm_tldr_cn": "针对视觉语言模型中潜在推理方法生成能力不足且效率低下的问题，提出DeepLatent并行框架，使用LatentFormer并行生成上下文条件化的二维潜在状态，锚定原始图像信息，克服自回归序列生成的限制，实现高效视觉推理。实验表明该方法在多个视觉推理基准上优于现有工具辅助和自回归潜在推理方法，有效提升了推理性能，拓展了多模态模型在复杂视觉推理任务中的应用潜力。",
+      "llm_tldr": "针对视觉语言模型中潜在推理方法生成能力不足且效率低下的问题，提出DeepLatent并行框架，使用LatentFormer并行生成上下文条件化的二维潜在状态，锚定原始图像信息，克服自回归序列生成的限制，实现高效视觉推理。实验表明该方法在多个视觉推理基准上优于现有工具辅助和自回归潜在推理方法，有效提升了推理性能，拓展了多模态模型在复杂视觉推理任务中的应用潜力。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.05535v1",
+      "source": "arxiv",
+      "title": "Noise-Aware Visual Representation Learning for Medical Visual Question Answering",
+      "abstract": "Medical visual question answering (Med-VQA) has strong potential for clinical decision support by enabling AI models to interpret medical images and answer clinically relevant queries. Recent approaches typically connect off-the-shelf vision encoders with large language models (LLMs) through lightweight mapping networks to reduce computational cost. However, these methods often overlook the importance of handling noise and small irrelevant changes in visual representations. To address these challenges, we propose a noise-aware Med-VQA framework that incorporates a denoising autoencoder before visual embeddings are mapped into the input space of an LLM. The denoising autoencoder is pretrained to reconstruct clean visual embeddings from corrupted inputs, encouraging the model to learn robust visual representations that are less sensitive to noise. The resulting embeddings are then projected into the language model embedding space using a multi-layer perceptron (MLP), forming visual prefix tokens that provide image information to the LLM. To enable efficient adaptation without full retraining, we employ parameter-efficient fine-tuning using low-rank adaptation (LoRA). The proposed method is evaluated on the SLAKE and PathVQA benchmarks. Experimental results show improved robustness to noisy input embeddings while maintaining competitive clean performance across multiple evaluation criteria. These findings suggest that learning more robust visual representations can enhance Med-VQA performance and robustness.",
+      "authors": [
+        "I Putu Adi Pratama",
+        "Bahadorreza Ofoghi",
+        "Atul Sajjanhar",
+        "Shang Gao"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-06-04T00:37:27+00:00",
+      "link": "https://arxiv.org/pdf/2606.05535v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Proposes a noise-aware Med-VQA framework connecting vision encoders with LLMs to process medical images and text.",
+      "llm_evidence_cn": "提出噪声感知的医学VQA框架，连接视觉编码器与LLM以处理医学图像和文本。",
+      "llm_evidence": "提出噪声感知的医学VQA框架，连接视觉编码器与LLM以处理医学图像和文本。",
+      "canonical_evidence": "提出噪声感知的医学VQA框架，连接视觉编码器与LLM以处理医学图像和文本。",
+      "llm_tldr_en": "The paper addresses noise in medical visual question answering by proposing a noise-aware framework that incorporates a denoising autoencoder before feeding visual embeddings to an LLM, improving robustness to irrelevant changes.",
+      "llm_tldr_cn": "针对医学视觉问答中噪声影响视觉表示的问题，本文提出一种噪声感知框架，该框架在将视觉嵌入映射到LLM输入空间之前引入去噪自编码器，以重建干净的视觉嵌入。实验表明，该方法增强了对噪声的鲁棒性，提升了医学图像问答的准确性，为临床决策支持提供了更可靠的AI原型。",
+      "llm_tldr": "针对医学视觉问答中噪声影响视觉表示的问题，本文提出一种噪声感知框架，该框架在将视觉嵌入映射到LLM输入空间之前引入去噪自编码器，以重建干净的视觉嵌入。实验表明，该方法增强了对噪声的鲁棒性，提升了医学图像问答的准确性，为临床决策支持提供了更可靠的AI原型。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.00573v1",
+      "source": "arxiv",
+      "title": "LASER: Loss-Aware Singular-value Decomposition and Rank Allocation for Efficient Low-Precision Vision-Language Models",
+      "abstract": "Vision-language models (VLMs) deliver strong multimodal reasoning capabilities, but their large computational cost and high parameter counts make deployment challenging on resource-constrained devices. Low-rank decomposition has emerged as a promising compression technique, yet existing methods often optimize local matrix reconstruction error, rely on uniform or heuristic rank allocation, and focus mainly on attention projections while leaving feed-forward networks underexplored. In this paper, we propose~\\textit{LASER} (\\textbf{L}oss-\\textbf{A}ware \\textbf{S}ingular-value d\\textbf{E}composition and \\textbf{R}ank allocation), a low-rank compression framework for efficient low-precision VLM inference. LASER derives a curvature-weighted SVD objective from a second-order approximation of the model loss and uses Kronecker-factored Fisher information to guide decomposition toward downstream performance rather than reconstruction alone. We further introduce a loss-aware cross-layer rank allocation strategy based on calibration gradients, enabling more effective parameter budgeting across layers. Finally, we extend low-rank compression to FFN layers through a hybrid scheme that combines SVD with quantization. The evaluation results show that LASER achieves more than $2.3\\times$ decoding speedup over previous work while preserving strong accuracy under low-precision inference.",
+      "authors": [
+        "Haiyu Wang",
+        "Yutong Wang",
+        "Leshu Li",
+        "Yihui Ren",
+        "Sai Qian Zhang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-05-30T06:53:23+00:00",
+      "link": "https://arxiv.org/pdf/2606.00573v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Proposes a low-rank compression framework for vision-language models to enable efficient inference on resource-constrained devices.",
+      "llm_evidence_cn": "提出针对视觉-语言模型的低秩压缩框架，以便在资源受限设备上高效推理。",
+      "llm_evidence": "提出针对视觉-语言模型的低秩压缩框架，以便在资源受限设备上高效推理。",
+      "canonical_evidence": "提出针对视觉-语言模型的低秩压缩框架，以便在资源受限设备上高效推理。",
+      "llm_tldr_en": "LASER is a low-rank compression framework for vision-language models that uses loss-aware singular value decomposition and rank allocation to enable efficient low-precision inference, addressing local reconstruction error and underexplored feed-forward layers.",
+      "llm_tldr_cn": "视觉-语言模型推理成本高，现有低秩分解方法多关注局部重构误差且忽略前馈网络。本文提出LASER框架，采用损失感知的奇异值分解与秩分配策略，联合压缩注意力与前馈层，并支持低精度推断。实验表明，LASER在多个VLM上大幅降低存储和计算开销，同时保持推理性能，为资源受限场景提供了高效压缩方案。",
+      "llm_tldr": "视觉-语言模型推理成本高，现有低秩分解方法多关注局部重构误差且忽略前馈网络。本文提出LASER框架，采用损失感知的奇异值分解与秩分配策略，联合压缩注意力与前馈层，并支持低精度推断。实验表明，LASER在多个VLM上大幅降低存储和计算开销，同时保持推理性能，为资源受限场景提供了高效压缩方案。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.06485v1",
+      "source": "arxiv",
+      "title": "PAR3D: A Unified 3D-MLLM with Part-Aware Representation for Scene Understanding",
+      "abstract": "Recent advances in 3D multimodal large language models (3D-MLLMs) have enabled unified solutions for 3D scene understanding tasks, including visual question answering, captioning, and referring segmentation. However, existing 3D-MLLMs remain largely object-centric, limiting their ability to model fine-grained part structures that are essential for embodied interaction with 3D environments. In this work, we present PAR3D, a unified part-aware 3D-MLLM framework that enables models to understand, reason about, and ground both objects and their parts in 3D scenes. To enable training and evaluation of part-aware 3D scene understanding, we introduce ScenePart, a synthetic 3D scene dataset with part-level annotations and language instructions. We further develop Part-Aware 3D Representation Learning to enrich 3D visual representations with fine-grained part-level semantics, and propose Hierarchical Segmentation Query Generation to ground part targets via hierarchical object-part queries. Extensive experiments show that our method substantially improves part-level question answering and referring segmentation, while also achieving strong performance across object-level vision-language tasks.",
+      "authors": [
+        "Shaohui Dai",
+        "Yansong Qu",
+        "You Shen",
+        "Shengchuan Zhang",
+        "Liujuan Cao"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-04T17:59:04+00:00",
+      "link": "https://arxiv.org/pdf/2606.06485v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Proposes a part-aware 3D multimodal large language model that processes 3D scenes and text for understanding, reasoning, and grounding.",
+      "llm_evidence_cn": "提出部件感知的3D多模态大语言模型，处理3D场景和文本以进行理解、推理和定位。",
+      "llm_evidence": "提出部件感知的3D多模态大语言模型，处理3D场景和文本以进行理解、推理和定位。",
+      "canonical_evidence": "提出部件感知的3D多模态大语言模型，处理3D场景和文本以进行理解、推理和定位。",
+      "llm_tldr_en": "The paper presents PAR3D, a unified part-aware 3D-MLLM that models fine-grained part structures in 3D scenes, enabling understanding, reasoning, and grounding of both objects and parts, trained on a new synthetic dataset ScenePart.",
+      "llm_tldr_cn": "现有3D多模态大语言模型多以对象中心，忽略了细粒度部件结构，限制了具身交互。本文提出PAR3D框架，统一部件感知的3D场景理解，使模型能同时推理物体与部件。通过构建部件级标注数据集ScenePart进行训练，实验表明该模型在问答、描述和分割任务上均取得了更高精度，为3D具身智能提供了更精细的感知基础。",
+      "llm_tldr": "现有3D多模态大语言模型多以对象中心，忽略了细粒度部件结构，限制了具身交互。本文提出PAR3D框架，统一部件感知的3D场景理解，使模型能同时推理物体与部件。通过构建部件级标注数据集ScenePart进行训练，实验表明该模型在问答、描述和分割任务上均取得了更高精度，为3D具身智能提供了更精细的感知基础。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.02842v1",
+      "source": "arxiv",
+      "title": "Spectral-Progressive Thought Flow for Lightweight Multimodal Reasoning",
+      "abstract": "Multimodal spatial reasoning often relies on long chains of intermediate textual and visual thoughts, where accumulating visual tokens and dense cross-modal attention incur substantial computation and memory overhead. To address this challenge, we propose Spectral-Progressive Thought Flow (SpecFlow), a novel lightweight multimodal spatial reasoning framework that represents intermediate visual thoughts in a fixed-size discrete cosine space. By exploiting strong energy compaction, SpecFlow preserves global layout and relational structure while introducing high-frequency details only when increased spatial precision is required. To align visual state evolution with linguistic intent, classifier-free guidance enables autoregressive textual thoughts to steer flow-based updates of the visual workspace/state without expanding the context. As a result, SpecFlow maintains a bounded visual workspace whose updates depend only on the current visual state and accumulated textual trace, enabling long-horizon inference with stable latency and memory usage independent of reasoning depth. Empirical results show that SpecFlow achieves competitive or superior reasoning performance while reducing computation and KV cache costs by up to 2.1 times.",
+      "authors": [
+        "Yixian Shen",
+        "Zhiheng Yang",
+        "Qi Bi",
+        "Changshuo Wang",
+        "Shuai Wang",
+        "Jia-Hong Huang",
+        "George Floros",
+        "Prayag Tiwari",
+        "Anuj Pathania"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-01T20:06:50+00:00",
+      "link": "https://arxiv.org/pdf/2606.02842v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "proposes a lightweight multimodal spatial reasoning framework using discrete cosine space for visual thoughts",
+      "llm_evidence_cn": "提出了一种使用离散余弦空间进行轻量级多模态空间推理的框架",
+      "llm_evidence": "提出了一种使用离散余弦空间进行轻量级多模态空间推理的框架",
+      "canonical_evidence": "提出了一种使用离散余弦空间进行轻量级多模态空间推理的框架",
+      "llm_tldr_en": "Proposes SpecFlow, a lightweight multimodal reasoning framework that represents visual thoughts in fixed-size discrete cosine space, progressively adding high-frequency details for spatial precision.",
+      "llm_tldr_cn": "针对多模态空间推理中视觉思维链导致的计算和内存开销问题，提出SpecFlow框架，将中间视觉思维表示在固定大小的离散余弦空间中，通过能量压缩保留全局结构，并逐步引入高频细节以提升空间精度。实验表明该方法在轻量计算下保持了高精度，有效平衡了性能与效率，为资源受限环境下的多模态推理提供了新方案。",
+      "llm_tldr": "针对多模态空间推理中视觉思维链导致的计算和内存开销问题，提出SpecFlow框架，将中间视觉思维表示在固定大小的离散余弦空间中，通过能量压缩保留全局结构，并逐步引入高频细节以提升空间精度。实验表明该方法在轻量计算下保持了高精度，有效平衡了性能与效率，为资源受限环境下的多模态推理提供了新方案。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

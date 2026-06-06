@@ -6,31 +6,41 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-05
-- 运行时间：2026-06-05 22:00:06 UTC
+- 最新运行日期：2026-06-06
+- 运行时间：2026-06-06 21:19:04 UTC
 - 运行状态：成功
-- 本次总论文数：3
-- 精读区：2
-- 速读区：1
+- 本次总论文数：6
+- 精读区：0
+- 速读区：6
 
 ### 今日简报（AI）
-今日精读两篇高分论文，聚焦图像美学评估的跨场景泛化与文生图缺陷的结构化解释，速读一篇科学图像质量研究。  
-值得关注：用相对编辑差异替代绝对评分，可提升美学模型泛化性；缺陷定位要同时回答“在哪、是什么、为什么、重不重要”，反馈更精准。  
-若你对AI绘画评测感兴趣，不妨从“相对比较”和“结构化缺陷描述”两个思路找差距，比单纯追求评分更有启发。
-- 详情：[/202606/05/README](/202606/05/README)
+今日速览3篇AI前沿论文，聚焦图像修复代理、医学视觉问答与三维场景理解。  
+基于顺序感知的通用图像修复代理DiTTo、噪声感知的医疗视觉问答学习，以及部件感知的三维大模型PAR3D，都展示多模态与鲁棒性的融合趋势。  
+建议读者关注“任务统一化”和“噪声适应机制”在医疗与三维场景中的落地潜力。
+- 详情：[/202606/06/README](/202606/06/README)
 
 ### 精读区论文标签
-1. [Beyond Absolute Scores: Relative Edit-induced Difference for Generalizable Image Aesthetic Assessment](/202606/05/2606.05778v1-beyond-absolute-scores-relative-edit-induced-difference-for-generalizable-image-aesthetic-assessment)  
-   标签：评分：9.0/10、query:xiqa
-   evidence：利用相对编辑差异模拟人类审美推理进行图像质量评价
-2. [Where, What, Why, and Importance: Structured Defect Grounding for Text-to-Image Feedback](/202606/05/2606.06113v1-where-what-why-and-importance-structured-defect-grounding-for-text-to-image-feedback)  
-   标签：评分：9.0/10、query:xiqa
-   evidence：通过结构化缺陷定位提供图像质量诊断解释（何处、何事、为何、重要性）
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Towards Characterizing Scientific Image Utility and Upgradability](/202606/05/2606.03401v1-towards-characterizing-scientific-image-utility-and-upgradability)  
+1. [DiTTo: Scalable Order-aware All-in-One Image Restoration Agent](/202606/06/2605.30915v2-ditto-scalable-order-aware-all-in-one-image-restoration-agent)  
+   标签：评分：7.0/10、query:xiqa
+   evidence：使用视觉-语言模型调度复原专家进行图像复原，处理图像和文本以决定复原顺序。
+2. [Noise-Aware Visual Representation Learning for Medical Visual Question Answering](/202606/06/2606.05535v1-noise-aware-visual-representation-learning-for-medical-visual-question-answering)  
+   标签：评分：7.0/10、query:xiqa
+   evidence：提出噪声感知的医学VQA框架，连接视觉编码器与LLM以处理医学图像和文本。
+3. [PAR3D: A Unified 3D-MLLM with Part-Aware Representation for Scene Understanding](/202606/06/2606.06485v1-par3d-a-unified-3d-mllm-with-part-aware-representation-for-scene-understanding)  
+   标签：评分：7.0/10、query:xiqa
+   evidence：提出部件感知的3D多模态大语言模型，处理3D场景和文本以进行理解、推理和定位。
+4. [DeepLatent: Think with Images via Parallel Latent Visual Reasoning](/202606/06/2606.00562v1-deeplatent-think-with-images-via-parallel-latent-visual-reasoning)  
    标签：评分：6.0/10、query:xiqa
-   evidence：提出评估科学图像效用与可升级性的框架
+   evidence：提出了一种用于视觉语言模型的并行潜在视觉推理框架
+5. [LASER: Loss-Aware Singular-value Decomposition and Rank Allocation for Efficient Low-Precision Vision-Language Models](/202606/06/2606.00573v1-laser-loss-aware-singular-value-decomposition-and-rank-allocation-for-efficient-low-precision-vision-language-models)  
+   标签：评分：6.0/10、query:xiqa
+   evidence：提出针对视觉-语言模型的低秩压缩框架，以便在资源受限设备上高效推理。
+6. [Spectral-Progressive Thought Flow for Lightweight Multimodal Reasoning](/202606/06/2606.02842v1-spectral-progressive-thought-flow-for-lightweight-multimodal-reasoning)  
+   标签：评分：6.0/10、query:xiqa
+   evidence：提出了一种使用离散余弦空间进行轻量级多模态空间推理的框架
 
 
 <div class="dpr-home-promo-card">
