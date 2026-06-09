@@ -1,0 +1,39 @@
+{
+  "label": "2026-06-09",
+  "date": "2026-06-09",
+  "generated_at": "2026-06-09T22:06:23",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202606/09/2606.07938v1-dal-pcqa-enabling-distortion-level-and-language-driven-reasoning-for-point-cloud-quality-assessment",
+      "section": "deep",
+      "title_en": "DAL-PCQA: Enabling Distortion-Level and Language-Driven Reasoning for Point Cloud Quality Assessment",
+      "authors": "Swarna Chakraborty, Gabriel De Castro Araújo, Syeda Tasmi Faria, Marcelo M. Carvalho, Mylene C. Q. Farias",
+      "date": "2026-06-06",
+      "pdf": "https://arxiv.org/pdf/2606.07938v1",
+      "score": "9.0",
+      "evidence": "点云质量推理，带有失真标签和自然语言描述",
+      "tldr": "现有点云质量评估方法仅预测整体MOS分数，无法解释具体失真类型与成因，而人类感知天然具备失真推理能力。为此构建的DAL-PCQA数据集为点云样本提供多级失真严重性标签、离散质量类别及结构化自然语言描述，涵盖模糊、颜色漂移、点密度变化等常见光度和几何伪影的分类体系。统计分析揭示了不同失真类型与质量级别的退化模式，并通过零样本与微调多模态模型验证标注效用。结果表明失真感知监督显著增强生成描述与人类评判的词汇及语义一致性，为语言驱动的可解释点云质量评估研究提供了关键基准。",
+      "tags": "query:xiqa",
+      "abstract_en": "Point Cloud Quality Assessment (PCQA) methods typically predict scalar Mean Opinion Scores (MOS), which quantify overall perceptual degradation but do not reveal its causes. In contrast, human observers naturally reason in terms of specific distortions such as blur, color shifts, point density changes, missing regions, and geometric deformations. To close this gap, we introduce DAL-PCQA, a distortion-aware, language-annotated dataset for PCQA. DAL-PCQA augments benchmark point clouds with multi-level distortion severity labels, discrete quality categories, and structured natural language descriptions aligned with human perception. We define a point-cloud-specific distortion taxonomy that covers both photometric and geometric artifacts. Statistical analysis reveals characteristic degradation patterns across distortion types and quality levels. To assess the utility of these annotations, we compare zero-shot and fine-tuned multimodal models for generating perceptual quality descriptions. Experiments show that distortion-aware supervision substantially improves lexical and semantic alignment with ground-truth descriptions. By enabling interpretable, distortion-level reasoning, DAL-PCQA facilitates language-driven, explainable point cloud quality assessment. The dataset is publicly available at https://github.com/swarna96/DAL-PCQA.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/09/2606.03345v1-beyond-semantics-modeling-factual-and-affective-perceptual-experiences-from-vision-language-data",
+      "section": "quick",
+      "title_en": "Beyond Semantics: Modeling Factual and Affective Perceptual Experiences from Vision-Language Data",
+      "authors": "Youssef Mohamed, Kenneth Ward Church, Mohamed Elhoseiny",
+      "date": "2026-06-02",
+      "pdf": "https://arxiv.org/pdf/2606.03345v1",
+      "score": "7.0",
+      "evidence": "从图像和标题中发现感知体验（事实性和情感性），有效描述图像质量",
+      "tldr": "理解图像如何在不同文化中被情感感知是多模态学习的重要挑战。本文提出P-Topics建模，从图文数据中同时捕获事实和情感感知体验。PercepT两阶段架构先利用无监督聚类形成感知主题，再通过注意力池化实现图像到主题的映射。在ArtELingo上，轮廓系数达0.97（基线0.37），AUC达0.94（基线0.77），大幅超越现有方法。该工作验证了统一建模事实与情感感知的可行性与优越性，为跨文化图像感知计算提供新范式。",
+      "tags": "query:xiqa",
+      "abstract_en": "We present P-Topics (Perception Topics) modeling, a novel problem for understanding how images are perceived affectively and across cultures. The goal is to (1) discover and model the different perception experiences in a dataset of images and captions, where each experience is defined by an objective factual and a subjective affective aspect, and (2) associate images to their relevant perception experiences. We introduce **PercepT** (**Percep**tion topic **T**ransformer), a two-stage architecture that tackles P-Topics modeling. In the formation stage, percepT discovers *P-Topics* as visual-textual clusters using an unsupervised training objective, and dynamically selects the number of clusters to match the perceptual richness of the dataset. In the mapping stage, it learns *P-Topic mapping functions* via attention pooling to associate images to their respective clusters. On ArtELingo, PercepT achieves a silhouette score of **0.97** compared to **0.37** from the closest baseline reflecting better perceptual clusters. PercepT also achieves an AUC score of **0.94** compared to **0.77** showing better mapping to perceptual clusters. Human evaluation confirms that PercepT captures semantically meaningful perception experiences and significantly outperforms existing methods. Our implementation will be made public.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,97 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-09T22:03:29.523265+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2606.07938v1",
+      "source": "arxiv",
+      "title": "DAL-PCQA: Enabling Distortion-Level and Language-Driven Reasoning for Point Cloud Quality Assessment",
+      "abstract": "Point Cloud Quality Assessment (PCQA) methods typically predict scalar Mean Opinion Scores (MOS), which quantify overall perceptual degradation but do not reveal its causes. In contrast, human observers naturally reason in terms of specific distortions such as blur, color shifts, point density changes, missing regions, and geometric deformations. To close this gap, we introduce DAL-PCQA, a distortion-aware, language-annotated dataset for PCQA. DAL-PCQA augments benchmark point clouds with multi-level distortion severity labels, discrete quality categories, and structured natural language descriptions aligned with human perception. We define a point-cloud-specific distortion taxonomy that covers both photometric and geometric artifacts. Statistical analysis reveals characteristic degradation patterns across distortion types and quality levels. To assess the utility of these annotations, we compare zero-shot and fine-tuned multimodal models for generating perceptual quality descriptions. Experiments show that distortion-aware supervision substantially improves lexical and semantic alignment with ground-truth descriptions. By enabling interpretable, distortion-level reasoning, DAL-PCQA facilitates language-driven, explainable point cloud quality assessment. The dataset is publicly available at https://github.com/swarna96/DAL-PCQA.",
+      "authors": [
+        "Swarna Chakraborty",
+        "Gabriel De Castro Araújo",
+        "Syeda Tasmi Faria",
+        "Marcelo M. Carvalho",
+        "Mylene C. Q. Farias"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.MM",
+        "eess.IV"
+      ],
+      "published": "2026-06-06T01:57:49+00:00",
+      "link": "https://arxiv.org/pdf/2606.07938v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Point cloud quality reasoning with distortion labels and natural language descriptions",
+      "llm_evidence_cn": "点云质量推理，带有失真标签和自然语言描述",
+      "llm_evidence": "点云质量推理，带有失真标签和自然语言描述",
+      "canonical_evidence": "点云质量推理，带有失真标签和自然语言描述",
+      "llm_tldr_en": "Introduces DAL-PCQA, a dataset that augments point clouds with multi-level distortion labels and structured natural language descriptions, enabling reasoning-based quality assessment beyond scalar scores.",
+      "llm_tldr_cn": "现有PCQA方法仅输出整体质量分数，未解释失真原因。本文提出DAL-PCQA数据集，为点云标注多级失真严重性、离散质量类别和结构化自然语言描述，首次将语言驱动的推理引入点云质量评价。实验表明该数据集能支持模型进行推理并生成质量解释，弥合了与人类感知的差距，推动了可解释的质量评估发展。",
+      "llm_tldr": "现有PCQA方法仅输出整体质量分数，未解释失真原因。本文提出DAL-PCQA数据集，为点云标注多级失真严重性、离散质量类别和结构化自然语言描述，首次将语言驱动的推理引入点云质量评价。实验表明该数据集能支持模型进行推理并生成质量解释，弥合了与人类感知的差距，推动了可解释的质量评估发展。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "reasoning based perceptual image quality evaluation with explanations",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.03345v1",
+      "source": "arxiv",
+      "title": "Beyond Semantics: Modeling Factual and Affective Perceptual Experiences from Vision-Language Data",
+      "abstract": "We present P-Topics (Perception Topics) modeling, a novel problem for understanding how images are perceived affectively and across cultures. The goal is to (1) discover and model the different perception experiences in a dataset of images and captions, where each experience is defined by an objective factual and a subjective affective aspect, and (2) associate images to their relevant perception experiences. We introduce **PercepT** (**Percep**tion topic **T**ransformer), a two-stage architecture that tackles P-Topics modeling. In the formation stage, percepT discovers *P-Topics* as visual-textual clusters using an unsupervised training objective, and dynamically selects the number of clusters to match the perceptual richness of the dataset. In the mapping stage, it learns *P-Topic mapping functions* via attention pooling to associate images to their respective clusters. On ArtELingo, PercepT achieves a silhouette score of **0.97** compared to **0.37** from the closest baseline reflecting better perceptual clusters. PercepT also achieves an AUC score of **0.94** compared to **0.77** showing better mapping to perceptual clusters. Human evaluation confirms that PercepT captures semantically meaningful perception experiences and significantly outperforms existing methods. Our implementation will be made public.",
+      "authors": [
+        "Youssef Mohamed",
+        "Kenneth Ward Church",
+        "Mohamed Elhoseiny"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.CL",
+        "cs.CY"
+      ],
+      "published": "2026-06-02T08:54:59+00:00",
+      "link": "https://arxiv.org/pdf/2606.03345v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "discovers perceptual experiences (factual and affective) from images and captions, effectively describing image quality",
+      "llm_evidence_cn": "从图像和标题中发现感知体验（事实性和情感性），有效描述图像质量",
+      "llm_evidence": "从图像和标题中发现感知体验（事实性和情感性），有效描述图像质量",
+      "canonical_evidence": "从图像和标题中发现感知体验（事实性和情感性），有效描述图像质量",
+      "llm_tldr_en": "P-Topics modeling discovers distinct perceptual experiences from vision-language data; PercepT uses clustering and transformer to associate images with factual and affective aspects, enabling rich descriptions of image quality and perception.",
+      "llm_tldr_cn": "传统视觉-语言模型主要关注语义内容，缺乏对图像感知体验的建模。本文提出P-Topics建模任务，旨在从图像和标题数据中发现并建模不同的感知体验，每个体验包含客观事实和主观情感。设计PercepT两阶段架构，通过无监督聚类形成感知主题，并动态调整主题数量以匹配数据感知丰富度，最终将图像与相关感知体验关联。在大规模数据集上验证了模型能够有效捕捉图像的情感色彩和文化差异，为图像质量描述和推理提供了可迁移的方法基础。",
+      "llm_tldr": "传统视觉-语言模型主要关注语义内容，缺乏对图像感知体验的建模。本文提出P-Topics建模任务，旨在从图像和标题数据中发现并建模不同的感知体验，每个体验包含客观事实和主观情感。设计PercepT两阶段架构，通过无监督聚类形成感知主题，并动态调整主题数量以匹配数据感知丰富度，最终将图像与相关感知体验关联。在大规模数据集上验证了模型能够有效捕捉图像的情感色彩和文化差异，为图像质量描述和推理提供了可迁移的方法基础。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "generating natural language descriptions of image quality",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
