@@ -6,28 +6,28 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-09
-- 运行时间：2026-06-09 22:06:13 UTC
+- 最新运行日期：2026-06-10
+- 运行时间：2026-06-10 22:35:53 UTC
 - 运行状态：成功
 - 本次总论文数：2
 - 精读区：1
 - 速读区：1
 
 ### 今日简报（AI）
-今日精读点云质量评估新范式与多模态感知体验前沿  
-值得聚焦：失真层级+语言驱动推理突破点云QA，视觉-语言数据可细粒度建模事实与情感感知  
-建议读者跟进跨模态质量评估，这将深刻影响3D内容生成与AI感官交互的真实感
-- 详情：[/202606/09/README](/202606/09/README)
+今日聚焦医学影像评估与多模态模型：精读了一篇临床启发式低剂量腹部CT质控网络，速览了一种统一离散表示的自回归多模态架构。  
+最值得关注的是 ClinReadNet 如何将放射科医生的阅读习惯注入图像质量评分，以及 ARM 用离散表示统一多模态任务。  
+建议读者跟进临床先验与深度学习融合的影像质控方案，同时留意多模态模型在统一表示上的突破。
+- 详情：[/202606/10/README](/202606/10/README)
 
 ### 精读区论文标签
-1. [DAL-PCQA: Enabling Distortion-Level and Language-Driven Reasoning for Point Cloud Quality Assessment](/202606/09/2606.07938v1-dal-pcqa-enabling-distortion-level-and-language-driven-reasoning-for-point-cloud-quality-assessment)  
+1. [ClinReadNet: A clinical reading-inspired network for low-dose abdominal CT image quality assessment](/202606/10/2606.10372v1-clinreadnet-a-clinical-reading-inspired-network-for-low-dose-abdominal-ct-image-quality-assessment)  
    标签：评分：9.0/10、query:xiqa
-   evidence：点云质量推理，带有失真标签和自然语言描述
+   evidence：提出了用于CT图像的无参考图像质量评估网络
 
 ### 速读区论文标签
-1. [Beyond Semantics: Modeling Factual and Affective Perceptual Experiences from Vision-Language Data](/202606/09/2606.03345v1-beyond-semantics-modeling-factual-and-affective-perceptual-experiences-from-vision-language-data)  
-   标签：评分：7.0/10、query:xiqa
-   evidence：从图像和标题中发现感知体验（事实性和情感性），有效描述图像质量
+1. [ARM: An AutoRegressive Large Multimodal Model with Unified Discrete Representations](/202606/10/2606.11188v1-arm-an-autoregressive-large-multimodal-model-with-unified-discrete-representations)  
+   标签：评分：6.0/10、query:xiqa
+   evidence：统一图像理解、生成和编辑的自回归多模态模型
 
 
 <div class="dpr-home-promo-card">

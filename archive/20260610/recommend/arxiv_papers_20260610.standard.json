@@ -1,0 +1,113 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-10T22:32:42.758733+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2606.10372v1",
+      "source": "arxiv",
+      "title": "ClinReadNet: A clinical reading-inspired network for low-dose abdominal CT image quality assessment",
+      "abstract": "In abdominal CT imaging, developing a low-dose, no-reference image quality assessment (No-reference IQA) model that mimics doctors' reading habits for evaluating CT image quality has significant practical value. This paper proposes a novel deep learning-based framework, ClinReadNet, whose design aligns with the clinical reading logic of radiologists: first, it introduces the Sobel ordinal quality network (SOQN) module, which can simultaneously focus on edge details highly relevant to image quality and the quality distribution pattern of the entire image, accurately matching the clinical image-reading judgment habit of \"considering both local details and overall context\"; second, the framework integrates the (shifted) window multi-scale temperature multi-head self-attention ((S)W-MTMSA) module, which further replicates the radiologists' image-reading process of shifting from overall scanning to local focusing, and accurately locks in regions of interest through multi-sharpness attention; third, it designs the hierarchical ranked probability score (HRPS) loss function, which combines the dual logics of coarse classification and fine classification, while paying attention to the distance information between grading labels, effectively improving the performance of image quality assessment. Experiments conducted on the LDCTIQAG2023 dataset show that the proposed method achieves the current state-of-the-art (SOTA) performance: the values of Pearson's linear correlation coefficient (PLCC), Spearman's rank-order correlation coefficient (SROCC), and Kendall's rank-order correlation coefficient (KROCC) reach 0.9507, 0.9554, and 0.8629 respectively, with the sum of their absolute values (Score) being 2.7690, outperforming existing methods.",
+      "authors": [
+        "Xianye Xiao",
+        "Yulong Zou",
+        "Yujie Luo",
+        "Taihui Yu",
+        "Cun-Jing Zheng",
+        "Yuan-ming Geng",
+        "Shuihua Wang",
+        "Yudong Zhang",
+        "Jin Hong"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-09T03:34:11+00:00",
+      "link": "https://arxiv.org/pdf/2606.10372v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Proposes a no-reference image quality assessment network for CT images",
+      "llm_evidence_cn": "提出了用于CT图像的无参考图像质量评估网络",
+      "llm_evidence": "提出了用于CT图像的无参考图像质量评估网络",
+      "canonical_evidence": "提出了用于CT图像的无参考图像质量评估网络",
+      "llm_tldr_en": "ClinReadNet mimics radiologists' reading habits to assess low-dose abdominal CT image quality without reference, using a Sobel ordinal quality network and shifted window integration, achieving accurate and clinically aligned evaluations.",
+      "llm_tldr_cn": "低剂量CT成像在减少辐射剂量的同时会降低图像质量，临床亟需能够自动评估图像质量的无参考方法。为此，ClinReadNet模仿放射科医生的阅片逻辑，设计Sobel序数质量网络同步捕捉边缘锐度等局部特征和整体质量分布，并集成移位窗口机制以增强上下文建模。在腹部CT扫描数据集上的实验表明，该网络输出的质量分数与医生主观评分高度一致，且无需参考图像，为低剂量CT的质量监控和参数优化提供了可靠工具。此外，该框架无需全剂量配对数据，显著提升了临床部署的灵活性。",
+      "llm_tldr": "低剂量CT成像在减少辐射剂量的同时会降低图像质量，临床亟需能够自动评估图像质量的无参考方法。为此，ClinReadNet模仿放射科医生的阅片逻辑，设计Sobel序数质量网络同步捕捉边缘锐度等局部特征和整体质量分布，并集成移位窗口机制以增强上下文建模。在腹部CT扫描数据集上的实验表明，该网络输出的质量分数与医生主观评分高度一致，且无需参考图像，为低剂量CT的质量监控和参数优化提供了可靠工具。此外，该框架无需全剂量配对数据，显著提升了临床部署的灵活性。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.11188v1",
+      "source": "arxiv",
+      "title": "ARM: An AutoRegressive Large Multimodal Model with Unified Discrete Representations",
+      "abstract": "This paper introduces ARM, a discrete representation-based AutoRegressive Model that unifies image understanding, generation, and editing within a next-token prediction framework. ARM is built on three efforts: first, we train a discrete semantic visual tokenizer that maps images into compact token sequences. Our tokenizer is supervised with multiple objectives that jointly promote semantic discriminability, language alignment and faithful reconstruction, thereby supporting diverse tasks in a shared latent space. With this, we train a 7B autoregressive model over large-scale text and image token sequences, seamlessly developing vision-language perception and generation capabilities. Finally, to further improve preference-aligned behavior for text-to-image generation and instruction-guided editing, ARM applies reinforcement learning (RL) to optimize task-level objectives such as visual quality, instruction adherence, and edit consistency. Surprisingly, the results show that RL not only substantially improves performance on the target tasks (e.g., raising WISE overall from 0.50 to 0.56, GEdit-Bench-EN G_O from 5.75 to 6.68), but also induces cross-task synergy between text-to-image generation and editing. Collectively, these findings highlight autoregressive modeling, when paired with strong representations and preference optimization, as a scalable foundation for multimodal intelligence. Code: https://github.com/wdrink/ARM.",
+      "authors": [
+        "Junke Wang",
+        "Xiao Wang",
+        "Jiacheng Pan",
+        "Xuefeng Hu",
+        "Feng Li",
+        "Jingxiang Sun",
+        "Chaorui Deng",
+        "Zilong Chen",
+        "Yunpeng Chen",
+        "Kaibin Tian",
+        "Matthew Gwilliam",
+        "Hao Chen",
+        "Danhui Guan",
+        "Kun Xu",
+        "Weilin Huang",
+        "Zuxuan Wu",
+        "Haoqi Fan",
+        "Yu-Gang Jiang",
+        "Zhenheng Yang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-09T17:59:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.11188v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "a multimodal autoregressive model unifying image understanding, generation, and editing",
+      "llm_evidence_cn": "统一图像理解、生成和编辑的自回归多模态模型",
+      "llm_evidence": "统一图像理解、生成和编辑的自回归多模态模型",
+      "canonical_evidence": "统一图像理解、生成和编辑的自回归多模态模型",
+      "llm_tldr_en": "ARM is a 7B autoregressive model that uses discrete semantic visual tokenization to unify image tasks within a next-token prediction framework, achieving strong performance in understanding and generation.",
+      "llm_tldr_cn": "当前多模态模型通常分离理解与生成任务。本文提出ARM，基于离散语义视觉分词器，将图像理解、生成和编辑统一到下一个令牌预测框架中。通过多目标监督的视觉分词器和在大规模图文序列上训练7B自回归模型，ARM实现了感知与生成的协同，并在偏好对齐后大幅提升性能，展示了统一多模态建模的潜力。",
+      "llm_tldr": "当前多模态模型通常分离理解与生成任务。本文提出ARM，基于离散语义视觉分词器，将图像理解、生成和编辑统一到下一个令牌预测框架中。通过多目标监督的视觉分词器和在大规模图文序列上训练7B自回归模型，ARM实现了感知与生成的协同，并在偏好对齐后大幅提升性能，展示了统一多模态建模的潜力。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

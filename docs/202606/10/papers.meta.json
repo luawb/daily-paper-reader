@@ -1,0 +1,39 @@
+{
+  "label": "2026-06-10",
+  "date": "2026-06-10",
+  "generated_at": "2026-06-10T22:36:02",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202606/10/2606.10372v1-clinreadnet-a-clinical-reading-inspired-network-for-low-dose-abdominal-ct-image-quality-assessment",
+      "section": "deep",
+      "title_en": "ClinReadNet: A clinical reading-inspired network for low-dose abdominal CT image quality assessment",
+      "authors": "Xianye Xiao, Yulong Zou, Yujie Luo, Taihui Yu, Cun-Jing Zheng, Yuan-ming Geng, Shuihua Wang, Yudong Zhang, Jin Hong",
+      "date": "2026-06-09",
+      "pdf": "https://arxiv.org/pdf/2606.10372v1",
+      "score": "9.0",
+      "evidence": "提出了用于CT图像的无参考图像质量评估网络",
+      "tldr": "低剂量腹部CT图像质量评估需要自动化的无参考方法，但现有方法未充分模拟放射科医生兼顾局部细节与整体上下文、从全局扫描到局部聚焦的阅读习惯。本文提出ClinReadNet，通过SOQN模块、(S)W-MTMSA模块和HRPS损失函数，多层次复现临床读图逻辑。在LDCTIQAG2023数据集上取得PLCC=0.9507、SROCC=0.9554、KROCC=0.8629的当前最优性能。该方法为低剂量CT图像质量评估提供了符合临床认知的解决方案，有助于优化成像流程和辅助诊断。",
+      "tags": "query:xiqa",
+      "abstract_en": "In abdominal CT imaging, developing a low-dose, no-reference image quality assessment (No-reference IQA) model that mimics doctors' reading habits for evaluating CT image quality has significant practical value. This paper proposes a novel deep learning-based framework, ClinReadNet, whose design aligns with the clinical reading logic of radiologists: first, it introduces the Sobel ordinal quality network (SOQN) module, which can simultaneously focus on edge details highly relevant to image quality and the quality distribution pattern of the entire image, accurately matching the clinical image-reading judgment habit of \"considering both local details and overall context\"; second, the framework integrates the (shifted) window multi-scale temperature multi-head self-attention ((S)W-MTMSA) module, which further replicates the radiologists' image-reading process of shifting from overall scanning to local focusing, and accurately locks in regions of interest through multi-sharpness attention; third, it designs the hierarchical ranked probability score (HRPS) loss function, which combines the dual logics of coarse classification and fine classification, while paying attention to the distance information between grading labels, effectively improving the performance of image quality assessment. Experiments conducted on the LDCTIQAG2023 dataset show that the proposed method achieves the current state-of-the-art (SOTA) performance: the values of Pearson's linear correlation coefficient (PLCC), Spearman's rank-order correlation coefficient (SROCC), and Kendall's rank-order correlation coefficient (KROCC) reach 0.9507, 0.9554, and 0.8629 respectively, with the sum of their absolute values (Score) being 2.7690, outperforming existing methods.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/10/2606.11188v1-arm-an-autoregressive-large-multimodal-model-with-unified-discrete-representations",
+      "section": "quick",
+      "title_en": "ARM: An AutoRegressive Large Multimodal Model with Unified Discrete Representations",
+      "authors": "Junke Wang, Xiao Wang, Jiacheng Pan, Xuefeng Hu, Feng Li, Jingxiang Sun, Chaorui Deng, Zilong Chen, Yunpeng Chen, Kaibin Tian, Matthew Gwilliam, Hao Chen, Danhui Guan, Kun Xu, Weilin Huang, Zuxuan Wu, Haoqi Fan, Yu-Gang Jiang, Zhenheng Yang",
+      "date": "2026-06-09",
+      "pdf": "https://arxiv.org/pdf/2606.11188v1",
+      "score": "6.0",
+      "evidence": "统一图像理解、生成和编辑的自回归多模态模型",
+      "tldr": "针对多模态任务中理解和生成架构分离的问题，ARM提出统一离散表示框架。首先训练一个语义视觉分词器，通过多目标监督将图像映射为紧凑离散token，再训练7B自回归模型在大规模图文序列上统一学习感知与生成能力。最后利用强化学习优化文本到图像生成和指令编辑的目标指标，显著提升视觉质量和一致性（如WISE从0.50到0.56），并观察到跨任务协同效应。ARM展示了自回归建模结合强表示与偏好优化的多模态智能路径。",
+      "tags": "query:xiqa",
+      "abstract_en": "This paper introduces ARM, a discrete representation-based AutoRegressive Model that unifies image understanding, generation, and editing within a next-token prediction framework. ARM is built on three efforts: first, we train a discrete semantic visual tokenizer that maps images into compact token sequences. Our tokenizer is supervised with multiple objectives that jointly promote semantic discriminability, language alignment and faithful reconstruction, thereby supporting diverse tasks in a shared latent space. With this, we train a 7B autoregressive model over large-scale text and image token sequences, seamlessly developing vision-language perception and generation capabilities. Finally, to further improve preference-aligned behavior for text-to-image generation and instruction-guided editing, ARM applies reinforcement learning (RL) to optimize task-level objectives such as visual quality, instruction adherence, and edit consistency. Surprisingly, the results show that RL not only substantially improves performance on the target tasks (e.g., raising WISE overall from 0.50 to 0.56, GEdit-Bench-EN G_O from 5.75 to 6.68), but also induces cross-task synergy between text-to-image generation and editing. Collectively, these findings highlight autoregressive modeling, when paired with strong representations and preference optimization, as a scalable foundation for multimodal intelligence. Code: https://github.com/wdrink/ARM.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
