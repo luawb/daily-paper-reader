@@ -1,0 +1,54 @@
+{
+  "label": "2026-06-11",
+  "date": "2026-06-11",
+  "generated_at": "2026-06-11T21:17:28",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202606/11/2606.11838v1-plan-and-verify-video-reward-reasoning-with-spatio-temporal-scene-graph-grounding",
+      "section": "deep",
+      "title_en": "Plan-and-Verify Video Reward Reasoning with Spatio-Temporal Scene Graph Grounding",
+      "authors": "Hyomin Kim, Junghye Kim, Joanie Hayoun Chung, Yoonjin Oh, Kyungjae Lee, Sungbin Lim, Sungwoong Kim",
+      "date": "2026-06-10",
+      "pdf": "https://arxiv.org/pdf/2606.11838v1",
+      "score": "9.0",
+      "evidence": "针对细粒度视觉质量评价的计划与验证推理",
+      "tldr": "文本到视频生成奖励模型常无法细粒度对齐语义，因现有推理方法未系统验证所有条件且判断证据隐含。SG-PVR提出基于时空场景图的规划验证框架，将提示分解为原子声明并逐一对照场景图与视频显式验证。实验表明SG-PVR在语义对齐尤其是细粒度时间语义上效果显著，作为重排序器可进一步提升组合对齐能力。",
+      "tags": "query:xiqa",
+      "abstract_en": "Reward models for text-to-video (T2V) generation guide post-training but often fail at fine-grained semantic alignment. We trace this to two structural weaknesses in existing reasoning-based reward models: they do not systematically verify every condition described in the prompt, and the visual evidence supporting each judgment remains implicit in their free-form reasoning. We propose SG-PVR, a video reward model that addresses these limitations through plan-and-verify reasoning grounded in spatio-temporal scene graphs. The verification plan decomposes the prompt into atomic claims, ensuring every requirement is checked. The spatio-temporal scene graph, encoding entities, attributes, and temporally-grounded relations, is extracted from the video and maintained as a persistent structured visual reference throughout reasoning. Each claim is verified against both the video and the scene graph, anchoring judgments in explicit visual evidence. SG-PVR achieves strong performance on semantic alignment, including fine-grained temporal semantics. As a test-time reranker, it further enhances compositional alignment in T2V generation.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/11/2606.07872v1-visualflip-do-predictions-depend-on-task-critical-visual-evidence-in-multimodal-reasoning",
+      "section": "quick",
+      "title_en": "VisualFLIP: Do Predictions Depend on Task-Critical Visual Evidence in Multimodal Reasoning?",
+      "authors": "Didi Zhu, Changrui Chen, Stefanos Zafeiriou, Jiankang Deng",
+      "date": "2026-06-05",
+      "pdf": "https://arxiv.org/pdf/2606.07872v1",
+      "score": "6.0",
+      "evidence": "测试多模态大模型推理是否依赖关键视觉证据的基准",
+      "tldr": "多模态大模型视觉推理正确时，其预测可能不依赖任务关键视觉证据，准确率不足以衡量视觉扎根性。我们构建VisualFLIP基准，包含1374张图像配对，通过最小视觉证据修改使答案翻转，涵盖基数、属性、空间和逻辑任务。采用配对准确率与崩溃率评估24个MLLM，显示配对正确性与证据依赖性相关但不一致，视觉变化后模型持续先前回答，序列下崩溃加剧。这揭示了准确率与视觉扎根性的分离，突显了考核证据敏感性的重要性。",
+      "tags": "query:xiqa",
+      "abstract_en": "When a multimodal large language model answers a visual reasoning question correctly, is the prediction actually supported by the task-critical visual evidence? Correct answers can coexist with flawed reasoning, making accuracy alone an incomplete test of grounding. We introduce VisualFLIP, a paired benchmark with 1,374 images arranged as same-question perturbation pairs across cardinality, attribute, spatial, and logic tasks. Each pair keeps the question fixed but minimally changes the evidence so the gold answer deterministically flips. We evaluate 24 MLLMs with pair accuracy, which requires solving both sides of a pair, and Collapse Rate (CR), which measures how often a model that solves at least one side repeats the same non-empty answer for both images. Together, these metrics show that paired correctness and evidence dependence are related but distinct: capable models can still fail to update after task-critical visual changes, and collapse becomes more severe for some models when the edited image follows an earlier answer in a sequential setting. Further details are available on our project page: https://didizhu-judy.github.io/VisualFLIP/",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/11/2606.11884v1-image-quality-assessment-of-identity-cards-using-measures-from-open-face-image-quality",
+      "section": "quick",
+      "title_en": "Image Quality Assessment of Identity Cards Using Measures from Open Face Image Quality",
+      "authors": "Gregor Grote, Juan E. Tapia, Christian Rathgeb",
+      "date": "2026-06-10",
+      "pdf": "https://arxiv.org/pdf/2606.11884v1",
+      "score": "6.0",
+      "evidence": "直接使用标准质量度量评估身份证件图像质量。",
+      "tldr": "远程身份验证中，身份证图像常因拍摄环境复杂导致质量参差，直接影响攻击检测可靠性。然而传统质量评估未考虑证件特性，本文采用开放人脸图像质量（OFIQ）标准，并针对身份证图像设计了角点检测、透视归一化与前景掩膜的预处理流程，以消除背景干扰和变形，确保质量度量计算公平准确。在四个数据集（含真实卡与打印伪造卡）上，分析这些度量与三种呈现攻击检测（PAD）算法的相关性。结果表明，部分OFIQ度量与PAD性能强相关，基于这些度量过滤低质量图像可显著降低攻击检测错误率，最终提升攻击检测准确性，证实了跨域质量评估的有效性，为远程验证提供高效可靠的质量评估方案。",
+      "tags": "query:xiqa",
+      "abstract_en": "This paper addresses the challenge of assessing image quality in ID cards in remote verification systems by applying capture-related quality measures from the Open Face Image Quality (OFIQ) standard to ID card images. Our preprocessing pipeline includes corner detection, perspective normalization, and comprehensive foreground masking to ensure accurate and unbiased quality measure computation. We evaluate the effectiveness of these measures by analyzing their correlation with the performance of three presentation attack detection (PAD) algorithms across four diverse ID card datasets, where two datasets contain bona fide, i.e. pristine, images and two contain printed mock ID cards. Our results suggest that quality assessment based on some OFIQ measures can significantly improve PAD performance.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

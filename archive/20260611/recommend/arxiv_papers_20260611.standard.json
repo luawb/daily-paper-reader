@@ -1,0 +1,134 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-11T21:14:01.015030+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2606.11838v1",
+      "source": "arxiv",
+      "title": "Plan-and-Verify Video Reward Reasoning with Spatio-Temporal Scene Graph Grounding",
+      "abstract": "Reward models for text-to-video (T2V) generation guide post-training but often fail at fine-grained semantic alignment. We trace this to two structural weaknesses in existing reasoning-based reward models: they do not systematically verify every condition described in the prompt, and the visual evidence supporting each judgment remains implicit in their free-form reasoning. We propose SG-PVR, a video reward model that addresses these limitations through plan-and-verify reasoning grounded in spatio-temporal scene graphs. The verification plan decomposes the prompt into atomic claims, ensuring every requirement is checked. The spatio-temporal scene graph, encoding entities, attributes, and temporally-grounded relations, is extracted from the video and maintained as a persistent structured visual reference throughout reasoning. Each claim is verified against both the video and the scene graph, anchoring judgments in explicit visual evidence. SG-PVR achieves strong performance on semantic alignment, including fine-grained temporal semantics. As a test-time reranker, it further enhances compositional alignment in T2V generation.",
+      "authors": [
+        "Hyomin Kim",
+        "Junghye Kim",
+        "Joanie Hayoun Chung",
+        "Yoonjin Oh",
+        "Kyungjae Lee",
+        "Sungbin Lim",
+        "Sungwoong Kim"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-10T09:18:14+00:00",
+      "link": "https://arxiv.org/pdf/2606.11838v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "plan-and-verify reasoning for fine-grained visual quality evaluation",
+      "llm_evidence_cn": "针对细粒度视觉质量评价的计划与验证推理",
+      "llm_evidence": "针对细粒度视觉质量评价的计划与验证推理",
+      "canonical_evidence": "针对细粒度视觉质量评价的计划与验证推理",
+      "llm_tldr_en": "Proposes SG-PVR, a video reward model that improves fine-grained semantic alignment in T2V generation by plan-and-verify reasoning grounded in spatio-temporal scene graphs.",
+      "llm_tldr_cn": "针对文本到视频生成中奖励模型常忽略细粒度语义对齐的问题，提出基于时空场景图验证的推理奖励模型SG-PVR。该方法将提示分解为原子声明并制定验证计划，从视频中提取时空场景图作为视觉证据，通过结构化的感知质量评价实现全面、可解释的推理。实验证明了其在提升视频质量评价准确性与可解释性方面的有效性，为基于推理的多模态质量评估提供了新范式。",
+      "llm_tldr": "针对文本到视频生成中奖励模型常忽略细粒度语义对齐的问题，提出基于时空场景图验证的推理奖励模型SG-PVR。该方法将提示分解为原子声明并制定验证计划，从视频中提取时空场景图作为视觉证据，通过结构化的感知质量评价实现全面、可解释的推理。实验证明了其在提升视频质量评价准确性与可解释性方面的有效性，为基于推理的多模态质量评估提供了新范式。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "advanced image quality assessment using reasoning methods",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.07872v1",
+      "source": "arxiv",
+      "title": "VisualFLIP: Do Predictions Depend on Task-Critical Visual Evidence in Multimodal Reasoning?",
+      "abstract": "When a multimodal large language model answers a visual reasoning question correctly, is the prediction actually supported by the task-critical visual evidence? Correct answers can coexist with flawed reasoning, making accuracy alone an incomplete test of grounding. We introduce VisualFLIP, a paired benchmark with 1,374 images arranged as same-question perturbation pairs across cardinality, attribute, spatial, and logic tasks. Each pair keeps the question fixed but minimally changes the evidence so the gold answer deterministically flips. We evaluate 24 MLLMs with pair accuracy, which requires solving both sides of a pair, and Collapse Rate (CR), which measures how often a model that solves at least one side repeats the same non-empty answer for both images. Together, these metrics show that paired correctness and evidence dependence are related but distinct: capable models can still fail to update after task-critical visual changes, and collapse becomes more severe for some models when the edited image follows an earlier answer in a sequential setting. Further details are available on our project page: https://didizhu-judy.github.io/VisualFLIP/",
+      "authors": [
+        "Didi Zhu",
+        "Changrui Chen",
+        "Stefanos Zafeiriou",
+        "Jiankang Deng"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-05T22:06:07+00:00",
+      "link": "https://arxiv.org/pdf/2606.07872v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Benchmark testing whether MLLM predictions rely on task-critical visual evidence for reasoning.",
+      "llm_evidence_cn": "测试多模态大模型推理是否依赖关键视觉证据的基准",
+      "llm_evidence": "测试多模态大模型推理是否依赖关键视觉证据的基准",
+      "canonical_evidence": "测试多模态大模型推理是否依赖关键视觉证据的基准",
+      "llm_tldr_en": "VisualFLIP introduces a paired benchmark to evaluate whether multimodal LLMs correctly ground their reasoning in visual evidence, revealing that many models achieve high accuracy without proper evidence reliance.",
+      "llm_tldr_cn": "针对多模态大模型正确回答可能伴随缺陷推理的问题，VisualFLIP构建了一个包含1374对图像的配对基准，通过最低程度修改证据使答案翻转，评估模型是否真正基于视觉证据进行推理。测试24款MLLM发现，高准确率模型仍存在证据盲从的坍塌现象，提出的配对准确率和坍塌率指标揭示了视觉推理的可信度不足，为提升多模态模型的可解释性与可靠性提供了诊断工具。",
+      "llm_tldr": "针对多模态大模型正确回答可能伴随缺陷推理的问题，VisualFLIP构建了一个包含1374对图像的配对基准，通过最低程度修改证据使答案翻转，评估模型是否真正基于视觉证据进行推理。测试24款MLLM发现，高准确率模型仍存在证据盲从的坍塌现象，提出的配对准确率和坍塌率指标揭示了视觉推理的可信度不足，为提升多模态模型的可解释性与可靠性提供了诊断工具。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "image quality reasoning and explanation generation via multimodal large models",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.11884v1",
+      "source": "arxiv",
+      "title": "Image Quality Assessment of Identity Cards Using Measures from Open Face Image Quality",
+      "abstract": "This paper addresses the challenge of assessing image quality in ID cards in remote verification systems by applying capture-related quality measures from the Open Face Image Quality (OFIQ) standard to ID card images. Our preprocessing pipeline includes corner detection, perspective normalization, and comprehensive foreground masking to ensure accurate and unbiased quality measure computation. We evaluate the effectiveness of these measures by analyzing their correlation with the performance of three presentation attack detection (PAD) algorithms across four diverse ID card datasets, where two datasets contain bona fide, i.e. pristine, images and two contain printed mock ID cards. Our results suggest that quality assessment based on some OFIQ measures can significantly improve PAD performance.",
+      "authors": [
+        "Gregor Grote",
+        "Juan E. Tapia",
+        "Christian Rathgeb"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.CR"
+      ],
+      "published": "2026-06-10T10:11:02+00:00",
+      "link": "https://arxiv.org/pdf/2606.11884v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Directly assesses image quality of identity cards using standard quality measures.",
+      "llm_evidence_cn": "直接使用标准质量度量评估身份证件图像质量。",
+      "llm_evidence": "直接使用标准质量度量评估身份证件图像质量。",
+      "canonical_evidence": "直接使用标准质量度量评估身份证件图像质量。",
+      "llm_tldr_en": "Addresses ID card image quality assessment for remote verification by applying Open Face Image Quality measures. Uses preprocessing (corner detection, perspective normalization, foreground masking) and evaluates correlation with PAD on four datasets. Results show some quality measures are effective for ID quality evaluation.",
+      "llm_tldr_cn": "身份证件图像质量是远程身份验证系统的关键瓶颈，但缺乏客观统一的评价标准。本文借鉴开放面部图像质量标准中的捕获相关质量度量，包括对焦、曝光、光照均匀性等，设计包含角点检测、透视归一化及前景掩码的预处理流水线，确保质量度量计算的准确性和无偏性。在四个包含真实和伪造证件的多样化数据集上，结合三种伪造攻击检测算法进行相关性分析，实验结果表明部分质量度量与检测性能显著相关，可有效评估证件图像质量，且前景掩码对度量准确性尤为重要。本文首次将面部图像质量评价体系迁移至证件图像，验证了跨域应用的可行性，为远程身份验证场景下的自动化图像质量控制提供了实用工具和研究基准，有效提升了身份验证系统的安全性。",
+      "llm_tldr": "身份证件图像质量是远程身份验证系统的关键瓶颈，但缺乏客观统一的评价标准。本文借鉴开放面部图像质量标准中的捕获相关质量度量，包括对焦、曝光、光照均匀性等，设计包含角点检测、透视归一化及前景掩码的预处理流水线，确保质量度量计算的准确性和无偏性。在四个包含真实和伪造证件的多样化数据集上，结合三种伪造攻击检测算法进行相关性分析，实验结果表明部分质量度量与检测性能显著相关，可有效评估证件图像质量，且前景掩码对度量准确性尤为重要。本文首次将面部图像质量评价体系迁移至证件图像，验证了跨域应用的可行性，为远程身份验证场景下的自动化图像质量控制提供了实用工具和研究基准，有效提升了身份验证系统的安全性。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
