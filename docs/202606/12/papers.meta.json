@@ -1,0 +1,69 @@
+{
+  "label": "2026-06-12",
+  "date": "2026-06-12",
+  "generated_at": "2026-06-12T22:02:38",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202606/12/2606.08641v1-learnable-token-sparsification-for-efficient-gigapixel-whole-slide-image-reasoning",
+      "section": "deep",
+      "title_en": "Learnable Token Sparsification for Efficient Gigapixel Whole Slide Image Reasoning",
+      "authors": "Jingzhi Chen, Landi He, Zhuo Chen, Shawn Young, Lijian Xu",
+      "date": "2026-06-07",
+      "pdf": "https://arxiv.org/pdf/2606.08641v1",
+      "score": "9.0",
+      "evidence": "使用视觉语言模型对全切片图像进行推理，并提出可学习的令牌稀疏化",
+      "tldr": "处理千兆像素全切片图像时，视觉语言模型面临海量视觉令牌导致的效率瓶颈，且现有启发式剪枝易丢失关键病理证据。本文提出可学习的令牌稀疏化框架，通过解耦路由和SparseLearn组件，利用可微Soft Top-K训练出最优令牌选择策略，仅在推理时保留32个高信息量令牌（占原始0.78%）。在SlideBench (TCGA)上以73.32%准确率超越基线模型，并具备强零样本泛化能力，为端到端千兆像素病理图像推理提供了高效范式。",
+      "tags": "query:xiqa",
+      "abstract_en": "The processing of gigapixel whole slide images within vision language models faces a major difficulty due to an excessive number of visual tokens. Existing solutions typically rely on spatial downsampling or heuristic pruning strategies that operate without training, and these methods often discard subtle but clinically meaningful patterns because pathological evidence is scattered irregularly across the tissue. To overcome this limitation, we reformulate token reduction in whole slide images as a trainable sparsification problem, allowing the model to learn an optimal selection strategy instead of following fixed heuristics. We propose a decoupled routing architecture. To enable gradient propagation through the nondifferentiable pruning operation during training, we introduce a component called SparseLearn. This component uses a variance-preserving noise gate that regulates the information flow of each patch via a differentiable Soft Top-K operator, together with a diagonal attention denoiser that recovers perturbed representations without leaking spatial information. At inference time, the SparseLearn module is entirely discarded, and the trained scorer applies a deterministic Hard Top-K operator to keep only the highest scoring 32 tokens, incurring no extra computation. By compressing the visual sequence down to a sparse set of just 32 tokens, which represents as little as 0.78% of the original length, our framework achieves 73.32% overall accuracy on SlideBench (TCGA), consistently surpassing sampling-based baselines and general-purpose vision language models. It also demonstrates strong zero shot generalization on SlideBench (BCNB) and WSI VQA*. By resolving the visual context bottleneck and preventing the dilution of sparse diagnostic evidence, this work provides a highly efficient paradigm for end to end gigapixel whole slide image reasoning.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/12/2606.09303v1-reason-twice-segmentation-via-candidate-discovery-and-comparative-reasoning",
+      "section": "deep",
+      "title_en": "Reason Twice: Segmentation via Candidate Discovery and Comparative Reasoning",
+      "authors": "Xinyan Gao, Haoran Hao, Xiangyu Yue",
+      "date": "2026-06-08",
+      "pdf": "https://arxiv.org/pdf/2606.09303v1",
+      "score": "9.0",
+      "evidence": "使用多模态大语言模型进行基于推理的图像分割",
+      "tldr": "现有基于MLLM的分割方法在处理复杂推理查询时，因训练数据匮乏和MLLM与掩码模块的鸿沟而受限，且现有基准偏重常识推理，难以全面评估真实推理能力。本文提出Rea2Seg两阶段框架，先借由注意力图发现候选掩码，再令MLLM对问题与候选联合推理并评分，通过重排序选取最优掩码，将分割转化为候选发现与比较选择。同时构建ReasonSeg-SGDR新基准，涵盖判别识别、空间推理、几何推理和多步推理，并收集训练数据增强模型对齐。实验证明该框架有效提升复杂推理分割表现，为多模态推理分割提供了新范式。",
+      "tags": "query:xiqa",
+      "abstract_en": "The rapid development of pretrained foundation models has enabled more general image segmentation. Multimodal large language models (MLLMs) have been widely explored for image segmentation with complex queries that require high-level reasoning. Despite promising progress, existing methods are often constrained by limited training data and the gap between MLLMs and mask generation modules. To better transfer MLLMs' perception and reasoning ability to complex reasoning-based segmentation tasks, we propose a two-stage framework Rea2Seg for mask generation and selection. Specifically, the framework first identifies potential regions as candidate masks based on the attention maps of a segmentation MLLM. It then employs an MLLM to reason over the question and candidate masks and assign scores to each mask. The final segmentation result is obtained by reranking the candidates and selecting the highest-scoring mask, reformulating image segmentation as candidate discovery followed by discriminative mask selection.   We also notice that a large portion of questions in existing benchmarks focus on commonsense reasoning, and these questions usually do not fully require joint visual observation and reasoning. To address this issue, we introduce a new benchmark called ReasonSeg-SGDR that comprehensively evaluates a model's perception, grounding, and reasoning abilities across multiple dimensions, including discriminative recognition, spatial reasoning, geometric reasoning, and multi-step reasoning, with fine-grained mask generation.   In addition, we collect training data to enhance MLLMs' ability to jointly understand multimodal queries and candidate masks, and to assign scores through reasoning. Experimental results on the proposed benchmark and ReasonSeg demonstrate the effectiveness of the unified mask generation and selection framework.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/12/2606.08511v1-look-less-reason-more-block-wise-attention-skipping-for-efficient-multimodal-llms",
+      "section": "deep",
+      "title_en": "Look Less, Reason More: Block-wise Attention Skipping for Efficient Multimodal LLMs",
+      "authors": "Jie Ma, Zhike Qiu, Jiayi Ji, Xiaoshuai Sun, Rongrong Ji",
+      "date": "2026-06-07",
+      "pdf": "https://arxiv.org/pdf/2606.08511v1",
+      "score": "8.0",
+      "evidence": "提出针对处理图像和文本的多模态大语言模型的无需训练推理加速方法",
+      "tldr": "多模态大模型因长视觉序列的自注意力二次计算而面临推理瓶颈，且深层视觉-视觉自注意力存在饱和冗余。V-Skip提出块状结构化稀疏，通过跳过深层冗余视觉注意力模块，结合少样本校准自适应路由最优稀疏路径，在保持94%以上性能的同时提升效率。该工作表明模型无需丢弃所见信息，仅需在适当深度“少看”即可更高效推理。",
+      "tags": "query:xiqa",
+      "abstract_en": "Multimodal Large Language Models (MLLMs) face a significant inference bottleneck due to the quadratic computational cost of self-attention over long visual token sequences. However, we identify a critical inefficiency in current architectures: Visual Attention Saturation. Our analysis reveals that visual tokens rapidly establish their spatial structure and intra-modal relationships in early layers, rendering visual-to-visual self-attention in deeper layers computationally redundant. Conversely, Feed-Forward Networks (FFNs) in these layers remain essential for projecting visual features into the evolving textual semantic space. Leveraging this insight, we present Visual-Skip (V-Skip), a training-free inference paradigm that decouples spatial interaction from semantic evolution. Rather than discarding tokens, V-Skip imposes block-wise structured sparsity by selectively bypassing saturated visual self-attention modules. Furthermore, recognizing that varying downstream tasks demand distinct reasoning depths, V-Skip employs a lightweight, few-shot calibration to dynamically route the task-optimal sparsity path. Extensive experiments demonstrate that V-Skip effectively bypasses redundant vision attention to achieve block-wise sparsity, maintaining a 94.16% to 100.31% performance retention across diverse MLLMs. Ultimately, we prove that to reason more effectively, models do not need to discard what they see -- they simply need to \"look less\" at the right depth.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/12/2606.09330v1-dynamic-xr-rendering-offloading-based-on-feature-based-quality-assessment",
+      "section": "quick",
+      "title_en": "Dynamic XR Rendering Offloading Based on Feature-Based Quality Assessment",
+      "authors": "Sige Liu, Zhe Wang, Lavish Kamal Kumar, Yansha Deng",
+      "date": "2026-06-08",
+      "pdf": "https://arxiv.org/pdf/2606.09330v1",
+      "score": "6.0",
+      "evidence": "提出基于深度特征嵌入的XR图像感知质量评价指标",
+      "tldr": "XR实时渲染面临高计算与低延迟双重挑战，客户端设备资源受限。为此，本文构建边缘辅助动态卸载平台，集成HoloLens 2与GPU边缘服务器，实现本地与边缘渲染实时切换。提出基于深度特征嵌入的感知质量评价，克服像素级指标在头部运动与异步帧下的局限，并设计上下文赌博机学习控制器实时优化卸载决策，平衡质量与延迟。实验表明，系统能动态适应网络变化，鲁棒评估渲染质量，有效提升XR交互体验，为边缘辅助渲染提供了高效方案。",
+      "tags": "query:xiqa",
+      "abstract_en": "Extended Reality (XR) applications demand intensive computation and low latency, especially for real-time rendering tasks. In this letter, we present an edge-aided XR rendering testbed that dynamically offloads rendering workloads between the XR client and the edge server built upon network conditions and latency constraints. The testbed integrates a Microsoft HoloLens 2 headset, a GPU-enabled edge server, and a customized remote rendering toolkit based on the HOLO Stream SDK, enabling seamless switching between local and edge rendering modes in real time. To overcome the limitations of pixel-level quality metrics under head movements and asynchronous frame arrivals, we propose a perceptual evaluation metric based on deep feature embeddings and cosine similarity, which remains robust to spatial and temporal misalignments. Furthermore, we design a contextual bandit learning controller to adapt rendering placement decisions in real time by jointly optimizing perceptual quality and latency. Experimental results demonstrate the feasibility and performance of our testbed, validating its effectiveness in delivering high-quality and interactive XR experiences.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
