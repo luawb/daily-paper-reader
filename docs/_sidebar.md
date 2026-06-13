@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-06-13 <!--dpr-date:20260613-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/13/2606.07861v1-the-last-visible-pixel-probing-fine-scale-perception-in-vision-language-models" data-sidebar-item="{&quot;title&quot;: &quot;The Last Visible Pixel: Probing Fine-Scale Perception in Vision-Language Models&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2606.07861v1-the-last-visible-pixel-probing-fine-scale-perception-in-vision-language-models&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;探究视觉语言模型在微小尺度上的视觉感知极限，分离感知与推理能力，直接关联质量评估所需的能力。&quot;}">The Last Visible Pixel: Probing Fine-Scale Perception in Vision-Language Models</a>
   * 2026-06-12 <!--dpr-date:20260612-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/12/2606.08641v1-learnable-token-sparsification-for-efficient-gigapixel-whole-slide-image-reasoning" data-sidebar-item="{&quot;title&quot;: &quot;Learnable Token Sparsification for Efficient Gigapixel Whole Slide Image Reasoning&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2606.08641v1-learnable-token-sparsification-for-efficient-gigapixel-whole-slide-image-reasoning&quot;, &quot;score&quot;: &quot;9.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;使用视觉语言模型对全切片图像进行推理，并提出可学习的令牌稀疏化&quot;}">Learnable Token Sparsification for Efficient Gigapixel Whole Slide Image Reasoning</a>

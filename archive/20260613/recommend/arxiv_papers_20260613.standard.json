@@ -1,0 +1,59 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-13T21:06:38.087599+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2606.07861v1",
+      "source": "arxiv",
+      "title": "The Last Visible Pixel: Probing Fine-Scale Perception in Vision-Language Models",
+      "abstract": "Recent vision-language models (VLMs) excel at multimodal understanding and reasoning, yet their fine-grained visual perception remains underexplored. A natural extension of ``How many r are there in Strawberry?'' asks: how small a visual pattern can a VLM reliably perceive? As such, we introduce FineSightBench, a new benchmark that systematically probes this limit by separating perception tasks (pixel-level recognition of letters, shapes, objects) from reasoning tasks (spatial reasoning, counting, ordering over small targets) across controlled scales of 4--48px. Through comprehensive experiments and detailed failure mode analysis on state-of-the-art models, we reveal a sharp dissociation: perception saturates around 12px, while reasoning remains limited even at larger scales, with persistent numeracy and sequence errors. These findings expose fundamental deficiencies in VLMs' fine-scale visual reasoning that demand more rigorous evaluation.",
+      "authors": [
+        "Lujun Li",
+        "Lama Sleem",
+        "Niccolo Gentile",
+        "Yangjie Xu",
+        "Yewei Song",
+        "Wenbo Wu",
+        "Radu State"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-06-05T21:49:34+00:00",
+      "link": "https://arxiv.org/pdf/2606.07861v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Probes fine-scale visual perception limits of VLMs, separating perception and reasoning over small targets, directly relevant to understanding VLM capabilities for quality assessment.",
+      "llm_evidence_cn": "探究视觉语言模型在微小尺度上的视觉感知极限，分离感知与推理能力，直接关联质量评估所需的能力。",
+      "llm_evidence": "探究视觉语言模型在微小尺度上的视觉感知极限，分离感知与推理能力，直接关联质量评估所需的能力。",
+      "canonical_evidence": "探究视觉语言模型在微小尺度上的视觉感知极限，分离感知与推理能力，直接关联质量评估所需的能力。",
+      "llm_tldr_en": "Introduces FineSightBench to systematically test VLM perception of small visual patterns (4-48px) and reveals a dissociation where perception saturates early while reasoning improves with scale, informing VLM deployment in detail-sensitive tasks like image quality assessment.",
+      "llm_tldr_cn": "现有视觉语言模型在宏观理解上表现优异，但细粒度视觉感知能力未知。本文提出FineSightBench基准，系统测试VLM对4-48像素微小视觉模式的感知与推理，发现感知能力在约12像素饱和，而推理能力随尺度提升。该工作揭示了VLM在细节敏感任务（如图像质量评价）中的潜力与局限，为未来多模态模型的应用提供了关键洞察。",
+      "llm_tldr": "现有视觉语言模型在宏观理解上表现优异，但细粒度视觉感知能力未知。本文提出FineSightBench基准，系统测试VLM对4-48像素微小视觉模式的感知与推理，发现感知能力在约12像素饱和，而推理能力随尺度提升。该工作揭示了VLM在细节敏感任务（如图像质量评价）中的潜力与局限，为未来多模态模型的应用提供了关键洞察。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "image quality reasoning and explanation generation via multimodal large models",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

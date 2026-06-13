@@ -1,0 +1,24 @@
+{
+  "label": "2026-06-13",
+  "date": "2026-06-13",
+  "generated_at": "2026-06-13T21:08:14",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202606/13/2606.07861v1-the-last-visible-pixel-probing-fine-scale-perception-in-vision-language-models",
+      "section": "quick",
+      "title_en": "The Last Visible Pixel: Probing Fine-Scale Perception in Vision-Language Models",
+      "authors": "Lujun Li, Lama Sleem, Niccolo Gentile, Yangjie Xu, Yewei Song, Wenbo Wu, Radu State",
+      "date": "2026-06-05",
+      "pdf": "https://arxiv.org/pdf/2606.07861v1",
+      "score": "6.0",
+      "evidence": "探究视觉语言模型在微小尺度上的视觉感知极限，分离感知与推理能力，直接关联质量评估所需的能力。",
+      "tldr": "视觉语言模型虽擅长多模态理解与推理，但其细粒度视觉感知的极限尚未明确。针对此问题，本研究构建了名为FineSightBench的评测基准，将像素级识别（字母、形状、物体）与高层推理（空间推理、计数、排序）任务分离，在四至四十八像素的尺度上进行系统性探测。实验揭示了一个显著的分裂现象：感知能力在十二像素左右即趋于饱和，而推理能力即使在较大尺度下仍表现不足，尤其存在持续的计数与序列错误。该发现凸显了当前VLMs在精细尺度视觉推理方面的根本性缺陷，强调需要建立更为严格的评估范式。",
+      "tags": "query:xiqa",
+      "abstract_en": "Recent vision-language models (VLMs) excel at multimodal understanding and reasoning, yet their fine-grained visual perception remains underexplored. A natural extension of ``How many r are there in Strawberry?'' asks: how small a visual pattern can a VLM reliably perceive? As such, we introduce FineSightBench, a new benchmark that systematically probes this limit by separating perception tasks (pixel-level recognition of letters, shapes, objects) from reasoning tasks (spatial reasoning, counting, ordering over small targets) across controlled scales of 4--48px. Through comprehensive experiments and detailed failure mode analysis on state-of-the-art models, we reveal a sharp dissociation: perception saturates around 12px, while reasoning remains limited even at larger scales, with persistent numeracy and sequence errors. These findings expose fundamental deficiencies in VLMs' fine-scale visual reasoning that demand more rigorous evaluation.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
