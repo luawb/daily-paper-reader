@@ -1,0 +1,54 @@
+{
+  "label": "2026-06-14",
+  "date": "2026-06-14",
+  "generated_at": "2026-06-14T20:14:57",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202606/14/2606.12590v1-analyzing-and-improving-fine-grained-preference-optimization-in-medical-lvlms",
+      "section": "deep",
+      "title_en": "Analyzing and Improving Fine-grained Preference Optimization in Medical LVLMs",
+      "authors": "Shayan Mohammadizadehsamakosh, Pritam Sarkar, Leonid Sigal, Ali Etemad, Elham Dolatabadi",
+      "date": "2026-06-10",
+      "pdf": "https://arxiv.org/pdf/2606.12590v1",
+      "score": "9.0",
+      "evidence": "医学多模态大语言模型的细粒度偏好优化",
+      "tldr": "针对医学LVLMs的事实不一致与视觉基础薄弱问题，现有偏好优化方法忽略临床关键token差异、存在分布偏移且缺乏视觉约束。本文提出结合token级KL正则与视觉对比基础目标的在策略对齐框架，通过最小编辑生成响应纠正临床错误。实验表明方法在医学影像与文本生成任务上显著提升临床正确性与视觉基础能力。",
+      "tags": "query:xiqa",
+      "abstract_en": "Large Vision-Language Models (LVLMs) have achieved strong performance across medical imaging tasks, yet they remain prone to factual inconsistencies, poor visual grounding, and misalignment with clinically meaningful feedback. Existing post-training alignment approaches, including Direct Preference Optimization (DPO) and its variants, face three critical limitations in the medical domain: (1) sequence-level reward signals treat clinically critical tokens identically to generic filler text; (2) reliance on static supervised fine-tuning references as preferred responses introduces an off-policy distribution shift, steering optimization toward stylistic artifacts over clinical correctness; and (3) alignment objectives lack explicit visual grounding constraints, leaving models insensitive to subtle yet diagnostically decisive pathological features. Our method leverages a bidirectional token-wise KL regularizer alongside a visual-contrastive grounding objective that pairs clean and lesion-corrupted images to penalize responses generated without adequate visual evidence. Together, these components form a fine-grained, on-policy alignment framework that constructs preference pairs by minimally editing model-generated outputs, correcting only clinically erroneous spans while preserving the original linguistic style. Extensive experiments across medical imaging tasks and clinical text generation benchmarks validate the effectiveness of our approach.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/14/2606.12671v1-salart-vqa-diagnosing-whether-vlms-understand-salient-artifacts-in-generated-images",
+      "section": "deep",
+      "title_en": "SalArt-VQA: Diagnosing Whether VLMs Understand Salient Artifacts in Generated Images",
+      "authors": "Xiaoxiao Sun, Ruotian Zhang, Junzhe Huang, James Burgess, Serena Yeung-Levy",
+      "date": "2026-06-10",
+      "pdf": "https://arxiv.org/pdf/2606.12671v1",
+      "score": "9.0",
+      "evidence": "通过描述与定位任务诊断视觉语言模型对AI生成图像中显著伪影的推理能力基准。",
+      "tldr": "视觉语言模型（VLM）在检测AI生成图像伪影时，高准确率常掩盖其缺乏细粒度理解的问题。为诊断这一缺陷，提出SalArt-VQA基准，包含950张图像和3681道多选题，从存在检测、语义定位、空间定位和证据识别四方面评估VLM。实验显示，最强模型检测召回率达99.37%，但仅53.26%的图像完全答对所有相关问题，并暴露出敏感性与校准的权衡。该基准揭示了VLM伪影判断背后缺乏局部证据支持，为可信分析提供了诊断工具。",
+      "tags": "query:xiqa",
+      "abstract_en": "Vision-language models (VLMs) are increasingly used to detect whether AI-generated images contain visible artifacts, yet their ability to analyze such artifacts remains poorly understood. A correct image-level decision can still hide important failures: a model may correctly flag an artifact while relying on the wrong visual cue, selecting the wrong region, or describing a defect that the image does not support. To evaluate these behaviors directly, we introduce SalArt-VQA, a diagnostic benchmark for fine-grained SALient ARTifact understanding in AI-generated images. SalArt-VQA contains 950 images and 3,681 human-authored multiple-choice questions spanning artifact images, matched real reference images, and paired generated reference images. Four aligned question types evaluate presence detection, semantic localization, spatial grounding, and evidence-grounded defect identification, while the reference splits test calibration and abstention when the annotated defect is absent. Across 20 VLMs, SalArt-VQA reveals failures that image-level detection accuracy hides: the strongest model reaches 99.37% detection recall on artifact images but answers all four artifact-side questions correctly on only 53.26% of images. Comparing artifact images with artifact-free references reveals a sensitivity-calibration tradeoff: sensitive models often make unsupported artifact claims, while conservative models avoid false alarms largely by missing real artifacts. These results show that high artifact detection accuracy alone does not imply grounded artifact understanding. SalArt-VQA exposes these hidden failure modes and provides a fine-grained evaluation of whether VLM artifact claims are supported by local visual evidence.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/14/2606.09393v1-caprl-unified-reinforcement-learning-with-verifiable-rewards-for-dense-image-and-video-captioning",
+      "section": "quick",
+      "title_en": "CapRL++: Unified Reinforcement Learning with Verifiable Rewards for Dense Image and Video Captioning",
+      "authors": "Penghui Yang, Long Xing, Xiaoyi Dong, Yuhang Zang, Yuhang Cao, Yibin Wang, Yujie Zhou, Jiazi Bu, Jianze Liang, Qidong Huang, Jiaqi Wang, Feng Wu, Dahua Lin",
+      "date": "2026-06-08",
+      "pdf": "https://arxiv.org/pdf/2606.09393v1",
+      "score": "6.0",
+      "evidence": "使用强化学习进行密集图像/视频描述，可应用于质量描述。",
+      "tldr": "图像与视频字幕任务依赖监督微调(SFT)面临昂贵标注与模型记忆、缺乏泛化等瓶颈。CapRL++提出无参考强化学习框架，以基于无视觉语言模型问答准确性的可验证奖励来优化字幕质量。在20余个基准上，CapRL++显著提升密集字幕质量，紧凑模型性能比肩Qwen2.5-VL-72B等超大模型，且预训练带来下游增益。该框架突破了传统SFT限制，为生成高保真可泛化描述建立了新范式。",
+      "tags": "query:xiqa",
+      "abstract_en": "Image and video captioning are fundamental tasks that bridge the visual and linguistic domains, playing a critical role in pre-training Large Vision-Language Models (LVLMs). Current state-of-the-art captioning models are typically trained with Supervised Fine-Tuning (SFT), a paradigm that relies on expensive, non-scalable annotations and often causes models to memorize specific ground-truth answers, limiting their generality and ability to generate diverse, creative descriptions. To overcome these limitations, we propose applying Reinforcement Learning with Verifiable Rewards (RLVR) to the open-ended task of multimodal captioning. We introduce Captioning Reinforcement Learning++ (CapRL++), a novel reference-free training framework that redefines caption quality through its utility: a high-quality caption should enable a non-visual language model to accurately answer questions about the corresponding visual content. CapRL++ employs a decoupled two-stage pipeline where an LVLM generates a caption, and the objective reward is derived from the accuracy of a separate, vision-free LLM answering Multiple-Choice Questions based solely on that caption. Evaluations on more than 20 image and video benchmarks show that CapRL++ improves dense caption quality and strengthens caption-based pretraining across tasks such as spatial and temporal understanding. Pretraining on scalable image and video caption datasets annotated by CapRL++ yields substantial downstream gains. Furthermore, within the Prism Framework for caption quality evaluation, compact models trained with CapRL++ achieve dense captioning performance comparable to substantially larger models such as Qwen2.5-VL-72B and Qwen3-VL-235B-A22B. These results validate that CapRL++ effectively trains models to produce generalizable, high-fidelity descriptions, establishing a robust foundation beyond the limitations of traditional SFT.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
