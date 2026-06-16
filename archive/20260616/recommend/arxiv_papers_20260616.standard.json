@@ -1,0 +1,209 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-16T22:53:07.646200+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 4,
+    "deep_cap": 6,
+    "deep_selected": 4,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2606.16082v1",
+      "source": "arxiv",
+      "title": "Tool-IQA: Augmenting Image Quality Assessment with Simple Tools",
+      "abstract": "Vision-Language Models (VLMs) have been increasingly adopted for Image Quality Assessment (IQA). However, current methods typically employ a static one-shot scoring paradigm, despite the fact that humans assess image quality through dynamic visual inspection, e.g., selectively adjusting views to verify details and subtle artifacts. Specifically, relying solely on a single-pass observation introduces two primary limitations: first, perceiving the image only at a global scale restricts the assessment of finer local details; second, the original intensity distribution of the image may overwhelm the visibility, leading to insufficient inspection of image quality. To address these issues, we propose Tool-IQA, shifting the assessment mechanism from passive scoring to a tool-augmented workflow. In particular, we equip VLMs with simple yet effective view tools: a Magnifier to inspect local details, and a Gamma Corrector to uncover visibility and hidden artifacts. The assessment follows a structured pipeline that consists of an initial observation with rubric notes, a tool-augmented in-depth inspection, and a final quantification for calibrated quality score. Furthermore, to ensure efficient and purposeful tool callings, we introduce a batch-aware training strategy to reward tool interactions that can yield positive contributions rather than simply encouraging usage. Experiments on a variety of IQA benchmarks demonstrate that, with effective tool calling and calibrated assessment, our proposed Tool-IQA significantly outperforms existing state-of-the-art models, e.g., it achieves a PLCC of 0.854 on the challenging CLIVE dataset.",
+      "authors": [
+        "Guanyi Qin",
+        "Junjie Zhang",
+        "Chunming He",
+        "Yibing Fu",
+        "Jie Liang",
+        "Tianhe Wu",
+        "Lei Zhang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-06-15T00:47:05+00:00",
+      "link": "https://arxiv.org/pdf/2606.16082v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "Augments image quality assessment with simple tools for dynamic inspection, shifting from passive scoring.",
+      "llm_evidence_cn": "通过简单工具增强图像质量评估，实现动态检查，从被动评分转变。",
+      "llm_evidence": "通过简单工具增强图像质量评估，实现动态检查，从被动评分转变。",
+      "canonical_evidence": "通过简单工具增强图像质量评估，实现动态检查，从被动评分转变。",
+      "llm_tldr_en": "Tool-IQA proposes augmenting image quality assessment with simple tools to enable dynamic visual inspection, addressing limitations of static one-shot scoring in VLMs, improving evaluation of fine details and artifacts.",
+      "llm_tldr_cn": "现有基于视觉语言模型的图像质量评价方法多采用静态单次评分，难以检查局部细节和微妙伪影。Tool-IQA提出通过简单工具增强评价机制，使模型能动态调整观察视角，从而更精细地评估图像质量。实验表明该方法能有效提升评价准确性，推动了从被动评分到主动检测的范式转变。",
+      "llm_tldr": "现有基于视觉语言模型的图像质量评价方法多采用静态单次评分，难以检查局部细节和微妙伪影。Tool-IQA提出通过简单工具增强评价机制，使模型能动态调整观察视角，从而更精细地评估图像质量。实验表明该方法能有效提升评价准确性，推动了从被动评分到主动检测的范式转变。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "advanced image quality assessment using reasoning methods",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.16799v1",
+      "source": "arxiv",
+      "title": "Decoupling Semantics from Distortions: Multi-Scale Two-Stream Vision-Language Alignment for AI-Generated Image Quality Assessment",
+      "abstract": "Existing vision-language model (VLM)-based AI-generated image quality assessment (AIGIQA) methods suffer from a fundamental semantic-distortion dimensional conflict: monolithic representations optimized for semantic discrimination inherently entangle compositional understanding with low-level perceptual sensitivity, rendering them blind to fine-grained quality degradations. We introduce MST-CLIPIQA, a multi-scale two-stream framework that achieves hierarchical vision-language alignment through explicit representational decoupling. Our architecture leverages dual CLIP encoders with complementary patch granularities: coarse-grained streams capture global semantic coherence while fine-grained streams preserve textural signatures and artifact patterns. An information bottleneck-inspired gated fusion mechanism performs adaptive cross-scale distillation, with optional cross-attention enabling prompt-anchored correspondence evaluation when generation prompts are available. Extensive experiments across five benchmarks establish new state-of-the-art results, achieving average improvements of 1.11 percent SRCC on quality and 2.35 percent SRCC on text-image correspondence prediction, while maintaining efficiency with only 0.8M trainable parameters. Our project is available at https://github.com/YMlinfeng/MST-CLIPIQA.",
+      "authors": [
+        "Zijie Meng"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-06-15T14:40:30+00:00",
+      "link": "https://arxiv.org/pdf/2606.16799v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "direct AI-generated image quality assessment using multi-scale two-stream CLIP",
+      "llm_evidence_cn": "使用多尺度双流CLIP直接进行AI生成图像质量评估",
+      "llm_evidence": "使用多尺度双流CLIP直接进行AI生成图像质量评估",
+      "canonical_evidence": "使用多尺度双流CLIP直接进行AI生成图像质量评估",
+      "llm_tldr_en": "Addresses the semantic-distortion conflict in VLM-based AIGIQA by proposing MST-CLIPIQA, a multi-scale two-stream framework that decouples global semantics and fine-grained distortions via dual CLIP encoders, achieving hierarchical vision-language alignment for accurate quality assessment.",
+      "llm_tldr_cn": "针对现有VLM基AI生成图像质量评估方法中语义与失真维度相互纠缠的问题，提出MST-CLIPIQA多尺度双流框架，通过双CLIP编码器显式解耦全局语义与细粒度失真，实现层次化视觉-语言对齐，从而提升质量评估的准确性。实验表明该方法能有效感知细微质量退化，为AI生成图像质量评估提供了新范式。",
+      "llm_tldr": "针对现有VLM基AI生成图像质量评估方法中语义与失真维度相互纠缠的问题，提出MST-CLIPIQA多尺度双流框架，通过双CLIP编码器显式解耦全局语义与细粒度失真，实现层次化视觉-语言对齐，从而提升质量评估的准确性。实验表明该方法能有效感知细微质量退化，为AI生成图像质量评估提供了新范式。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.15608v1",
+      "source": "arxiv",
+      "title": "On the Adversarial Robustness of Multimodal LLM Judges",
+      "abstract": "Multimodal Large Language Models (MLLMs) are increasingly used as automated judges, e.g., for image quality and safety assessment. However, their adversarial robustness remains largely unexplored, threatening the fairness and reliability of automated judging. To bridge this gap, we introduce RobustMLLMJudge, the first general framework for evaluating the adversarial robustness of general-purpose MLLMs when functioning as judges. It covers diverse attacks against popular judge approaches across quality and safety evaluation scenarios. Using RobustMLLMJudge, we reveal that i) different MLLM judges are highly vulnerable to score-inflating adversarial attacks; and ii) although effective, these attack methods face a critical challenge due to unique constraints in the evaluation protocols of MLLM judges. We further propose MGSIA, namely Manifold-Guided Semantic Induction Attack, a novel method that bypasses these constraints to enable more effective and transferable attacks on MLLM judges. The core idea of MGSIA is to combine affirmative semantic induction with high-score manifold alignment: it maximizes the probability that judges yield affirmative responses (e.g., \"Yes\") to binary semantic queries, while regularizing adversarial representations toward high-score centers estimated from proxy protocols. Together, these objectives yield transferable score-inflating perturbations. Extensive experiments demonstrate the superiority and generalizability of MGSIA in deceiving advanced MLLM judges under different evaluation scenarios, highlighting the need for robust MLLM judges. Code and data will be made available at https://github.com/mala-lab/RobustMLLMJudge.",
+      "authors": [
+        "Zihan Wang",
+        "Guansong Pang",
+        "Zelin Liu",
+        "Wenjun Miao",
+        "Jin Zheng",
+        "Xiao Bai"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-14T05:30:20+00:00",
+      "link": "https://arxiv.org/pdf/2606.15608v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "using MLLMs for image quality judging",
+      "llm_evidence_cn": "使用多模态大语言模型进行图像质量裁判",
+      "llm_evidence": "使用多模态大语言模型进行图像质量裁判",
+      "canonical_evidence": "使用多模态大语言模型进行图像质量裁判",
+      "llm_tldr_en": "Presents RobustMLLMJudge, a framework to evaluate adversarial robustness of multimodal LLM judges for image quality and safety assessment, revealing their vulnerability to score-inflating attacks and unique evaluation constraints.",
+      "llm_tldr_cn": "针对多模态大语言模型（MLLM）被用作图像质量评判时的对抗鲁棒性问题，提出首个通用评估框架RobustMLLMJudge，覆盖多种攻击方法，揭示MLLM裁判对打分膨胀攻击高度脆弱，并分析了评估场景中的独特约束。这为可靠地使用MLLM进行图像质量自动评估提供了鲁棒性基准和方法论基础。",
+      "llm_tldr": "针对多模态大语言模型（MLLM）被用作图像质量评判时的对抗鲁棒性问题，提出首个通用评估框架RobustMLLMJudge，覆盖多种攻击方法，揭示MLLM裁判对打分膨胀攻击高度脆弱，并分析了评估场景中的独特约束。这为可靠地使用MLLM进行图像质量自动评估提供了鲁棒性基准和方法论基础。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.15629v1",
+      "source": "arxiv",
+      "title": "XPASS-Vis: A Dataset for Cross-Domain Personalized Image Aesthetic Assessment",
+      "abstract": "Personalized image aesthetic assessment (PIAA) seeks to model, at the individual level, the subjective nature of aesthetic judgments toward artworks and photographs. Aesthetic preference is known to be both deeply personal and partially consistent across visual domains. Yet existing PIAA datasets and methods are largely confined to a single domain, or provide too few samples per annotator within each domain to enable personalization across domains. Consequently, the cross-domain generalization of personalized aesthetic preferences remains largely unexplored. To address this gap, we introduce XPASS-Vis, the first dataset explicitly designed for cross-domain PIAA. XPASS-Vis comprises 6,526 stimuli from three visual domains -- art, fashion, and landscape -- rated by 129 annotators, yielding 87,836 user-stimulus interactions, each annotated with an overall aesthetic score and nine aesthetic-emotion ratings. Notably, each annotator rated more than 200 stimuli per domain, providing sufficient per-domain coverage to support personalization both within and across domains. Moreover, we establish baseline models for cross-domain PIAA under unsupervised domain adaptation (UDA), where a model trained on a labeled source domain is transferred to an unlabeled target domain. A systematic evaluation of representative UDA approaches shows that the best-performing method recovers approximately 60\\% (Spearman's $ρ$ = .28) of the supervised upper bound under a fully unsupervised setting. This provides encouraging evidence that personalized aesthetic preferences are, to a meaningful extent, transferable across visual domains. At the same time, a substantial gap remains, highlighting the need for PIAA-specific adaptation strategies. XPASS-Vis and the accompanying baselines provide a foundation for future research on cross-domain PIAA. All datasets and code will be made publicly available upon acceptance.",
+      "authors": [
+        "Takato Hayashi",
+        "Hiroaki Takahara",
+        "Candy Olivia Mawalim",
+        "Hiromi Narimatsu",
+        "Akisato Kimura",
+        "Shiro Kumano",
+        "Shogo Okada"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-14T06:44:19+00:00",
+      "link": "https://arxiv.org/pdf/2606.15629v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Dataset for personalized image aesthetic assessment, directly evaluating perceptual image quality.",
+      "llm_evidence_cn": "个性化图像美学评估数据集，直接评价图像感知质量。",
+      "llm_evidence": "个性化图像美学评估数据集，直接评价图像感知质量。",
+      "canonical_evidence": "个性化图像美学评估数据集，直接评价图像感知质量。",
+      "llm_tldr_en": "A new multi-domain dataset for personalized image aesthetic assessment with 6,526 stimuli from art, fashion, and landscape domains, enabling cross-domain generalization study.",
+      "llm_tldr_cn": "针对现有个性化图像美学评估数据集局限于单一领域、缺少跨域个性化能力的问题，本文提出XPASS-Vis，首个显式面向跨域PIAA的数据集。它包含来自艺术、时尚和风景三个视觉领域的6526个刺激样本，并由多名标注者提供评分。实验表明该数据集能有效支持跨域美学偏好的建模与泛化研究，推动了美学质量评估的个性化发展。",
+      "llm_tldr": "针对现有个性化图像美学评估数据集局限于单一领域、缺少跨域个性化能力的问题，本文提出XPASS-Vis，首个显式面向跨域PIAA的数据集。它包含来自艺术、时尚和风景三个视觉领域的6526个刺激样本，并由多名标注者提供评分。实验表明该数据集能有效支持跨域美学偏好的建模与泛化研究，推动了美学质量评估的个性化发展。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.14556v1",
+      "source": "arxiv",
+      "title": "Visual Quality Score Assessment of Large White Goods in Remanufacture with Multi-View Deformable-DETR",
+      "abstract": "Remanufacturing large white goods is essential for a circular economy, yet visual quality assessment remains a manual bottleneck for training and pricing. Conventional detection methods require extensive annotation and struggle with small defects in high-resolution multi-view data. We present a multi-view framework based on Deformable-DETR for automated quality scoring that aggregates information across redundant views to extract fine-grained features. To enhance robustness with limited labels, we employ self-supervised pretraining followed by supervised fine-tuning on expert-annotated scores. Additionally, a linear projection over frozen feature maps identifies regions of interest to explain model decisions. Evaluated on an industrial multi-view dataset, our approach delivers precise quality assessments while reducing reliance on manual annotation and per-part customization, enabling scalable and transparent inspection for remanufacturing lines.",
+      "authors": [
+        "Paul Koch",
+        "Vivek Chavan"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-12T15:35:41+00:00",
+      "link": "https://arxiv.org/pdf/2606.14556v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "visual quality score assessment with region-of-interest explanation",
+      "llm_evidence_cn": "通过感兴趣区域解释进行视觉质量评分评估",
+      "llm_evidence": "通过感兴趣区域解释进行视觉质量评分评估",
+      "canonical_evidence": "通过感兴趣区域解释进行视觉质量评分评估",
+      "llm_tldr_en": "Proposes a multi-view Deformable-DETR framework for automated visual quality scoring of remanufactured white goods, using self-supervised pretraining and linear projection to explain decisions by highlighting regions of interest.",
+      "llm_tldr_cn": "针对再制造大型白色家电的视觉质量评估依赖人工且难以处理小缺陷的问题，提出基于可变形DETR的多视角框架，通过自监督预训练与监督微调实现自动化质量评分，并利用线性投影识别感兴趣区域来解释模型决策。实验在专家标注数据上验证了框架的有效性，为工业视觉质量评估提供了可解释的自动化方案。",
+      "llm_tldr": "针对再制造大型白色家电的视觉质量评估依赖人工且难以处理小缺陷的问题，提出基于可变形DETR的多视角框架，通过自监督预训练与监督微调实现自动化质量评分，并利用线性投影识别感兴趣区域来解释模型决策。实验在专家标注数据上验证了框架的有效性，为工业视觉质量评估提供了可解释的自动化方案。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "image quality assessment with explanations",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
