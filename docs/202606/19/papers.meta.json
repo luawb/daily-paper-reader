@@ -1,0 +1,39 @@
+{
+  "label": "2026-06-19",
+  "date": "2026-06-19",
+  "generated_at": "2026-06-19T21:44:14",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202606/19/2606.20108v1-efiqa-explainable-fundus-image-quality-assessment-via-anatomical-priors",
+      "section": "deep",
+      "title_en": "EFIQA: Explainable Fundus Image Quality Assessment via Anatomical Priors",
+      "authors": "Pengwei Wang, José Morano, Qian Wan, Hrvoje Bogunović",
+      "date": "2026-06-18",
+      "pdf": "https://arxiv.org/pdf/2606.20108v1",
+      "score": "9.0",
+      "evidence": "提供可解释的图像质量评估，通过解剖先验生成空间质量图，无需质量标签",
+      "tldr": "传统基于深度学习的眼底图像质量评估方法受限于数据集特定的监督标签，导致跨质量标准泛化能力差，且无法指明图像质量退化的具体空间位置。为突破这一瓶颈，EFIQA创新性地采用解剖先验知识，通过无监督的掩码血管修复训练异常检测器来识别血管缺失区域，并将其蒸馏为浅层适配器，映射冻结基础模型特征以生成精细的空间质量图。在多个使用不同质量标注标准的外部数据集上，EFIQA无需任何人工质量标签，性能却优于现有监督方法，同时提供了高质量的可解释反馈。这项工作展示了无监督、基于先验的质控框架在真实世界眼底图像分析中的巨大潜力，为可解释AI辅助诊断奠定了基础。",
+      "tags": "query:xiqa",
+      "abstract_en": "Image quality control is vital for a wide range of downstream applications. Deep learning-based image quality assessment methods typically train classifiers on dataset-specific quality labels, inheriting two limitations: (1) generalization is tied to the labeling criteria of the training set and (2) these methods cannot provide spatial feedback on where the quality is degraded, lacking explainability. In this work, we propose EFIQA, a framework that requires no quality-related supervision and produces spatial quality maps by design. Rather than learning ``what is degradation\" from human-annotated labels, EFIQA learns ``what should be there\" by leveraging anatomical priors. For fundus photography, we instantiate this as a two-stage approach, by first training an unsupervised anomaly detector via masked anatomical inpainting to identify regions of missing vasculature, and then distilling this prior knowledge into a shallow adapter mapping features of a frozen foundation model to precise quality maps. External-dataset evaluation demonstrates that this label-free approach with minimal adaptation achieves better performance and explainability compared with supervised methods across benchmarks with different quality criteria, highlighting its potential for real-world applications.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202606/19/2606.19073v1-taming-i2v-models-for-image-hoi-editing-a-cognitive-benchmark-and-agentic-self-correcting-framework",
+      "section": "quick",
+      "title_en": "Taming I2V models for Image HOI Editing: A Cognitive Benchmark and Agentic Self-Correcting Framework",
+      "authors": "Jiayi Gao, Qingchao Chen, Yuxin Peng, Yang Liu",
+      "date": "2026-06-17",
+      "pdf": "https://arxiv.org/pdf/2606.19073v1",
+      "score": "6.0",
+      "evidence": "使用VLM问答评估编辑图像质量，通过推理判断交互有效性",
+      "tldr": "现有图像编辑方法局限于静态属性，难以处理复杂的人-物交互（HOI），且缺乏同时评估交互有效性和对象保留的基准。我们提出三层认知基准HOI-Edit与实例级自动化度量HOI-Eval，发现图像到视频（I2V）模型天然适合动态编辑并具错误诊断能力。基于此设计自校正框架SCPE，通过迭代优化提示约束生成，实现精准HOI编辑。在HOI-Edit上，SCPE性能媲美Nano Banana等SOTA模型，代码已开源。",
+      "tags": "query:xiqa",
+      "abstract_en": "Current image editing methods excel at static attributes but fail at complex Human-Object Interactions (HOI), a critical challenge unaddressed by existing benchmarks that conflate HOI with static attributes, relying on global metrics incapable of simultaneously assessing dynamic interaction validity and entangled human-object pair preservation. Thus, we first introduce HOI-Edit, a comprehensive benchmark with three progressive cognitive levels, which features an automated metric HOI-Eval that reliably evaluates instance-level interaction by letting VLM Q&A after thinking with images containing grounded Human-Object pairs. Considering the task's essence of remodeling dynamic relationships, we benchmark Image-to-Video (I2V) models, finding them inherently suited for dynamic editing due to their temporal generation capabilities. Crucially, beyond superior performance, this capability provides a \"replay of the failure process,\" offering unique diagnosability into why errors occur. We thus propose SCPE (Self-Correcting Process Editing), a novel, agentic self-correcting framework that constrains the generation of I2V models through iteratively refined prompts, enabling the generated videos to more accurately present the target HOI. Extracted frames from these videos are the final editing results. On HOI-Edit, SCPE achieves performance competitive with state-of-the-art (SOTA) editing models like Nano Banana on interaction. Code is available at https://github.com/oceanflowlab/HOI-Edit.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
