@@ -1,0 +1,24 @@
+{
+  "label": "2026-06-21",
+  "date": "2026-06-21",
+  "generated_at": "2026-06-21T20:16:31",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202606/21/2606.18869v1-learning-to-distort-weakly-supervised-image-quality-transfer-for-prostate-dwi-correction",
+      "section": "deep",
+      "title_en": "Learning to Distort: Weakly-Supervised Image Quality Transfer for Prostate DWI Correction",
+      "authors": "YuCheng Tang, Wen Yan, Alexander Ng, Natasha Thorley, Pawel Rajwa, Yipei Wang, Aqua Asif, Clare Allen, Louise Dickinson, Francesco Giganti, David Atkinson, Shonit Punwani, Daniel Alexander, Shaheer Ullah Saeed, Veeru Kasivisvanathan, Yipeng Hu",
+      "date": "2026-06-17",
+      "pdf": "https://arxiv.org/pdf/2606.18869v1",
+      "score": "8.0",
+      "evidence": "利用图像质量评估信号来监督图像质量迁移过程",
+      "tldr": "针对前列腺DWI校正缺乏配对数据的问题，提出弱监督图像质量迁移框架，利用图像级质量标签和原型流匹配合成逼真失真图像以构造配对数据，进而训练校正模型。实验显示，合成伪影真实模拟临床干扰，校正模型在PI-RADS和Gleason评分分类上优于现有非配对方法，为无配对数据的失真校正提供了新途径。",
+      "tags": "query:xiqa",
+      "abstract_en": "Single-shot echo-planar prostate diffusion-weighted imaging (DWI) is frequently complicated by geometric distortions, which impact the ability to derive reliable diagnoses from such images. Developing automated correction methods is challenged by the absence of paired distorted and undistorted clinical scans. In this paper, we first propose a novel weakly-supervised image quality transfer (IQT) framework from undistorted to distorted images that utilizes image quality assessment (IQA) signals to supervise the transfer process. Unlike traditional methods that require expensive, voxel-wise paired data or resort to developing unpaired algorithms, our approach utilizes image-level quality labels (here, distorted vs. undistorted) to establish latent quality prototypes within a pre-trained feature space. Recognizing that simulating realistic distortions is more reliable than direct unpaired correction, we describe a weakly-supervised prototype flow matching algorithm to explicitly regularize generative trajectories towards distorted prototypes, producing realistic susceptibility artifacts that mimic clinical degradations. By synthesizing these realistic pairs, we enable a second IQT model to be trained in the forward direction for distortion correction. Experimental results demonstrate that our generated images successfully mimic the diagnostic interference of real-world artifacts, which leads to more capable distortion correction IQT models. In addition to qualitative comparisons, we also conduct exhaustive quantitative evaluations that compare our approach with existing unpaired approaches (e.g., CycleGAN, UNIT-DDPM, and OT-FM) - as either forward or reverse alternatives - by assessing clinical downstream task performance in PI-RADS and Gleason score classification, using both in-distribution and external data sets.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

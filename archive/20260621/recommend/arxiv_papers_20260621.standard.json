@@ -1,0 +1,66 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-21T20:15:22.490248+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 0,
+    "quick_skim_target": 11,
+    "quick_selected": 0
+  },
+  "deep_dive": [
+    {
+      "id": "2606.18869v1",
+      "source": "arxiv",
+      "title": "Learning to Distort: Weakly-Supervised Image Quality Transfer for Prostate DWI Correction",
+      "abstract": "Single-shot echo-planar prostate diffusion-weighted imaging (DWI) is frequently complicated by geometric distortions, which impact the ability to derive reliable diagnoses from such images. Developing automated correction methods is challenged by the absence of paired distorted and undistorted clinical scans. In this paper, we first propose a novel weakly-supervised image quality transfer (IQT) framework from undistorted to distorted images that utilizes image quality assessment (IQA) signals to supervise the transfer process. Unlike traditional methods that require expensive, voxel-wise paired data or resort to developing unpaired algorithms, our approach utilizes image-level quality labels (here, distorted vs. undistorted) to establish latent quality prototypes within a pre-trained feature space. Recognizing that simulating realistic distortions is more reliable than direct unpaired correction, we describe a weakly-supervised prototype flow matching algorithm to explicitly regularize generative trajectories towards distorted prototypes, producing realistic susceptibility artifacts that mimic clinical degradations. By synthesizing these realistic pairs, we enable a second IQT model to be trained in the forward direction for distortion correction. Experimental results demonstrate that our generated images successfully mimic the diagnostic interference of real-world artifacts, which leads to more capable distortion correction IQT models. In addition to qualitative comparisons, we also conduct exhaustive quantitative evaluations that compare our approach with existing unpaired approaches (e.g., CycleGAN, UNIT-DDPM, and OT-FM) - as either forward or reverse alternatives - by assessing clinical downstream task performance in PI-RADS and Gleason score classification, using both in-distribution and external data sets.",
+      "authors": [
+        "YuCheng Tang",
+        "Wen Yan",
+        "Alexander Ng",
+        "Natasha Thorley",
+        "Pawel Rajwa",
+        "Yipei Wang",
+        "Aqua Asif",
+        "Clare Allen",
+        "Louise Dickinson",
+        "Francesco Giganti",
+        "David Atkinson",
+        "Shonit Punwani",
+        "Daniel Alexander",
+        "Shaheer Ullah Saeed",
+        "Veeru Kasivisvanathan",
+        "Yipeng Hu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-17T09:47:53+00:00",
+      "link": "https://arxiv.org/pdf/2606.18869v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "utilizes image quality assessment signals to supervise image quality transfer",
+      "llm_evidence_cn": "利用图像质量评估信号来监督图像质量迁移过程",
+      "llm_evidence": "利用图像质量评估信号来监督图像质量迁移过程",
+      "canonical_evidence": "利用图像质量评估信号来监督图像质量迁移过程",
+      "llm_tldr_en": "Proposes weakly-supervised image quality transfer for prostate DWI correction, leveraging image-level IQA labels to guide the transfer from undistorted to distorted images without paired data.",
+      "llm_tldr_cn": "针对前列腺DWI图像几何失真校正中缺乏配对的失真与未失真数据的问题，本文提出了一种弱监督图像质量迁移框架。该框架利用图像级质量标签（失真 vs. 未失真）来监督从高质量到低质量图像的迁移过程，避免了昂贵体素级配对数据的需求。实验表明，方法能有效校正失真，仅依赖粗粒度质量信号。这为医学图像质量增强提供了一种实用的弱监督解决方案。",
+      "llm_tldr": "针对前列腺DWI图像几何失真校正中缺乏配对的失真与未失真数据的问题，本文提出了一种弱监督图像质量迁移框架。该框架利用图像级质量标签（失真 vs. 未失真）来监督从高质量到低质量图像的迁移过程，避免了昂贵体素级配对数据的需求。实验表明，方法能有效校正失真，仅依赖粗粒度质量信号。这为医学图像质量增强提供了一种实用的弱监督解决方案。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": []
+}

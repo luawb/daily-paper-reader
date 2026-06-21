@@ -1,0 +1,233 @@
+Title: Learning to Distort: Weakly-Supervised Image Quality Transfer for Prostate DWI Correction
+
+URL Source: https://arxiv.org/pdf/2606.18869v1
+
+Published Time: Thu, 18 Jun 2026 00:44:06 GMT
+
+Number of Pages: 10
+
+Markdown Content:
+# Learning to Distort: Weakly-Supervised Image Quality Transfer for Prostate DWI Correction 
+
+Yucheng Tang 1, Wen Yan 1, Alexander Ng 2, Natasha Thorley 3, Pawel Rajwa 2,Yipei Wang 1, Aqua Asif 4,2, Clare Allen 5, Louise Dickinson 5, Francesco Giganti 2,5, David Atkinson 3, Shonit Punwani 5,3, Daniel Alexander 6,7, Shaheer Ullah Saeed 1, Veeru Kasivisvanathan 2,8, and Yipeng Hu 1 
+
+> 1
+
+UCL Hawkes Institute and Department of Medical Physics and Biomedical Engineering, University College London, UK  
+
+> 2
+
+Division of Surgery and Interventional Science, University College London, UK  
+
+> 3
+
+Centre for Medical Imaging, University College London, UK  
+
+> 4
+
+British Urology Researchers in Surgical Training (BURST), UK  
+
+> 5
+
+Department of Radiology, University College London Hospitals NHS Foundation Trust, UK  
+
+> 6
+
+Centre for Medical Image Computing, University College London, UK  
+
+> 7
+
+Department of Computer Science, University College London, UK  
+
+> 8
+
+Department of Urology, University College London Hospitals NHS Foundation Trust, UK 
+
+Abstract. Single-shot echo-planar prostate diffusion-weighted imaging (DWI) is frequently complicated by geometric distortions, which impact the ability to derive reliable diagnoses from such images. Developing automated correction methods is challenged by the absence of paired distorted and undistorted clinical scans. In this paper, we first propose a novel weakly-supervised image quality transfer (IQT) framework from undistorted to distorted images that utilizes image quality assessment (IQA) signals to supervise the transfer process. Unlike traditional meth-ods that require expensive, voxel-wise paired data or resort to develop-ing unpaired algorithms, our approach utilizes image-level quality labels (here, distorted vs. undistorted) to establish latent quality prototypes within a pre-trained feature space. Recognizing that simulating realistic distortions is more reliable than direct unpaired correction, we describe a weakly-supervised prototype flow matching algorithm to explicitly reg-ularize generative trajectories towards distorted prototypes, producing realistic susceptibility artifacts that mimic clinical degradations. By syn-thesizing these realistic pairs, we enable a second IQT model to be trained in the forward direction for distortion correction. Experimental results demonstrate that our generated images successfully mimic the diagnostic interference of real-world artifacts, which leads to more capable distortion correction IQT models. In addition to qualitative comparisons, we also conduct exhaustive quantitative evaluations that compare our approach with existing unpaired approaches (e.g., CycleGAN, UNIT-DDPM, and OT-FM) - as either forward or reverse alternatives - by assessing clinical downstream task performance in PI-RADS and Gleason score classifica-tion, using both in-distribution and external data sets. Code is available at https://anonymous.4open.science/r/ProtoFM-IQT-06DD .      
+
+> arXiv:2606.18869v1 [cs.CV] 17 Jun 2026 2Tang et al.
+> Keywords: Prostate DWI ·Flow Matching ·Image Transfer.
+
+# 1 Introduction 
+
+Prostate diffusion-weighted imaging (DWI) is playing a growing role in cancer detection, grading, risk assessment and their subsequent biopsy and treatment planning. However, single-shot echo-planar imaging is inherently prone to suscep-tibility artifacts caused by rectal air and patient motion [6]. These artifacts lead to geometric distortions, thereby misleading the spatial correspondence between DWI and anatomical T2-weighted images (T2WI) [16] and, when used alone, its true zonal and pathology localisation with respect to surrounding anatomy. In clinical practice, distorted DWI often needs repeated scans, extending examina-tion time and increasing patient and healthcare burden. Although acquisition-stage techniques [11, 4] and reverse phase-encoding tools such as TopUp [1] alleviate distortions effectively, they require additional scans or paired images with opposite encoding directions, which are often unavail-able in routine clinical workflows. Fully-supervised image quality transfer (IQT) methods [12, 9, 3] rely on paired distorted-undistorted scans, which are generally infeasible. Unpaired IQT methods, including CycleGAN [17] and diffusion-based models [25, 18] may respectively face challenges in unstable training [10] and high inference latency [19], with additional risk in anatomical hallucinations [20]. To address these challenges, we propose a novel weakly-supervised IQT method that overcomes paired data scarcity. Using weak quality-based supervision, sim-ulating distortions is found more reliable than direct correction (speculatively, generative mistakes (e.g., hallucinations) during degradation are less harmful than hallucinating non-existent or removing true anatomical structures during correction). Therefore, we first generate realistic distortions from undistorted inputs based on flow matching (FM) [13], yielding a synthetic paired dataset to train a second fully-supervised distortion correction model. Our contributions include: First, a novel weak-IQA-supervised prototype FM method to generate realistic distorted DWI from undistorted inputs. Second, an effective IQT algorithm reformulating the problem as realistic distortion gen-eration followed by fully-supervised correction. Third, using two clinical down-stream tasks on two independent data sets, we first demonstrate that classifiers evaluated on our synthesized distorted images exhibit significant performance degradation in PI-RADS and Gleason scoring, indicating strong correlation be-tween the synthesized artifacts and diagnostic decision-making. Furthermore, we show that the generated distorted-undistorted pairs can be successfully used to train a second IQT model that effectively corrects real-world DWI distortions. 
+
+# 2 Method 
+
+The proposed IQT method comprises three stages: 1) constructing a weak super-vision signal via an IQA encoder and quality prototypes, as shown in Fig. 2(a) Weakly-Supervised Image Quality Transfer 3 
+
+> Fig. 1. Overview of the proposed Weakly-Supervised Prototype FM framework. (a) An IQA encoder is pre-trained to construct a feature space that distinguishes distorted and undistorted images. (b) Quality prototypes are learned to represent the centers of these domain distributions. (c) Training of the FM-based IQT model, where the generation trajectory is explicitly guided toward the distorted manifold using the pre-trained encoder and learned prototypes.
+
+and (b), and 2) training a FM network constrained by this signal, as shown in Fig. 2(c). 3) Inference via the trained FM network and use the generated paired images to fully supervise a second IQT model. 
+
+2.1 Construction of Weak Quality Supervision Signal IQA Encoder Pre-training. We first pre-train an IQA encoder fϕ(·), to dis-criminate distorted features from undistorted ones and extract distortion-related representations. The encoder accepts a 3D DWI volume xi as input and produces a global feature vector zi ∈ Rd, where d denotes the feature dimension. Consider a mini-batch B of samples {(xi, c i)}|B| 
+
+> i=1
+
+, where ci ∈ { 0, 1} is the binary label with 
+
+ci = 0 and ci = 1 representing undistorted and distorted images, respectively. The IQA encoder extracts the feature vector zi, which is then mapped to the output logits oi via a linear classification head. The encoder and classification head are optimized using the standard binary cross-entropy loss LCE against the ground-truth labels ci. To encourage a well-structured feature space with compact intra-class clusters and clear inter-class separation, we incorporate a contrastive loss Lcon . This loss maximizes feature similarity among samples of the same class while separating features from different classes. Given a temper-4 Tang et al. 
+
+ature parameter τ , the loss is formulated as in Eq. (1) 
+
+Lcon = 1
+
+|B| 
+
+> |B|
+
+X
+
+> i=1
+
+−1
+
+|P (i)|
+
+X
+
+> p∈P (i)
+
+log exp(cos( zi, zp)/τ )
+
+P  
+
+> j̸=i
+
+exp(cos( zi, zj )/τ ) (1) where cos( a, b) = a·b 
+
+> |a|| b|
+
+. P(i) = {p ∈ B | cp = ci, p ̸ = i} is the set of samples in the same class as i, excluding itself. The total encoder training loss is de-fined as Lenc = LCE + λcon Lcon , where λcon is a hyper-parameter weighting the contrastive loss. 
+
+Quality Prototype Learning. Subsequently, we train the quality proto-types with the IQA encoder frozen. We optimize two prototype vectors, p0 ∈ Rd
+
+and p1 ∈ Rd, corresponding to undistorted and distorted images, respectively. For each sample (xi, c i), the extracted feature zi is optimized to be closer to its class prototype and further from the opposing prototype. We utilize cosine similarity as the metric and apply a margin ranking loss with a constant margin 
+
+m, defined as Lproto = 1
+
+> |B|
+
+P|B|  
+
+> i=1
+
+max (0 , cos( zi, p1−ci ) − cos( zi, pci ) + m).
+
+2.2 Weakly-Supervised Prototype FM Model Training 
+
+Let X = {xi}Ns 
+
+> i=1
+
+denote the source domain (undistorted DWI) and Y = {yj }Nt
+
+> j=1
+
+denote the target domain (distorted DWI), where Ns and Nt represent the num-ber of samples in the source and target training sets, respectively. Since our ultimate clinical objective is distortion correction (forward direction, Y → X), we formulate the distortion simulation as a reverse generation process ( X → Y). The objective of FM is to learn a time-dependent velocity field vθ (·, t ) that ap-proximates the true conditional flow at any time t ∈ [0 , 1] . During training, mini-batches of samples are drawn independently from X and Y, and a contin-uous time step t is sampled from the uniform distribution U(0 , 1) . We employ a minibatch optimal transport (OT) plan, where source and target samples within each mini-batch are coupled to minimize the overall transport cost, as detailed in [21]. Given an OT-coupled pair (xi, y j ) and a time step t, the intermediate state is defined via linear interpolation as ˆyti,j = (1 − t)xi + ty j , with the ground-truth velocity field ui,j = yj − xi. The FM network takes ˆyti,j and t as inputs to get the velocity field prediction ˆvθ (ˆ yti,j , t ). The training objective minimizes the mean squared error between the predicted and ground-truth velocity fields as LFM = Exi,y j ,t 
+
+∥ˆvθ (ˆ yti,j , t ) − ui,j ∥22
+
+.In addition to learning the velocity field in the image space, we introduce a weak supervision strategy that explicitly guides the generated features toward the distorted feature manifold in the feature space. The FM network generates a trajectory {xki }Kk=0 starting from the initial state x0 
+
+> i
+
+(where x0 
+
+> i
+
+= xi) with discrete time steps tk = k/K . We define a threshold step k0. For early generation steps ( k < k 0), we apply no quality constraints, as the early generated images are semantically unstable and noisy. For later steps ( k ≥ k0), the generated image 
+
+xki is passed through the IQA encoder at each step to extract its feature zki . We calculate a margin ranking loss between this feature and the quality prototypes Weakly-Supervised Image Quality Transfer 5
+
+to formulate the guidance loss. Crucially, we introduce a time-dependent weight 
+
+wk to allocate stronger supervision as the generated image progressively reveals structural details, preventing the loss from misguiding the trajectory during the early, noisy stages. The prototype guidance loss is defined as: 
+
+LPG =
+
+> K
+
+X
+
+> k=k0
+
+wk · max  0, cos( zki , p0) − cos( zki , p1) + m , (2) where wk = [( k − k0)/(K − k0)] 2 is the quadratic time-dependent weight and 
+
+m is the constant margin. To maintain memory efficiency while optimizing this continuous trajectory, we employ gradient accumulation, updating the model parameters at intervals of n∆k steps. The total training objective for the FM network is defined as Ltotal = LFM + λPG LPG , where λPG is a hyper-parameter that balances the prototype guidance loss. 
+
+2.3 Inference and Second IQT Model Training. 
+
+During inference, the FM network generates a distorted image iteratively start-ing from an undistorted source image xi. For each discrete time step k =1, . . . , K (corresponding to tk = k/K ), the state xki is updated from the previ-ous state xk−1 
+
+> i
+
+using the predicted velocity field ˆvθ (xk−1 
+
+> i
+
+, t k−1), as xki = xk−1 
+
+> i
+
++ˆvθ (xk−1 
+
+> i
+
+, t k−1)∆t , where ∆t = 1 /K . By applying this generation process to the undistorted dataset, we synthesize a paired dataset of undistorted and generated distorted images, denoted as {(xi, ˆyi)}Ns
+
+> i=1
+
+, where ˆyi = xKi represents the final generated state. Utilizing these synthetic pairs, we train a supervised second IQT network denoted as Gψ to map the distorted DWI ˆyi back to the undistorted one 
+
+xi. The network is trained to minimize the reconstruction loss between the pre-dicted undistorted image and the ground truth as Lcorr = Exi,ˆyi [∥xi − Gψ (ˆ yi)∥1],where ∥ · ∥ 1 denotes the L1 norm to preserve high-frequency textural details, which are critical for downstream clinical evaluations. 
+
+# 3 Experiments and Results 
+
+Implementation Details. The FM and the second IQT models both employ 3D U-Net backbones [5] featuring a three-level symmetric encoder-decoder struc-ture. Specifically, we set the channel multipliers to (1, 2, 4) with two residual blocks per level and integrate a self-attention module at the second level. The IQA encoder is implemented using a 3D ResNet-18 architecture [8], which yields a 512-dimensional feature vector via global average pooling. For encoder pre-training, the temperature parameter τ and contrastive loss weight λcon are set to 0.1 and 0.5, respectively. In the quality prototype learning and FM training stages, the margin m is set to 0.2. FM training utilizes K = 20 total inference steps, with a threshold step k0 = 10 , an interval n∆k = 3 , and a guidance loss weight λPG = 1 .0. All models are optimized for 100 epochs using Adam with a 6 Tang et al. 
+
+learning rate of 1 × 10 −4 and a batch size of 4. Experiments are conducted on an NVIDIA Quadro GV100 GPU with 24 GB memory. 
+
+Datasets. A private dataset [23], referred to as ’Dataset 1’, consisting of 
+
+1027 prostate DWI scans with multiple high b-values ( ≥ 1400 s/mm 2) from 851 
+
+patients, is used for training and internal testing. These cases are categorized into undistorted ( 790 scans) and distorted ( 237 scans) based on geometric consistency between T2WI and the imaging-coordinate-aligned DWI. Dataset 1 is randomly partitioned into training and test sets with an 8 : 2 ratio at the patient level. The PRIME dataset [2] is used for external evaluation, comprising 483 cases, including 28 labeled as distorted by expert radiologists. Additionally, it includes expert-labeled PI-RADS [22] ( 227 ≥ 4, 256 < 4) and Gleason scores [7] ( 209 
+
+≥ 3 + 4 , 274 < 3 + 4 ) for downstream clinical validation. All volumes are prepro-cessed using SimpleITK [14] python library, resampled to a spatial resolution of 
+
+[1 .0, 1.0, 1.5] mm, followed by center-cropping to [128 , 128 , 32] . Voxel intensities are normalized to the range [−1, 1] via min-max scaling. 
+
+Downstream Evaluation Protocol. We utilize the ProFound foundation model 9 to evaluate the clinical value of generated images through downstream tasks. The model takes three modalities as input: high b-value DWI, axial T2WI, and the apparent diffusion coefficient (ADC) map. The ProFound model is fine-tuned on 386 undistorted PRIME cases and tested on the remaining 60 scans, which include 30 randomly selected samples per class for each task. During fine-tuning, affine transformations are applied jointly to all three modalities to preserve spatial alignment, including random rotation (up to 15 ◦) and transla-tion (up to 0.15 mm). For comparison and ablation study evaluation, we replace the original undistorted DWI with generated distorted DWI to measure the per-formance degradation. For correction evaluation, we use 37 real-world distorted volumes from the PRIME dataset and replace them with generated undistorted DWI. Performance is quantified using accuracy (ACC) and area under the curve (AUC). We follow the open-source ProFound fine-tuning code and use the same hyperparameter settings. 
+
+Comparison Study We compare the proposed weakly-supervised prototype FM method with CycleGAN (C-GAN) [17], UNIT-DDPM (U-DDPM) [18] using the SDEdit strategy [15], and optimal transport flow matching (OT-FM) [24] on the test sets. All models share the same 3D U-Net backbone. U-DDPM, OT-FM, and our method use 20 inference steps. Results are summarized in Table 1, and compared in Fig. 2 (a). As shown in Table 1, CycleGAN achieves relatively low classification scores, and primarily performs intensity and style transfer rather than learning geometric deformation as observed in Fig. 2 (a). U-DDPM with SDEdit fails to simulate geometric distortions. It maintains PI-RADS perfor-mance by preserving anatomical structures, but significantly degrades Gleason scoring. This is perhaps due to the denoising process smoothing out fine tex-tures and intensities essential for grading, reflecting textural degradation rather than realistic distortion. For FM-based methods, the OT-FM yields higher ACC and AUC scores. Visually, OT-FM primarily introduces blurring effects through  
+
+> 9https://github.com/pipiwang/ProFound
+
+Weakly-Supervised Image Quality Transfer 7
+
+Table 1. Quantitative evaluation on the PRIME dataset. Comparison and Ablation Study: Performance of the downstream classifier when the original undistorted DWI is replaced with generated distorted DWI. Lower ACC and AUC indicate more effective distortion simulation. Distortion Correction: Evaluation of diagnostic correction on real distorted images. For unpaired baselines (C-GAN, U-DDPM, OT-FM) and Ours (FG), correction is performed via forward generation (distorted-to-undistorted). Ours (UNet) refers to a supervised U-Net trained on the synthetic paired data produced by our distortion synthesis FM model. Higher ACC and AUC indicate superior correction. Ref. Un and Ref. Dis denote reference performance on original undistorted and distorted test images, respectively. All metrics are reported as mean ± standard deviation over five runs. For diffusion and FM-based methods, results with total inference steps of 20 .PI-RADS Score Gleason Score Category Method ACC ( %) AUC ( %) ACC ( %) AUC ( %)Comparison Study Ref. Un 59.33 ± 3.83 67.22 ± 3.98 57.33 ± 2.98 62.89 ± 2.11 C-GAN 50.33 ± 4.41 56.02 ± 4.42 54.67 ± 4.14 47.24 ± 4.12 U-DDPM 60.00 ± 4.08 57.11 ± 4.25 52.67 ± 2.88 52.91 ± 3.49 OT-FM 57.67 ± 4.14 61.44 ± 5.77 56.33 ± 4.82 54.67 ± 5.56 Ours 49.67 ± 2.11 53.78 ± 3.45 46.67 ± 3.54 45.82 ± 3.21 Ablation Study w.o. PG 57.67 ± 4.14 61.44 ± 5.77 56.33 ± 4.82 54.67 ± 5.56 PG → CE 54.33 ± 2.36 57.67 ± 3.12 58.33 ± 4.63 59.33 ± 4.23 Ours 49.67 ± 2.11 53.78 ± 3.45 46.67 ± 3.54 45.82 ± 3.21 Distortion Correction Ref. Dis 42.86 ± 6.68 46.78 ± 8.76 48.57 ± 9.65 48.65 ± 7.71 C-GAN 48.57 ± 6.96 49.56 ± 6.44 55.00 ± 6.49 50.41 ± 9.63 U-DDPM 41.43 ± 8.22 42.78 ± 8.35 48.57 ± 8.22 50.53 ± 9.50 OT-FM 45.71 ± 8.53 48.11 ± 8.97 43.57 ± 8.22 51.93 ± 9.50 Ours (FG) 44.29 ± 5.98 47.33 ± 6.13 46.43 ± 7.99 46.08 ± 4.97 Ours (UNet) 54.29 ± 4.66 53.98 ± 3.02 56.43 ± 5.42 51.11 ± 4.85 
+
+pixel-wise averaging and fails to simulate complex structural degradations. With-out a defined target in the feature space, the standard flow trajectory tends to converge to a conservative mean representation of the target domain, failing to reach the regions of high distortion intensity within the manifold. Our method is able to push velocity field toward the core distortion features, producing PI-RADS-and-Gleason-impacting boundary deformation. 
+
+Ablation Study. We evaluate the weakly supervised prototype guidance (PG) mechanism by comparing our model with: (1) a version without the PG constraint (w.o. PG), which is equivalent to OT-FM, and a version where the PG loss is replaced by a standard binary cross-entropy (BCE) classification loss (PG → CE). The BCE loss is computed using the outputs of the pre-trained classification head in Section 2.1 against the label for distorted images ( c = 1 ). As shown in Table 1 and Fig. 2 (b), both removing and substituting the PG constraint lead to a reduction in distortion intensity. The CE approach is less effective than PG because the BCE loss is primarily optimized by pushing fea-tures across the decision boundary. Once the sample is classified as distorted, the 8 Tang et al.  
+
+> Fig. 2. Qualitative evaluation on the in-distribution and external test datasets. (a) Visual comparison of distortion generation with baseline methods. (b) Ablation study on the weakly-supervised PG mechanism. (c) Visualization of baseline methods for direct forward distortion correction and the U-Net model trained on synthetic paired data (Ours (UNet)).
+
+gradient signal diminishes, often leaving the generated image near the boundary with insufficient geometric deformation. In contrast, by maximizing the cosine similarity to this cluster center, the PG constraint provides a continuous and sta-ble directional force that pulls the generation trajectory deeper into the distorted distribution, resulting in more clinically realistic distortion. 
+
+Supervised Distortion Correction via Synthetic Paired Data. As shown in Table 1, direct forward generation (FG) ( Y → X) using the proposed approach (Ours (FG)) and other unpaired baselines yield poor downstream per-formance. Qualitatively, in Fig. 2(c), the Ours (FG) merely fills geometric voids with unrealistic intensities. On the other hand, as presented in Table 1, the U-Net trained on our synthetic data produced via reverse generation (Ours (UNet)) out-performs all baseline methods attempting direct correction on PI-RADS score task. However, we observe that the U-Net outputs tend to over-smooth high-frequency textures, resulting in blurrier images compared to the original undis-torted references. This loss of fine-grained detail limits the model’s performance on the Gleason score task. We expect further development using generative mod-eling for this step may warrant improvement. Weakly-Supervised Image Quality Transfer 9
+
+# 4 Conclusion 
+
+We proposed a novel, practical and effective two-stage IQT framework for un-paired DWI distortion correction. Experiments confirm that the generated im-ages are clinically realistic and downstream impactful. Furthermore, using these synthetic paired samples, a simple supervised distortion correction model im-proves image quality in real-world scenarios. Our future work will focus on employing more powerful generative models (such as FM) for the supervised correction stage to enhance textural fidelity. Furthermore, we plan to incorpo-rate corresponding T2WI as structural priors to provide stronger anatomical constraints during the correction process. 
+
+Disclosure of Interests. The authors have no competing interests to declare that are relevant to the content of this article. 
+
+# References 
+
+1. Andersson, J.L., Skare, S., Ashburner, J.: How to correct susceptibility distortions in spin-echo echo-planar images: application to diffusion tensor imaging. Neuroim-age 20 (2), 870–888 (2003) 2. Asif, A., Nathan, A., Ng, A., Khetrapal, P., Chan, V.W.S., Giganti, F., Allen, C., Freeman, A., Punwani, S., Lorgelly, P., et al.: Comparing biparametric to multiparametric mri in the diagnosis of clinically significant prostate cancer in biopsy-naive men (prime): a prospective, international, multicentre, non-inferiority within-patient, diagnostic yield trial protocol. BMJ open 13 (4), e070280 (2023) 3. Bian, Z., Shao, M., Carass, A., Prince, J.L.: Drdisco: Deep registration for distor-tion correction of diffusion mri with single phase-encoding. In: Medical Imaging 2023: Image Processing. vol. 12464, pp. 300–304. SPIE (2023) 4. Chien, N., Cho, Y.H., Wang, M.Y., Tsai, L.W., Yeh, C.Y., Li, C.W., Lan, P., Wang, X., Liu, K.L., Chang, Y.C.: Deep learning based multi-shot breast diffusion mri: Improving imaging quality and reduced distortion. European Journal of Radiology p. 112419 (2025) 5. Çiçek, Ö., Abdulkadir, A., Lienkamp, S.S., Brox, T., Ronneberger, O.: 3d u-net: learning dense volumetric segmentation from sparse annotation. In: International conference on medical image computing and computer-assisted intervention. pp. 424–432. Springer (2016) 6. Donato Jr, F., Costa, D.N., Yuan, Q., Rofsky, N.M., Lenkinski, R.E., Pe-drosa, I.: Geometric distortion in diffusion-weighted mr imaging of the prostate—contributing factors and strategies for improvement. Academic radiol-ogy 21 (6), 817–823 (2014) 7. Epstein, J.I.: An update of the gleason grading system. The Journal of urology 
+
+183 (2), 433–440 (2010) 8. Hara, K., Kataoka, H., Satoh, Y.: Can spatiotemporal 3d cnns retrace the history of 2d cnns and imagenet? In: Proceedings of the IEEE conference on Computer Vision and Pattern Recognition. pp. 6546–6555 (2018) 9. Hu, Z., Wang, Y., Zhang, Z., Zhang, J., Zhang, H., Guo, C., Sun, Y., Guo, H.: Distortion correction of single-shot epi enabled by deep-learning. Neuroimage 221 ,117170 (2020) 10 Tang et al. 10. Johnson, J.W.: Generative adversarial networks in medical imaging. In: State of the Art in Neural Networks and their Applications, pp. 271–278. Elsevier (2021) 11. Lawrence, E.M., Zhang, Y., Starekova, J., Wang, Z., Pirasteh, A., Wells, S.A., Hernando, D.: Reduced field-of-view and multi-shot dwi acquisition techniques: Prospective evaluation of image quality and distortion reduction in prostate cancer imaging. Magnetic resonance imaging 93 , 108–114 (2022) 12. Liao, P., Zhang, J., Zeng, K., Yang, Y., Cai, S., Guo, G., Cai, C.: Referenceless distortion correction of gradient-echo echo-planar imaging under inhomogeneous magnetic fields based on a deep convolutional neural network. Computers in biology and medicine 100 , 230–238 (2018) 13. Lipman, Y., Chen, R.T., Ben-Hamu, H., Nickel, M., Le, M.: Flow matching for generative modeling. arXiv preprint arXiv:2210.02747 (2022) 14. Lowekamp, B.C., Chen, D.T., Ibáñez, L., Blezek, D.: The design of simpleitk. Frontiers in neuroinformatics 7, 45 (2013) 15. Meng, C., He, Y., Song, Y., Song, J., Wu, J., Zhu, J.Y., Ermon, S.: Sdedit: Guided image synthesis and editing with stochastic differential equations. arXiv preprint arXiv:2108.01073 (2021) 16. Rakow-Penner, R.A., White, N.S., Margolis, D.J., Parsons, J.K., Schenker-Ahmed, N., Kuperman, J.M., Bartsch, H., Choi, H.W., Bradley, W.G., Shabaik, A., et al.: Prostate diffusion imaging with distortion correction. Magnetic resonance imaging 
+
+33 (9), 1178–1181 (2015) 17. Sandfort, V., Yan, K., Pickhardt, P.J., Summers, R.M.: Data augmentation us-ing generative adversarial networks (cyclegan) to improve generalizability in ct segmentation tasks. Scientific reports 9(1), 16884 (2019) 18. Sasaki, H., Willcocks, C.G., Breckon, T.P.: Unit-ddpm: Unpaired image transla-tion with denoising diffusion probabilistic models. arXiv preprint arXiv:2104.05358 (2021) 19. Song, J., Meng, C., Ermon, S.: Denoising diffusion implicit models. arXiv preprint arXiv:2010.02502 (2020) 20. Tivnan, M., Yoon, S., Chen, Z., Li, X., Wu, D., Li, Q.: Hallucination index: An image quality metric for generative reconstruction models. In: International Con-ference on Medical Image Computing and Computer-Assisted Intervention. pp. 449–458. Springer (2024) 21. Tong, A., Fatras, K., Malkin, N., Huguet, G., Zhang, Y., Rector-Brooks, J., Wolf, G., Bengio, Y.: Improving and generalizing flow-based generative models with mini-batch optimal transport. arXiv preprint arXiv:2302.00482 (2023) 22. Turkbey, B., Rosenkrantz, A.B., Haider, M.A., Padhani, A.R., Villeirs, G., Macura, K.J., Tempany, C.M., Choyke, P.L., Cornud, F., Margolis, D.J., et al.: Prostate imaging reporting and data system version 2.1: 2019 update of prostate imaging reporting and data system version 2. European urology 76 (3), 340–351 (2019) 23. Yan, W., Chiu, B., Shen, Z., Yang, Q., Syer, T., Min, Z., Punwani, S., Emberton, M., Atkinson, D., Barratt, D.C., et al.: Combiner and hypercombiner networks: Rules to combine multimodality mr images for prostate cancer localisation. Medical Image Analysis 91 , 103030 (2024) 24. Yazdani, M., Medghalchi, Y., Ashrafian, P., Hacihaliloglu, I., Shahriari, D.: Flow matching for medical image synthesis: Bridging the gap between speed and quality. In: International Conference on Medical Image Computing and Computer-Assisted Intervention. pp. 216–226. Springer (2025) 25. Zou, S., Huang, Y., Yi, R., Zhu, C., Xu, K.: Cyclediff: Cycle diffusion models for unpaired image-to-image translation. arXiv preprint arXiv:2508.06625 (2025)

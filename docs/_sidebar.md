@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-06-21 <!--dpr-date:20260621-->
+    * 精读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/21/2606.18869v1-learning-to-distort-weakly-supervised-image-quality-transfer-for-prostate-dwi-correction" data-sidebar-item="{&quot;title&quot;: &quot;Learning to Distort: Weakly-Supervised Image Quality Transfer for Prostate DWI Correction&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2606.18869v1-learning-to-distort-weakly-supervised-image-quality-transfer-for-prostate-dwi-correction&quot;, &quot;score&quot;: &quot;8.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;利用图像质量评估信号来监督图像质量迁移过程&quot;}">Learning to Distort: Weakly-Supervised Image Quality Transfer for Prostate DWI Correction</a>
   * 2026-06-19 <!--dpr-date:20260619-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/19/2606.20108v1-efiqa-explainable-fundus-image-quality-assessment-via-anatomical-priors" data-sidebar-item="{&quot;title&quot;: &quot;EFIQA: Explainable Fundus Image Quality Assessment via Anatomical Priors&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2606.20108v1-efiqa-explainable-fundus-image-quality-assessment-via-anatomical-priors&quot;, &quot;score&quot;: &quot;9.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;提供可解释的图像质量评估，通过解剖先验生成空间质量图，无需质量标签&quot;}">EFIQA: Explainable Fundus Image Quality Assessment via Anatomical Priors</a>
