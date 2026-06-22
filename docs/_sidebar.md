@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-06-22 <!--dpr-date:20260622-->
+    * 精读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/22/2606.20364v1-judging-to-improve-a-de-biased-vlm-as-3d-judge-protocol-for-single-image-3d-generation" data-sidebar-item="{&quot;title&quot;: &quot;Judging to Improve: A De-biased VLM-as-3D-Judge Protocol for Single-Image 3D Generation&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2606.20364v1-judging-to-improve-a-de-biased-vlm-as-3d-judge-protocol-for-single-image-3d-generation&quot;, &quot;score&quot;: &quot;8.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;采用VLM评委评估三维网格质量并用于模型优化&quot;}">Judging to Improve: A De-biased VLM-as-3D-Judge Protocol for Single-Image 3D Generation</a>
   * 2026-06-21 <!--dpr-date:20260621-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/21/2606.18869v1-learning-to-distort-weakly-supervised-image-quality-transfer-for-prostate-dwi-correction" data-sidebar-item="{&quot;title&quot;: &quot;Learning to Distort: Weakly-Supervised Image Quality Transfer for Prostate DWI Correction&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2606.18869v1-learning-to-distort-weakly-supervised-image-quality-transfer-for-prostate-dwi-correction&quot;, &quot;score&quot;: &quot;8.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;利用图像质量评估信号来监督图像质量迁移过程&quot;}">Learning to Distort: Weakly-Supervised Image Quality Transfer for Prostate DWI Correction</a>

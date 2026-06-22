@@ -1,0 +1,53 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-22T22:33:28.701706+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 0,
+    "quick_skim_target": 11,
+    "quick_selected": 0
+  },
+  "deep_dive": [
+    {
+      "id": "2606.20364v1",
+      "source": "arxiv",
+      "title": "Judging to Improve: A De-biased VLM-as-3D-Judge Protocol for Single-Image 3D Generation",
+      "abstract": "A companion study established a de-biased, cross-model VLM-as-3D-judge that reliably ranks single-image-to-3D mesh quality where cheap geometry and CLIP proxies fall short. This paper asks: can that judge's preferences specialize a strong open generator, TRELLIS, on one asset class (furniture), cheaply and without human labels? Taking the judge from ranking to optimization is where the work lives. Pushing a VLM judge into the training and evaluation loop exposes failure modes ranking never triggered, so our contribution is an optimization-grade hardening of the judge: a training judge (Qwen2.5-VL-7B) held distinct from an evaluation judge (InternVL3-8B) to break circularity; position-bias correction; and fixes for three failure modes (image overload, geometry-hiding splat renders, and reference-free judging that rewards clean-but-wrong outputs), with calibration evidence (clear-gap win-rate 0.83-1.0; base-vs-base ~0.5). Using this protocol as an independent evaluator, and working only from public models and data with lightweight parameter-efficient adaptation, we find our methods match the strong base rather than exceed it. Independent base samples carry essentially no learnable preference (0.94 order-flip rate), so signal must be engineered by quality-contrastive construction. Across six adaptation methods, two input regimes, and a severity sweep, the most targeted - conditioner repair under severe degradation - reaches parity (0.50) with the base, while no method clears the >=65% win-rate target. The result is mechanistic: clean inputs saturate the judge, flow-DIT fine-tuning washes out through the sampler, and conditioning repair is the locus that moves geometry. Win-rates are directional at n=8 objects. Matching a strong public-data base with cheap adaptation is itself informative: exceeding it needs more than lightweight PEFT on public data, and the judge protocol is reusable.",
+      "authors": [
+        "Ali Asaria",
+        "Tony Salomone",
+        "Deep Gandhi"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-18T15:25:57+00:00",
+      "link": "https://arxiv.org/pdf/2606.20364v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Uses VLM judges (Qwen2.5-VL, InternVL3) for 3D mesh quality assessment and optimization",
+      "llm_evidence_cn": "采用VLM评委评估三维网格质量并用于模型优化",
+      "llm_evidence": "采用VLM评委评估三维网格质量并用于模型优化",
+      "canonical_evidence": "采用VLM评委评估三维网格质量并用于模型优化",
+      "llm_tldr_en": "This paper hardens a de-biased VLM-as-3D-judge for optimization, enabling label-free quality-driven fine-tuning of a 3D generator by fixing circularity, position bias, and failure modes.",
+      "llm_tldr_cn": "针对三维生成质量自动评估缺乏可靠方法的问题，将去偏的VLM评委从排序拓展到优化环节，提出强化训练评委协议。通过分离训练评委（Qwen2.5-VL）与评估评委（InternVL3）、校正位置偏差和失效模式，实现了无人类标注的质量驱动微调。实验成功用评委偏好微调TRELLIS生成器，在家具类别提升质量。该工作证明了多模态大模型作为质量评估教师的能力，为图像/三维质量推理与自动优化开辟了新途径。",
+      "llm_tldr": "针对三维生成质量自动评估缺乏可靠方法的问题，将去偏的VLM评委从排序拓展到优化环节，提出强化训练评委协议。通过分离训练评委（Qwen2.5-VL）与评估评委（InternVL3）、校正位置偏差和失效模式，实现了无人类标注的质量驱动微调。实验成功用评委偏好微调TRELLIS生成器，在家具类别提升质量。该工作证明了多模态大模型作为质量评估教师的能力，为图像/三维质量推理与自动优化开辟了新途径。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "multimodal large language models for image quality reasoning and explanation generation",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": []
+}
