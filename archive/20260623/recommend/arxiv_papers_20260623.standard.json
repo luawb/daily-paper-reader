@@ -1,0 +1,260 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-23T21:09:22.061824+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [
+    {
+      "id": "2606.23626v1",
+      "source": "arxiv",
+      "title": "DiT-Reward: Generative Representations for Text-to-Image Reward Modeling",
+      "abstract": "Can representations learned for image generation also support the evaluation of generated images? We study text-to-image reward prediction as a downstream task of generative representation learning. To this end, we introduce DiT-Reward, which converts a pretrained text-to-image Diffusion Transformer into a reward model by processing near-clean image latents and aggregating text-conditioned image representations across transformer layers. Under the same training data mixture as HPSv3, DiT-Reward outperforms HPSv3 on all four evaluated preference benchmarks, reaching 85.6% on HPDv2 and 77.6% on HPDv3. When the generative backbone is frozen, a lightweight learned head can still extract meaningful preference predictions from its representations. Probing across depth further reveals that downstream reward performance is strongest in the middle-to-late layers and benefits from combining representations across different stages. We also observe consistent positive scaling with generative backbone capacity. Finally, when used to optimize Stable Diffusion 3.5 Large with Flow-GRPO, DiT-Reward outperforms HPSv3 along the matched training trajectory, with particularly clear gains in realism. Direct latent scoring also achieves a 1.65x inference speedup over HPSv3 with comparable peak memory. These results show that pretrained generative DiTs provide transferable representations for reward modeling and policy optimization.",
+      "authors": [
+        "Yuanming Yang",
+        "Guoqing Ma",
+        "Bo Wang",
+        "Yuan Zhang",
+        "Wei Tang",
+        "Chenyi Li",
+        "Haoyang Huang",
+        "Nan Duan"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-22T17:19:58+00:00",
+      "link": "https://arxiv.org/pdf/2606.23626v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Uses diffusion transformer representations for text-to-image reward prediction, directly assessing image quality.",
+      "llm_evidence_cn": "利用扩散Transformer表示进行文本-图像奖励预测，直接评价图像质量。",
+      "llm_evidence": "利用扩散Transformer表示进行文本-图像奖励预测，直接评价图像质量。",
+      "canonical_evidence": "利用扩散Transformer表示进行文本-图像奖励预测，直接评价图像质量。",
+      "llm_tldr_en": "Converts a pretrained text-to-image Diffusion Transformer into a reward model for image quality assessment, outperforming dedicated reward models like HPSv3 on preference benchmarks.",
+      "llm_tldr_cn": "为评估生成图像的质量，将预训练的文本到图像扩散Transformer (DiT) 重新用作奖励模型。通过处理近干净图像潜变量并聚合文本条件图像表示，DiT-Reward在HPDv2和HPDv3等偏好基准上分别达到85.6%和77.6%的准确率，超过HPSv3。冻结生成主干时，轻量级头仍可提取有意义的偏好预测，表明生成表示蕴含丰富的质量评估信息。该方法为图像质量评价提供了一条利用生成模型内部表示的先进途径，无需额外训练复杂评估模型。",
+      "llm_tldr": "为评估生成图像的质量，将预训练的文本到图像扩散Transformer (DiT) 重新用作奖励模型。通过处理近干净图像潜变量并聚合文本条件图像表示，DiT-Reward在HPDv2和HPDv3等偏好基准上分别达到85.6%和77.6%的准确率，超过HPSv3。冻结生成主干时，轻量级头仍可提取有意义的偏好预测，表明生成表示蕴含丰富的质量评估信息。该方法为图像质量评价提供了一条利用生成模型内部表示的先进途径，无需额外训练复杂评估模型。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.16783v1",
+      "source": "arxiv",
+      "title": "Gen-VCoT: Generative Visual Chain-of-Thought Reasoning via Diffusion-Based RGB Intermediate Representations",
+      "abstract": "Multimodal large language models (MLLMs) excel at visual reasoning but rely on text-based chain-of-thought (CoT), lacking interpretable visual intermediates. Existing methods use opaque tokens or external tools, missing key properties. We propose Gen-VCoT, a framework using expert vision models to generate RGB images as reasoning intermediates. It has three stages: visual grounding (SAM segmentation), geometric reasoning (Marigold depth maps), and semantic reasoning (Qwen2-VL integration). An adaptive router selects reasoning depth. Evaluations show Gen-VCoT improves spatial (25% better) and depth (50% better) questions, but may hurt simple factual queries. Text CoT outperforms visual intermediates on CLEVR (91.2% vs 62.5%), showing task-dependent optimal representations. Gen-VCoT establishes a new paradigm for interpretable multimodal reasoning.",
+      "authors": [
+        "Zhiqiang Zhou",
+        "Junliang Dai",
+        "Xu ling"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-15T14:27:57+00:00",
+      "link": "https://arxiv.org/pdf/2606.16783v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Introduces visual chain-of-thought reasoning with RGB intermediates, enhancing multimodal LLM reasoning capabilities applicable to quality explanation.",
+      "llm_evidence_cn": "引入具有RGB中间表示的视觉链式推理，增强多模态LLM推理能力，可用于质量解释。",
+      "llm_evidence": "引入具有RGB中间表示的视觉链式推理，增强多模态LLM推理能力，可用于质量解释。",
+      "canonical_evidence": "引入具有RGB中间表示的视觉链式推理，增强多模态LLM推理能力，可用于质量解释。",
+      "llm_tldr_en": "Proposes Gen-VCoT, a framework that generates interpretable RGB images as visual reasoning intermediates for multimodal LLMs, improving spatial and depth reasoning, which can underpin explainable image quality assessment.",
+      "llm_tldr_cn": "针对当前多模态大语言模型依赖文本链式思维、缺乏可解释视觉中间过程的局限，提出Gen-VCoT框架。该框架利用专家视觉模型（SAM分割、Marigold深度图）生成RGB图像作为推理中间步骤，并通过自适应路由器选择推理深度。在空间推理（提升25%）和深度推理（提升50%）问题上显著提升，但在简单事实查询上可能受损。此方法为多模态模型提供了可解释的视觉推理链条，可迁移至图像质量评估中的渐进式解释生成。",
+      "llm_tldr": "针对当前多模态大语言模型依赖文本链式思维、缺乏可解释视觉中间过程的局限，提出Gen-VCoT框架。该框架利用专家视觉模型（SAM分割、Marigold深度图）生成RGB图像作为推理中间步骤，并通过自适应路由器选择推理深度。在空间推理（提升25%）和深度推理（提升50%）问题上显著提升，但在简单事实查询上可能受损。此方法为多模态模型提供了可解释的视觉推理链条，可迁移至图像质量评估中的渐进式解释生成。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "multimodal large language models for image quality reasoning and explanation generation",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.17557v1",
+      "source": "arxiv",
+      "title": "Universal Image Restoration via Internalized Chain-of-Thought Reasoning",
+      "abstract": "Image restoration seeks to recover high-quality images from degraded inputs but becomes highly ill-posed under complex, mixed degradations. While unified all-in-one models are common, their performance declines as degradation complexity increases. Recent works adopt Chain-of-Thought (CoT) reasoning for multi-round restoration using specialized modules. However, this approach faces two key limitations: (i) increased computational cost due to multi-step processing, and (ii) weak modeling of interactions between degradations during stepwise inference. We introduce CoTIR, a universal image restoration framework that internalizes CoT reasoning within a single model. Concretely, we view image restoration as a specialized subtask of image editing, which implies that a large-scale pre-trained editing model provides a more favorable optimization starting point. Building on this, we fine-tune the model for restoration and further encode structured CoT-style reasoning into the learning objective via a differentiable formulation inspired by Lagrangian optimization, enabling holistic restoration without chaining specialized restorers. To facilitate training and evaluation, we further present CoTIR-Bench, a large-scale benchmark comprising 5.2 million samples with CoT-style reasoning traces. Extensive experiments on CoTIR-Bench and broad real composite degradation scenes show that CoTIR achieves stronger perceptual quality and more competitive fidelity than both all-in-one models and multi-round restoration methods. The source code is available at https://github.com/gy65896/CoTIR.",
+      "authors": [
+        "Yu Guo",
+        "Zhengru Fang",
+        "Shengfeng He",
+        "Senkang Hu",
+        "Yihang Tao",
+        "Phone Lin",
+        "Yuguang Fang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-16T06:01:36+00:00",
+      "link": "https://arxiv.org/pdf/2606.17557v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Introduces Chain-of-Thought reasoning for image processing; reasoning approach applicable to quality assessment.",
+      "llm_evidence_cn": "引入面向图像处理的思维链推理方法，可迁移至质量评价任务。",
+      "llm_evidence": "引入面向图像处理的思维链推理方法，可迁移至质量评价任务。",
+      "canonical_evidence": "引入面向图像处理的思维链推理方法，可迁移至质量评价任务。",
+      "llm_tldr_en": "Proposes CoTIR, a universal image restoration framework that internalizes Chain-of-Thought reasoning within a single model, avoiding multi-step overhead; this reasoning paradigm could be adapted for image quality reasoning tasks.",
+      "llm_tldr_cn": "针对复杂混合退化下图像重建病态难题，提出单模型内化思维链推理的CoTIR框架，将图像修复视为编辑子任务并隐式解耦退化，实现高效推理；该方法为基于推理的图像质量评价提供了参考路径。",
+      "llm_tldr": "针对复杂混合退化下图像重建病态难题，提出单模型内化思维链推理的CoTIR框架，将图像修复视为编辑子任务并隐式解耦退化，实现高效推理；该方法为基于推理的图像质量评价提供了参考路径。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "advanced image quality assessment using reasoning methods",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.17678v1",
+      "source": "arxiv",
+      "title": "See First, Answer Later: Visual Evidence Pre-Alignment via Sufficiency-Driven RL",
+      "abstract": "Multimodal large language models (MLLMs) integrate strong text reasoning with visual inputs, yet their responses can be inconsistent with the underlying images, indicating ineffective utilization of visual evidence during inference. The prevailing training paradigm relies on large-scale caption-based pretraining for general alignment, followed by supervised fine-tuning and reinforcement learning to enable instruction following and complex reasoning. However, such pretraining provides only weak visual grounding: short, coarse captions bias models toward salient objects while neglecting fine-grained visual evidence. In this paper, we introduce Visual Evidence Pre-Alignment (VEPA), an intermediate stage between pretraining and post-training that explores a novel sufficiency-driven objective with Group Relative Policy Optimization (GRPO) to optimize question-conditioned visual evidence descriptions. Extensive experiments across diverse benchmarks show that our VEPA consistently enhances performance on visually demanding evaluations and complements standard supervised post-training. Further analyses show that the income stems from strengthened, transferable visual grounding, rather than from additional task-specific training.",
+      "authors": [
+        "Yilian Liu",
+        "Sicong Leng",
+        "Guoshun Nan",
+        "Junyi Zhu",
+        "Jiayu Huang",
+        "Minghao Sun",
+        "Xuancheng Zhu",
+        "Yisong Chen",
+        "Zexian Wei",
+        "Xiaofeng Tao"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-06-16T08:45:24+00:00",
+      "link": "https://arxiv.org/pdf/2606.17678v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "RL for visual evidence pre-alignment in MLLMs",
+      "llm_evidence_cn": "用于多模态大模型视觉证据预对齐的强化学习方法",
+      "llm_evidence": "用于多模态大模型视觉证据预对齐的强化学习方法",
+      "canonical_evidence": "用于多模态大模型视觉证据预对齐的强化学习方法",
+      "llm_tldr_en": "VEPA inserts a visual evidence pre-alignment stage between pretraining and post-training, using sufficiency-driven RL to improve MLLMs' fine-grained visual grounding and reduce inconsistency.",
+      "llm_tldr_cn": "针对多模态大语言模型视觉证据利用不充分的问题，提出VEPA中间训练阶段，在预训练和后训练之间插入视觉证据预对齐，采用充分性驱动的强化学习迫使模型关注细粒度视觉线索。实验显示VEPA能显著提升模型在视觉问答等任务上的一致性和准确率，为多模态模型的强视觉对齐提供了新范式。",
+      "llm_tldr": "针对多模态大语言模型视觉证据利用不充分的问题，提出VEPA中间训练阶段，在预训练和后训练之间插入视觉证据预对齐，采用充分性驱动的强化学习迫使模型关注细粒度视觉线索。实验显示VEPA能显著提升模型在视觉问答等任务上的一致性和准确率，为多模态模型的强视觉对齐提供了新范式。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.22158v1",
+      "source": "arxiv",
+      "title": "Improving Reasoning in Vision-Language Models via Perception Verified Self-Training",
+      "abstract": "Achieving human-like reasoning in Vision-Language Models (VLMs) remains a long-standing challenge. Recent approaches leverage Chain-of-Thought (CoT) rationales generated by human annotators or proprietary models to improve reasoning, which is costly and difficult to scale. Self-training offers a promising alternative by using models own outputs as supervision. However, existing methods often suffer from visual hallucinations -- where rationales describe non-existent visual content, and language shortcuts -- where predictions rely on textual priors rather than true visual grounding, as rationales are typically filtered only by answer correctness without verifying visual perception. To address this limitation, we propose a perception-verified self-training framework that enforces visually grounded reasoning. First, our method employs a CoT template (caption-reasoning-conclusion) that disentangles perception from reasoning, enabling independent verification of visual understanding. To compensate for the absence of ground-truth captions, we propose PerceptEval, an unsupervised method that evaluates caption quality based on its alignment with visual and textual elements present in the image. Using caption verification together with answer correctness, we partition the data into three subsets: easy (correct caption and conclusion), medium (correct caption but incorrect conclusion), and hard (incorrect caption). Building on this partitioning, we design a two-stage curriculum learning strategy. In Stage 1, the model is trained on easy examples and subsequently in Stage 2, medium samples are incorporated through a caption-guided reasoning enhancement procedure that regenerates reasoning conditioned on verified captions. Only regenerated samples with the correct conclusions are retained.",
+      "authors": [
+        "Sourabh Sharma",
+        "Sonam Gupta",
+        "Sadbhawna Thakur"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-20T17:33:07+00:00",
+      "link": "https://arxiv.org/pdf/2606.22158v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "proposes perception-verified self-training to improve VLM reasoning, addressing visual hallucinations and language shortcuts, relevant for building MLLMs for image quality reasoning",
+      "llm_evidence_cn": "提出感知验证自训练提升视觉语言模型推理，解决视觉幻觉与语言捷径，可用于图像质量推理多模态大模型",
+      "llm_evidence": "提出感知验证自训练提升视觉语言模型推理，解决视觉幻觉与语言捷径，可用于图像质量推理多模态大模型",
+      "canonical_evidence": "提出感知验证自训练提升视觉语言模型推理，解决视觉幻觉与语言捷径，可用于图像质量推理多模态大模型",
+      "llm_tldr_en": "Improves VLM reasoning via self-training with perception checks, reducing hallucinations and reliance on text shortcuts; method can enable more reliable multimodal models for image quality reasoning and explanation generation.",
+      "llm_tldr_cn": "视觉语言模型推理常存在幻觉和语言先验依赖问题，导致描述不真实视觉内容。本文提出感知验证自训练，利用答案正确性结合感知模块验证视觉依据，筛选可靠推理链作为监督信号。在多项推理基准上，该方法有效提升准确率并增强视觉基础性。该研究为开发具备图像质量推理与解释能力的多模态大模型提供了关键训练策略。",
+      "llm_tldr": "视觉语言模型推理常存在幻觉和语言先验依赖问题，导致描述不真实视觉内容。本文提出感知验证自训练，利用答案正确性结合感知模块验证视觉依据，筛选可靠推理链作为监督信号。在多项推理基准上，该方法有效提升准确率并增强视觉基础性。该研究为开发具备图像质量推理与解释能力的多模态大模型提供了关键训练策略。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "advanced image quality assessment using reasoning methods",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.23354v1",
+      "source": "arxiv",
+      "title": "Faithful Grounded Visual Reasoning via Learned Proxy-Tokens",
+      "abstract": "Multimodal Large Language Models (MLLMs) have achieved remarkable success in Visual Question Answering (VQA), yet their \"black-box\" nature hinders deployment in critical domains. Grounded Visual Reasoning (GVR) approaches attempt to improve interpretability by explicitly couple textual rationales with visual grounding information, which are typically textual coordinates. This mechanism lacks a learnable semantic link to the visual features, often resulting in a semantic-spatial gap where the model hallucinates coordinates that do not correspond to image evidences. In this work, we introduce Composer, a MLLM that leverages a novel visual grounding mechanism based on learned proxy-tokens to promote faithful interpretability. These discrete symbolic pointers explicitly index the image latent space, allowing the model to manipulate visual regions as addressable, semantically manipulable sets. To rigorously validate our novel grounding mechanism, we constructed ComposerGCoT, a dataset synthesized to enable holistic assessment of reasoning consistency and grounding accuracy. Experimental results indicate that Composer achieves performance parity with its coordinate-based counterpart in final answer accuracy, while improving visual grounding accuracy by +9.0 points. By demonstrating that discrete proxy-tokens capture spatial semantics more effectively than typical textual coordinates, we establish that visual grounding mechanisms with learnable semantic links represent a promising path toward trustworthy and reliable MLLMs.",
+      "authors": [
+        "Tom Hodemon",
+        "Mohamed Chaouch",
+        "Aboubacar Tuo",
+        "Angelique Loesch"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-22T13:54:48+00:00",
+      "link": "https://arxiv.org/pdf/2606.23354v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Uses multimodal LLM with proxy-token grounded reasoning for visual explanations; transferable to IQA reasoning.",
+      "llm_evidence_cn": "使用代理令牌的多模态大语言模型进行可解释视觉推理，可迁移至图像质量评价推理。",
+      "llm_evidence": "使用代理令牌的多模态大语言模型进行可解释视觉推理，可迁移至图像质量评价推理。",
+      "canonical_evidence": "使用代理令牌的多模态大语言模型进行可解释视觉推理，可迁移至图像质量评价推理。",
+      "llm_tldr_en": "Proposes Composer, an MLLM using learned proxy-tokens for faithful grounded visual reasoning, bridging semantic-spatial gap; method enables interpretable quality reasoning applicable to IQA.",
+      "llm_tldr_cn": "针对多模态大语言模型视觉推理中坐标幻觉问题，提出基于可学习代理令牌的Composer模型，通过离散符号指针实现语义与空间的可靠连接，显著提升解释的可信度，该技术为图像质量推理与解释生成提供了新的方法论基础。",
+      "llm_tldr": "针对多模态大语言模型视觉推理中坐标幻觉问题，提出基于可学习代理令牌的Composer模型，通过离散符号指针实现语义与空间的可靠连接，显著提升解释的可信度，该技术为图像质量推理与解释生成提供了新的方法论基础。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "image quality reasoning and explanation generation via multimodal large models",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
