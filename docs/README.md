@@ -6,49 +6,39 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-24
-- 运行时间：2026-06-24 21:55:06 UTC
+- 最新运行日期：2026-06-25
+- 运行时间：2026-06-25 21:16:35 UTC
 - 运行状态：成功
-- 本次总论文数：9
-- 精读区：6
+- 本次总论文数：5
+- 精读区：2
 - 速读区：3
 
 ### 今日简报（AI）
-今日精读2篇高分论文，速览3篇基准与统一建模工作，重点关注多模态感知前沿。  
-PerceptionDLM与4DVLT分别以并行区域感知和世界线中心跟踪，推动多模态扩散理解与动态场景追踪。  
-建议读者先从LADBench与WeGenBench评测入手，看清当前模型在逻辑故障检测和图像生成优化上的具体盲区。
-- 详情：[/202606/24/README](/202606/24/README)
+今日聚焦医学影像评估新基准，精读《FunPiQ》眼底图像像素级质量评估框架（满分10分）与多模态肺栓塞风险问答模型（9分）。
+
+两大核心看点：眼底成像质量自动化评分迈入像素级精准校验，临床多模态问答在肺栓塞风险判读上展现高效融合路径。
+
+若关注AI落地医疗，优先追踪视觉质量评估的标准化进展与多模态临床决策支持系统的实用性验证。
+- 详情：[/202606/25/README](/202606/25/README)
 
 ### 精读区论文标签
-1. [PerceptionDLM: Parallel Region Perception with Multimodal Diffusion Language Models](/202606/24/2606.19534v1-perceptiondlm-parallel-region-perception-with-multimodal-diffusion-language-models)  
+1. [FunPiQ: A New Benchmark for Pixel-Level Quality Assessment in Fundus Images](/202606/25/2606.25915v1-funpiq-a-new-benchmark-for-pixel-level-quality-assessment-in-fundus-images)  
+   标签：评分：10.0/10、query:xiqa
+   evidence：提出像素级眼底图像质量评估基准，实现可解释、任务无关的质量评价
+2. [Efficient Multimodal Clinical Question Answering for Pulmonary Embolism Risk Assessment](/202606/25/2606.22442v1-efficient-multimodal-clinical-question-answering-for-pulmonary-embolism-risk-assessment)  
    标签：评分：9.0/10、query:xiqa
-   evidence：提出一种处理图像和文本的多模态扩散语言模型，用于高效区域感知。
-2. [4DVLT: Dynamic Scene Understanding with Worldline-Centered Vision-Language Tracking](/202606/24/2606.22631v1-4dvlt-dynamic-scene-understanding-with-worldline-centered-vision-language-tracking)  
-   标签：评分：9.0/10、query:xiqa
-   evidence：提出一种多模态模型，将语言与持久世界线结合，处理视觉和文本数据以理解4D动态场景。
-3. [S1-Omni-Image: A Unified Model for Scientific Image Understanding, Generation, and Editing](/202606/24/2606.24441v1-s1-omni-image-a-unified-model-for-scientific-image-understanding-generation-and-editing)  
-   标签：评分：9.0/10、query:xiqa
-   evidence：提出一种统一的多模态模型，处理科学图像与文本指令进行理解、生成和编辑，符合处理图像和文本的大语言模型定义。
-4. [Through the PRISM: Preference Representation in Intermediate States of Video Diffusion Models](/202606/24/2606.20310v1-through-the-prism-preference-representation-in-intermediate-states-of-video-diffusion-models)  
-   标签：评分：8.0/10、query:xiqa
-   evidence：从扩散模型中间状态直接评估视频生成质量，是图像质量评估的一种形式
-5. [UI-LIC: A Unified Framework for Evaluating Learned Image Compression Models](/202606/24/2606.23545v1-ui-lic-a-unified-framework-for-evaluating-learned-image-compression-models)  
-   标签：评分：8.0/10、query:xiqa
-   evidence：使用质量指标(PSNR, SSIM, VMAF, LPIPS)评估学习型图像压缩模型。
-6. [Towards Fast and Effective Long Video Understanding of Multimodal Large Language Models via Adaptive Quasi-Gaussian Sampling](/202606/24/2606.24187v1-towards-fast-and-effective-long-video-understanding-of-multimodal-large-language-models-via-adaptive-quasi-gaussian-sampling)  
-   标签：评分：8.0/10、query:xiqa
-   evidence：提出AdaQ，一种无训练的自适应准高斯关键帧采样方法，提升多模态大语言模型的视频理解效率。
+   evidence：使用高效多模态大语言模型处理图像和文本进行临床问答
 
 ### 速读区论文标签
-1. [LADBench: A Benchmark for Logical Fault Detection in Images](/202606/24/2606.17433v1-ladbench-a-benchmark-for-logical-fault-detection-in-images)  
+1. [Edges Before Embeddings: A Confidence-Aware Blur Gate for Vision-Language Pipelines](/202606/25/2606.25838v1-edges-before-embeddings-a-confidence-aware-blur-gate-for-vision-language-pipelines)  
    标签：评分：7.0/10、query:xiqa
-   evidence：评估图像逻辑异常检测与推理的基准，符合基于推理的感知图像质量评价方向。
-2. [WeGenBench: A Multidimensional Diagnostic Benchmark towards Text-to-Image Model Optimization](/202606/24/2606.20100v1-wegenbench-a-multidimensional-diagnostic-benchmark-towards-text-to-image-model-optimization)  
-   标签：评分：7.0/10、query:xiqa
-   evidence：多维评估文本到图像生成质量的基准，直接评价图像质量。
-3. [Unified Multimodal Autoregressive Modeling with Shared Context-Visual Tokenizer is Key to Unification](/202606/24/2606.18249v1-unified-multimodal-autoregressive-modeling-with-shared-context-visual-tokenizer-is-key-to-unification)  
+   evidence：将图像分类为清晰、模糊或不确定以实现质量门控
+2. [Seeing Before Reasoning: Decoupling Perception and Reasoning for Shortcut-Resilient Multimodal On-Policy Self-Distillation](/202606/25/2606.19120v1-seeing-before-reasoning-decoupling-perception-and-reasoning-for-shortcut-resilient-multimodal-on-policy-self-distillation)  
    标签：评分：6.0/10、query:xiqa
-   evidence：提出统一的视觉-语言自回归模型，使用共享视觉分词器，使得大语言模型能够处理图像和文本
+   evidence：解耦MLLM中的视觉描述和推理，使解释性生成成为可能
+3. [Multimodal Image Colorization: Quantifying the Impact of Text-Conditioned Guidance on Grayscale-to-Color Translation](/202606/25/2606.20722v1-multimodal-image-colorization-quantifying-the-impact-of-text-conditioned-guidance-on-grayscale-to-color-translation)  
+   标签：评分：6.0/10、query:xiqa
+   evidence：使用PSNR、SSIM和感知指标量化着色质量
 
 
 <div class="dpr-home-promo-card">

@@ -1,0 +1,209 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-25T21:12:58.899830+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2606.25915v1",
+      "source": "arxiv",
+      "title": "FunPiQ: A New Benchmark for Pixel-Level Quality Assessment in Fundus Images",
+      "abstract": "Color fundus photography (CFP) is the most common ophthalmic imaging modality for large-scale screening. However, it is highly susceptible to degradations, making robust fundus image quality assessment (FIQA) crucial. The criteria for what constitutes high-quality at the image level vary across clinical tasks, making FIQA dependent on expert knowledge. This motivated the development of automated methods and datasets. While existing datasets aim to standardize image-level quality, their criteria often differ. Furthermore, image-level labels preclude the quantitative evaluation of localized degradations, which is essential for trustworthy FIQA. We argue that pixel-level FIQA based on anatomical visibility represents a more task-agnostic, explainable approach. In this work, we introduce FunPiQ, the first FIQA benchmark to provide pixel-level quality annotations. In addition, we propose EFIQA-CP, an explainable-by-design (EBD) method that uses quality pseudo-labels based on anatomical visibility to train a CNN via Non-Negative Positive-Unlabeled learning. Extensive evaluations of classification methods with post-hoc explanations, anomaly detection methods, and EBD methods demonstrate the superior performance of the last and, particularly, of EFIQA-CP.",
+      "authors": [
+        "Pengwei Wang",
+        "José Morano",
+        "Virginia Mares",
+        "Hrvoje Bogunović"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-24T14:59:34+00:00",
+      "link": "https://arxiv.org/pdf/2606.25915v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "Introduces a pixel-level fundus image quality assessment benchmark for explainable, task-agnostic quality evaluation.",
+      "llm_evidence_cn": "提出像素级眼底图像质量评估基准，实现可解释、任务无关的质量评价",
+      "llm_evidence": "提出像素级眼底图像质量评估基准，实现可解释、任务无关的质量评价",
+      "canonical_evidence": "提出像素级眼底图像质量评估基准，实现可解释、任务无关的质量评价",
+      "llm_tldr_en": "FunPiQ provides pixel-level quality annotations based on anatomical visibility, enabling explainable and localized fundus image quality assessment for robust screening.",
+      "llm_tldr_cn": "FunPiQ 基于解剖结构可见性构建了像素级眼底图像质量标注基准，克服了图像级标签无法定位局部退化的局限，为可解释、任务无关的鲁棒IQA提供了新工具。",
+      "llm_tldr": "FunPiQ 基于解剖结构可见性构建了像素级眼底图像质量标注基准，克服了图像级标签无法定位局部退化的局限，为可解释、任务无关的鲁棒IQA提供了新工具。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "image quality assessment with explanations",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.22442v1",
+      "source": "arxiv",
+      "title": "Efficient Multimodal Clinical Question Answering for Pulmonary Embolism Risk Assessment",
+      "abstract": "Pulmonary embolism (PE) is a high risk cardiopulmonary condition whose management requires both timely diagnosis and reliable assessment of future clinical risk. Because PE care routinely combines computed tomography pulmonary angiography (CTPA), radiology interpretation, and longitudinal electronic health record (EHR) evidence, it provides a clinically meaningful setting for evaluating compact multimodal language models. In this work, we build a benchmark using efficient multimodal large language models (MLLMs) on INSPECT, a multimodal PE dataset containing 23,248 CTPA studies from 19,402 patients. We formulate eight diagnostic and prognostic tasks as structured clinical question answering problems and evaluate on typical efficient MLLMs under CTPA-Only, EHR-Only, and CTPA+EHR settings with zero-shot and few-shot prompting. Results show that Gemma4 E4B and Gemma4 E2B perform more strongly when EHR evidence is available, especially under CTPA+EHR input. Task level analysis further shows that PE diagnosis achieves higher performance than prognostic tasks, particularly readmission prediction. These observations suggest that compact multimodal models have the great potential in early stage PE risk detection and explanation.",
+      "authors": [
+        "Xiangyuan Xue",
+        "Yang Yu",
+        "Yan Gao",
+        "Junyan Wang",
+        "Bin Chen",
+        "Lingyan Ruan",
+        "Ting Dang",
+        "Hong Jia"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-21T11:18:06+00:00",
+      "link": "https://arxiv.org/pdf/2606.22442v1",
+      "tags": [
+        "keyword:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Uses efficient multimodal large language models (MLLMs) to process images and text for clinical QA.",
+      "llm_evidence_cn": "使用高效多模态大语言模型处理图像和文本进行临床问答",
+      "llm_evidence": "使用高效多模态大语言模型处理图像和文本进行临床问答",
+      "canonical_evidence": "使用高效多模态大语言模型处理图像和文本进行临床问答",
+      "llm_tldr_en": "The paper benchmarks efficient multimodal LLMs on pulmonary embolism diagnosis and prognosis tasks using CTPA images and EHR data, demonstrating their feasibility for clinical multimodal question answering.",
+      "llm_tldr_cn": "该论文在包含23,248例CTPA检查的INSPECT数据集上，评估高效多模态大语言模型在肺栓塞诊断和预后等八项临床问答任务中的表现，验证了紧凑MLLM在结合影像和电子健康记录进行多模态临床决策中的潜力。",
+      "llm_tldr": "该论文在包含23,248例CTPA检查的INSPECT数据集上，评估高效多模态大语言模型在肺栓塞诊断和预后等八项临床问答任务中的表现，验证了紧凑MLLM在结合影像和电子健康记录进行多模态临床决策中的潜力。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.25838v1",
+      "source": "arxiv",
+      "title": "Edges Before Embeddings: A Confidence-Aware Blur Gate for Vision-Language Pipelines",
+      "abstract": "Production vision pipelines silently degrade on blurry input, wasting compute on downstream OCR, retrieval, and vision-language model (VLM) calls that cannot recover a usable output. We present MagikaDocumentFromPixel, a lightweight, CPU-friendly image quality gate that classifies a single image as sharp, blurred, or uncertain in roughly 7 ms on a single CPU core. The contributions are (i) a recipe selected from a 46-configuration, 8-sweep empirical search that isolates input resolution as the dominant lever and shows architecture capacity only pays off at >= 384 px; (ii) a confidence-aware routing formalism grounded in classical selective prediction; (iii) the Edge Prior Module (EPM), a Laplacian-magnitude auxiliary input channel that gives the network direct access to the spectral evidence that classical blur heuristics rely on and that lifts test F1 by +1.3 points in a matched-env comparison; and (iv) an observation that the gate is one instance of a recurring design pattern that appears independently in Magika content-type detection, risk-controlled OCR with VLMs, and DocVLM. The final recipe MobileNetV3-Large with the EPM trained at 384x384 on paired GoPro Large frames, evaluated with 5-scale test-time augmentation reaches F1 = 0.9803 (AUC 0.9989) with a 17 MB ONNX artifact, improving over our fixed-scale baseline on the same hardware (F1 = 0.9672) by +1.31 points. We are explicit about limitations: results are on a single motion-blur distribution, numbers are from a single seed, and calibration is qualitative rather than measured.",
+      "authors": [
+        "Duy Tran Thanh"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-06-24T13:51:42+00:00",
+      "link": "https://arxiv.org/pdf/2606.25838v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "classifies image as sharp, blurred, or uncertain for quality gating",
+      "llm_evidence_cn": "将图像分类为清晰、模糊或不确定以实现质量门控",
+      "llm_evidence": "将图像分类为清晰、模糊或不确定以实现质量门控",
+      "canonical_evidence": "将图像分类为清晰、模糊或不确定以实现质量门控",
+      "llm_tldr_en": "Proposes a lightweight image quality gate that uses edge information to classify images as sharp, blurred, or uncertain, preventing downstream vision-language models from wasting compute on poor-quality inputs.",
+      "llm_tldr_cn": "生产视觉管道中模糊输入会浪费下游OCR、检索和视觉语言模型的计算资源。本文提出轻量级图像质量门控MagikaDocumentFromPixel，基于边缘信息将图像分类为清晰、模糊或不确定，单CPU核心决策仅需约7毫秒。贡献包括：从46配置8轮扫描中提炼出输入分辨率为关键因素的配方，架构容量仅在384像素以上才显优势；引入置信感知路由形式化；设计边缘先验模块（EPM）利用拉普拉斯幅度辅助信道。该方法为视觉语言管道提供快速高效的质量预筛，避免无效推理。",
+      "llm_tldr": "生产视觉管道中模糊输入会浪费下游OCR、检索和视觉语言模型的计算资源。本文提出轻量级图像质量门控MagikaDocumentFromPixel，基于边缘信息将图像分类为清晰、模糊或不确定，单CPU核心决策仅需约7毫秒。贡献包括：从46配置8轮扫描中提炼出输入分辨率为关键因素的配方，架构容量仅在384像素以上才显优势；引入置信感知路由形式化；设计边缘先验模块（EPM）利用拉普拉斯幅度辅助信道。该方法为视觉语言管道提供快速高效的质量预筛，避免无效推理。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.19120v1",
+      "source": "arxiv",
+      "title": "Seeing Before Reasoning: Decoupling Perception and Reasoning for Shortcut-Resilient Multimodal On-Policy Self-Distillation",
+      "abstract": "On-policy self-distillation (OPSD) trains a model on its own rollouts and uses a frozen copy to provide dense token-level targets conditioned on a reference target. This works well for LLM reasoning, but a direct extension to multimodal large language models (MLLMs) can create a shortcut: the privileged target may guide tokens mainly based on the text reference target rather than the image. We propose ViGOS, a visually grounded OPSD framework for MLLM post-training. The student first writes a visual description and then reasons toward the final answer. For valid rollouts, an image-only perception teacher supervises the description, while a privileged reasoning teacher supervises the reasoning and final answer on the same student prefix. A reference teacher is used only for invalid rollouts to recover the output format. Across general vision-language, expert reasoning, visual math, spatial grounding, and visual-language-prior benchmarks, ViGOS keeps the main benefits of OPSD and improves image-grounded behavior in shortcut-prone settings.",
+      "authors": [
+        "Sihan Wang",
+        "Xiyao Liu",
+        "Lianqing Liu",
+        "Zhi Han"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.CV"
+      ],
+      "published": "2026-06-17T14:33:38+00:00",
+      "link": "https://arxiv.org/pdf/2606.19120v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Decouples visual description and reasoning in MLLMs, enabling interpretable generation",
+      "llm_evidence_cn": "解耦MLLM中的视觉描述和推理，使解释性生成成为可能",
+      "llm_evidence": "解耦MLLM中的视觉描述和推理，使解释性生成成为可能",
+      "canonical_evidence": "解耦MLLM中的视觉描述和推理，使解释性生成成为可能",
+      "llm_tldr_en": "ViGOS introduces a visually grounded on-policy self-distillation framework for MLLMs, forcing the model to first describe the image before reasoning, thus reducing shortcut learning and improving interpretability.",
+      "llm_tldr_cn": "ViGOS针对多模态大语言模型在在线策略自蒸馏中易产生文本依赖捷径、忽略图像信息的问题，提出了一种视觉解耦框架：学生模型先生成精确的视觉描述，再进行推理回答，并通过冻结的图像感知教师和特权推理教师分别提供监督信号。在多个多模态推理任务上，该方法有效抑制了捷径行为，显著提升了模型对图像内容的利用和推理的可解释性，实验结果证明，该框架提高了准确率并生成更细致的视觉解释，为图像质量评估等需要生成解释的任务提供了可靠的技术路径。",
+      "llm_tldr": "ViGOS针对多模态大语言模型在在线策略自蒸馏中易产生文本依赖捷径、忽略图像信息的问题，提出了一种视觉解耦框架：学生模型先生成精确的视觉描述，再进行推理回答，并通过冻结的图像感知教师和特权推理教师分别提供监督信号。在多个多模态推理任务上，该方法有效抑制了捷径行为，显著提升了模型对图像内容的利用和推理的可解释性，实验结果证明，该框架提高了准确率并生成更细致的视觉解释，为图像质量评估等需要生成解释的任务提供了可靠的技术路径。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "image quality reasoning and explanation generation via multimodal large models",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.20722v1",
+      "source": "arxiv",
+      "title": "Multimodal Image Colorization: Quantifying the Impact of Text-Conditioned Guidance on Grayscale-to-Color Translation",
+      "abstract": "Grayscale images are commonly found in historical photography restoration, medical imaging, and artistic media. However, automatically applying color to these images remains a significant challenge in computer vision because many plausible colorizations can correspond to the same grayscale input.   In this work, we quantify the effect of text conditioning on pixel-level and perceptual metrics for grayscale-to-color image models. Specifically, we compare two architectures, a U-Net and Stable Diffusion 1.5, each tested with and without CLIP text conditioning while holding all other variables constant. Our results show that text conditioning improves PSNR by 5.6%, SSIM by 1.2%, and colorfulness by 36.6%, while reducing LPIPS by 7.6% in the U-Net tier. In the Stable Diffusion tier, text conditioning improves PSNR by 5.8%, SSIM by 1.5%, and colorfulness by 0.6%, while reducing LPIPS by 11.3%. These results indicate that text conditioning provides consistent, measurable improvements to colorization quality across both architecture scales.",
+      "authors": [
+        "Colten Reissmann",
+        "Hugo Garrido-Lestache Belinchon"
+      ],
+      "primary_category": "cs.GR",
+      "categories": [
+        "cs.GR",
+        "cs.CL",
+        "cs.CV",
+        "cs.LG"
+      ],
+      "published": "2026-06-16T21:21:47+00:00",
+      "link": "https://arxiv.org/pdf/2606.20722v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Quantifies colorization quality using PSNR, SSIM, and perceptual metrics",
+      "llm_evidence_cn": "使用PSNR、SSIM和感知指标量化着色质量",
+      "llm_evidence": "使用PSNR、SSIM和感知指标量化着色质量",
+      "canonical_evidence": "使用PSNR、SSIM和感知指标量化着色质量",
+      "llm_tldr_en": "This work quantifies the impact of text conditioning on grayscale-to-color translation, showing improvements in PSNR, SSIM, and colorfulness when using CLIP text guidance.",
+      "llm_tldr_cn": "尽管多模态文本引导已被用于图像着色，但其对客观质量的具体影响缺乏定量分析。该工作系统对比了有/无CLIP文本条件的U-Net和Stable Diffusion模型，在相同数据集上测量像素保真度和感知质量，结果表明文本条件可小幅提升PSNR和SSIM，同时大幅增加色彩丰富度，但过于鲜艳的色彩也可能降低感知自然度。这首次提供了文本提示对着色质量影响的定量证据，并为交互式恢复和编辑任务中的可控生成提供了实证参考，分析框架可推广至其他图像增强任务。",
+      "llm_tldr": "尽管多模态文本引导已被用于图像着色，但其对客观质量的具体影响缺乏定量分析。该工作系统对比了有/无CLIP文本条件的U-Net和Stable Diffusion模型，在相同数据集上测量像素保真度和感知质量，结果表明文本条件可小幅提升PSNR和SSIM，同时大幅增加色彩丰富度，但过于鲜艳的色彩也可能降低感知自然度。这首次提供了文本提示对着色质量影响的定量证据，并为交互式恢复和编辑任务中的可控生成提供了实证参考，分析框架可推广至其他图像增强任务。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
