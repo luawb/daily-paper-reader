@@ -6,39 +6,26 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-25
-- 运行时间：2026-06-25 21:16:35 UTC
+- 最新运行日期：2026-06-26
+- 运行时间：2026-06-26 21:50:02 UTC
 - 运行状态：成功
-- 本次总论文数：5
-- 精读区：2
-- 速读区：3
+- 本次总论文数：1
+- 精读区：1
+- 速读区：0
 
 ### 今日简报（AI）
-今日聚焦医学影像评估新基准，精读《FunPiQ》眼底图像像素级质量评估框架（满分10分）与多模态肺栓塞风险问答模型（9分）。
-
-两大核心看点：眼底成像质量自动化评分迈入像素级精准校验，临床多模态问答在肺栓塞风险判读上展现高效融合路径。
-
-若关注AI落地医疗，优先追踪视觉质量评估的标准化进展与多模态临床决策支持系统的实用性验证。
-- 详情：[/202606/25/README](/202606/25/README)
+今日精读一篇顶会高分论文，用稀疏自编码器拆解视觉语言模型的多模态概念表征。  
+核心发现：稀疏自编码器能有效提取并分离图文对齐、物体属性等可解释概念，且不同模态的语义映射存在结构化差异。  
+若想理解多模态AI如何“看见”并“描述”，不妨从这篇的概念解耦实验入手，关注概念编码的设计思路。
+- 详情：[/202606/26/README](/202606/26/README)
 
 ### 精读区论文标签
-1. [FunPiQ: A New Benchmark for Pixel-Level Quality Assessment in Fundus Images](/202606/25/2606.25915v1-funpiq-a-new-benchmark-for-pixel-level-quality-assessment-in-fundus-images)  
-   标签：评分：10.0/10、query:xiqa
-   evidence：提出像素级眼底图像质量评估基准，实现可解释、任务无关的质量评价
-2. [Efficient Multimodal Clinical Question Answering for Pulmonary Embolism Risk Assessment](/202606/25/2606.22442v1-efficient-multimodal-clinical-question-answering-for-pulmonary-embolism-risk-assessment)  
+1. [Extraction and Analysis of Multimodal Concepts in Vision Language Models through Sparse Autoencoders](/202606/26/2606.21197v1-extraction-and-analysis-of-multimodal-concepts-in-vision-language-models-through-sparse-autoencoders)  
    标签：评分：9.0/10、query:xiqa
-   evidence：使用高效多模态大语言模型处理图像和文本进行临床问答
+   evidence：分析处理图像和文本的视觉语言模型中的多模态概念
 
 ### 速读区论文标签
-1. [Edges Before Embeddings: A Confidence-Aware Blur Gate for Vision-Language Pipelines](/202606/25/2606.25838v1-edges-before-embeddings-a-confidence-aware-blur-gate-for-vision-language-pipelines)  
-   标签：评分：7.0/10、query:xiqa
-   evidence：将图像分类为清晰、模糊或不确定以实现质量门控
-2. [Seeing Before Reasoning: Decoupling Perception and Reasoning for Shortcut-Resilient Multimodal On-Policy Self-Distillation](/202606/25/2606.19120v1-seeing-before-reasoning-decoupling-perception-and-reasoning-for-shortcut-resilient-multimodal-on-policy-self-distillation)  
-   标签：评分：6.0/10、query:xiqa
-   evidence：解耦MLLM中的视觉描述和推理，使解释性生成成为可能
-3. [Multimodal Image Colorization: Quantifying the Impact of Text-Conditioned Guidance on Grayscale-to-Color Translation](/202606/25/2606.20722v1-multimodal-image-colorization-quantifying-the-impact-of-text-conditioned-guidance-on-grayscale-to-color-translation)  
-   标签：评分：6.0/10、query:xiqa
-   evidence：使用PSNR、SSIM和感知指标量化着色质量
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">

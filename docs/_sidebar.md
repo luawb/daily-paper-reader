@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-06-26 <!--dpr-date:20260626-->
+    * 精读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/26/2606.21197v1-extraction-and-analysis-of-multimodal-concepts-in-vision-language-models-through-sparse-autoencoders" data-sidebar-item="{&quot;title&quot;: &quot;Extraction and Analysis of Multimodal Concepts in Vision Language Models through Sparse Autoencoders&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2606.21197v1-extraction-and-analysis-of-multimodal-concepts-in-vision-language-models-through-sparse-autoencoders&quot;, &quot;score&quot;: &quot;9.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;分析处理图像和文本的视觉语言模型中的多模态概念&quot;}">Extraction and Analysis of Multimodal Concepts in Vision Language Models through Sparse Autoencoders</a>
   * 2026-06-25 <!--dpr-date:20260625-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202606/25/2606.25915v1-funpiq-a-new-benchmark-for-pixel-level-quality-assessment-in-fundus-images" data-sidebar-item="{&quot;title&quot;: &quot;FunPiQ: A New Benchmark for Pixel-Level Quality Assessment in Fundus Images&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2606.25915v1-funpiq-a-new-benchmark-for-pixel-level-quality-assessment-in-fundus-images&quot;, &quot;score&quot;: &quot;10.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;提出像素级眼底图像质量评估基准，实现可解释、任务无关的质量评价&quot;}">FunPiQ: A New Benchmark for Pixel-Level Quality Assessment in Fundus Images</a>

@@ -1,0 +1,55 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-26T21:48:24.909410+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 0,
+    "quick_skim_target": 11,
+    "quick_selected": 0
+  },
+  "deep_dive": [
+    {
+      "id": "2606.21197v1",
+      "source": "arxiv",
+      "title": "Extraction and Analysis of Multimodal Concepts in Vision Language Models through Sparse Autoencoders",
+      "abstract": "Vision Language Models (VLMs) have demonstrated impressive performance in tasks requiring joint understanding of images and text, such as image captioning and Visual Question Answering (VQA), but our understanding of their internal processes remains limited. Recently, Sparse Autoencoders (SAEs) have emerged as a promising tool to support the interpretation of concepts encoded in VLMs. However, most SAE-based approaches focus only on textual or visual concepts separately, ignoring multimodal concepts.   This limitation hinders a comprehensive understanding of VLMs, since concepts that integrate both modalities can be misclassified.   Moreover, previous visual approaches often produce low-quality visual concept descriptions that are vague or incomplete, limiting their usefulness for understanding model reasoning. We propose a framework based on SAEs to extract and analyze visual, textual, and multimodal concepts from VLMs. For each neuron, we propose a candidate human-interpretable concept and compute the alignment between the concept and the dataset samples using cosine similarity scores. Experiments on a VQA dataset (LLaVA-NeXT) demonstrate that our framework improves visual concept quality by up to 45\\% compared to existing SAE-based methods, while maintaining high textual concept quality and enabling systematic identification of multimodal concepts. This work contributes new insights into the conceptual space of VLMs, providing a structured approach to distinguish between visual, textual, and multimodal concepts.   The code is available at https://github.com/PHDLanza/Multidata_SAE",
+      "authors": [
+        "Sergio Lanza",
+        "Jae Hee Lee",
+        "Stefan Wermter"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-19T08:08:43+00:00",
+      "link": "https://arxiv.org/pdf/2606.21197v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Analyzes multimodal concepts in VLMs which process images and text.",
+      "llm_evidence_cn": "分析处理图像和文本的视觉语言模型中的多模态概念",
+      "llm_evidence": "分析处理图像和文本的视觉语言模型中的多模态概念",
+      "canonical_evidence": "分析处理图像和文本的视觉语言模型中的多模态概念",
+      "llm_tldr_en": "This paper extracts multimodal concepts from VLMs using sparse autoencoders to better understand how these models integrate vision and language.",
+      "llm_tldr_cn": "当前对视觉语言模型（VLM）的可解释性研究大多将视觉和文本概念分开处理，难以捕捉整合两种模态的多模态概念。本文提出基于稀疏自编码器的方法，从VLM的激活中同时提取涉及图像和文本的跨模态概念，并生成相应的自然语言描述。在多个VLM上的实验证明，所提取的概念具有清晰的语义，能够反映模型联合推理的方式。该方法弥补了仅分析单模态概念的不足，为全面理解VLM提供了更有效的工具，有助于增强模型的可信度和安全性。此外，通过分析这些概念，可以诊断模型在复杂多模态任务中的决策依据，推动VLM在关键应用中的可靠部署。",
+      "llm_tldr": "当前对视觉语言模型（VLM）的可解释性研究大多将视觉和文本概念分开处理，难以捕捉整合两种模态的多模态概念。本文提出基于稀疏自编码器的方法，从VLM的激活中同时提取涉及图像和文本的跨模态概念，并生成相应的自然语言描述。在多个VLM上的实验证明，所提取的概念具有清晰的语义，能够反映模型联合推理的方式。该方法弥补了仅分析单模态概念的不足，为全面理解VLM提供了更有效的工具，有助于增强模型的可信度和安全性。此外，通过分析这些概念，可以诊断模型在复杂多模态任务中的决策依据，推动VLM在关键应用中的可靠部署。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": []
+}

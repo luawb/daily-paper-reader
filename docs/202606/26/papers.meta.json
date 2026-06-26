@@ -1,0 +1,24 @@
+{
+  "label": "2026-06-26",
+  "date": "2026-06-26",
+  "generated_at": "2026-06-26T21:50:07",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202606/26/2606.21197v1-extraction-and-analysis-of-multimodal-concepts-in-vision-language-models-through-sparse-autoencoders",
+      "section": "deep",
+      "title_en": "Extraction and Analysis of Multimodal Concepts in Vision Language Models through Sparse Autoencoders",
+      "authors": "Sergio Lanza, Jae Hee Lee, Stefan Wermter",
+      "date": "2026-06-19",
+      "pdf": "https://arxiv.org/pdf/2606.21197v1",
+      "score": "9.0",
+      "evidence": "分析处理图像和文本的视觉语言模型中的多模态概念",
+      "tldr": "视觉语言模型在图像描述与视觉问答中表现优异，但其内部概念表征，尤其多模态融合概念尚不清晰。现有稀疏自编码方法往往局限于单一模态，视觉概念描述质量低。本文提出一种新框架，利用SAE为神经元分配候选概念，并基于余弦相似度评估概念与多模态数据的对齐程度，从而区分视觉、文本和多模态概念。实验在LLaVA-NeXT数据集上，视觉概念质量相对现有方法提升45%，并成功实现多模态概念的系统提取。这为理解VLM内部工作机制和跨模态推理提供了结构化视角。",
+      "tags": "query:xiqa",
+      "abstract_en": "Vision Language Models (VLMs) have demonstrated impressive performance in tasks requiring joint understanding of images and text, such as image captioning and Visual Question Answering (VQA), but our understanding of their internal processes remains limited. Recently, Sparse Autoencoders (SAEs) have emerged as a promising tool to support the interpretation of concepts encoded in VLMs. However, most SAE-based approaches focus only on textual or visual concepts separately, ignoring multimodal concepts.   This limitation hinders a comprehensive understanding of VLMs, since concepts that integrate both modalities can be misclassified.   Moreover, previous visual approaches often produce low-quality visual concept descriptions that are vague or incomplete, limiting their usefulness for understanding model reasoning. We propose a framework based on SAEs to extract and analyze visual, textual, and multimodal concepts from VLMs. For each neuron, we propose a candidate human-interpretable concept and compute the alignment between the concept and the dataset samples using cosine similarity scores. Experiments on a VQA dataset (LLaVA-NeXT) demonstrate that our framework improves visual concept quality by up to 45\\% compared to existing SAE-based methods, while maintaining high textual concept quality and enabling systematic identification of multimodal concepts. This work contributes new insights into the conceptual space of VLMs, providing a structured approach to distinguish between visual, textual, and multimodal concepts.   The code is available at https://github.com/PHDLanza/Multidata_SAE",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
