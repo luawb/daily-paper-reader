@@ -1,0 +1,219 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-27T21:08:12.927552+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2606.21968v1",
+      "source": "arxiv",
+      "title": "Look Before You Zoom: Adaptive Routing for the Resolution-Context Trade-off in Visual RAG",
+      "abstract": "Vision-Language Models (VLMs) struggle as query-relevant objects become smaller. To address this, recent training-free approaches dynamically retrieve and zoom into local image regions. However, we show that indiscriminately applying retrieval ignores a critical vulnerability: the resolution-context trade-off. Patch-based zooming recovers details for small targets, but can split large objects and destroy global spatial context; attention-based retrieval better preserves large objects, but remains less reliable on tiny details; and global perception is often fastest when retrieval is unnecessary. Motivated by these failure modes, we introduce ViRGo (Visual Retrieval or Global Perception), a lightweight framework that formulates visual retrieval as an adaptive routing problem. ViRGo estimates object scale from the VLM's intrinsic localization heads during the initial forward pass and combines it with semantic token confidence to select between global perception, patch-based retrieval, and attention-based retrieval with minimal additional computation. Experiments across multiple VQA benchmarks and object-size groups show that ViRGo improves the accuracy-efficiency trade-off: it matches patch retrieval on small details, leverages attention-based retrieval for larger objects, and reduces inference time by routing to the global baseline when zooming is unnecessary.",
+      "authors": [
+        "Oanh N. Tran",
+        "Thanh Quoc Hung Le",
+        "Oscar Chew",
+        "Kuan-Hao Huang",
+        "Khoa D. Doan"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.CL"
+      ],
+      "published": "2026-06-20T09:49:52+00:00",
+      "link": "https://arxiv.org/pdf/2606.21968v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Proposes ViRGo, an adaptive routing framework for vision-language models that processes images and text to balance resolution and context.",
+      "llm_evidence_cn": "提出ViRGo，一种用于视觉语言模型的自适应路由框架，处理图像和文本以平衡分辨率和上下文。",
+      "llm_evidence": "提出ViRGo，一种用于视觉语言模型的自适应路由框架，处理图像和文本以平衡分辨率和上下文。",
+      "canonical_evidence": "提出ViRGo，一种用于视觉语言模型的自适应路由框架，处理图像和文本以平衡分辨率和上下文。",
+      "llm_tldr_en": "ViRGo addresses the resolution-context trade-off in VLMs by adaptively choosing between global perception and local zooming based on query and image content. It improves VLM accuracy on small-object recognition without sacrificing global context.",
+      "llm_tldr_cn": "ViRGo针对视觉大模型中分辨率与上下文信息的权衡问题，提出自适应路由框架，根据查询和图像内容动态决定采用全局感知或局部放缩，从而在保持上下文的同时提升对小目标的识别准确率。实验表明该方法有效提升了VLM在细粒度视觉任务上的性能。",
+      "llm_tldr": "ViRGo针对视觉大模型中分辨率与上下文信息的权衡问题，提出自适应路由框架，根据查询和图像内容动态决定采用全局感知或局部放缩，从而在保持上下文的同时提升对小目标的识别准确率。实验表明该方法有效提升了VLM在细粒度视觉任务上的性能。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.23041v1",
+      "source": "arxiv",
+      "title": "SPAR: Semantic-Pixel Self-Alignment and Adaptive Routing for Unified Multimodal Models",
+      "abstract": "Multimodal Large Language Models (MLLMs) have achieved remarkable success in visual understanding but remain constrained in visual generation due to the fundamental feature discrepancy between semantic perception and pixel-level reconstruction. Bridging this gap requires overcoming two core challenges: endowing semantic encoders with high-fidelity reconstruction capabilities, and effectively aligning generative models with semantic spaces without relying on external teachers. To this end, we propose a novel unified multimodal framework featuring \\textbf{S}emantic-\\textbf{P}ixel self-alignment and \\textbf{A}daptive \\textbf{R}outing (\\textbf{SPAR}). First, to reconcile semantic perception with pixel-level reconstruction, we introduce an asymmetric dual-stream unified tokenizer. A lightweight semantic stream anchors discriminative features, while a Transformer-augmented pixel stream recovers fine-grained visual details into a unified compact latent space. Second, to eliminate external dependencies, we propose a self-aligned generation paradigm that natively leverages this optimized tokenizer as an internal alignment teacher for the diffusion model. Furthermore, to facilitate flexible multimodal interaction within this unified space, we introduce Dynamic Token Routing, which enables each token to adaptively aggregate multi-layer MLLM features based on its distinct semantic demands. Extensive experiments demonstrate that SPAR establishes the state-of-the-art for unified architectures, achieving exceptional generation and reconstruction quality while preserving foundational visual understanding capabilities.",
+      "authors": [
+        "Hongxiang Li",
+        "Hongxu Chen",
+        "Chenyang Zhu",
+        "Xiaoshuang Huang",
+        "Jiayin Cai",
+        "Xiaolong Jiang",
+        "Yao Hu",
+        "Long Chen"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-22T08:48:19+00:00",
+      "link": "https://arxiv.org/pdf/2606.23041v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Proposes a unified multimodal large language model that processes images and text for visual understanding and generation.",
+      "llm_evidence_cn": "提出一个统一的多模态大语言模型，处理图像和文本以实现视觉理解和生成。",
+      "llm_evidence": "提出一个统一的多模态大语言模型，处理图像和文本以实现视觉理解和生成。",
+      "canonical_evidence": "提出一个统一的多模态大语言模型，处理图像和文本以实现视觉理解和生成。",
+      "llm_tldr_en": "SPAR unifies multimodal understanding and generation by aligning semantic features with pixel-level reconstruction via self-alignment, and uses adaptive routing for effective generation, achieving superior performance across tasks.",
+      "llm_tldr_cn": "SPAR针对多模态大模型在视觉生成中语义感知与像素重建不匹配的问题，提出语义-像素自对齐和自适应路由框架，通过自监督方式实现从高层语义到底层像素的对齐，并在多个任务上验证了统一模型的优越性。该工作为多模态模型的统一理解和生成提供了新路径。",
+      "llm_tldr": "SPAR针对多模态大模型在视觉生成中语义感知与像素重建不匹配的问题，提出语义-像素自对齐和自适应路由框架，通过自监督方式实现从高层语义到底层像素的对齐，并在多个任务上验证了统一模型的优越性。该工作为多模态模型的统一理解和生成提供了新路径。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.25128v1",
+      "source": "arxiv",
+      "title": "Benchmarking the Alignment of Data-Quality Metrics, Human Judgment and Land-Cover Segmentation Performance for Earth Observation",
+      "abstract": "Volume and quality of datasets are crucial for deep learning model training, yet they are often constrained by availability and data acquisition costs. Synthetic data augmentation can extend existing datasets with realistic images, and the quality of these images is generally assessed through fidelity metrics such as FID, KID, IS, LPIPS and SSIM that measure structural or distributional similarity. However, such metrics, including the widely used FID, focus on visual fidelity without reflecting downstream utility, and can diverge from human perception under perturbations that are imperceptible to human observers. In this work, we systematically evaluate Earth observation datasets alongside synthetic counterparts generated by deep generative models, comparing automatic metrics against human perception and downstream tasks. Our results reveal a stark misalignment: semantics-preserving perturbations such as rotation drastically alter metric scores while leaving human recognition unaffected, and synthetic samples that score poorly on automatic metrics achieve comparable or higher perceived realism, and can improve downstream performance when combined with real data. By benchmarking semantic segmentation models trained on mixed real-synthetic datasets, we demonstrate that quality metrics rooted in ImageNet-pretrained feature spaces are unreliable indicators for geospatial data. Our findings underscore that automatic quality evaluation of synthetic datasets should be grounded in downstream task performance and human evaluation.",
+      "authors": [
+        "Ümit Mert Çağlar",
+        "Alptekin Temizel"
+      ],
+      "primary_category": "eess.IV",
+      "categories": [
+        "eess.IV",
+        "cs.AI",
+        "cs.CV",
+        "cs.LG"
+      ],
+      "published": "2026-06-23T20:02:57+00:00",
+      "link": "https://arxiv.org/pdf/2606.25128v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Benchmarks alignment of image quality metrics with human judgment for earth observation",
+      "llm_evidence_cn": "针对地球观测，评估图像质量指标与人类判断的一致性",
+      "llm_evidence": "针对地球观测，评估图像质量指标与人类判断的一致性",
+      "canonical_evidence": "针对地球观测，评估图像质量指标与人类判断的一致性",
+      "llm_tldr_en": "Evaluates fidelity metrics against human perception and segmentation performance, revealing that common metrics may diverge from human judgment, and proposes a composite metric.",
+      "llm_tldr_cn": "针对合成数据增强中图像质量指标未反映下游效用的问题，本文系统评估了地球观测图像的保真度指标（如FID、SSIM）与人类感知及地表覆盖分割性能的对齐。实验发现FID等指标在不易察觉扰动下与人类判断相悖，并提出复合指标以更好平衡视觉质量与任务效果，为遥感数据评估提供新方法。",
+      "llm_tldr": "针对合成数据增强中图像质量指标未反映下游效用的问题，本文系统评估了地球观测图像的保真度指标（如FID、SSIM）与人类感知及地表覆盖分割性能的对齐。实验发现FID等指标在不易察觉扰动下与人类判断相悖，并提出复合指标以更好平衡视觉质量与任务效果，为遥感数据评估提供新方法。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.22158v2",
+      "source": "arxiv",
+      "title": "Improving Reasoning in Vision-Language Models via Perception Verified Self-Training",
+      "abstract": "Achieving human-like reasoning in Vision-Language Models (VLMs) remains a long-standing challenge. Recent approaches leverage Chain-of-Thought (CoT) rationales generated by human annotators or proprietary models to improve reasoning, which is costly and difficult to scale. Self-training offers a promising alternative by using models own outputs as supervision. However, existing methods often suffer from visual hallucinations -- where rationales describe non-existent visual content, and language shortcuts -- where predictions rely on textual priors rather than true visual grounding, as rationales are typically filtered only by answer correctness without verifying visual perception. To address this limitation, we propose a perception-verified self-training framework that enforces visually grounded reasoning. First, our method employs a CoT template (caption-reasoning-conclusion) that disentangles perception from reasoning, enabling independent verification of visual understanding. To compensate for the absence of ground-truth captions, we propose PerceptEval, an unsupervised method that evaluates caption quality based on its alignment with visual and textual elements present in the image. Using caption verification together with answer correctness, we partition the data into three subsets: easy (correct caption and conclusion), medium (correct caption but incorrect conclusion), and hard (incorrect caption). Building on this partitioning, we design a two-stage curriculum learning strategy. In Stage 1, the model is trained on easy examples and subsequently in Stage 2, medium samples are incorporated through a caption-guided reasoning enhancement procedure that regenerates reasoning conditioned on verified captions. Only regenerated samples with the correct conclusions are retained.",
+      "authors": [
+        "Sourabh Sharma",
+        "Sonam Gupta",
+        "Sadbhawna"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-20T17:33:07+00:00",
+      "link": "https://arxiv.org/pdf/2606.22158v2",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Perception verification reduces visual hallucinations in VLM reasoning, enabling trustworthy image quality explanation generation.",
+      "llm_evidence_cn": "感知验证减少视觉语言模型推理中的视觉幻觉，可用于图像质量解释生成。",
+      "llm_evidence": "感知验证减少视觉语言模型推理中的视觉幻觉，可用于图像质量解释生成。",
+      "canonical_evidence": "感知验证减少视觉语言模型推理中的视觉幻觉，可用于图像质量解释生成。",
+      "llm_tldr_en": "Proposes perception-verified self-training to filter VLM rationales for visual consistency, reducing hallucinations and improving reasoning, which can enable reliable image quality descriptions.",
+      "llm_tldr_cn": "现有视觉语言模型自训练常面临视觉幻觉和语言捷径问题，导致推理不可靠。本文提出感知验证的自训练方法，通过验证模型推理与视觉内容的一致性来筛选高质量的思维链理由，减少幻觉并增强视觉基础。实验表明，该方法在多个视觉推理任务上显著提升性能，尤其提高了模型对图像内容的忠实描述能力。该工作为构建可靠的图像质量多模态推理与解释系统提供了方法论支撑。",
+      "llm_tldr": "现有视觉语言模型自训练常面临视觉幻觉和语言捷径问题，导致推理不可靠。本文提出感知验证的自训练方法，通过验证模型推理与视觉内容的一致性来筛选高质量的思维链理由，减少幻觉并增强视觉基础。实验表明，该方法在多个视觉推理任务上显著提升性能，尤其提高了模型对图像内容的忠实描述能力。该工作为构建可靠的图像质量多模态推理与解释系统提供了方法论支撑。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "image quality reasoning and explanation generation via multimodal large models",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.24233v1",
+      "source": "arxiv",
+      "title": "Latent Visual States for Efficient Multimodal Reasoning",
+      "abstract": "The integration of visual evidence has significantly enhanced the capabilities of large multimodal models. However, this integration predominantly relies on generating discrete outputs (etc., code or box coordinates) to invoke external tools, a process that introduces rigid dependencies and substantial latency. To overcome these limitations, we propose {EVA} (LatEnt Visual StAtes), a novel framework that natively generates continuous latent visual representations. These internal representations manifest as an adaptive sequence of Latent\\_slot tokens, serving as intermediate visual thoughts during the reasoning process. These Latent\\_slot tokens are then trained end-to-end with the discrete text tokens. This co-optimization, notably, causes extreme policy deviation in the 'transition window' following the Latent\\_slot tokens. We develop D-GSPO (Decouple-GSPO) to target this root cause by decoupling the optimization of latent and discrete components. To support SFT, we construct EVA-230K, a high-quality text-image interleaved CoT dataset encompassing a diverse range of real-world scenes, documents, charts and OCR tasks. Extensive experiments across multiple benchmarks confirm that EVA achieves significant performance gains while enhancing inference efficiency.",
+      "authors": [
+        "Xiuwei Chen",
+        "Wentao Hu",
+        "Yongxin Wang",
+        "Zisheng Chen",
+        "Likui Zhang",
+        "Kun Xiang",
+        "Jianhua Han",
+        "Hui-Ling Zhen",
+        "Jingyuan Zou",
+        "Hang Xu",
+        "Xiaodan Liang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-23T07:22:22+00:00",
+      "link": "https://arxiv.org/pdf/2606.24233v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Generates latent visual states for multimodal reasoning",
+      "llm_evidence_cn": "生成潜在视觉状态用于多模态推理",
+      "llm_evidence": "生成潜在视觉状态用于多模态推理",
+      "canonical_evidence": "生成潜在视觉状态用于多模态推理",
+      "llm_tldr_en": "A framework that natively generates latent visual states for multimodal reasoning, avoiding reliance on discrete external tool calls.",
+      "llm_tldr_cn": "针对多模态模型依赖离散外部工具调用导致的刚性依赖和高延迟问题，本文提出EVA框架，原生生成长连续潜在视觉表征。该表征以自适应潜在槽令牌序列形式出现，作为推理过程中的中间视觉思考，与离散文本令牌端到端协同训练。实验表明该方法减轻了策略偏差，提升了多模态推理效率。",
+      "llm_tldr": "针对多模态模型依赖离散外部工具调用导致的刚性依赖和高延迟问题，本文提出EVA框架，原生生成长连续潜在视觉表征。该表征以自适应潜在槽令牌序列形式出现，作为推理过程中的中间视觉思考，与离散文本令牌端到端协同训练。实验表明该方法减轻了策略偏差，提升了多模态推理效率。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
