@@ -1,0 +1,241 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-29T21:50:48.472432+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2606.27608v1",
+      "source": "arxiv",
+      "title": "Qwen-Image-2.0-RL Technical Report",
+      "abstract": "We present Qwen-Image-2.0-RL, a post-training pipeline that applies reinforcement learning from human feedback (RLHF) and on-policy distillation (OPD) to improve both the visual quality and instruction-following capability of the Qwen-Image-2.0 diffusion model. To provide reliable reward signals, we construct task-specific composite reward models by fine-tuning vision-language models with a pointwise scoring paradigm and chain-of-thought reasoning. For text-to-image generation, the reward models cover alignment, aesthetics, and portrait fidelity dimensions. For image editing tasks, the reward system addresses instruction-following accuracy and face identity preservation. Building on this reward system, we develop a scalable GRPO-based RL training framework, incorporating a hybrid classifier-free guidance (CFG) strategy to preserve pre-trained knowledge, prompt curation via intra-group reward range filtering, and per-category reward weight calibration. To merge the task-specialized RL policies for T2I and editing, we propose on-policy distillation as the final training stage, which consolidates multiple teachers into a single student model through trajectory-level velocity matching. Extensive evaluation shows that Qwen-Image-2.0-RL achieves 57.84 overall score on Qwen-Image-Bench (+2.61 over the base model), Elo ratings of 1193 in text-to-image arena (+78) and 1349 in image edit arena (+93), demonstrating consistent gains in aesthetic quality, prompt adherence, and editing accuracy.",
+      "authors": [
+        "Yixian Xu",
+        "Kaiyuan Gao",
+        "Yuxiang Chen",
+        "Yilei Chen",
+        "Zecheng Tang",
+        "Zihao Liu",
+        "Zikai Zhou",
+        "Deqing Li",
+        "Hao Meng",
+        "Kuan Cao",
+        "Jiahao Li",
+        "Jie Zhang",
+        "Liang Peng",
+        "Lihan Jiang",
+        "Ningyuan Tang",
+        "Shengming Yin",
+        "Tianhe Wu",
+        "Xiaoyue Chen",
+        "Yan Shu",
+        "Yanran Zhang",
+        "Yi Wang",
+        "Yu Wu",
+        "Yujia Wu",
+        "Zekai Zhang",
+        "Zhendong Wang",
+        "Xiao Xu",
+        "Kun Yan",
+        "Chenfei Wu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.LG"
+      ],
+      "published": "2026-06-25T23:49:50+00:00",
+      "link": "https://arxiv.org/pdf/2606.27608v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Constructs VLM reward models with chain-of-thought reasoning to assess image quality dimensions for RL-based generation improvement",
+      "llm_evidence_cn": "用带链式推理的VLM奖励模型评估图像质量，驱动生成强化学习",
+      "llm_evidence": "用带链式推理的VLM奖励模型评估图像质量，驱动生成强化学习",
+      "canonical_evidence": "用带链式推理的VLM奖励模型评估图像质量，驱动生成强化学习",
+      "llm_tldr_en": "Proposes a reinforcement learning pipeline for text-to-image models that uses task-specific composite reward models built from vision-language models with pointwise scoring and chain-of-thought reasoning; these reward models assess dimensions like alignment, aesthetics, and portrait fidelity, enabling GRPO-based training that significantly improves image quality and instruction following.",
+      "llm_tldr_cn": "针对扩散模型强化学习缺乏可靠质量奖励信号的问题，本文提出基于视觉语言模型的复合奖励模型，该模型通过点式评分和链式推理对生成图像的对齐度、美学和肖像保真度等维度进行细粒度评估。在此基础上，构建了可扩展的GRPO强化学习框架，显著提升了Qwen-Image-2.0的视觉质量和指令遵循能力。这项工作展示了将多模态大模型的推理能力嵌入图像质量评估奖励模型，进而实现高效图像生成优化的潜力。",
+      "llm_tldr": "针对扩散模型强化学习缺乏可靠质量奖励信号的问题，本文提出基于视觉语言模型的复合奖励模型，该模型通过点式评分和链式推理对生成图像的对齐度、美学和肖像保真度等维度进行细粒度评估。在此基础上，构建了可扩展的GRPO强化学习框架，显著提升了Qwen-Image-2.0的视觉质量和指令遵循能力。这项工作展示了将多模态大模型的推理能力嵌入图像质量评估奖励模型，进而实现高效图像生成优化的潜力。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "image quality reasoning and explanation generation via multimodal large models",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.28266v1",
+      "source": "arxiv",
+      "title": "RSICCLLM: A Multimodal Large Language Model for Remote Sensing Image Change Captioning",
+      "abstract": "Remote Sensing Image Change Captioning (RSICC) aims to describe changes between bi-temporal remote sensing images and holds significant research and application value. However, most existing methods rely on conventional deep learning architectures, and the limited model capacity constrains performance. Although large-model post-training techniques have achieved great success in general domains, their direct transfer to RSICC remains challenging due to data scarcity and the need for fine-grained change understanding. To address this, we propose RSICCLLM, the first post-training framework for large vision-language models in RSICC. Specifically, we design a data generation paradigm, release the instruction dataset RSICI, and establish a task-specific RSICC benchmark. We further introduce Difference-aware Supervised Fine-tuning to explicitly extract change representations and guide the model in perceiving and understanding temporal differences. In addition, we propose Dual-Negative Preference Optimization (DNPO), which employs two complementary negative-sample construction strategies to construct the preference dataset RSICP and further refine model performance. Extensive experiments validate the superior capability of RSICCLLM, which achieves outstanding results with only 7B parameters, surpassing models of substantially larger scales. The code and dataset will be made publicly available at https://github.com/keaill/RSICCLLM.",
+      "authors": [
+        "Yelin Wang",
+        "Zijia Song",
+        "Shuo Ye",
+        "Chuanguang Yang",
+        "Miaoyu Wang",
+        "Yong Xu",
+        "Zhulin An",
+        "Yongjun Xu",
+        "Zitong Yu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-26T16:57:40+00:00",
+      "link": "https://arxiv.org/pdf/2606.28266v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "multimodal large language model for describing image changes",
+      "llm_evidence_cn": "用于描述图像变化的多模态大语言模型",
+      "llm_evidence": "用于描述图像变化的多模态大语言模型",
+      "canonical_evidence": "用于描述图像变化的多模态大语言模型",
+      "llm_tldr_en": "RSICCLLM is a post-training framework for large vision-language models to generate natural language descriptions of changes in remote sensing images.",
+      "llm_tldr_cn": "RSICCLLM 提出首个面向遥感图像变化描述的大视觉语言模型后训练框架，通过数据生成范式和指令数据集 RSICI，使大模型能够理解并生成双时相遥感图像变化的细粒度自然语言描述，在遥感变化理解任务上取得突破。该方法解决了遥感领域数据稀缺和精细变化理解难题，为遥感图像自动分析提供了新方案。",
+      "llm_tldr": "RSICCLLM 提出首个面向遥感图像变化描述的大视觉语言模型后训练框架，通过数据生成范式和指令数据集 RSICI，使大模型能够理解并生成双时相遥感图像变化的细粒度自然语言描述，在遥感变化理解任务上取得突破。该方法解决了遥感领域数据稀缺和精细变化理解难题，为遥感图像自动分析提供了新方案。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.25763v1",
+      "source": "arxiv",
+      "title": "ShutterMuse: Capture-Time Photography Guidance with MLLMs",
+      "abstract": "Real-world photography requires capture-time guidance for both camera framing and subject pose. Yet existing aesthetic cropping benchmarks mainly evaluate post-hoc crop prediction and overlook subject-side recommendations, leaving the capture-time guidance capabilities of multimodal large language models (MLLMs) underexplored. To address this gap, we introduce CaptureGuide-Bench, a benchmark with two complementary tasks: photographer-side composition decision and refinement, and subject-side scene-conditioned pose recommendation. Our evaluation reveals limitations: general-purpose MLLMs can make composition decisions but lack precise refinement localization, while specialized aesthetic cropping models localize crops effectively but are limited to refinement; neither provides actionable pose guidance. To support model development, we further construct CaptureGuide-Dataset, comprising 130K samples with textual rationales and structured visual annotations, and develop ShutterMuse, a unified MLLM trained with supervised and reinforcement fine-tuning. Experiments on CaptureGuide-Bench show that ShutterMuse achieves the best overall photographer-side performance among evaluated baselines and competitive subject-side pose recommendation with substantially lower inference cost, demonstrating the potential of MLLMs as interactive assistants for photography during image capture.",
+      "authors": [
+        "Jiayu Li",
+        "Yixiao Fang",
+        "Tianyu Hu",
+        "Wei Cheng",
+        "Ping Huang",
+        "Zheheng Fan",
+        "Gang Yu",
+        "Xingjun Ma"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-24T12:37:56+00:00",
+      "link": "https://arxiv.org/pdf/2606.25763v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "uses MLLMs for photography composition guidance",
+      "llm_evidence_cn": "利用多模态大语言模型进行摄影构图指导",
+      "llm_evidence": "利用多模态大语言模型进行摄影构图指导",
+      "canonical_evidence": "利用多模态大语言模型进行摄影构图指导",
+      "llm_tldr_en": "Introduces a benchmark for capture-time photography guidance using MLLMs, with tasks on composition and pose recommendation, revealing MLLM limitations in precise localization for aesthetic tasks.",
+      "llm_tldr_cn": "现有摄影基准主要评估事后裁剪预测，忽视了拍摄时的指导需求。本文提出CaptureGuide-Bench，包含摄影师侧构图决策与精细化、以及被摄者侧姿态推荐两个互补任务，评估多模态大语言模型的能力，发现通用模型能做出构图决策但缺乏精确定位，而专用美学裁剪模型定位准确但仅限于精细化，两者均未充分解决拍摄指导问题。该基准揭示了现有MLLM在拍摄指导中的局限性，为未来研究提供了方向。",
+      "llm_tldr": "现有摄影基准主要评估事后裁剪预测，忽视了拍摄时的指导需求。本文提出CaptureGuide-Bench，包含摄影师侧构图决策与精细化、以及被摄者侧姿态推荐两个互补任务，评估多模态大语言模型的能力，发现通用模型能做出构图决策但缺乏精确定位，而专用美学裁剪模型定位准确但仅限于精细化，两者均未充分解决拍摄指导问题。该基准揭示了现有MLLM在拍摄指导中的局限性，为未来研究提供了方向。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.22487v1",
+      "source": "arxiv",
+      "title": "FetSelect: Task-Specific Architectures and Self-Supervised Learning for Automated Fetal Ultrasound Frame Selection",
+      "abstract": "Automated frame selection for fetal biometry remains under addressed, with most prior work targeting generic quality assessment or downstream measurement pipelines that assume suitable frames are available. We introduce FetSelect, a task-specific framework that pairs a frozen vision foundation backbone with a hybrid multi-head design: a Task-Gated classification head and a Detection-derived quality head combined via learned fusion. We curate 6,486 expert-labeled frames across four targets: Crown-Rump Length (CRL), Nuchal Translucency (NT), Nasal Bone (NB), and Scalebar, and adapt the backbone with BYOL pretraining on 19,019 unlabeled images. On a held-out test set (974 frames), FetSelect achieves mean AUROC 0.956 and mean correlation 0.818 with expert quality annotations. Ablations confirm that hybrid fusion surpasses single-head variants, and ultrasound-specific self-supervision yields consistent gains. Evaluation on external clinical videos and 509 external CRL images demonstrates task-specific discrimination.",
+      "authors": [
+        "Mahmood Alzubaidi",
+        "Raden Muaz",
+        "Uzair Shah",
+        "Mohammed Ammar",
+        "Khalid Alyafei",
+        "Mowafa Househ",
+        "Marco Agus"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-21T13:14:44+00:00",
+      "link": "https://arxiv.org/pdf/2606.22487v1",
+      "tags": [
+        "keyword:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Automates fetal ultrasound frame selection via quality assessment",
+      "llm_evidence_cn": "通过质量评估自动化胎儿超声帧选择",
+      "llm_evidence": "通过质量评估自动化胎儿超声帧选择",
+      "canonical_evidence": "通过质量评估自动化胎儿超声帧选择",
+      "llm_tldr_en": "FetSelect uses a hybrid multi-head architecture with task-gated classification and quality head to assess ultrasound frame quality for fetal biometry.",
+      "llm_tldr_cn": "FetSelect针对胎儿超声帧选择，结合任务门控分类头与检测导出的质量头，融合视觉基础模型，在多目标上实现高AUROC。该方法为医学图像质量评估提供了专用框架。",
+      "llm_tldr": "FetSelect针对胎儿超声帧选择，结合任务门控分类头与检测导出的质量头，融合视觉基础模型，在多目标上实现高AUROC。该方法为医学图像质量评估提供了专用框架。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.26923v1",
+      "source": "arxiv",
+      "title": "GAVEL: Grounded Caption Error Verification and Localization",
+      "abstract": "Vision-language models (VLMs) often produce hallucinated or inconsistent outputs, where text and images are not properly aligned. Addressing this issue requires not only detecting misalignment but also explaining the discrepancy and localizing its visual evidence. We introduce GAVEL (Grounded Caption Error Verification and Localization), a task that jointly addresses verification, explanation, and localization for image-text pairs. To support systematic evaluation, we also present a corresponding dataset and benchmark. We further train a supervised baseline on the human-annotated training split to assess whether GAVEL provides learnable supervision for these abilities. Experiments show that even strong closed-source models struggle on GAVEL, while the supervised baseline yields consistent improvements across grounding and explanation metrics.",
+      "authors": [
+        "Zixian Gao",
+        "Atsushi Hashimoto",
+        "Kuniaki Saito"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-25T12:00:45+00:00",
+      "link": "https://arxiv.org/pdf/2606.26923v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Addresses verification, explanation, and localization for image-text pairs using VLMs, a transferable method for image quality explanation tasks.",
+      "llm_evidence_cn": "使用多模态大模型进行图文对的验证、解释和定位，可为图像质量解释任务提供可迁移方法。",
+      "llm_evidence": "使用多模态大模型进行图文对的验证、解释和定位，可为图像质量解释任务提供可迁移方法。",
+      "canonical_evidence": "使用多模态大模型进行图文对的验证、解释和定位，可为图像质量解释任务提供可迁移方法。",
+      "llm_tldr_en": "GAVEL introduces a task for grounded caption error verification and localization, jointly addressing misalignment detection, explanation, and visual evidence localization in image-text pairs. It provides a benchmark and a supervised baseline, showing even strong VLMs struggle, offering a framework transferable to image quality assessment explanation.",
+      "llm_tldr_cn": "GAVEL针对视觉语言模型的图文不一致问题，提出了一项联合验证、解释和视觉证据定位的新任务，并提供了基准数据集和监督基线。实验显示强闭源模型仍面临挑战，而监督基线可有效学习。该方法框架可迁移至图像质量评估的解释生成任务，为多模态大模型的质量推理提供了方法论支持。",
+      "llm_tldr": "GAVEL针对视觉语言模型的图文不一致问题，提出了一项联合验证、解释和视觉证据定位的新任务，并提供了基准数据集和监督基线。实验显示强闭源模型仍面临挑战，而监督基线可有效学习。该方法框架可迁移至图像质量评估的解释生成任务，为多模态大模型的质量推理提供了方法论支持。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "image quality reasoning and explanation generation via multimodal large models",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

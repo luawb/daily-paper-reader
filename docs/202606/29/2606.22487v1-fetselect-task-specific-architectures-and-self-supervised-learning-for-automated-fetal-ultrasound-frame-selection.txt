@@ -1,0 +1,315 @@
+Title: FetSelect: Task-Specific Architectures and Self-Supervised Learning for Automated Fetal Ultrasound Frame Selection
+
+URL Source: https://arxiv.org/pdf/2606.22487v1
+
+Published Time: Tue, 23 Jun 2026 02:37:49 GMT
+
+Number of Pages: 14
+
+Markdown Content:
+# FetSelect: Task-Specific Architectures and Self-Supervised Learning for Automated Fetal Ultrasound Frame Selection 
+
+Mahmood Alzubaidi 1, Raden Muaz 1, Uzair Shah 1, Mohammed Ammar 2,Khalid Alyafei 3, Mowafa Househ 1, and Marco Agus 1 
+
+> 1
+
+College of Science and Engineering, Hamad Bin Khalifa University, Doha, Qatar  
+
+> 2
+
+LIST Laboratory Department of Electrical Systems Engineering, University of Boumerdes, Boumerdes, Algeria  
+
+> 3
+
+Sidra Medicine, Doha, Qatar 
+
+Abstract. Automated frame selection for fetal biometry remains under-addressed, with most prior work targeting generic quality assessment or downstream measurement pipelines that assume suitable frames are available. We introduce FetSelect , a task-specific framework that pairs a frozen vision foundation backbone with a hybrid multi-head design: a Task-Gated classification head and a Detection-derived quality head combined via learned fusion. We curate 6,486 expert-labeled frames across four targets—Crown–Rump Length (CRL), Nuchal Translucency (NT), Nasal Bone (NB), and Scalebar—and adapt the backbone with BYOL pretraining on 19,019 unlabeled images. On a held-out test set (974 frames), FetSelect achieves mean AUROC 0.956 and mean correlation 
+
+0.818 with expert quality annotations. Ablations confirm that hybrid fu-sion surpasses single-head variants, and ultrasound-specific self-supervision yields consistent gains. Evaluation on external clinical videos and 509 ex-ternal CRL images demonstrates task-specific discrimination. 
+
+Keywords: Fetal ultrasound · Frame selection · Self-supervised learning 
+
+· Multi-task learning · Quality assessment. 
+
+# 1 Introduction 
+
+Selecting diagnostically optimal frames from fetal ultrasound videos is a pre-requisite for reliable first-trimester screening. In routine practice, sonographers sweep through the midsagittal view and manually pick frames for crown–rump length (CRL), nuchal translucency (NT), nasal bone (NB) assessment, and scale-bar calibration [31,24]. Missed or suboptimal frames degrade measurements, increase operator burden, and complicate quality control [25,32,30]. Although standard-plane detection [4] and end-to-end biometry pipelines [30,27] have ad-vanced markedly, most assume expert pre-selection of frames or optimize a single downstream endpoint rather than the upstream selection of task-specific, diag-nostically optimal frames. Related video-to-measurement works [26] and first-trimester CRL/NT algorithms [31] still depend on having an appropriate frame available.   
+
+> arXiv:2606.22487v1 [cs.CV] 21 Jun 2026 2M. Alzubaidi et al.
+> Fig. 1. FetSelect overview. FetSelect ingests midsagittal ultrasound videos or frames and outputs task-specific frame-quality scores for CRL, NT, NB, and scalebar; the highest-scoring frames are selected for clinical use.
+
+Medical image quality assessment [15], ultrasound frame selection [1,11,22], clip retrieval [21], and foundation-model IQA [12] typically emphasize global quality or single endpoints and do not enforce clinical criteria that differ across CRL, NT, NB, and scalebar . Selection criteria diverge across tasks: CRL requires a full fetal profile in neutral posture; NT demands precise midsagittal delineation of a 1–3 mm hypoechoic space; NB is sensitive to the exact midsagittal plane [24]; scalebar detection depends on stable placement and legible tick marks. 
+
+Our approach. We introduce FetSelect (Figure 1), a unified framework for au-tomated task-specific frame selection across four first-trimester objectives. Fet-Select combines (i) ultrasound-specific self-supervision with BYOL on 19,019 unlabeled images, and (ii) a lightweight multi-path head trained on 6,486 multi-annotated frames. The head fuses a task-gated pathway (global features) with a 
+
+detection-derived pathway (localization statistics), and a learned fusion module; the frozen backbone and small heads ( ∼2.2M params) enable real-time inference. 
+
+Contributions. 
+
+– We cast fetal ultrasound frame selection as a multi-objective, task-specific learning problem spanning CRL, NT, NB, and scalebar—the upstream bot-tleneck preceding biometry. 
+
+– A new multi-task dataset of 6,486 first-trimester frames with multi-modal annotations (boxes, keypoints, polygons, clinical attributes). 
+
+– A multi-path head combining a task-gated classifier, a detection-derived quality converter, and a learned fusion module (Section 3). FetSelect: Automated Fetal Ultrasound Frame Selection 3
+
+# 2 Related Work 
+
+Fetal ultrasound analysis and biometry. SonoNet [4] introduced real-time standard-plane recognition with weakly supervised localization, establishing the paradigm of end-to-end view classification from video frames. Subsequent pipelines pro-cess entire examinations to aggregate noisy measurements into calibrated bio-metrics [30], while related workflows automate intrapartum measurements across classification, segmentation, and measurement stages [27]. Multi-task fetal biom-etry from ultrasound videos [26] demonstrates that direct video-to-measurement paradigms are feasible, and task-specific first-trimester efforts include standard-plane localization for CRL and NT [31]. Nasal bone assessment is particularly sensitive to the exact midsagittal plane [24], underscoring the need for task-specific criteria when selecting frames. However, these pipelines assume expert pre-selection of suitable frames or optimize only downstream measurements rather than the upstream selection of diagnostically optimal frames. 
+
+Frame selection and image quality assessment. Medical image quality assessment has a rich literature spanning generic assessment [15] and domain-specific ap-plications. In ultrasound, frame selection has been explored for obstetric sweeps using adaptive temporal selection [1], multimodal clinical summarization [11], and metric-based selection in lung ultrasound videos [22]. Clip-level retrieval adapts spatiotemporal transformers and contrastive objectives to robustly re-trieve standard-frame clips under noise and boundary uncertainty [21]. Foundation-model adaptation has been leveraged for IQA on blind sweeps [12]. However, these methods emphasize global quality or single endpoints and seldom enforce 
+
+task-specific, clinically grounded selection criteria that differ across CRL, NT, NB, and scalebar. 
+
+Vision foundation models and self-supervised learning. Vision foundation mod-els show strong transfer to medical imaging. C-RADIO-B [28]—a Vision Trans-former distilled from CLIP, DINOv2, and SAM—provides rich multi-scale fea-tures suitable for downstream medical tasks. General-purpose self-supervised models such as DINOv2 show mixed, modality-dependent outcomes in medical domains [23], motivating domain-specific adaptation. Fetal-specific pretraining is emerging: FetalCLIP [19], trained on 210K image–text pairs, yields robust down-stream performance across tasks with limited labels, and parameter-efficient adaptations further benefit blind-sweep IQA [12]. Concurrent ultrasound-specific foundation models such as USFM [17] and USF-MAE [20] pretrain on large unlabeled ultrasound corpora across organs, but target generic representation learning rather than the task-specific frame-selection problem we address. Video-based ultrasound SSL demonstrates that temporally aware objectives improve downstream tasks [16,29]. We compare four canonical SSL objectives—BYOL [10], MoCo [13], DINO [6], and VICReg [3]—finding that ultrasound-specific BYOL pretraining yields the most consistent gains for frame selection, while the remain-ing objectives provide informative comparisons for augmentation sensitivity and architectural compatibility. 4 M. Alzubaidi et al.                     
+
+> Table 1. Supervised learning dataset statistics. The annotated corpus encompasses 6,486 frames with multi-modal annotations across four clinical tasks.
+> Task Frames Train Val Test
+> NT 517 362 78 77 CRL 1,169 818 175 176 NB 4,239 2,967 636 636 Scalebar 561 393 84 84
+> Total 6,486 4,540 972 974
+
+Summary and gap. Existing work optimizes downstream biometry or global IQA and typically presumes optimal frames are available. Foundation models and generic SSL alone are insufficient for specialized ultrasound selection without domain adaptation. Multi-task learning with modality-aware fusion and task-specific architectures has been explored broadly in medical imaging, but a sys-tematic comparison of fusion designs for frame selection in fetal ultrasound is lacking. FetSelect fills this gap with a unified, task-specific framework that com-bines ultrasound-specific SSL with a lightweight fusion head integrating global context and detection-derived anatomical evidence. 
+
+# 3 Methods and Materials 
+
+3.1 Datasets 
+
+Self-supervised learning dataset. We compiled a pretraining corpus of 19,019 fetal ultrasound images from 14 anatomical categories (abdomen, aorta, CRL view, cervical, cervix, femur, NT view, non-standard/standard NT, pubic symphysis– fetal head, thorax, transcerebellar, transthalamic, transventricular) sourced from public repositories [8,5,2,18,7] and Kaggle. The corpus spans imaging protocols, gestational ages, and clinical contexts. All SSL images use the same preprocessing as the supervised set: resize to 224 × 224 , per-image intensity normalization, and cropping of vendor banner overlays; only quality labels are added in the super-vised pipeline. We deliberately span all three trimesters in the SSL corpus—even though downstream tasks are first-trimester only—because the wider anatomical and probe-pose distribution gives the frozen backbone richer ultrasound-specific texture and structural priors. Domain shift between the SSL and supervised sets is therefore limited to anatomical class distribution rather than acquisition or preprocessing. 
+
+Supervised learning dataset. For supervised training and evaluation, we curated a multi-task annotated dataset of 6,486 ultrasound frames across four first-trimester tasks: CRL, NT, NB, and scalebar calibration (Table 1). The corpus includes bounding boxes, keypoints, polygons, and clinical attributes, partitioned into training (70%), validation (15%), and test (15%) splits via stratified sam-pling. FetSelect: Automated Fetal Ultrasound Frame Selection 5  
+
+> Fig. 2. FetSelect architecture. Phase 1 : BYOL pretraining on 19K unlabeled im-ages with C-RADIO-B backbone. Phase 2 : Supervised training of Task-Gated, De-tection, and Fusion heads (backbone frozen). Phase 3 : Inference-time frame ranking across four clinical tasks.
+
+Annotation quality and label definition. The dataset was annotated by a senior sonographer (4 years experience). We employ rule-guided scoring (Equation (2)) to produce continuous quality labels. We acknowledge that these heuristics are a proxy for real clinical quality; however, they incorporate domain-specific criteria mirroring established clinical scoring systems [25] (fluid clarity for NT, neutral-posture full profile for CRL, bone definition for NB, tick legibility for scalebar). The detection pathway (Path B) uses predicted detections at inference—not ground-truth annotations—reducing label circularity. Inter-observer agreement (50 images/task, two senior experts with 10+ years experience) yielded Cohen’s 
+
+κ: CRL 0.82, NT 0.76, NB 0.79, Scalebar 0.92. Intra-observer ICC was 0.88. 
+
+3.2 FetSelect Architecture 
+
+FetSelect comprises three phases (Figure 2): (1) self-supervised backbone pre-training, (2) supervised training of task-specific heads, and (3) inference-time frame ranking. 
+
+Self-supervised pretraining with BYOL. We employed Bootstrap Your Own La-tent (BYOL) [10], a non-contrastive framework avoiding collapse without neg-ative pairs. BYOL uses an online network (θ) and a target network (ξ) shar-ing identical encoder architectures. Both utilize C-RADIO-B [28,14], a 98.5M-parameter Vision Transformer distilled from CLIP, DINOv2, and SAM, produc-ing 2304-dimensional features. Crucially, the online network includes a predictor 6 M. Alzubaidi et al. 
+
+head qθ absent from the target network—this asymmetry is the mechanism pre-venting representation collapse [10]. Given an image x, two augmented views v1, v 2 are generated using random flipping, rotation ( ±10 ◦), brightness/contrast adjustment ( ±20% ), multiplica-tive Rayleigh noise, and elastic deformations. We model ultrasound speckle as multiplicative Rayleigh noise ( I′ = I · n, n ∼ Rayleigh (σ)) rather than additive Gaussian noise, since speckle arises from constructive/destructive interference of backscattered echoes and is inherently multiplicative. The online network computes projection ziθ = gθ (fθ (vi)) and prediction piθ =
+
+qθ (ziθ ); the target computes only ziξ = gξ (fξ (vi)) . The symmetrized BYOL loss is: 
+
+LBYOL = qθ (z1 
+
+> θ
+
+)
+
+∥qθ (z1 
+
+> θ
+
+)∥2
+
+− z2
+
+> ξ
+
+∥z2 
+
+> ξ
+
+∥2
+
+> 22
+
++ qθ (z2 
+
+> θ
+
+)
+
+∥qθ (z2 
+
+> θ
+
+)∥2
+
+− z1
+
+> ξ
+
+∥z1 
+
+> ξ
+
+∥2
+
+> 22
+
+(1) where the predictor qθ appears explicitly, applied only to the online branch. Target parameters are updated via EMA: ξ ← τ ξ + (1 − τ )θ with τ = 0 .996 .We pretrained on 19,019 images for 100 epochs (batch size 12, LR 10 −3, cosine decay, AdamW, 10-epoch warmup; converged at epoch 40). 
+
+Path A: Task-Gated Head. Given frozen backbone outputs—summary features 
+
+s ∈ R2304 and spatial features Fspatial ∈ R768 ×16 ×16 —we pool spatial features and concatenate ( h ∈ R3072 ). Per-task two-layer MLPs (ReLU, dropout p=0 .2)output quality logits y(k)
+
+> gate
+
+. Ground-truth labels are computed via heuristic qual-ity scoring: 
+
+q(k) = w(k)1 · ⊮present + w(k)2 · c(k) + w(k)3 · v(k) (2) where ⊮present is binary annotation presence, c(k) ∈ [0 , 1] is the fraction of required landmarks visible, and v(k) ∈ [0 , 1] is a task-specific visibility ratio computed deterministically from box and keypoint geometry (e.g., NT-segment width relative to expected range; tick legibility for scalebar). All three terms are fixed inputs derived from annotations and are not learnable. The per-task weights w(k)1 , w (k)2 , w (k)3 are clinical hyperparameters set prior to training; only the task-gated MLP weights are optimized. Final scores are normalized to [0 , 1] .
+
+Path B: Detection Head with Quality Converter. Anchor-based detection on spatial features produces bounding boxes and class logits across 3 scales. A detection-to-gate converter extracts five statistics per task (max confidence, count, average/max area, coverage) and maps them to quality logits y(k) 
+
+> det
+
+via task-specific networks. This pathway uses predicted detections at inference, not ground-truth annotations. 
+
+Fusion module and loss. Per-task fusion networks combine [y(k)
+
+> gate
+
+; y(k)
+
+> det
+
+] to produce fused logits y(k)
+
+> fused
+
+. All pathways are trained jointly: 
+
+Ltotal =
+
+> 4
+
+X
+
+> k=1
+
+h
+
+LBCE (y(k)
+
+> gate
+
+, ˆy(k)) + LBCE (y(k)
+
+> det
+
+, ˆy(k)) + LBCE (y(k)
+
+> fused
+
+, ˆy(k))
+
+i
+
+(3) FetSelect: Automated Fetal Ultrasound Frame Selection 7                                                 
+
+> Table 2. FetSelect performance on the held-out test set (974 frames). All values report mean ±std over 3 random seeds.
+> Task AUROC AP Corr.
+> NT 0.931 ±0.003 0.286 ±0.008 0.745 ±0.011
+> CRL 0.996 ±0.001 0.935 ±0.004 0.913 ±0.006
+> Nasal Bone 0.988 ±0.001 0.952 ±0.003 0.886 ±0.007
+> Scalebar 0.908 ±0.004 0.426 ±0.010 0.728 ±0.009
+> Mean 0.956 ±0.002 0 .789 ±0.006 0 .818 ±0.008
+
+where LBCE is binary cross-entropy with logits and ˆy(k) ∈ [0 , 1] are ground-truth scores. BCE was selected over focal loss after controlled comparison: focal loss yielded AUROC 0.870 vs. BCE 0.953 on C-RADIO-B with fusion, likely because focal loss down-weights easy examples that still carry useful gradient signal for continuous quality regression. Training used 4,540 frames, 100 epochs with early stopping (patience 10), batch size 12 with 4-step accumulation, LR 10 −4, cosine annealing, AdamW. The frozen backbone (98.5M) remained fixed; task heads (2.2M) were optimized. 
+
+Inference efficiency. With the backbone frozen and only the lightweight heads active ( ∼2.2M parameters), single-frame inference runs at ∼111 FPS on an NVIDIA RTX 4090 (latency 9.0 ± 0.0 ms, batch size 1). This exceeds typical clinical ultra-sound frame rates (15–30 FPS) by >3×, enabling real-time frame scoring during live acquisition without interrupting the clinical workflow. On CPU (Intel i7-12700, single thread, ONNX runtime), the heads alone run at ∼50 FPS once backbone features are cached; the full pipeline including the frozen C-RADIO-B backbone runs at ∼1.8 FPS, which is suited to offline batch scoring of stored sweeps and to retrospective quality control rather than live acquisition. A dis-tilled or quantized backbone is the natural next step for live CPU deployment. 
+
+3.3 Evaluation Metrics 
+
+Per-task and mean: (1) AUROC (binarized at 0.5); (2) Average Precision (AP) ; (3) Pearson Correlation . The composite score = 12 (AUROC +Correlation ).
+
+# 4 Results and Evaluation 
+
+4.1 Performance on Supervised Test Set 
+
+Table 2 reports performance on the held-out test set (974 frames). FetSelect attains mean AUROC 0.956 , mean AP 0.789 , mean Corr. 0.818 , and compos-ite 0.887 . CRL (0.996) and NB (0.988) show near-perfect discrimination; NT (0.931) and Scalebar (0.908) are more challenging but still excellent. 8 M. Alzubaidi et al.                                                   
+
+> Table 3. Qualitative validation on external videos. For each task, the best frame index and its quality score are reported.
+> Video Total CRL NT NB Frame Score Frame Score Frame Score
+> (a) CRL-1 62 50.902 12 0.045 80.231 (b) CRL-2 62 31 0.884 28 0.067 29 0.189 (c) CRL-3 62 18 0.915 22 0.082 19 0.267 (d) NT-1 62 42 0.612 38 0.823 41 0.445
+> Table 4. Quality scores on 509 external CRL images (unseen during training).
+> Task Mean SD High-Qual. ( >0.8)
+> CRL 0.674 0.142 13.2% NT 0.107 0.056 0.0% NB 0.401 0.037 0.0% Scalebar 0.064 0.047 0.0%
+> Overall 0.312 0.260 3.3%
+
+4.2 Qualitative Validation on External Videos 
+
+We assess temporal behavior on four external clips (Samsung HS40, 1232 ×924, 30 FPS, ∼62 frames each). Table 3 reports selected frame indices and quality scores. CRL-focused videos (a–c) yield high CRL scores (.884–.915) with low NT scores (.045–.082); the NT-focused video (d) assigns the highest score to NT (.823). Different tasks select different frames within each clip, confirming task-specific criteria. 
+
+4.3 Generalization to External Public Fetal Images 
+
+On 509 external CRL images [9], CRL achieves the highest mean score (0.674) while non-target tasks score low (NT: .107; Scalebar: .064), confirming task speci-ficity (Table 4). Only 13.2% surpass the high-quality threshold ( > 0.8), consistent with heterogeneous public data. 
+
+4.4 Self-Supervised Pretraining Comparison 
+
+Table 5 compares SSL methods (identical supervised training; composite =(AUROC + Corr. )/2). DINO achieves the highest single-run composite (0.870), while BYOL attains 0.860 ±0.009 across three seeds. BYOL was selected for the final pipeline due to: (1) verified reproducibility ( ±0.008 AUROC over 3 seeds vs. single-run estimates for others); (2) training stability without negative pairs (batch size 12); and (3) complementarity with fusion—BYOL + fusion yields the best overall result (AUROC 0.956, composite 0.887; Table 2), a +0.018 gain over baseline + fusion (0.869; Table 6). 
+
+Statistical significance. Paired t-tests (BYOL vs. baseline, 3 seeds): CRL 
+
+p=0 .031 , NB p=0 .042 , NT p=0 .078 , Scalebar p=0 .091 ; aggregate mean AUROC FetSelect: Automated Fetal Ultrasound Frame Selection 9                                                    
+
+> Table 5. Self-supervised pretraining comparison. All rows: frozen C-RADIO-B, multi-head fusion, BCE loss. Baseline and BYOL report mean over 3 seeds; others are single runs.
+> Method AUROC AP Corr. Comp.
+> Baseline (no SSL) 0.936 0.757 0.770 0.853 VICReg [3] 0.924 0.713 0.764 0.844 MoCo [13] 0.926 0.718 0.770 0.848 DINO [6] 0.946 0.760 0.794 0.870
+> BYOL [10] 0.940 0.776 0.779 0.860 Table 6. Architecture ablation and baseline comparison (frozen C-RADIO-B). Com-posite = ( AUROC +Corr. )/2. Baseline+Fusion and FetSelect report mean over 3 seeds.
+> Configuration AUROC AP Corr. Comp.
+> Random 0.500 0.249 0.001 0.251 TaskGate Only (Linear) 0.899 0.680 0.712 0.806 Detection Only 0.876 0.702 0.691 0.784 Baseline+Fusion (no SSL) 0.945 0.779 0.793 0.869 Swapped Inputs 0.917 0.702 0.735 0.826
+> FetSelect (BYOL+Fusion) 0.956 0.789 0.818 0.887
+
+p=0 .038 . Effect sizes (Cohen’s d) are moderate to large ( d = 0 .6–1.1). With n=3 
+
+seeds, statistical power is limited; the consistent directionality and effect sizes support practical significance. 
+
+4.5 Architecture Ablation and Baseline Comparison SSL vs. extended supervised training. Unfreezing the final transformer block (30 epochs, LR 10 −5) yielded AUROC 0.894 vs. frozen baseline 0.953 and BYOL 0.956, confirming SSL provides value beyond supervised fine-tuning. Table 6 ablates architectural components (no SSL) and compares against adapted baselines. No existing method directly addresses multi-task frame se-lection for first-trimester ultrasound (SonoNet [4] targets second/third-trimester plane classification; FetalCLIP [19] targets general representation), so we con-struct baselines from our pipeline components. Fusion improves over either single pathway (+0.069 AUROC over Detection-Only; +0.046 over TaskGate-Only). Swapping inputs degrades all tasks, confirm-ing proper feature routing. BYOL pretraining adds a further +0.018 composite over baseline+fusion (0.887 vs. 0.869), with the largest gains on NT and Scale-bar. 
+
+Per-task breakdown. Table 7 disaggregates AUROC by task for architectural variants (no SSL). Detection-Only dominates structure-dependent tasks where localization cues are strong (CRL 0.976, NB 0.990). However, fusion is crit-ical for the two most challenging tasks: NT (+1.2% over Detection-Only) and Scalebar (+2.2%), where global context and local detections are complementary. 10 M. Alzubaidi et al.                               
+
+> Table 7. Per-task AUROC for architectural variants (test split, no SSL). Fusion pro-vides the largest gains on the two most challenging tasks: NT and Scalebar.
+> Configuration NT CRL NB Scalebar
+> TaskGate Only 0.702 0.940 0.985 0.670 Detection Only 0.812 0.976 0.990 0.803
+> With Fusion 0.824 0.976 0.991 0.825
+> Swapped Inputs 0.745 0.952 0.982 0.725
+> Table 8. Backbone comparison (all frozen, no SSL). C-RADIO-B achieves the best correlation and the largest fusion gain.
+> Backbone Det-Only Fusion ∆Corr.
+> C-RADIO-B 0.794 0.816 +0.022 DINOv2-B 0.791 0.806 +0.015 DINOv3-B 0.785 0.782 −0.003
+
+Swapping pathway inputs degrades all four tasks uniformly, confirming that the task-gated and detection pathways encode distinct, non-interchangeable infor-mation. 
+
+4.6 Backbone Generalization 
+
+To validate the backbone choice, we compared C-RADIO-B against DINOv2-B and DINOv3-B under identical conditions (frozen backbone, no SSL, Ta-ble 8). C-RADIO-B achieves the strongest absolute correlation (0.816 with fu-sion) and the largest fusion gain (+0.022 over Detection-Only), suggesting its multi-teacher distillation (CLIP, DINOv2, SAM) produces features that are par-ticularly amenable to the complementary fusion of global and localization signals. DINOv2-B remains competitive (0.806), while DINOv3-B shows a slight nega-tive fusion delta ( −0.003), indicating that not all foundation backbones benefit equally from our dual-pathway design. 
+
+# 5 Discussion and Limitations 
+
+Label definition. Our quality labels use rule-guided heuristics grounded in clin-ical criteria rather than end-to-end radiologist preference. While inter-observer agreement is strong ( κ = 0 .76 –0.92 ), rule-based scores simplify nuanced clinical judgments. Two factors mitigate this: (i) Path B relies on predicted landmarks, requiring genuine visual understanding; (ii) strong generalization to unseen ex-ternal data (Sections 4.2 and 4.3) suggests the model captures patterns beyond rule artifacts. Future work should incorporate direct expert preference labels and rank-based learning objectives. 
+
+Why BYOL helps. BYOL’s exponential moving average (EMA) target net-work stabilizes training even with small batch sizes (12 in our setup), avoiding FetSelect: Automated Fetal Ultrasound Frame Selection 11 
+
+the large-batch requirements of contrastive methods. Its positive-pair-only objec-tive sidesteps hard-negative pitfalls that arise when visually similar frames differ subtly in clinical quality—a common scenario in fetal ultrasound where adjacent frames may look nearly identical yet vary in diagnostic suitability. In-domain SSL on 19K ultrasound images adapts backbone features to speckle texture, probe-specific contrast patterns, and anatomical priors absent from natural-image pre-training. The result is a +0.018 composite improvement over the no-SSL baseline (Table 6), with the largest per-task gains on the two hardest targets, NT and Scalebar (Table 7). 
+
+Clinical implications. FetSelect’s real-time inference ( ∼111 FPS) and lightweight task heads ( ∼2.2M parameters) make deployment feasible on clinical worksta-tions or edge devices attached to ultrasound machines. In practice, the system could (i) provide live frame-quality feedback during scanning, reducing the need for repeat sweeps; (ii) automatically select optimal frames for downstream biom-etry pipelines, removing operator-dependent pre-selection; and (iii) serve as a quality gate in retrospective studies, filtering suboptimal frames before mea-surement extraction. The task-specific design is critical: a global quality score would miss that a frame excellent for CRL may be poor for NT. 
+
+Baseline comparisons. No existing method addresses the same multi-task, task-specific frame selection problem, making direct comparison difficult. We provide adapted baselines (Random, Linear, Detection-Only) and comprehensive ablations (Tables 6 and 7). Broader comparison with adapted methods from adjacent domains (e.g., second-trimester plane classification, echocardiography quality scoring), and with CLIP-style zero-shot rankers built on FetalCLIP [19], would further strengthen the evaluation and is a priority for future work. 
+
+Statistical significance. With n=3 seeds, t-tests have limited power. We report p-values and effect sizes (Cohen’s d = 0 .6–1.1); the consistent direction-ality across all four tasks supports practical significance. We acknowledge this limitation and recommend future work with n ≥ 5 seeds or cross-validation. 
+
+Other limitations. Single primary annotator (validated by two senior ex-perts); single-site acquisition; no temporal modeling across frames. The system currently treats each frame independently–incorporating temporal context (e.g., via sliding-window attention or recurrent modules over video clips) could im-prove robustness by leveraging motion continuity and probe trajectory. 
+
+# 6 Conclusion 
+
+We presented FetSelect, a multi-task architecture for automated best-frame selection in first-trimester fetal ultrasound. On a held-out test set, FetSelect achieves mean AUROC 0.956, Corr. 0.818 (composite 0.887), with temporally coherent behavior on external videos and robust task-aware generalization to unseen public images. Ablations demonstrate that both dual-pathway fusion and BYOL pretraining contribute complementary gains, with the largest im-provements on the most clinically challenging targets (NT and Scalebar). The backbone comparison confirms that multi-teacher distilled features (C-RADIO-12 M. Alzubaidi et al. 
+
+B) are particularly suited to our fusion design. Real-time inference ( >100 FPS) supports integration into clinical workflows. Future work will incorporate tempo-ral modeling over video sequences, multi-site validation across scanner vendors, richer label sources including direct expert preference rankings, and extension to additional biometry targets beyond the first trimester. Code and pretrained weights are available at https://github.com/mahmoodphd/FetSelect. 
+
+Acknowledgments. This publication was funded by the PPM7th Cycle grant (PPM 07-0409-240041, AMAL-For-Qatar) from the Qatar Research Development and Inno-vation Council (QRDI), a member of the Qatar Foundation. 
+
+Disclosure of Interests. The authors have no competing interests to declare that are relevant to the content of this article. 
+
+# References 
+
+1. Akumu, T., Elbatel, M., Campello, V.M., Osuala, R., Martin-Isla, C., Valenzuela, I., Li, X., Khanal, B., Lekadir, K.: Adaptive frame selection for gestational age es-timation from blind sweep fetal ultrasound videos. In: MICCAI. pp. 3–13. Springer (2025). https://doi.org/10.1007/978-3-032-05185-1_1 2. Alzubaidi, M., Agus, M., Makhlouf, M., Anver, F., Alyafei, K., Househ, M.: Large-scale annotation dataset for fetal head biometry in ultrasound images. Data in Brief 
+
+51 , 109708 (2023). https://doi.org/https://doi.org/10.1016/j.dib.2023.109708 3. Bardes, A., Ponce, J., LeCun, Y.: Vicreg: Variance-invariance-covariance regular-ization for self-supervised learning (2022), https://arxiv.org/abs/2105.04906 4. Baumgartner, C.F., Kamnitsas, K., Matthew, J., Smith, S., Kainz, B., Rueckert, D.: Sononet: Real-time detection and localisation of fetal standard scan planes in freehand ultrasound. IEEE Transactions on Medical Imaging 36 (11), 2204–2215 (2017). https://doi.org/10.1109/TMI.2017.2712367 5. Burgos-Artizzu, X., Coronado-Gutiérrez, D., Valenzuela-Alcaraz, B., Bonet-Carne, E., Eixarch, E., Crispi, F., Gratacós, E.: Evaluation of deep convolutional neu-ral networks for automatic classification of common maternal fetal ultrasound planes. Nature Scientific Reports 10 , 10200 (2020). https://doi.org/10.1038/ s41598-020-67076-5 6. Caron, M., Touvron, H., Misra, I., Jégou, H., Mairal, J., Bojanowski, P., Joulin, A.: Emerging properties in self-supervised vision transformers (2021), https://arxiv. org/abs/2104.14294 7. Chen, G., Bai, J., Ou, Z., Lu, Y., Wang, H.: Psfhs: Intrapartum ultrasound image dataset for ai-based segmentation of pubic symphysis and fetal head. Scientific Data 11 (1), 436 (2024). https://doi.org/10.1038/s41597-024-03266-4 8. Correggio, K.S.D., Galluzzo, R.N., Santos, L.O., Barroso, F.S.M., Chaves, T.Z.L., Onofre, A.S.C., von Wangenheim, A.: Fetal abdominal structures segmentation dataset using ultrasonic images (2023). https://doi.org/10.17632/4gcpm9dsc3.1, https://data.mendeley.com/datasets/4gcpm9dsc3/1 9. Ghelichoghli, M.: CRL (9 2021). https://doi.org/10.6084/m9.figshare.16570518.v1, https://figshare.com/articles/dataset/CRL/16570518 10. Grill, J.B., Strub, F., Altché, F., Tallec, C., Richemond, P.H., Buchatskaya, E., Do-ersch, C., Pires, B.A., Guo, Z.D., Azar, M.G., Piot, B., Kavukcuoglu, K., Munos, FetSelect: Automated Fetal Ultrasound Frame Selection 13 R., Valko, M.: Bootstrap your own latent a new approach to self-supervised learn-ing. In: Proceedings of the 34th International Conference on Neural Information Processing Systems. NIPS ’20, Curran Associates Inc., Red Hook, NY, USA (2020) 11. Guo, X., Men, Q., Noble, J.A.: Mmsummary: Multimodal summary generation for fetal ultrasound video. In: MICCAI. pp. 678–688. Springer (2024). https://doi. org/10.1007/978-3-031-72083-3_63 12. He, D., Wang, H., Yaqub, M.: Advancing fetal ultrasound image quality assessment in low-resource settings (2025), https://arxiv.org/abs/2507.22802 13. He, K., Fan, H., Wu, Y., Xie, S., Girshick, R.: Momentum contrast for unsupervised visual representation learning. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) (June 2020). https://doi.org/ 10.1109/CVPR42600.2020.00975 14. Heinrich, G., Ranzinger, M., Yin, H., Lu, Y., Kautz, J., Tao, A., Catanzaro, B., Molchanov, P.: Radiov2.5: Improved baselines for agglomerative vision foundation models. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR). pp. 22487–22497 (June 2025) 15. Herath, H.M.S.S., Herath, H.M.K.K.M.B., Madusanka, N., Lee, B.I.: A systematic review of medical image quality assessment. Journal of Imaging 11 (4) (2025). https: //doi.org/10.3390/jimaging11040100 16. Jiao, J., Droste, R., Drukker, L., Papageorghiou, A.T., Noble, J.A.: Self-supervised representation learning for ultrasound video. In: IEEE 17th International Sympo-sium on Biomedical Imaging (ISBI). pp. 1125–1129. IEEE (2020). https://doi.org/ 10.1109/ISBI45749.2020.9098666 17. Jiao, J., Zhou, J., Li, X., Xia, M., Huang, Y., Huang, L., Wang, N., Zhang, X., Zhou, S., Wang, Y., et al.: Usfm: A universal ultrasound foundation model generalized to tasks and organs towards label efficient image analysis. Medical image analysis 
+
+96 , 103202 (2024) 18. Lin, Q., Zhou, Y., Shi, S., Zhang, Y., Yin, S., Liu, X., Peng, Q., Huang, S., Jiang, Y., Cui, C., She, R., Xu, J., Dong, F.: How much can ai see in early pregnancy: A multi-center study of fetus head characterization in week 10–14 in ultrasound using deep learning. Computer Methods and Programs in Biomedicine 226 , 107170 (2022). https://doi.org/https://doi.org/10.1016/j.cmpb.2022.107170 19. Maani, F., Saeed, N., Saleem, T., Farooq, Z., Alasmawi, H., Diehl, W., Mohammad, A., Waring, G., Valappi, S., Bricker, L., Yaqub, M.: Fetalclip: A visual-language foundation model for fetal ultrasound image analysis (2025), https://arxiv.org/ abs/2502.14807 20. Megahed, Y., Ducharme, R., Erman, A., Walker, M.C., Hawken, S., Chan, A.D.: Usf-mae: Ultrasound self-supervised foundation model with masked autoencoding. Biomedical Signal Processing and Control 122 , 110313 (2026). https://doi.org/ https://doi.org/10.1016/j.bspc.2026.110313 21. Mishra, D., Saha, P., Zhao, H., Hernandez-Cruz, N., Patey, O., Papageorghiou, A.T., Noble, J.A.: Tier-loc: Visual query-based video clip localization in fe-tal ultrasound videos with a multi-tier transformer. Medical Image Analysis 
+
+103 , 103611 (2025). https://doi.org/https://doi.org/10.1016/j.media.2025.103611, https://www.sciencedirect.com/science/article/pii/S1361841525001586 22. Nehary, E.A., Rajan, S., Rossa, C.: Metric-based frame selection and deep learning model with multi-head self attention for classification of ultrasound lung video images. IEEE Access 12 , 79297–79310 (2024). https://doi.org/10.1109/ACCESS. 2024.10547274 14 M. Alzubaidi et al. 23. Oquab, M., Darcet, T., Moutakanni, T., Vo, H., Szafraniec, M., Khalidov, V., Fernandez, P., Haziza, D., Massa, F., El-Nouby, A., Assran, M., Ballas, N., Galuba, W., Howes, R., Huang, P.Y., Li, S.W., Misra, I., Rabbat, M., Sharma, V., Synnaeve, G., Xu, H., Jegou, H., Mairal, J., Labatut, P., Joulin, A., Bojanowski, P.: Dinov2: Learning robust visual features without supervision (2024), https://arxiv.org/abs/ 2304.07193 24. Persico, N., Molina, F., Azumendi, G., Fedele, L., Nicolaides, K.H.: Nasal bone assessment in fetuses with trisomy 21 at 16–24 weeks of gestation by three-dimensional ultrasound. Prenatal diagnosis 32 (3), 240–244 (2012) 25. Płotka, S., Pustelnik, K., Szenejko, P., Żebrowska, K., Rzucidło-Szymańska, I., Szymecka-Samaha, N., Łęgowik, T., Kosińska-Kaczyńska, K., Korzeniowski, P., Biliński, P., Khalil, A., Brawura-Biskupski-Samaha, R., Išgum, I., Sánchez, C.I., Sitek, A.: Direct estimation of fetal biometry measurements from ultrasound video scans through deep learning. American Journal of Obstetrics & Gyne-cology MFM 7(4) (2025). https://doi.org/10.1016/j.ajogmf.2025.101623, https: //doi.org/10.1016/j.ajogmf.2025.101623 26. Płotka, S.S., Grzeszczyk, M.K., Szenejko, P.I., Żebrowska, K., Szymecka-Samaha, N.A., Łęgowik, T., Lipa, M.A., Kosińska-Kaczyńska, K., Brawura-Biskupski-Samaha, R., Išgum, I., Sánchez, C.I., Sitek, A.: Deep learning for estimation of fetal weight throughout the pregnancy from fetal abdominal ultrasound. American Jour-nal of Obstetrics & Gynecology MFM 5(12), 101182 (2023). https://doi.org/https: //doi.org/10.1016/j.ajogmf.2023.101182 27. Ramesh, J., Bacher, V., Eid, M.C., Kalabizadeh, H., Rupprecht, C., Namburete, A.I.L., Yeung, P.H., Wyburd, M.K., Dinsdale, N.K.: Automated fetal biometry assessment with deep ensembles using sparse-sampling of 2d intrapartum ultra-sound images. In: Intrapartum Ultrasound. pp. 46–60. Springer Nature Switzerland (2025). https://doi.org/10.1007/978-3-031-96318-6_5 28. Ranzinger, M., Heinrich, G., Kautz, J., Molchanov, P.: Am-radio: Agglomerative vision foundation model reduce all domains into one. In: IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR). pp. 12490–12500 (June 2024) 29. Stebler, Y., Sutter, T.M., Ozkan, E., Vogt, J.E.: Temporal representation learning for real-time ultrasound analysis (2025), https://arxiv.org/abs/2509.01433 30. Venturini, L., Budd, S., Farruggia, A., Wright, R., Matthew, J., Day, T.G., Kainz, B., Razavi, R., Hajnal, J.V.: Whole-examination ai estimation of fetal biometrics from 20-week ultrasound scans. npj Digital Medicine 8(1), 22 (2025). https://doi. org/10.1038/s41746-024-01406-z 31. Yasrab, R., Fu, Z., Drukker, L., Lee, L.H., Zhao, H., Papageorghiou, A.T., Noble, J.A.: End-to-end first trimester fetal ultrasound video automated crl and nt seg-mentation. In: 2022 IEEE 19th International Symposium on Biomedical Imaging (ISBI). pp. 1–5 (2022). https://doi.org/10.1109/ISBI52829.2022.9761400 32. Zhang, B., Liu, H., Luo, H., Li, K.: Automatic quality assessment for 2d fetal sonographic standard plane based on multitask learning. Medicine 100 (4) (2021)
