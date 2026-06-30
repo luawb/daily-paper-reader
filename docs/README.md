@@ -6,37 +6,40 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-29
-- 运行时间：2026-06-29 21:54:45 UTC
+- 最新运行日期：2026-06-30
+- 运行时间：2026-06-30 21:59:17 UTC
 - 运行状态：成功
-- 本次总论文数：5
-- 精读区：2
+- 本次总论文数：6
+- 精读区：3
 - 速读区：3
 
 ### 今日简报（AI）
-今日聚焦多模态生成与遥感变化描述，精读两篇高分论文。  
-图像RL微调与遥感变化理解模型均获突破，展示出强化学习增强图像生成、多模态大模型精准定位遥感差异的潜力。  
-建议关注RL在视觉生成中的落地路径，以及遥感领域用大模型自动解读变化的前沿应用。
-- 详情：[/202606/29/README](/202606/29/README)
+1) 今日聚焦多模态与视觉质量评估前沿，精读两篇满分论文，并速览三篇视觉语言代理与定位方法。
+2) 值得关注的方向：一是多模态大模型能否如人类般进行开放式审美推理，二是统一回归与排序视角的盲图像质量评估新框架。
+3) 推荐对AI美学判断或图像质量评估感兴趣的读者深入研读这两篇满分工作，并结合速读中技能演化代理的思路，探索多模态评估的可解释与动态化改进。
+- 详情：[/202606/30/README](/202606/30/README)
 
 ### 精读区论文标签
-1. [Qwen-Image-2.0-RL Technical Report](/202606/29/2606.27608v1-qwen-image-20-rl-technical-report)  
+1. [Can MLLMs Critique Like Humans? Evaluating Open-Ended Aesthetic Reasoning in Multimodal Large Language Models](/202606/30/2606.29689v1-can-mllms-critique-like-humans-evaluating-open-ended-aesthetic-reasoning-in-multimodal-large-language-models)  
+   标签：评分：10.0/10、query:xiqa
+   evidence：评估多模态大语言模型在开放式美学评价中的推理与自然语言解释能力
+2. [MR-IQA: A Unified Margin View of Regression and Ranking for Blind Image Quality Assessment](/202606/30/2606.29760v1-mr-iqa-a-unified-margin-view-of-regression-and-ranking-for-blind-image-quality-assessment)  
+   标签：评分：10.0/10、query:xiqa
+   evidence：提出统一的边缘框架用于盲图像质量评价
+3. [LEIQ-Assessor: Multi-dimensional Quality Assessment of Low-light Enhanced Images via Multi-task Learning](/202606/30/2606.29752v1-leiq-assessor-multi-dimensional-quality-assessment-of-low-light-enhanced-images-via-multi-task-learning)  
    标签：评分：9.0/10、query:xiqa
-   evidence：用带链式推理的VLM奖励模型评估图像质量，驱动生成强化学习
-2. [RSICCLLM: A Multimodal Large Language Model for Remote Sensing Image Change Captioning](/202606/29/2606.28266v1-rsiccllm-a-multimodal-large-language-model-for-remote-sensing-image-change-captioning)  
-   标签：评分：9.0/10、query:xiqa
-   evidence：用于描述图像变化的多模态大语言模型
+   evidence：低光增强图像的多维质量评价模型
 
 ### 速读区论文标签
-1. [ShutterMuse: Capture-Time Photography Guidance with MLLMs](/202606/29/2606.25763v1-shuttermuse-capture-time-photography-guidance-with-mllms)  
+1. [Dynamo: Dynamic Skill-Tool Evolution for Vision-Language Agents](/202606/30/2606.30185v1-dynamo-dynamic-skill-tool-evolution-for-vision-language-agents)  
    标签：评分：7.0/10、query:xiqa
-   evidence：利用多模态大语言模型进行摄影构图指导
-2. [GAVEL: Grounded Caption Error Verification and Localization](/202606/29/2606.26923v1-gavel-grounded-caption-error-verification-and-localization)  
-   标签：评分：7.0/10、query:xiqa
-   evidence：使用多模态大模型进行图文对的验证、解释和定位，可为图像质量解释任务提供可迁移方法。
-3. [FetSelect: Task-Specific Architectures and Self-Supervised Learning for Automated Fetal Ultrasound Frame Selection](/202606/29/2606.22487v1-fetselect-task-specific-architectures-and-self-supervised-learning-for-automated-fetal-ultrasound-frame-selection)  
+   evidence：无需训练即可为视觉语言模型动态生成推理技能和视觉工具
+2. [HKVLM: Faithful Reasoning Grounding by Binding Language Queries to a Frozen Detector](/202606/30/2606.28862v1-hkvlm-faithful-reasoning-grounding-by-binding-language-queries-to-a-frozen-detector)  
    标签：评分：6.0/10、query:xiqa
-   evidence：通过质量评估自动化胎儿超声帧选择
+   evidence：通过解耦定位与语言生成提升视觉语言模型的推理扎根能力
+3. [Spatially Localized Image Degradation Embeddings for Image Quality Assessment](/202606/30/2606.29162v1-spatially-localized-image-degradation-embeddings-for-image-quality-assessment)  
+   标签：评分：6.0/10、query:xiqa
+   evidence：使用空间局部化退化嵌入的无参考图像质量评价。
 
 
 <div class="dpr-home-promo-card">

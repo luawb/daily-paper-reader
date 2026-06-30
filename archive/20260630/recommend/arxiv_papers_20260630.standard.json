@@ -1,0 +1,257 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-30T21:55:18.151710+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 3,
+    "deep_cap": 6,
+    "deep_selected": 3,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2606.29689v1",
+      "source": "arxiv",
+      "title": "Can MLLMs Critique Like Humans? Evaluating Open-Ended Aesthetic Reasoning in Multimodal Large Language Models",
+      "abstract": "Open-ended aesthetic critique is a challenge for multimodal large language models (MLLMs): unlike multiple-choice aesthetic benchmarks, it has no single correct answer, and most aesthetic evaluation has measured models against numeric scores rather than the written critiques people actually give. We evaluate MLLM critiques against ranked human references and ask whether they are close to human ones. Using the Reddit Photo Critique Dataset, we score five open-weight MLLMs against multiple ranked human critiques per photo with reference-based similarity metrics, under six prompt conditions that disentangle persona framing, aspect hinting, length control, and single- versus multi-pass generation, and add an image-grounding control that feeds each model the wrong photograph. We find that reference-based similarity gives a misleading picture. Stricter lexical and learned metrics show only weak alignment with human critiques, while a coarse embedding cosine reports broad topical overlap that the grounding control traces to a stable house style rather than image-specific observation. Behaviorally, the models diverge from humans in consistent ways the scores do not surface: even under a length cap they write two to three times as much, cover nearly every aesthetic aspect where humans are selective, engage each aspect more uniformly and at greater depth, and repeat themselves across critiques of the same photo where humans vary. We argue that reference-based similarity rewards a fluent, comprehensive critique style rather than the selectivity and specificity of human critique, and discuss implications for evaluating and training open-ended multimodal generation.",
+      "authors": [
+        "Sajjad Ghiasvand",
+        "Maryam Amirizaniani",
+        "Haniyeh Ehsani Oskouie",
+        "Mahnoosh Alizadeh",
+        "Ramtin Pedarsani"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-29T01:31:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.29689v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "Evaluates MLLMs on open-ended aesthetic critique using reasoning and natural language explanations",
+      "llm_evidence_cn": "评估多模态大语言模型在开放式美学评价中的推理与自然语言解释能力",
+      "llm_evidence": "评估多模态大语言模型在开放式美学评价中的推理与自然语言解释能力",
+      "canonical_evidence": "评估多模态大语言模型在开放式美学评价中的推理与自然语言解释能力",
+      "llm_tldr_en": "The paper assesses whether multimodal large language models can generate human-like aesthetic critiques, finding that current models still fall short of human agreement levels under various prompting conditions.",
+      "llm_tldr_cn": "该论文评估多模态大语言模型能否生成类似人类的美学评论，发现在多种提示条件下现有模型与人类判断的一致性仍较低，表明开放式美学推理仍是挑战。",
+      "llm_tldr": "该论文评估多模态大语言模型能否生成类似人类的美学评论，发现在多种提示条件下现有模型与人类判断的一致性仍较低，表明开放式美学推理仍是挑战。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "image quality reasoning and explanation generation via multimodal large models",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.29760v1",
+      "source": "arxiv",
+      "title": "MR-IQA: A Unified Margin View of Regression and Ranking for Blind Image Quality Assessment",
+      "abstract": "Blind image quality assessment (BIQA) is commonly built on two basic learning paradigms: regression and ranking. Regression calibrates absolute scores, whereas ranking recovers quality structure from ordinal relations. Although joint regression-ranking supervision often improves BIQA, the relation between the two paradigms remains largely empirical and underexplored. In this work, we revisit what underlies regression and ranking and identify pairwise relational distance, termed quality margin, as their common bridge. Our derivation shows that, at the objective-optimization level, both paradigms fit quality margins: regression fits margins induced by score endpoints, while ranking fits transformed or sign-level margins through preference probabilities. Motivated by this insight, we propose MR-IQA, a direct quality-margin optimization framework for reinforcement learning (RL)-based BIQA. MR-IQA samples quality scores and optimizes pairwise margin errors as policy rewards, thereby modeling quality structure more explicitly. Experiments on six BIQA benchmarks show competitive general performance, and controlled comparisons demonstrate that MR-IQA achieves the strongest average PLCC/SRCC over regression- or ranking-based RL methods. Our findings provide a new insight into unifying regression and ranking, offering a theoretical basis for understanding quality-structure modeling in BIQA and beyond.",
+      "authors": [
+        "Yuan Li",
+        "Youyuan Lin",
+        "Zitang Sun",
+        "Yung-Hao Yang",
+        "Kiyofumi Miyoshi",
+        "Chenhui Chu",
+        "Shin'ya Nishida"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-29T04:07:46+00:00",
+      "link": "https://arxiv.org/pdf/2606.29760v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "Proposes a unified margin-based framework for blind image quality assessment",
+      "llm_evidence_cn": "提出统一的边缘框架用于盲图像质量评价",
+      "llm_evidence": "提出统一的边缘框架用于盲图像质量评价",
+      "canonical_evidence": "提出统一的边缘框架用于盲图像质量评价",
+      "llm_tldr_en": "MR-IQA reveals that regression and ranking both fit quality margins, providing a unified theoretical framework for blind image quality assessment.",
+      "llm_tldr_cn": "针对盲图像质量评价中回归与排序关系不明的问题，本文发现两者可以在质量边缘的框架下得到统一：回归拟合由分数端点诱导的连续边缘，而排序则拟合符号级的偏好边缘。基于这一洞察提出了统一训练方案，实验表明该框架不仅性能优越，还揭示了两种学习范式深层的一致性，推动了BIQA的理论发展。",
+      "llm_tldr": "针对盲图像质量评价中回归与排序关系不明的问题，本文发现两者可以在质量边缘的框架下得到统一：回归拟合由分数端点诱导的连续边缘，而排序则拟合符号级的偏好边缘。基于这一洞察提出了统一训练方案，实验表明该框架不仅性能优越，还揭示了两种学习范式深层的一致性，推动了BIQA的理论发展。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.29752v1",
+      "source": "arxiv",
+      "title": "LEIQ-Assessor: Multi-dimensional Quality Assessment of Low-light Enhanced Images via Multi-task Learning",
+      "abstract": "Low-light image enhancement algorithms (LIEAs) aim to improve the visibility of images captured under poor illumination. However, the enhancement process often introduces artifacts such as noise amplification, color shift, structural damage, and over-exposure, which degrade the perceptual quality of the enhanced images. Therefore, a reliable image quality assessment (IQA) metric for evaluating enhancement effects is of great importance for both the development of LIEAs and their practical applications. In this paper, we present \\textbf{LEIQ-Assessor}, a multi-dimensional quality assessment model for low-light image enhancement based on multi-task learning, developed for the QoMEX 2026 Grand Challenge on Low-light Enhanced Image Quality Assessment. Specifically, our method leverages a pre-trained SigLIP2 Vision Transformer as the backbone and simultaneously predicts the overall Mean Opinion Score (MOS) together with six perceptual sub-attributes: lightness, color fidelity, noise level, exposure quality, naturalness, and content recovery. By jointly optimizing these correlated objectives via the PLCC loss, the shared representation captures richer quality-aware features than its single-task counterpart. Experiments on the MLE benchmark demonstrate that LEIQ-Assessor significantly outperforms existing no-reference IQA models and hand-crafted quality descriptors. Our method achieved second place in the QoMEX 2026 Grand Challenge on Low-light Enhanced Image Quality Assessment. The code is available at https://github.com/sunwei925/LEIQ-Assessor.",
+      "authors": [
+        "Wei Sun",
+        "Yanwei Jiang",
+        "Dandan Zhu",
+        "Jinqiu Sang",
+        "Jikai Xu",
+        "Weixia Zhang",
+        "Guangtao Zhai"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.MM"
+      ],
+      "published": "2026-06-29T03:49:43+00:00",
+      "link": "https://arxiv.org/pdf/2606.29752v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "multi-dimensional quality assessment model for low-light enhanced images",
+      "llm_evidence_cn": "低光增强图像的多维质量评价模型",
+      "llm_evidence": "低光增强图像的多维质量评价模型",
+      "canonical_evidence": "低光增强图像的多维质量评价模型",
+      "llm_tldr_en": "Proposes LEIQ-Assessor, a multi-task learning model that evaluates low-light enhanced images across multiple quality dimensions, enabling reliable IQA for enhancement algorithms.",
+      "llm_tldr_cn": "针对低光增强图像容易引入噪声、色偏等伪影的问题，本文提出基于多任务学习的多维质量评价模型LEIQ-Assessor，同时评估多个质量维度，为增强算法提供可靠的图像质量评估。实验表明该模型能够有效捕捉各种失真，对低光增强图像质量的感知评价更全面。",
+      "llm_tldr": "针对低光增强图像容易引入噪声、色偏等伪影的问题，本文提出基于多任务学习的多维质量评价模型LEIQ-Assessor，同时评估多个质量维度，为增强算法提供可靠的图像质量评估。实验表明该模型能够有效捕捉各种失真，对低光增强图像质量的感知评价更全面。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.30185v1",
+      "source": "arxiv",
+      "title": "Dynamo: Dynamic Skill-Tool Evolution for Vision-Language Agents",
+      "abstract": "Improving vision-language models (VLMs) on visual reasoning typically requires retraining or hand-designed prompts and tools. We present Dynamo, a training-free framework that adapts a frozen VLM without any weight updates. On a small labeled training subset, the agent inspects its own correct and incorrect attempts and evolves two complementary capabilities: reusable reasoning skills for cognitive bottlenecks, and executable visual tools for perceptual ones. Each generated tool is paired with a skill that specifies when to invoke it, and both capability types accumulate in a persistent library. Across four visual reasoning benchmarks and five VLM backbones, Dynamo improves direct inference on all 20 model--benchmark settings (avg. +5.6 acc). When the tool set is given in advance, the framework learns when to call each tool, and per-step tool choice improves on every tested backbone. Against task-specific RL (VTool-R1, DeepEyes), Dynamo closes 65--99% of the RL gap at a fraction of the compute, and combines additively with RL when available.",
+      "authors": [
+        "Yutao Sun",
+        "Yanting Miao",
+        "Hao-Xuan Ma",
+        "Mengyu Zhou",
+        "Mingshuai Chen",
+        "Tiancheng Zhao",
+        "Dexin Wang",
+        "Lei Lv",
+        "Li Xu",
+        "Xiaoxi Jiang",
+        "Guanjun Jiang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-29T11:59:01+00:00",
+      "link": "https://arxiv.org/pdf/2606.30185v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Training-free framework that evolves reasoning skills and visual tools for vision-language models",
+      "llm_evidence_cn": "无需训练即可为视觉语言模型动态生成推理技能和视觉工具",
+      "llm_evidence": "无需训练即可为视觉语言模型动态生成推理技能和视觉工具",
+      "canonical_evidence": "无需训练即可为视觉语言模型动态生成推理技能和视觉工具",
+      "llm_tldr_en": "Dynamo enables a frozen VLM to self-improve visual reasoning by generating reusable skills and tools from correct/incorrect attempts.",
+      "llm_tldr_cn": "为提高视觉语言模型的推理能力，Dynamo无需更新权重，通过分析自身错误和正确样例，动态生成可累积的推理技能和感知工具，在多个基准和模型上平均提升5.6%准确率，展示了训练无关的自适应推理范式。",
+      "llm_tldr": "为提高视觉语言模型的推理能力，Dynamo无需更新权重，通过分析自身错误和正确样例，动态生成可累积的推理技能和感知工具，在多个基准和模型上平均提升5.6%准确率，展示了训练无关的自适应推理范式。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.28862v1",
+      "source": "arxiv",
+      "title": "HKVLM: Faithful Reasoning Grounding by Binding Language Queries to a Frozen Detector",
+      "abstract": "Many visual requests -- ``the object to open this bottle'', ``the person not wearing a helmet'' -- require reasoning, not just category matching. Pure open-vocabulary detectors need an explicit phrase; vision-language models (VLMs) can reason yet ``see but mis-speak'', attending to the right region but returning the wrong box or label. We argue this is a \\emph{binding} failure: in coordinate-as-text VLMs localization passes through the autoregressive head, coupling it to language generation; in two-stage pipelines the model's intent is squeezed through a single class string. We present HKVLM, which removes localization from the language path. A frozen, language-aligned detector emits class-agnostic region proposals; a frozen language model encodes reasoning instructions as referential query embeddings; a lightweight \\emph{alignment hook} binds queries to regions by contrastive retrieval and bipartite assignment in a shared embedding space. A perception-grounded faithfulness veto forbids naming an object that no region supports. Only the hook is trained, targeting small-data cold-start settings where monolithic VLM tuning struggles. We formalize a \\emph{say-vs-see} decomposition separating localization error (SeeErr) from binding error (SayErr), and evaluate on RefCOCO/RefCOCO+/RefCOCOg and POPE. With frozen Grounding DINO and Qwen2.5-VL, training only the hook lifts grounding accuracy by $50$--$90\\times$ over untrained cross-space matching; the faithfulness veto raises POPE accuracy from near-chance ($0.50$) to $0.66$--$0.76$ and reduces hallucination from ${\\sim}0.99$ to $0.23$--$0.43$, with gains from $200$ expressions. Increasing proposals from $M{=}50$ to $M{=}300$ improves grounding by $19$--$24\\%$ without retraining, confirming that residual error is perceptual (SeeErr) rather than binding (SayErr).",
+      "authors": [
+        "Bo Ma"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-27T11:10:33+00:00",
+      "link": "https://arxiv.org/pdf/2606.28862v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Improves visual reasoning grounding in VLMs by decoupling localization from language generation",
+      "llm_evidence_cn": "通过解耦定位与语言生成提升视觉语言模型的推理扎根能力",
+      "llm_evidence": "通过解耦定位与语言生成提升视觉语言模型的推理扎根能力",
+      "canonical_evidence": "通过解耦定位与语言生成提升视觉语言模型的推理扎根能力",
+      "llm_tldr_en": "HKVLM addresses binding failures in VLMs by using a frozen detector for localization, improving faithful reasoning grounding.",
+      "llm_tldr_cn": "视觉语言模型在推理时常出现注意到正确区域却给出错误边界框或标签的绑定失败问题，HKVLM通过将定位从语言路径中剥离，利用冻结的检测器生成无类别区域建议，从而提升推理的可靠性。",
+      "llm_tldr": "视觉语言模型在推理时常出现注意到正确区域却给出错误边界框或标签的绑定失败问题，HKVLM通过将定位从语言路径中剥离，利用冻结的检测器生成无类别区域建议，从而提升推理的可靠性。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.29162v1",
+      "source": "arxiv",
+      "title": "Spatially Localized Image Degradation Embeddings for Image Quality Assessment",
+      "abstract": "Self-supervised learning (SSL) currently drives state-of-the-art performance in no-reference image quality assessment (NR-IQA). However, standard SSL pipelines uniformly apply synthetic distortions across the entire image field, which can limit their sensitivity to spatially localized and co-occurring degradations encountered in real-world content. In this work, we empirically expose this representational blind spot across existing state-of-the-art encoders, demonstrating their reduced sensitivity to spatially bounded image degradations. To bridge this gap, we introduce Spatial Localized Image Degradation Embeddings for Image Quality Assessment (SLIDE-IQA). SLIDE-IQA employs a dual-branch Vision Transformer framework that injects spatially bounded degradations into a contrastive pretraining objective. To handle the spatial complexity of these degradations, we introduce a Threshold-Bounded Exclusion Mechanism, a representational design choice that resolves structural conflicts arising from spatially localized distortions to ensure the latent space respects both degradation type and spatial scale. Finally, we show that SLIDE-IQA's synthetic-only pretraining significantly improves sensitivity to localized distortions, while achieving competitive performance on NR-IQA benchmarks against existing SSL NR-IQA models.",
+      "authors": [
+        "Krishna Srikar Durbha",
+        "Hassene Tmar",
+        "Ping-Hao Wu",
+        "Ioannis Katsavounidis",
+        "Alan C. Bovik"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "eess.IV"
+      ],
+      "published": "2026-06-28T02:55:20+00:00",
+      "link": "https://arxiv.org/pdf/2606.29162v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "No-reference image quality assessment using spatially localized degradation embeddings.",
+      "llm_evidence_cn": "使用空间局部化退化嵌入的无参考图像质量评价。",
+      "llm_evidence": "使用空间局部化退化嵌入的无参考图像质量评价。",
+      "canonical_evidence": "使用空间局部化退化嵌入的无参考图像质量评价。",
+      "llm_tldr_en": "Proposes SLIDE-IQA, a dual-branch ViT that explicitly models spatially bounded degradations for NR-IQA, improving sensitivity to real-world distortions.",
+      "llm_tldr_cn": "针对无参考图像质量评价中自监督学习忽略空间局部退化的问题，提出SLIDE-IQA双分支视觉Transformer框架，显式建模空间受限退化嵌入，实验表明能有效提升对真实场景局部缺陷的感知能力，弥补现有方法盲点。",
+      "llm_tldr": "针对无参考图像质量评价中自监督学习忽略空间局部退化的问题，提出SLIDE-IQA双分支视觉Transformer框架，显式建模空间受限退化嵌入，实验表明能有效提升对真实场景局部缺陷的感知能力，弥补现有方法盲点。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
