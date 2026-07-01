@@ -1,0 +1,97 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-01T21:52:38.734306+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 0,
+    "quick_skim_target": 11,
+    "quick_selected": 0
+  },
+  "deep_dive": [
+    {
+      "id": "2606.29760v2",
+      "source": "arxiv",
+      "title": "MR-IQA: A Unified Margin View of Regression and Ranking for Blind Image Quality Assessment",
+      "abstract": "Blind image quality assessment (BIQA) is commonly built on two basic learning paradigms: regression and ranking. Regression calibrates absolute scores, whereas ranking recovers quality structure from ordinal relations. Although joint regression-ranking supervision often improves BIQA, the relation between the two paradigms remains largely empirical and underexplored. In this work, we revisit what underlies regression and ranking and identify pairwise relational distance, termed quality margin, as their common bridge. Our derivation shows that, at the objective-optimization level, both paradigms fit quality margins: regression fits margins induced by score endpoints, while ranking fits transformed or sign-level margins through preference probabilities. Motivated by this insight, we propose MR-IQA, a direct quality-margin optimization framework for reinforcement learning (RL)-based BIQA. MR-IQA samples quality scores and optimizes pairwise margin errors as policy rewards, thereby modeling quality structure more explicitly. Experiments on six BIQA benchmarks show competitive general performance, and controlled comparisons demonstrate that MR-IQA achieves the strongest average PLCC/SRCC over regression- or ranking-based RL methods. Our findings provide a new insight into unifying regression and ranking, offering a theoretical basis for understanding quality-structure modeling in BIQA and beyond. Code is available at https://github.com/RobinY99/MR-IQA.",
+      "authors": [
+        "Yuan Li",
+        "Youyuan Lin",
+        "Zitang Sun",
+        "Yung-Hao Yang",
+        "Kiyofumi Miyoshi",
+        "Chenhui Chu",
+        "Shin'ya Nishida"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-29T04:07:46+00:00",
+      "link": "https://arxiv.org/pdf/2606.29760v2",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "reconciles regression and ranking in BIQA via quality margin concept",
+      "llm_evidence_cn": "通过质量边距概念统一盲图像质量评估中的回归与排序",
+      "llm_evidence": "通过质量边距概念统一盲图像质量评估中的回归与排序",
+      "canonical_evidence": "通过质量边距概念统一盲图像质量评估中的回归与排序",
+      "llm_tldr_en": "MR-IQA reveals that regression and ranking in BIQA share a common quality margin optimization, and proposes a unified margin-based joint objective that achieves state-of-the-art performance across both individual and combined paradigms.",
+      "llm_tldr_cn": "MR-IQA从优化目标层面揭示了盲图像质量评估中回归与排序两种范式均拟合质量边距（回归拟合分数端点引起的边距，排序拟合偏好变换得到的边距），提出统一边距框架和联合优化目标。实验表明，该方法在多个BIQA数据集上超越单独回归或排序以及现有联合方法，为IQA提供了理论统一视角和性能提升。",
+      "llm_tldr": "MR-IQA从优化目标层面揭示了盲图像质量评估中回归与排序两种范式均拟合质量边距（回归拟合分数端点引起的边距，排序拟合偏好变换得到的边距），提出统一边距框架和联合优化目标。实验表明，该方法在多个BIQA数据集上超越单独回归或排序以及现有联合方法，为IQA提供了理论统一视角和性能提升。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.31626v1",
+      "source": "arxiv",
+      "title": "PrISM-IQA: Image Quality Assessment Made Practical for Smartphone Photography",
+      "abstract": "Existing smartphone image quality assessment (IQA) methods commonly reduce perceptual quality to a single score. However, this scalar formulation is poorly aligned with practical image signal processor (ISP) tuning, where engineers must identify specific quality issues, estimate their severities, and determine whether they are acceptable or require intervention. In this work, we introduce a Practical ISP-aware Structured Model for IQA (PrISM-IQA), which reformulates smartphone IQA as a multi-issue ordinal diagnosis problem. Rather than regressing a single quality score, PrISM-IQA predicts an \\textit{ordered} severity level -- absent, minor, severe, or critical -- for each ISP-relevant issue, covering both global image-level artifacts and local content-dependent defects. To produce logically consistent predictions, PrISM-IQA combines cumulative ordinal encoding with structured inference that captures within-issue monotonicity as well as cross-issue subsumption and exclusion relations. We evaluate PrISM-IQA on a reconstructed SPAQ benchmark annotated with $53$ ISP-relevant quality issues and on a small-scale expert-annotated real-world dataset. Experimental results demonstrate the effectiveness of PrISM-IQA for practical issue-level diagnosis, reveal transferable perceptual quality representations through linear probing, and further show how its predictions can support actionable and meaningful ISP tuning.",
+      "authors": [
+        "Shuyan Zhai",
+        "Jiaqi He",
+        "Weixia Zhang",
+        "Liang Wang",
+        "Zhenjie Lee",
+        "Zufeng Zhang",
+        "Kede Ma"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-30T13:10:29+00:00",
+      "link": "https://arxiv.org/pdf/2606.31626v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "reformulates smartphone IQA as multi-issue ordinal diagnosis, predicting severity levels for artifacts",
+      "llm_evidence_cn": "将智能手机IQA重新定义为多问题有序诊断，预测伪影的严重程度",
+      "llm_evidence": "将智能手机IQA重新定义为多问题有序诊断，预测伪影的严重程度",
+      "canonical_evidence": "将智能手机IQA重新定义为多问题有序诊断，预测伪影的严重程度",
+      "llm_tldr_en": "PrISM-IQA reformulates smartphone IQA as multi-issue ordinal severity prediction, moving beyond scalar scores to identify and localize specific ISP-relevant artifacts for practical tuning.",
+      "llm_tldr_cn": "针对智能手机图像信号处理器调优中单一评分无法定位具体质量问题，PrISM-IQA将图像质量评估转化为多问题有序诊断任务，预测每个问题的严重程度（无、轻微、严重、关键），覆盖全局图像级伪影和局部缺陷，为工程师提供可操作的诊断反馈，显著提升了实用性。",
+      "llm_tldr": "针对智能手机图像信号处理器调优中单一评分无法定位具体质量问题，PrISM-IQA将图像质量评估转化为多问题有序诊断任务，预测每个问题的严重程度（无、轻微、严重、关键），覆盖全局图像级伪影和局部缺陷，为工程师提供可操作的诊断反馈，显著提升了实用性。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": []
+}

@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-01",
+  "date": "2026-07-01",
+  "generated_at": "2026-07-01T21:55:13",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/01/2606.29760v2-mr-iqa-a-unified-margin-view-of-regression-and-ranking-for-blind-image-quality-assessment",
+      "section": "deep",
+      "title_en": "MR-IQA: A Unified Margin View of Regression and Ranking for Blind Image Quality Assessment",
+      "authors": "Yuan Li, Youyuan Lin, Zitang Sun, Yung-Hao Yang, Kiyofumi Miyoshi, Chenhui Chu, Shin'ya Nishida",
+      "date": "2026-06-29",
+      "pdf": "https://arxiv.org/pdf/2606.29760v2",
+      "score": "8.0",
+      "evidence": "通过质量边距概念统一盲图像质量评估中的回归与排序",
+      "tldr": "盲图像质量评估（BIQA）常采用回归和排序两种学习范式，但两者的内在关联缺乏理论解释。通过分析，本文揭示质量边界（quality margin）是回归和排序的共同优化目标，进而提出MR-IQA框架，在强化学习中以成对边界误差作为奖励，直接优化质量边界。在六个公开BIQA基准上，MR-IQA不仅取得有竞争力的性能，且平均PLCC/SRCC超过所有基于回归或排序的强化学习方法，为统一回归与排序提供了新理论。",
+      "tags": "query:xiqa",
+      "abstract_en": "Blind image quality assessment (BIQA) is commonly built on two basic learning paradigms: regression and ranking. Regression calibrates absolute scores, whereas ranking recovers quality structure from ordinal relations. Although joint regression-ranking supervision often improves BIQA, the relation between the two paradigms remains largely empirical and underexplored. In this work, we revisit what underlies regression and ranking and identify pairwise relational distance, termed quality margin, as their common bridge. Our derivation shows that, at the objective-optimization level, both paradigms fit quality margins: regression fits margins induced by score endpoints, while ranking fits transformed or sign-level margins through preference probabilities. Motivated by this insight, we propose MR-IQA, a direct quality-margin optimization framework for reinforcement learning (RL)-based BIQA. MR-IQA samples quality scores and optimizes pairwise margin errors as policy rewards, thereby modeling quality structure more explicitly. Experiments on six BIQA benchmarks show competitive general performance, and controlled comparisons demonstrate that MR-IQA achieves the strongest average PLCC/SRCC over regression- or ranking-based RL methods. Our findings provide a new insight into unifying regression and ranking, offering a theoretical basis for understanding quality-structure modeling in BIQA and beyond. Code is available at https://github.com/RobinY99/MR-IQA.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/01/2606.31626v1-prism-iqa-image-quality-assessment-made-practical-for-smartphone-photography",
+      "section": "deep",
+      "title_en": "PrISM-IQA: Image Quality Assessment Made Practical for Smartphone Photography",
+      "authors": "Shuyan Zhai, Jiaqi He, Weixia Zhang, Liang Wang, Zhenjie Lee, Zufeng Zhang, Kede Ma",
+      "date": "2026-06-30",
+      "pdf": "https://arxiv.org/pdf/2606.31626v1",
+      "score": "8.0",
+      "evidence": "将智能手机IQA重新定义为多问题有序诊断，预测伪影的严重程度",
+      "tldr": "现有智能手机图像质量评估常简化为单一评分，与图像信号处理器调优需求脱节。PrISM-IQA 将该任务重构为多问题序数诊断，预测每个 ISP 相关缺陷的严重等级（无、轻微、严重、关键），并结合累积序数编码与结构化推理保证逻辑一致性。在重构的含 53 个质量问题的 SPAQ 基准及真实数据集上，方法有效支持问题级诊断，其预测可指导 ISP 调优，并展现出可迁移的感知质量表征。",
+      "tags": "query:xiqa",
+      "abstract_en": "Existing smartphone image quality assessment (IQA) methods commonly reduce perceptual quality to a single score. However, this scalar formulation is poorly aligned with practical image signal processor (ISP) tuning, where engineers must identify specific quality issues, estimate their severities, and determine whether they are acceptable or require intervention. In this work, we introduce a Practical ISP-aware Structured Model for IQA (PrISM-IQA), which reformulates smartphone IQA as a multi-issue ordinal diagnosis problem. Rather than regressing a single quality score, PrISM-IQA predicts an \\textit{ordered} severity level -- absent, minor, severe, or critical -- for each ISP-relevant issue, covering both global image-level artifacts and local content-dependent defects. To produce logically consistent predictions, PrISM-IQA combines cumulative ordinal encoding with structured inference that captures within-issue monotonicity as well as cross-issue subsumption and exclusion relations. We evaluate PrISM-IQA on a reconstructed SPAQ benchmark annotated with $53$ ISP-relevant quality issues and on a small-scale expert-annotated real-world dataset. Experimental results demonstrate the effectiveness of PrISM-IQA for practical issue-level diagnosis, reveal transferable perceptual quality representations through linear probing, and further show how its predictions can support actionable and meaningful ISP tuning.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
