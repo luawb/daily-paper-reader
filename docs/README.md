@@ -6,34 +6,28 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-02
-- 运行时间：2026-07-02 21:31:34 UTC
+- 最新运行日期：2026-07-03
+- 运行时间：2026-07-03 21:44:44 UTC
 - 运行状态：成功
-- 本次总论文数：4
-- 精读区：3
+- 本次总论文数：2
+- 精读区：1
 - 速读区：1
 
 ### 今日简报（AI）
-今日聚焦多模态对齐与合成医学图像检测，从语言到视觉的语义关系映射及鲁棒性审计均获高分精读。  
-最值得关注的是利用Gromov–Wasserstein实现跨模态语义对齐的新范式，以及合成医学图像检测中文本叠加因素的鲁棒性盲区。  
-下一步可尝试将跨模态对齐思路引入合成检测任务，或关注高效视觉重采样方案以加速多模态模型落地。
-- 详情：[/202607/02/README](/202607/02/README)
+今日拆解图像复原的可解释性新范式，并速览了多模态搜索代理在知识型视觉问答的尝试。  
+最值得关注的是《BiDeMem》提出的双向退化记忆网络，它首次让图像修复过程能清晰回溯“为何这样修”。  
+如果你对模型透明性感兴趣，建议带着这篇的“记忆流向”思路去审视其他低层视觉任务。
+- 详情：[/202607/03/README](/202607/03/README)
 
 ### 精读区论文标签
-1. [MIRROR: Aligning Semantic Relations from Language to Image via Gromov--Wasserstein](/202607/02/2606.29462v1-mirror-aligning-semantic-relations-from-language-to-image-via-gromov--wasserstein)  
-   标签：评分：9.0/10、query:xiqa
-   evidence：通过最优传输正则化将语言关系先验对齐到视觉，改进多模态大模型
-2. [Text Over Image: Auditing Multimodal Robustness in Synthetic Medical Image Detection](/202607/02/2606.25375v2-text-over-image-auditing-multimodal-robustness-in-synthetic-medical-image-detection)  
+1. [BiDeMem: Bidirectional Degradation Memory for Explainable Image Restoration](/202607/03/2606.28112v1-bidemem-bidirectional-degradation-memory-for-explainable-image-restoration)  
    标签：评分：8.0/10、query:xiqa
-   evidence：研究视觉语言模型在合成医学图像检测中受文本上下文影响的脆弱性
-3. [Mural: Transferring LLM knowledge to image generation via Mixture-of-Transformers](/202607/02/2606.29013v1-mural-transferring-llm-knowledge-to-image-generation-via-mixture-of-transformers)  
-   标签：评分：8.0/10、query:xiqa
-   evidence：通过混合Transformer将冻结的LLM知识迁移到图像生成
+   evidence：通过双向记忆提供可解释的图像退化解释。
 
 ### 速读区论文标签
-1. [MS-Resampler: Multi-Scope Visual Resampling for Efficient Multimodal LLMs](/202607/02/2606.31383v1-ms-resampler-multi-scope-visual-resampling-for-efficient-multimodal-llms)  
-   标签：评分：7.0/10、query:xiqa
-   evidence：通过多范围视觉重采样增强多模态大语言模型，直接支持图像文本处理模型
+1. [ProMSA:Progressive Multimodal Search Agents for Knowledge-Based Visual Question Answering](/202607/03/2606.27974v1-promsaprogressive-multimodal-search-agents-for-knowledge-based-visual-question-answering)  
+   标签：评分：6.0/10、query:xiqa
+   evidence：使用强化学习训练渐进式多模态搜索代理。
 
 
 <div class="dpr-home-promo-card">

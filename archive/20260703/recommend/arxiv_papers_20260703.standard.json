@@ -1,0 +1,100 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-03T21:41:31.810684+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2606.28112v1",
+      "source": "arxiv",
+      "title": "BiDeMem: Bidirectional Degradation Memory for Explainable Image Restoration",
+      "abstract": "Degradation-aware prompts, conditions, and latent priors are increasingly used in image restoration, yet they are usually judged by a single endpoint: whether the restored image obtains higher PSNR. This is a weak test of semantics. A condition can help by adding capacity, acting as a global correction bias, or exploiting dataset shortcuts, without becoming an interpretable degradation prior. We propose BiDeMem, a bidirectional degradation memory for explainable image restoration. A query built from restoration features and input statistics retrieves a compact top-k subset of memory slots. The same selected slot identity supports the restoration path at inference time and a training-only forward-degradation explanation path. The study centers on verifiability in a controlled multi-degradation NAFNet setting. New controls separate the gain from a correction head alone, a dense query prior, and a static global prior: these variants are 0.2588, 0.2586, and 0.2839 dB below BiRank, respectively. Strong residual supervision and a wider degradation head also remain below the full bidirectional memory model. Intervention probes show that BiRank preserves restoration quality while increasing wrong-prior and native-prior sensitivity, framing degradation memory as both a restoration module and a falsifiable explanation mechanism.",
+      "authors": [
+        "Xinrui Wu",
+        "Lichen Huang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-06-26T14:12:33+00:00",
+      "link": "https://arxiv.org/pdf/2606.28112v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Provides interpretable degradation explanations in image restoration via a bidirectional memory.",
+      "llm_evidence_cn": "通过双向记忆提供可解释的图像退化解释。",
+      "llm_evidence": "通过双向记忆提供可解释的图像退化解释。",
+      "canonical_evidence": "通过双向记忆提供可解释的图像退化解释。",
+      "llm_tldr_en": "Proposes BiDeMem, a memory module that retrieves degradation priors for image restoration and concurrently provides forward degradation explanations during training, enabling interpretable restoration.",
+      "llm_tldr_cn": "图像复原模型常以退化条件作为辅助，但其可解释性不足。本文提出BiDeMem，一种双向退化记忆模块，它通过查询从复原特征和统计信息中检索退化表示，该退化表示既用于指导复原，又驱动一个前向路径来解释退化过程。在图像去雨等任务上的实验证明，BiDeMem在获得高质量复原的同时，能给出合理的退化解释，为图像质量相关的推理与解释提供了可行方案。",
+      "llm_tldr": "图像复原模型常以退化条件作为辅助，但其可解释性不足。本文提出BiDeMem，一种双向退化记忆模块，它通过查询从复原特征和统计信息中检索退化表示，该退化表示既用于指导复原，又驱动一个前向路径来解释退化过程。在图像去雨等任务上的实验证明，BiDeMem在获得高质量复原的同时，能给出合理的退化解释，为图像质量相关的推理与解释提供了可行方案。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "reasoning based perceptual image quality evaluation with explanations",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.27974v1",
+      "source": "arxiv",
+      "title": "ProMSA:Progressive Multimodal Search Agents for Knowledge-Based Visual Question Answering",
+      "abstract": "Knowledge-based Visual Question Answering (KB-VQA) requires models to combine image understanding with external knowledge. Most prior methods use a fixed retrieve-then-generate pipeline with a pre-selected retriever and a static top-k setting, which is not adaptive during reasoning. We propose ProMSA, a progressive multimodal search agent for KB-VQA. Given an image-question pair, the agent iteratively chooses image search, text search, or stop, under explicit tool-call budgets and with deduplication to avoid redundant retrieval. For training, we first use rejection-sampling SFT to learn valid tool-use formats, then optimize the agent with TN-GSPO, a sequence-level RL objective that normalizes updates by both generation length and tool-interaction depth. Experiments on E-VQA and InfoSeek show consistent gains over strong RAG and agent baselines, and improved retrieval and end-to-end accuracy. The code is available at https://github.com/DingWu1021/Promsa.",
+      "authors": [
+        "ZhengXian Wu",
+        "Hangrui Xu",
+        "Kai Shi",
+        "Zhuohong Chen",
+        "Yunyao Yu",
+        "Chuanrui Zhang",
+        "Zirui Liao",
+        "Jun Yang",
+        "Zhenyu Yang",
+        "Haonan Lu",
+        "Haoqian Wang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-06-26T11:23:18+00:00",
+      "link": "https://arxiv.org/pdf/2606.27974v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Uses reinforcement learning to train progressive multimodal search agents.",
+      "llm_evidence_cn": "使用强化学习训练渐进式多模态搜索代理。",
+      "llm_evidence": "使用强化学习训练渐进式多模态搜索代理。",
+      "canonical_evidence": "使用强化学习训练渐进式多模态搜索代理。",
+      "llm_tldr_en": "Proposes ProMSA, a multimodal search agent for KB-VQA that iteratively retrieves information using RL for adaptive tool-call decisions, outperforming fixed retrieval pipelines.",
+      "llm_tldr_cn": "针对知识型视觉问答中固定检索策略缺乏推理适应性的问题，提出ProMSA代理。该代理利用序列级强化学习TN-GSPO优化多模态搜索决策，在预算内逐步选择图像检索、文本检索或停止。实验表明，动态检索优于静态管线，在多个基准上取得领先结果。该方法为多模态推理任务提供了一种新的自适应信息获取方案。",
+      "llm_tldr": "针对知识型视觉问答中固定检索策略缺乏推理适应性的问题，提出ProMSA代理。该代理利用序列级强化学习TN-GSPO优化多模态搜索决策，在预算内逐步选择图像检索、文本检索或停止。实验表明，动态检索优于静态管线，在多个基准上取得领先结果。该方法为多模态推理任务提供了一种新的自适应信息获取方案。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "reinforcement learning for image quality assessment and description",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

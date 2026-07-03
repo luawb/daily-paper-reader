@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-03",
+  "date": "2026-07-03",
+  "generated_at": "2026-07-03T21:44:54",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/03/2606.28112v1-bidemem-bidirectional-degradation-memory-for-explainable-image-restoration",
+      "section": "deep",
+      "title_en": "BiDeMem: Bidirectional Degradation Memory for Explainable Image Restoration",
+      "authors": "Xinrui Wu, Lichen Huang",
+      "date": "2026-06-26",
+      "pdf": "https://arxiv.org/pdf/2606.28112v1",
+      "score": "8.0",
+      "evidence": "通过双向记忆提供可解释的图像退化解释。",
+      "tldr": "现有图像恢复方法常依赖退化感知先验，但缺乏可解释性，仅以PSNR为评判标准。本文提出BiDeMem，通过双向退化记忆和查询检索机制，同时支撑恢复路径与退化解释路径。在NAFNet多退化实验中，完整的双向记忆模型BiRank比静态先验等变体增益高出约0.26 dB。该工作将退化记忆构建为可证伪的解释模块，提升了恢复模型的可解释性。",
+      "tags": "query:xiqa",
+      "abstract_en": "Degradation-aware prompts, conditions, and latent priors are increasingly used in image restoration, yet they are usually judged by a single endpoint: whether the restored image obtains higher PSNR. This is a weak test of semantics. A condition can help by adding capacity, acting as a global correction bias, or exploiting dataset shortcuts, without becoming an interpretable degradation prior. We propose BiDeMem, a bidirectional degradation memory for explainable image restoration. A query built from restoration features and input statistics retrieves a compact top-k subset of memory slots. The same selected slot identity supports the restoration path at inference time and a training-only forward-degradation explanation path. The study centers on verifiability in a controlled multi-degradation NAFNet setting. New controls separate the gain from a correction head alone, a dense query prior, and a static global prior: these variants are 0.2588, 0.2586, and 0.2839 dB below BiRank, respectively. Strong residual supervision and a wider degradation head also remain below the full bidirectional memory model. Intervention probes show that BiRank preserves restoration quality while increasing wrong-prior and native-prior sensitivity, framing degradation memory as both a restoration module and a falsifiable explanation mechanism.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/03/2606.27974v1-promsaprogressive-multimodal-search-agents-for-knowledge-based-visual-question-answering",
+      "section": "quick",
+      "title_en": "ProMSA:Progressive Multimodal Search Agents for Knowledge-Based Visual Question Answering",
+      "authors": "ZhengXian Wu, Hangrui Xu, Kai Shi, Zhuohong Chen, Yunyao Yu, Chuanrui Zhang, Zirui Liao, Jun Yang, Zhenyu Yang, Haonan Lu, Haoqian Wang",
+      "date": "2026-06-26",
+      "pdf": "https://arxiv.org/pdf/2606.27974v1",
+      "score": "6.0",
+      "evidence": "使用强化学习训练渐进式多模态搜索代理。",
+      "tldr": "知识型视觉问答（KB-VQA）需要将图像理解与外部知识相融合，但现有方法大多采用固定的“检索-生成”流程，缺乏自适应推理能力。本文提出ProMSA，一种渐进式多模态搜索智能体，在显式工具调用预算内迭代选择图像搜索、文本搜索或停止，并利用去重避免冗余检索。训练先通过拒绝采样SFT学习有效工具使用格式，再采用TN-GSPO序列级强化学习目标，按生成长度和工具交互深度归一化更新智能体。在E-VQA和InfoSeek上的实验一致超越强RAG及智能体基线，显著提升了检索与端到端准确率，为自适应知识增强多模态推理提供了高效解决方案。",
+      "tags": "query:xiqa",
+      "abstract_en": "Knowledge-based Visual Question Answering (KB-VQA) requires models to combine image understanding with external knowledge. Most prior methods use a fixed retrieve-then-generate pipeline with a pre-selected retriever and a static top-k setting, which is not adaptive during reasoning. We propose ProMSA, a progressive multimodal search agent for KB-VQA. Given an image-question pair, the agent iteratively chooses image search, text search, or stop, under explicit tool-call budgets and with deduplication to avoid redundant retrieval. For training, we first use rejection-sampling SFT to learn valid tool-use formats, then optimize the agent with TN-GSPO, a sequence-level RL objective that normalizes updates by both generation length and tool-interaction depth. Experiments on E-VQA and InfoSeek show consistent gains over strong RAG and agent baselines, and improved retrieval and end-to-end accuracy. The code is available at https://github.com/DingWu1021/Promsa.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
