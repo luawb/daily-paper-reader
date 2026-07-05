@@ -1,0 +1,164 @@
+Title: DroneIQA-VLE: Multi-Task Drone Image Quality Assessment via Vision-Language Ensemble
+
+URL Source: https://arxiv.org/pdf/2607.00416v1
+
+Published Time: Thu, 02 Jul 2026 00:28:13 GMT
+
+Number of Pages: 4
+
+Markdown Content:
+# DroneIQA-VLE: Multi-Task Drone Image Quality Assessment via Vision-Language Ensemble 
+
+Wei Sun 1, Weixia Zhang 2, Hongjian Zhan 1, Mingkai Lu 2, Yixuan Gao 2, Guangtao Zhai 21East China Normal University, 2Shanghai Jiao Tong University 
+
+Abstract —We present DroneIQA-VLE, our solution to the ICME 2026 Drone-IQA Grand Challenge on Target-aware Image Quality Assessment for Low-altitude UAV Images. The frame-work jointly predicts global, target, and background quality scores by ensembling two complementary pipelines: (1) SigLIP2 vision encoders with multi-task regression heads, and (2) aLoRA-adapted Qwen3.5-9B multimodal large language model for quality score regression. The final global quality prediction is obtained by arithmetically averaging the outputs of both pipelines. Our method achieves 2nd place in the challenge, demonstrating its effectiveness. The code is available at https: //github.com/sunwei925/DroneIQA-VLE. 
+
+I. I NTRODUCTION 
+
+Unmanned Aerial Vehicle (UAV) imagery has become increasingly prevalent in applications such as surveillance, traffic monitoring, and emergency response. However, UAV images exhibit distinct quality characteristics compared to conventional natural images due to diverse viewpoints, small target regions, complex backgrounds, and spatially nonuniform degradations. These factors make standard image quality as-sessment (IQA) [1] methods less suitable for UAV scenarios. Traditional full-reference metrics such as PSNR and SSIM [2] are impractical since pristine references are unavailable in real-world UAV deployments, while most no-reference IQA methods [3]–[9] focus solely on global perceptual quality without considering target-region usability and background interference. To promote research on UAV-oriented quality modeling, the Drone-IQA GC 2026 Grand Challenge [10] introduces a target-aware benchmark comprising approximately 6,000 UAV images collected from VisDrone [11] and UAVDT [12] datasets, annotated by 18 human raters along three perceptual dimensions: global quality, target quality, and background quality. The challenge requires participants to predict the global quality score of UAV images, while target and back-ground quality annotations can serve as auxiliary supervision. Submissions are evaluated using the average of Pearson Linear Correlation Coefficient (PLCC) and Spearman Rank Correla-tion Coefficient (SRCC). In this report, we present DroneIQA-VLE, our solution to this challenge. Our approach is motivated by two key observations. First, multi-task learning with auxiliary quality dimensions (target and background) provides beneficial induc-tive bias for the primary global quality prediction task. Second, vision-encoder-based models and multimodal large language models capture complementary quality-relevant features: the former excels at spatial quality feature extraction, while the latter provides high-level semantic understanding and per-ceptual reasoning. By ensembling predictions from SigLIP2 vision encoders and a LoRA-adapted Qwen3.5-9B model, our framework achieves robust and accurate quality predictions that generalize well across diverse UAV imaging conditions. II. M ODEL ARCHITECTURE 
+
+We investigate two complementary modeling paradigms for multi-task drone image quality assessment: pure vision-encoder regression and multimodal large language model regression. 
+
+A. SigLIP2 Multi-task Models 
+
+We employ two SigLIP2-based visual backbones spanning different architectural scales within the Vision Transformer family. Each backbone is equipped with three independent regression heads to predict the three quality dimensions si-multaneously. 
+
+SigLIP2 ViT-L/16 (384 px). The first architecture builds upon the visual encoder of SigLIP2 ViT-L/16 [13], a Vision Transformer Large model with a patch size of 16 that op-erates at a 384 × 384 input resolution. It produces a 1024-dimensional feature vector per input image. Three lightweight quality regression heads, each consisting of two cascaded fully connected layers ( 1024 → 128 and 128 → 1) without intermediate nonlinearities, are appended to project the feature representation onto scalar quality scores for the three tasks. 
+
+SigLIP2 ViT-SO400M/14 (378 px). The second architec-ture employs the SigLIP2 ViT-SO400M/14 [13], a larger-capacity vision transformer with a patch size of 14, operating at a native resolution of 378 × 378 (378 = 27 × 14 ). Dynamic image size support is enabled to allow flexible resolution inputs. This model produces a 1152-dimensional feature vector per image. Three quality regression heads of analogous design (1152 → 128 and 128 → 1) map the extracted representations to scalar quality predictions. In both architectures, the three regression heads predict 
+
+global_quality_mean , target_quality_mean ,and background_quality_mean independently, sharing no parameters with one another beyond the common visual backbone. 
+
+B. Qwen3.5-9B Multimodal LLM 
+
+The second pipeline is based on the Qwen3.5-9B mul-timodal large language model [14], adapted for quality re-gression. Given an input drone image and a task-specific 
+
+> arXiv:2607.00416v1 [cs.CV] 1 Jul 2026
+
+prompt, the model learns a multimodal representation that cap-tures quality-relevant features at both semantic and perceptual levels. Instead of generating textual outputs, the framework directly uses the hidden representations of the MLLM as high-level features and employs a regression head to simultaneously predict three continuous quality scores corresponding to global quality, target quality, and background quality. For efficient adaptation, LoRA-based fine-tuning [15] is adopted with rank 64 and scaling factor α = 128 , applied to all linear modules across the visual encoder, the visual aligner, and the large language model, while keeping most pretrained parameters frozen. The model is trained under bfloat16 mixed precision with a maximum prompt length of 4096 tokens and a maximum of 2048 image tokens. 
+
+C. Ensemble Strategy 
+
+The final prediction is obtained by averaging the 
+
+global_quality predictions from both the SigLIP2 en-semble and the Qwen3.5-9B model: 
+
+ˆQ = QSigLIP2 + QQwen 
+
+2 , (1) where QSigLIP2 denotes the averaged global quality predic-tion across all SigLIP2 checkpoints, and QQwen denotes the Qwen3.5-9B prediction. This cross-architecture ensemble leverages complementary strengths: the SigLIP2 models pro-vide efficient, multi-scale vision-encoder-based quality fea-tures with strong spatial quality awareness, while Qwen3.5-9B contributes rich multimodal reasoning and high-level semantic understanding capabilities. III. T RAINING PROCEDURE 
+
+A. Dataset 
+
+We train and evaluate our model on the Drone-IQA GC 2026 benchmark [16]. The challenge provides 3,600 images with released annotations as the training set, 1,200 images as the validation set, and a held-out test set for final evaluation. Each image is annotated with three quality dimensions: global quality, target quality, and background quality. The final rank-ing is determined by the average of PLCC and SRCC on the global quality prediction. 
+
+B. Image Preprocessing 
+
+SigLIP2. Each image is first resized such that its shorter side equals 432 pixels, preserving the original aspect ratio. During training, a random crop of 384 ×384 (for ViT-L/16) or 
+
+378 ×378 (for ViT-SO400M/14) is extracted. During inference, a deterministic center crop of the same size is applied to ensure reproducibility. All pixel values are normalized with mean =[0 .5, 0.5, 0.5] and std = [0 .5, 0.5, 0.5] .
+
+Qwen3.5-9B. Images are processed through the Qwen3.5-9B built-in visual preprocessing pipeline. The maximum num-ber of image tokens is capped at 2048 and the maximum prompt sequence length is set to 4096 tokens. 
+
+C. Training Details — SigLIP2 
+
+Both SigLIP2 architectures are trained with an identical protocol. The dataset is randomly split into 80% training and 20% validation, with 3 independent splits (controlled by different random seeds) to reduce variance from data-dependent biases. All models are optimized using Adam [17] with an initial learning rate of 1 × 10 −5 and a weight decay of 1 × 10 −7. The learning rate is decayed by a factor of 0.95 every 2 epochs following a step-wise schedule. The training loss is the sum of PLCC losses across all three tasks [18]: 
+
+L = X
+
+> t∈T
+
+L(t)
+
+> PLCC
+
+, (2) where T is a set including the dimensions of 
+
+global_quality , target_quality , and 
+
+background_quality .Training is conducted for 10 epochs with a batch size of 32. The best checkpoint for each split is selected based on the highest (SRCC + PLCC )/2 computed on the 
+
+global_quality validation metric. 
+
+D. Training Details — Qwen3.5-9B 
+
+The Qwen3.5-9B model is fine-tuned using the ms-swift framework with LoRA adaptation. The task is configured as sequence classification with 3 regression labels. The model is trained with a combination of a PLCC-induced loss and a fidelity loss [3], [19]: 
+
+L = λ1LFid + λ2LPLCC . (3) Given a mini-batch of predictions ˆyi and ground-truth scores 
+
+yi, where i = 1 , . . . , B indexes samples, the PLCC-induced loss is defined as: 
+
+LPLCC = 1 −
+
+> B
+
+X
+
+> i=1
+
+(ˆ yi − ¯ˆy)( yi − ¯y)
+
+vuut BX
+
+> i=1
+
+(ˆ yi − ¯ˆy)2
+
+vuut BX
+
+> i=1
+
+(yi − ¯y)2
+
+, (4) where ¯ˆy = 1
+
+> B
+
+PBi=1 ˆyi and ¯y = 1
+
+> B
+
+PBi=1 yi. This term encourages high linear correlation between predictions and subjective scores. The fidelity loss is formulated on pairwise score differences: 
+
+LFid = 1
+
+|P| 
+
+X
+
+> (i,j )∈P
+
+
+
+1 −
+
+√pij gij +
+
+q
+
+(1 − pij )(1 − gij )
+
+ 
+
+,
+
+(5) where 
+
+pij = Φ(ˆ yi − ˆyj ), gij = sign (yi − yj ) + 1 2 , (6) and P = {(i, j ) | i < j }. Here, Φ( ·) denotes the standard Gaussian cumulative distribution function. This term enforces consistency between the predicted pairwise ordering and the ground-truth ordering. TABLE I EXPERIMENTS RESULTS OF THE ICME 2026 D RONE -IQA G RAND 
+
+CHALLENGE .Rank Team PLCC SRCC Score 1 cmsr 0.9512 0.9450 0.9481 2 VQA (DroneIQA-VLE) 0.9484 0.9420 0.9452 3 Echo 0.9394 0.9332 0.9363 4 TASEAI 0.9293 0.9244 0.9268 5 Watrix 0.9262 0.9226 0.9244 
+
+The initial learning rate is set to 1 × 10 −4 and updated with a cosine decay schedule. Training is conducted for 3 epochs with a per-GPU batch size of 16 under bfloat16 precision. 
+
+E. Inference and Ensemble 
+
+At inference time, we employ a cross-pipeline ensemble to improve prediction robustness. The SigLIP2 pipeline loads 6 checkpoints (2 architectures × 3 splits) and computes per-image quality predictions by averaging across all models after applying a four-parameter logistic mapping fitted on the corresponding validation splits. The Qwen3.5-9B pipeline in-dependently processes each image through the LoRA-adapted model and applies logistic mapping using pre-fitted parameters stored in a separate parameter file. The final global quality prediction is obtained by arith-metic averaging of the global_quality scores from both pipelines. This strategy leverages two complementary sources of diversity: the SigLIP2 models capture multi-scale spatial quality features through their vision-encoder architectures, while the Qwen3.5-9B model provides high-level multimodal reasoning informed by large-scale language–vision pretrain-ing, leading to more accurate and generalizable quality pre-dictions. IV. E XPERIMENT RESULTS 
+
+Table I presents the final results on the held-out test set as evaluated by the challenge organizers. Our method (Team VQA) ranks 2nd among all participating teams, demonstrating the effectiveness of our vision-language ensemble strategy. Compared with the 3rd-place method, our approach achieves a notable improvement of approximately 0.9 percentage points in the overall score, validating the complementary benefits of combining SigLIP2-based spatial quality features with Qwen3.5-9B’s multimodal reasoning capabilities. Moreover, the narrow gap relative to the 1st-place team (less than 0.3 percentage points) further confirms the competitiveness of our approach. Both PLCC and SRCC remain consistently high, indicating that our predictions are well-calibrated in terms of both linear correlation and rank-order agreement with human subjective judgments. V. C ONCLUSION 
+
+In this report, we present DroneIQA-VLE, a vi-sion–language ensemble framework for target-aware UAV image quality assessment. The framework integrates two com-plementary pipelines: SigLIP2 vision encoders with multi-task regression heads and a LoRA-adapted Qwen3.5-9B mul-timodal large language model. By ensembling the predictions from both pipelines, our method effectively captures diverse quality-aware representations and achieves second place in the ICME 2026 Drone-IQA Grand Challenge, demonstrating its effectiveness. REFERENCES [1] Guangtao Zhai and Xiongkuo Min, “Perceptual image quality assess-ment: a survey,” Science China Information Sciences , vol. 63, no. 11, pp. 211301, 2020. [2] Zhou Wang, Alan C Bovik, Hamid R Sheikh, and Eero P Simoncelli, “Image quality assessment: from error visibility to structural similarity,” 
+
+IEEE transactions on image processing , vol. 13, no. 4, pp. 600–612, 2004. [3] Weixia Zhang, Guangtao Zhai, Ying Wei, Xiaokang Yang, and Kede Ma, “Blind image quality assessment via vision-language correspondence: A multitask learning perspective,” in Proceedings of the IEEE/CVF conference on computer vision and pattern recognition , 2023, pp. 14071–14081. [4] Wei Sun, Xiongkuo Min, Danyang Tu, Siwei Ma, and Guangtao Zhai, “Blind quality assessment for in-the-wild images via hierarchical feature fusion and iterative mixed database training,” IEEE Journal of Selected Topics in Signal Processing , vol. 17, no. 6, pp. 1178–1192, 2023. [5] Wei Lu, Wei Sun, Xiongkuo Min, Wenhan Zhu, Quan Zhou, Jun He, Qiyuan Wang, Zicheng Zhang, Tao Wang, and Guangtao Zhai, “Deep neural network for blind visual quality assessment of 4k content,” IEEE Transactions on Broadcasting , vol. 69, no. 2, pp. 406–421, 2022. [6] Puyi Wang, Wei Sun, Zicheng Zhang, Jun Jia, Yanwei Jiang, Zhichao Zhang, Xiongkuo Min, and Guangtao Zhai, “Large multi-modality model assisted ai-generated image quality assessment,” in Proceedings of the 32nd ACM International Conference on Multimedia , 2024, pp. 7803–7812. [7] Wei Sun, Xiongkuo Min, Wei Lu, and Guangtao Zhai, “A deep learning based no-reference quality assessment model for ugc videos,” in 
+
+Proceedings of the 30th ACM International Conference on Multimedia ,2022, pp. 856–865. [8] Linhan Cao, Wei Sun, Weixia Zhang, Xiangyang Zhu, Jun Jia, Kaiwei Zhang, Dandan Zhu, Guangtao Zhai, and Xiongkuo Min, “Vqathinker: Exploring generalizable and explainable video quality assessment via reinforcement learning,” in Proceedings of the AAAI Conference on Artificial Intelligence , 2026, vol. 40, pp. 2607–2615. [9] Wei Sun, Weixia Zhang, Linhan Cao, Jun Jia, Xiangyang Zhu, Dandan Zhu, Xiongkuo Min, and Guangtao Zhai, “Efficient face image quality assessment via self-training and knowledge distillation,” in Proceedings of the IEEE/CVF International Conference on Computer Vision , 2025, pp. 3363–3371. [10] Chengyan Jiang, Lingyu Zhu, Baoliang Chen, Dachun Kai, Weisi Lin, Chenchi Luo, Liang Xie, Haijun Yang, Tao Wang, Yunliang Chen, Wei Sun, Weixia Zhang, Hongjian Zhan, Mingkai Lu, Yixuan Gao, Guangtao Zhai, Jie Li, Lei Yang, Meng Guo, Tushar Shinde, Anurag Roychowdhury, Sreejita Roy, Gaoxiang Li, Ying Zhang, Linxin Zhang, and Yongzhen Huang, “Overview of drone-iqa gc 2026: Target-aware image quality assessment for low-altitude uav images,” in Proceedings of the IEEE International Conference on Multimedia and Expo Workshops ,2026. [11] Pengfei Zhu, Longyin Wen, Xiao Bian, Haibin Ling, and Qinghua Hu, “Vision meets drones: A challenge,” arXiv preprint arXiv:1804.07437 ,2018. [12] Dawei Du, Yuankai Qi, Hongyang Yu, Yifan Yang, Kaiwen Duan, Guorong Li, Weigang Zhang, Qingming Huang, and Qi Tian, “The unmanned aerial vehicle benchmark: Object detection and tracking,” in 
+
+Proceedings of the European conference on computer vision , 2018, pp. 370–386. [13] Michael Tschannen, Alexey Gritsenko, Xiao Wang, Muhammad Ferjad Naeem, Ibrahim Alabdulmohsin, Nikhil Parthasarathy, Talfan Evans, Lucas Beyer, Ye Xia, Basil Mustafa, et al., “Siglip 2: Multilingual vision-language encoders with improved semantic understanding, localization, and dense features,” arXiv preprint arXiv:2502.14786 , 2025. [14] Qwen Team, “Qwen3. 5: Towards native multimodal agents,” URL: https://qwen. ai/blog , 2026. [15] Edward J Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean Wang, Liang Wang, Weizhu Chen, et al., “Lora: Low-rank adaptation of large language models.,” Iclr , vol. 1, no. 2, pp. 3, 2022. [16] Chengyan Jiang and others, “Drone-iqa gc 2026: Target-aware image quality assessment for low-altitude uav images,” https://chengyanjiang. github.io/icme26-droneiqa/, 2026, ICME 2026 Grand Challenge. [17] Diederik P Kingma and Jimmy Ba, “Adam: A method for stochastic optimization,” arXiv preprint arXiv:1412.6980 , 2014. [18] Wei Sun, Linhan Cao, Jun Jia, Zhichao Zhang, Zicheng Zhang, Xiongkuo Min, and Guangtao Zhai, “Enhancing blind video quality assessment with rich quality-aware features,” Expert Systems with Applications , p. 130452, 2025. [19] Wei Sun, Weixia Zhang, Yuqin Cao, Linhan Cao, Jun Jia, Zijian Chen, Zicheng Zhang, Xiongkuo Min, and Guangtao Zhai, “Assessing uhd image quality from aesthetics, distortions, and saliency,” in European Conference on Computer Vision . Springer, 2024, pp. 109–126.

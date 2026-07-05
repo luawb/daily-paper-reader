@@ -1,0 +1,96 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-05T20:51:16.715913+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2607.00416v1",
+      "source": "arxiv",
+      "title": "DroneIQA-VLE: Multi-Task Drone Image Quality Assessment via Vision-Language Ensemble",
+      "abstract": "We present DroneIQA-VLE, our solution to the ICME 2026 Drone-IQA Grand Challenge on Target-aware Image Quality Assessment for Low-altitude UAV Images. The framework jointly predicts global, target, and background quality scores by ensembling two complementary pipelines: (1) SigLIP2 vision encoders with multi-task regression heads, and (2) a LoRA-adapted Qwen3.5-9B multimodal large language model for quality score regression. The final global quality prediction is obtained by arithmetically averaging the outputs of both pipelines. Our method achieves 2nd place in the challenge, demonstrating its effectiveness. The code is available at https://github.com/sunwei925/DroneIQA-VLE.",
+      "authors": [
+        "Wei Sun",
+        "Weixia Zhang",
+        "Hongjian Zhan",
+        "Mingkai Lu",
+        "Yixuan Gao",
+        "Guangtao Zhai"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-01T04:17:02+00:00",
+      "link": "https://arxiv.org/pdf/2607.00416v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "Uses a multimodal large language model for image quality score regression",
+      "llm_evidence_cn": "使用多模态大语言模型进行图像质量分数回归",
+      "llm_evidence": "使用多模态大语言模型进行图像质量分数回归",
+      "canonical_evidence": "使用多模态大语言模型进行图像质量分数回归",
+      "llm_tldr_en": "DroneIQA-VLE ensembles vision encoders and a LoRA-adapted Qwen3.5-9B multimodal LLM for multi-task drone image quality assessment, achieving 2nd place in a challenge.",
+      "llm_tldr_cn": "针对无人机图像质量评估任务，提出一种集成视觉编码器与多模态大语言模型的框架，联合预测全局、目标和背景质量分数。通过在Qwen3.5-9B上应用LoRA适配，模型在ICME 2026挑战赛中获得第二名，验证了多模态大模型在图像质量评估中的有效性。",
+      "llm_tldr": "针对无人机图像质量评估任务，提出一种集成视觉编码器与多模态大语言模型的框架，联合预测全局、目标和背景质量分数。通过在Qwen3.5-9B上应用LoRA适配，模型在ICME 2026挑战赛中获得第二名，验证了多模态大模型在图像质量评估中的有效性。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.01086v1",
+      "source": "arxiv",
+      "title": "LongVQUBench: Benchmarking Long-Term Video Quality Understanding of Vision-Language Models",
+      "abstract": "The evaluation of long-term video quality understanding remains an open challenge for large vision-language models (LVLMs). Existing video quality benchmarks predominantly focus on short clips and isolated distortions, overlooking the temporal continuity, cumulative degradation, and reasoning complexity inherent in long-duration content. To address these limitations, we present LongVQUBench, a comprehensive benchmark for long-term video quality understanding. LongVQUBench contains over 1200 diverse videos spanning movies, documentaries, surveillance footage, egocentric recordings, and animated content, accompanied by 1500 multiple-choice and open-ended questions for validation and testing. To assess perceptual reasoning across different temporal scopes, we introduce three progressively complex evaluation levels: (i) local event quality understanding (LQU) for analyzing localized distortions; (ii) cross-event quality reasoning (CQR) for integrating multiple degraded events; and (iii) global quality understanding (GQU) for holistic perceptual evaluation over extended durations. Furthermore, a needle distortion question-answering (NDQA) paradigm is embedded across all three levels, where spatial or temporal artifacts are sparsely inserted to probe fine-grained detection and reasoning capabilities. Extensive experiments on 14 state-of-the-art LVLMs reveal significant performance degradation with increasing video length and reasoning depth, highlighting their limited capacity for long-range temporal integration and perceptual attribution. We envision LongVQUBench as a foundational step toward the systematic, hierarchical, and explainable evaluation of LVLMs' long-term video quality understanding.",
+      "authors": [
+        "Arpita Nema",
+        "Hanwei Zhu",
+        "Xi Zhang",
+        "Weisi Lin"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-07-01T15:40:42+00:00",
+      "link": "https://arxiv.org/pdf/2607.01086v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Benchmark for long-term video quality understanding with reasoning",
+      "llm_evidence_cn": "用于评估模型在长期视频质量上推理能力的基准",
+      "llm_evidence": "用于评估模型在长期视频质量上推理能力的基准",
+      "canonical_evidence": "用于评估模型在长期视频质量上推理能力的基准",
+      "llm_tldr_en": "LongVQUBench is a comprehensive benchmark with over 1200 videos and 1500 questions to evaluate LVLMs' reasoning about long-term video quality, addressing the lack of temporal and cumulative degradation considerations in existing benchmarks.",
+      "llm_tldr_cn": "为弥补现有视频质量基准忽视时间连续性和累积退化的不足，本文提出LongVQUBench，包含1200余个多样化视频和1500道选择题与开放性问题，系统评估大型视觉语言模型对长期视频质量的感知推理能力，为多模态模型在真实视频质量理解中的研究提供了标准化测试平台。",
+      "llm_tldr": "为弥补现有视频质量基准忽视时间连续性和累积退化的不足，本文提出LongVQUBench，包含1200余个多样化视频和1500道选择题与开放性问题，系统评估大型视觉语言模型对长期视频质量的感知推理能力，为多模态模型在真实视频质量理解中的研究提供了标准化测试平台。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
