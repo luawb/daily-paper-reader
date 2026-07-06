@@ -6,28 +6,37 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-05
-- 运行时间：2026-07-05 20:54:47 UTC
+- 最新运行日期：2026-07-06
+- 运行时间：2026-07-06 21:49:52 UTC
 - 运行状态：成功
-- 本次总论文数：2
-- 精读区：1
-- 速读区：1
+- 本次总论文数：5
+- 精读区：2
+- 速读区：3
 
 ### 今日简报（AI）
-今日深度解析无人机图像质量评估与长视频理解评测，揭晓了AI如何给画面“打分”。  
-最值得关注的是视觉语言模型多任务融合评估无人机图像的全新范式，以及长视频质量理解基准的首次建立。  
-建议开发者尝试将这类多模态评测思路引入你的相机或视频应用，精准提升拍摄质量。
-- 详情：[/202607/05/README](/202607/05/README)
+今日精读两篇9分论文，聚焦多模态智能体记忆泄露诊断与视觉语言模型的局部保形预测，速读探索视觉推理、冗余削减等方向。  
+MemLeak揭示多模态智能体在记忆处理中可能意外泄露信息，局部保形预测为图像分类提供了更可靠的不确定性估计。  
+建议构建AI应用时优先检查记忆隐私机制，并尝试引入保形预测来量化模型预测的可靠性。
+- 详情：[/202607/06/README](/202607/06/README)
 
 ### 精读区论文标签
-1. [DroneIQA-VLE: Multi-Task Drone Image Quality Assessment via Vision-Language Ensemble](/202607/05/2607.00416v1-droneiqa-vle-multi-task-drone-image-quality-assessment-via-vision-language-ensemble)  
-   标签：评分：10.0/10、query:xiqa
-   evidence：使用多模态大语言模型进行图像质量分数回归
+1. [MemLeak: Diagnosing Information Leaks in Multimodal Agent Memory](/202607/06/2606.29788v1-memleak-diagnosing-information-leaks-in-multimodal-agent-memory)  
+   标签：评分：9.0/10、query:xiqa
+   evidence：使用VLM诊断多模态AI代理的信息泄露，VLM是处理图像和文本的大型模型。
+2. [Localized Conformal Prediction for Image Classification with Vision-Language Models](/202607/06/2606.31577v1-localized-conformal-prediction-for-image-classification-with-vision-language-models)  
+   标签：评分：9.0/10、query:xiqa
+   evidence：将视觉语言模型（处理图像和文本的大型模型）应用于图像分类中的局部共形预测。
 
 ### 速读区论文标签
-1. [LongVQUBench: Benchmarking Long-Term Video Quality Understanding of Vision-Language Models](/202607/05/2607.01086v1-longvqubench-benchmarking-long-term-video-quality-understanding-of-vision-language-models)  
+1. [H-GRPO: Permutation-Invariant Reinforcement Learning for Grounded Visual Reasoning](/202607/06/2606.29915v1-h-grpo-permutation-invariant-reinforcement-learning-for-grounded-visual-reasoning)  
    标签：评分：7.0/10、query:xiqa
-   evidence：用于评估模型在长期视频质量上推理能力的基准
+   evidence：利用强化学习强制视觉推理的分解和证据定位，提供可解释的推理过程，可支持图像质量评价解释
+2. [Latent Noise Mask for Reducing Visual Redundancy in Multimodal Large Language Models](/202607/06/2606.30168v1-latent-noise-mask-for-reducing-visual-redundancy-in-multimodal-large-language-models)  
+   标签：评分：7.0/10、query:xiqa
+   evidence：通过潜在噪声掩码改善MLLM细粒度视觉推理，为IQA等下游任务提供更清晰的视觉线索
+3. [Caption Bottleneck Models](/202607/06/2607.00578v1-caption-bottleneck-models)  
+   标签：评分：7.0/10、query:xiqa
+   evidence：用自由格式描述替代刚性概念层，生成的自然语言描述可适配描述图像质量
 
 
 <div class="dpr-home-promo-card">

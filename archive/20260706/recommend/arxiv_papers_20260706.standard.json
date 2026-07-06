@@ -1,0 +1,204 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-06T21:45:38.274001+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [
+    {
+      "id": "2606.29788v1",
+      "source": "arxiv",
+      "title": "MemLeak: Diagnosing Information Leaks in Multimodal Agent Memory",
+      "abstract": "When a multimodal AI agent is asked to forget a fact, current memory systems usually delete the text entry and report success. We find that the fact can remain recoverable from retained user images, including images tagged to entirely different facts, because VLMs use implicit visual cues at inference time. We introduce the Information Provenance Graph (IPG), a taxonomy that classifies memory representations by deletion affordance. The IPG reveals that deletion fails through multiple channels. Our benchmark, MemLeak, measures this across a deletion cascade: direct probing of deletion-capable systems yields <1%, but retained correlated text enables 18.3% recovery, and retained images enable 12.0% recovery (0.0% blind baseline, 0.3% FPR) -- with 47% of image leaks not text-recoverable. Content-aware semantic deletion reduces the image residual to 2.0%. The residual appears across multiple VLMs, a production memory system, and real Unsplash-licensed photographs. Dual-annotator human validation (kappa = 0.88) confirms judge reliability.",
+      "authors": [
+        "Kuan Wang",
+        "Chao Zhang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-29T05:07:02+00:00",
+      "link": "https://arxiv.org/pdf/2606.29788v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Diagnoses information leaks in multimodal AI agents using VLMs (large models processing images and text).",
+      "llm_evidence_cn": "使用VLM诊断多模态AI代理的信息泄露，VLM是处理图像和文本的大型模型。",
+      "llm_evidence": "使用VLM诊断多模态AI代理的信息泄露，VLM是处理图像和文本的大型模型。",
+      "canonical_evidence": "使用VLM诊断多模态AI代理的信息泄露，VLM是处理图像和文本的大型模型。",
+      "llm_tldr_en": "MemLeak reveals that VLMs can recover deleted facts from retained images and text, exposing memory vulnerabilities in multimodal agents.",
+      "llm_tldr_cn": "MemLeak引入基准测量多模态代理删除后的信息恢复，发现VLM可从保留的图像和文本中恢复事实，暴露了记忆脆弱性。直接探测恢复率<1%，但相关文本恢复率达18.3%，图像恢复率12.0%，为多模态AI安全提供了新视角。",
+      "llm_tldr": "MemLeak引入基准测量多模态代理删除后的信息恢复，发现VLM可从保留的图像和文本中恢复事实，暴露了记忆脆弱性。直接探测恢复率<1%，但相关文本恢复率达18.3%，图像恢复率12.0%，为多模态AI安全提供了新视角。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.31577v1",
+      "source": "arxiv",
+      "title": "Localized Conformal Prediction for Image Classification with Vision-Language Models",
+      "abstract": "Conformal predictions have attracted significant attention in the field of uncertainty quantification, mainly because of their strong marginal coverage guarantees. Full conditional guarantee is not an attainable goal, a well known fact in conformal predictions literature. As a result, several approaches have tried to approximate this behavior by adapting the conformal sets of test-time samples according to their similarity to calibration examples. Although the latter has gained traction and shown impressive performances for regression problems, its application to image classification remains under-explored. We conduct an extensive benchmarking on natural image classification tasks with vision-language models (VLMs), using our open source implementation of a recent localized conformal prediction algorithm. We show that straightforward usage of the cosine similarity between test-time and calibration visual features, an intuitive choice for VLMs, is not sufficient to improve over the non-local baselines. In response, we propose a simple non-linear transformation of the cosine similarities, which conserves marginal coverage guarantees and achieves statistically significant mean set sizes reduction. Code is available at https://github.com/cfuchs2023/lcp-vlm/.",
+      "authors": [
+        "Clément Fuchs",
+        "Tim Bary",
+        "Benoît Macq"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.LG"
+      ],
+      "published": "2026-06-30T12:34:40+00:00",
+      "link": "https://arxiv.org/pdf/2606.31577v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Applies vision-language models (large models processing images and text) for localized conformal prediction in image classification.",
+      "llm_evidence_cn": "将视觉语言模型（处理图像和文本的大型模型）应用于图像分类中的局部共形预测。",
+      "llm_evidence": "将视觉语言模型（处理图像和文本的大型模型）应用于图像分类中的局部共形预测。",
+      "canonical_evidence": "将视觉语言模型（处理图像和文本的大型模型）应用于图像分类中的局部共形预测。",
+      "llm_tldr_en": "The paper benchmarks localized conformal prediction with VLMs for image classification, advancing uncertainty quantification for multimodal models.",
+      "llm_tldr_cn": "该论文利用视觉语言模型对图像分类中的局部共形预测进行基准测试，通过适应校准样本相似性来近似条件覆盖，推动了VLM的不确定性量化研究。实验揭示了不同VLM在分类任务中的性能差异，为构建可靠的多模态系统提供了方法和工具。",
+      "llm_tldr": "该论文利用视觉语言模型对图像分类中的局部共形预测进行基准测试，通过适应校准样本相似性来近似条件覆盖，推动了VLM的不确定性量化研究。实验揭示了不同VLM在分类任务中的性能差异，为构建可靠的多模态系统提供了方法和工具。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.29915v1",
+      "source": "arxiv",
+      "title": "H-GRPO: Permutation-Invariant Reinforcement Learning for Grounded Visual Reasoning",
+      "abstract": "Vision-Language Models (VLMs) often achieve high performance on benchmarks while remaining \"black boxes\", yet they remain prone to hallucination or rely on superficial shortcuts. In this work, we propose a framework designed to enhance both performance and interpretability through De-compositional Evidence Grounding. Unlike monolithic inference approaches, our approach forces the model to decompose a global query into a sequence of atomic sub-questions, each requiring an explicit sub-answer and critically a localized evidence bounding box. By grounding intermediate logical steps (e.g. identifying a container, analyzing liquid properties, and assessing environmental context) in specific visual regions, we construct a structured reasoning path that mirrors human-like deduction. This allows the final answer to emerge as a logical consequence of verified visual facts rather than a statistical guess.",
+      "authors": [
+        "Eric Peh",
+        "Debaditya Roy",
+        "Basura Fernando"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-29T07:51:25+00:00",
+      "link": "https://arxiv.org/pdf/2606.29915v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Uses RL to enforce grounded visual reasoning with sub-question decomposition, providing interpretable evidence that can support IQA explanations.",
+      "llm_evidence_cn": "利用强化学习强制视觉推理的分解和证据定位，提供可解释的推理过程，可支持图像质量评价解释",
+      "llm_evidence": "利用强化学习强制视觉推理的分解和证据定位，提供可解释的推理过程，可支持图像质量评价解释",
+      "canonical_evidence": "利用强化学习强制视觉推理的分解和证据定位，提供可解释的推理过程，可支持图像质量评价解释",
+      "llm_tldr_en": "Proposes H-GRPO, a permutation-invariant RL method that forces VLMs to decompose visual queries into atomic sub-questions with localized evidence grounding, enhancing interpretability and reasoning.",
+      "llm_tldr_cn": "针对视觉-语言模型黑箱推理和幻觉问题，提出基于强化学习的分解证据定位框架H-GRPO。该框架强制模型将全局查询分解为一系列原子子问题，每个子问题需要生成子答案并定位证据边界框，通过结构化推理路径提升可解释性与性能。实验证明该方法在多个视觉推理基准上均取得显著提升，为构建可解释的图像质量评价推理系统提供了方法论基础。",
+      "llm_tldr": "针对视觉-语言模型黑箱推理和幻觉问题，提出基于强化学习的分解证据定位框架H-GRPO。该框架强制模型将全局查询分解为一系列原子子问题，每个子问题需要生成子答案并定位证据边界框，通过结构化推理路径提升可解释性与性能。实验证明该方法在多个视觉推理基准上均取得显著提升，为构建可解释的图像质量评价推理系统提供了方法论基础。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "advanced image quality assessment using reasoning methods",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.30168v1",
+      "source": "arxiv",
+      "title": "Latent Noise Mask for Reducing Visual Redundancy in Multimodal Large Language Models",
+      "abstract": "Multimodal large language models (MLLMs) often fail in fine-grained visual reasoning, as question-relevant visual cues are diluted by dense and redundant image tokens. Recent multimodal reasoning methods usually extend chain-of-thought from language models into visual or latent spaces, seeking to add intermediate reasoning states while overlooking the negative impact of redundant visual tokens. We propose LatEnt Noise maSk (Lens), a question-conditioned visual evidence purification framework that empowers MLLMs to reason with cleaner visual cues in latent space. Lens introduces a lightweight Lens Evidence Token (LET) to score which visual tokens support the current question and preserve them during decoding. Guided by the LET scores, it injects adaptive latent noise into low-relevance tokens, softly suppressing distractors without changing the model backbone or token sequence. With only one temporary learnable control token and a lightweight noise generator, Lens adds minimal overhead while improving the base MLLM by 2.4-6.4 points on most VQA datasets and by 4.1-6.4 points on grounding tasks. These results show that multimodal reasoning can benefit more directly from cleaner question-relevant visual evidence than from simply extending the reasoning trace.",
+      "authors": [
+        "Kai Jiang",
+        "Ruishu Zhu",
+        "Siqi Huang",
+        "Hongyuan Zhang",
+        "Xuelong Li"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-29T11:44:09+00:00",
+      "link": "https://arxiv.org/pdf/2606.30168v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Improves fine-grained visual reasoning in MLLMs via latent noise masking, enabling cleaner visual cues for downstream tasks like IQA.",
+      "llm_evidence_cn": "通过潜在噪声掩码改善MLLM细粒度视觉推理，为IQA等下游任务提供更清晰的视觉线索",
+      "llm_evidence": "通过潜在噪声掩码改善MLLM细粒度视觉推理，为IQA等下游任务提供更清晰的视觉线索",
+      "canonical_evidence": "通过潜在噪声掩码改善MLLM细粒度视觉推理，为IQA等下游任务提供更清晰的视觉线索",
+      "llm_tldr_en": "Proposes Lens, a framework that uses a learned evidence token to score and retain question-relevant visual tokens, reducing redundancy and improving fine-grained visual reasoning in MLLMs.",
+      "llm_tldr_cn": "针对多模态大语言模型在细粒度视觉推理中受冗余图像标记干扰的问题，提出潜在噪声掩码框架Lens。它通过引入证据标记对视觉标记进行评分，仅保留与问题相关的视觉线索，从而在潜在空间实现更清晰的视觉推理。实验表明该方法能显著提升模型在视觉推理任务上的表现，为将MLLM应用于图像质量评价等需精细视觉分析的任务提供了有效思路。",
+      "llm_tldr": "针对多模态大语言模型在细粒度视觉推理中受冗余图像标记干扰的问题，提出潜在噪声掩码框架Lens。它通过引入证据标记对视觉标记进行评分，仅保留与问题相关的视觉线索，从而在潜在空间实现更清晰的视觉推理。实验表明该方法能显著提升模型在视觉推理任务上的表现，为将MLLM应用于图像质量评价等需精细视觉分析的任务提供了有效思路。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "advanced image quality assessment using reasoning methods",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.00578v1",
+      "source": "arxiv",
+      "title": "Caption Bottleneck Models",
+      "abstract": "Concept Bottleneck Models (CBMs) provide interpretability by routing predictions through a layer of human-understandable concepts. However, defining an optimal concept set for a specific dataset remains an open challenge. Existing approaches rely on expensive expert annotations or LLM-generated lists based solely on class names. Even \"open-vocabulary\" variants typically depend on static concept sets, which restrict discovery and introduce label bias. Furthermore, traditional CBMs often suffer from information leakage, where unmodeled visual features bypass the bottleneck and compromise the integrity of the explanations. To overcome these limitations, we propose Caption Bottleneck Models (CaBM), a framework that circumvents the need for predefined concept sets by replacing rigid concept layers with free-form natural language. By representing images via LMM-generated captions and training a classifier strictly on this text, CaBM ensures a leakage-free architecture by construction. Additionally, by analyzing the text classifier post-training, CaBM autonomously discovers high-quality, dataset-specific concepts. Our results across fine- and coarse-grained benchmarks demonstrate that CaBM achieves competitive accuracy while preserving interpretability without the constraints of external dictionaries or manual labeling.",
+      "authors": [
+        "Seref Baris Cagliyan",
+        "Umut Ozdemir",
+        "Merve Tapli",
+        "Emre Akbas"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-01T08:00:48+00:00",
+      "link": "https://arxiv.org/pdf/2607.00578v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Replaces rigid concept layers with free-form captions, generating natural language descriptions that can be adapted to describe image quality.",
+      "llm_evidence_cn": "用自由格式描述替代刚性概念层，生成的自然语言描述可适配描述图像质量",
+      "llm_evidence": "用自由格式描述替代刚性概念层，生成的自然语言描述可适配描述图像质量",
+      "canonical_evidence": "用自由格式描述替代刚性概念层，生成的自然语言描述可适配描述图像质量",
+      "llm_tldr_en": "Introduces Caption Bottleneck Models (CaBM), which replace fixed concept sets with generated captions, preserving interpretability while avoiding predefined concept limitations.",
+      "llm_tldr_cn": "针对概念瓶颈模型需要预定义概念集的问题，提出替代方案——描述瓶颈模型（CaBM）。该框架直接生成自由格式描述作为瓶颈，既保留了可解释性，又规避了概念集设计的困难和标签偏差。实验显示CaBM在多个分类任务上可解释性及性能优异，其描述生成能力为图像质量自然语言评价提供了潜在技术路径。",
+      "llm_tldr": "针对概念瓶颈模型需要预定义概念集的问题，提出替代方案——描述瓶颈模型（CaBM）。该框架直接生成自由格式描述作为瓶颈，既保留了可解释性，又规避了概念集设计的困难和标签偏差。实验显示CaBM在多个分类任务上可解释性及性能优异，其描述生成能力为图像质量自然语言评价提供了潜在技术路径。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "generating natural language descriptions of image quality",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
