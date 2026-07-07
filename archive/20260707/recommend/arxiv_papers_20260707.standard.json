@@ -1,0 +1,65 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-07T22:02:14.533054+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.01191v1",
+      "source": "arxiv",
+      "title": "Perceive-to-Reason: Decoupling Perception and Reasoning for Fine-Grained Visual Reasoning",
+      "abstract": "Fine-grained visual reasoning remains challenging for vision-language models, especially when small but critical visual cues are buried in high-resolution images. Existing approaches rely on repeated cropping or test-time visual search to introduce local evidence, but they typically do not explicitly distinguish perception from reasoning. In this paper, we propose Perceive-to-Reason (P2R), a unified framework that formulates fine-grained visual reasoning as a two-stage process: the model first localizes question-relevant evidence as a Perceiver, and then answers the question as a Reasoner based on the annotated image and cropped regions. To better align training with this decoupled formulation, we further introduce Perception-Reasoning Alternating GRPO (PRA-GRPO), a role-aware reinforcement learning strategy that alternates between perception-focused and reasoning-focused updates using only final-answer supervision. Built on top of Qwen3-VL-Instruct-2B/4B/8B, P2R consistently improves performance across model scales. In particular, P2R-4B achieves 93.2% on V-Star, 81.9% on HR-Bench-4K, and 80.5% on HR-Bench-8K, substantially outperforming its corresponding backbone. Further experiments show that the benefits of P2R extend beyond high-resolution benchmarks to broader multimodal reasoning tasks. These results suggest that explicitly decoupling perception from reasoning provides an effective framework for fine-grained visual reasoning.",
+      "authors": [
+        "Hongxing Li",
+        "Xiufeng Huang",
+        "Dingming Li",
+        "Wenjing Jiang",
+        "Zixuan Wang",
+        "Haolei Xu",
+        "Hanrong Zhang",
+        "Haiwen Hong",
+        "Longtao Huang",
+        "Hui Xue",
+        "Weiming Lu",
+        "Jun Xiao",
+        "Yueting Zhuang",
+        "Yongliang Shen"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-01T17:24:26+00:00",
+      "link": "https://arxiv.org/pdf/2607.01191v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "decouples perception and reasoning for fine-grained visual reasoning",
+      "llm_evidence_cn": "为细粒度视觉推理解耦感知与推理",
+      "llm_evidence": "为细粒度视觉推理解耦感知与推理",
+      "canonical_evidence": "为细粒度视觉推理解耦感知与推理",
+      "llm_tldr_en": "Perceive-to-Reason decouples fine-grained visual reasoning into a perception stage that localizes evidence and a reasoning stage that answers, improving accuracy and interpretability.",
+      "llm_tldr_cn": "针对视觉语言模型在细粒度视觉推理中难以处理微小但关键线索的问题，本文提出感知到推理框架，将推理过程分解为感知与推理两个阶段：模型先定位问题相关视觉证据，再基于这些证据进行回答。通过感知-推理对齐训练，模型在各项细粒度推理基准上均取得显著提升。该框架不仅提高了准确性，还增强了模型的可解释性，为未来高级视觉推理任务奠定了基础。",
+      "llm_tldr": "针对视觉语言模型在细粒度视觉推理中难以处理微小但关键线索的问题，本文提出感知到推理框架，将推理过程分解为感知与推理两个阶段：模型先定位问题相关视觉证据，再基于这些证据进行回答。通过感知-推理对齐训练，模型在各项细粒度推理基准上均取得显著提升。该框架不仅提高了准确性，还增强了模型的可解释性，为未来高级视觉推理任务奠定了基础。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "reasoning based perceptual image quality evaluation with explanations",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

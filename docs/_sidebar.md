@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-07 <!--dpr-date:20260707-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/07/2607.01191v1-perceive-to-reason-decoupling-perception-and-reasoning-for-fine-grained-visual-reasoning" data-sidebar-item="{&quot;title&quot;: &quot;Perceive-to-Reason: Decoupling Perception and Reasoning for Fine-Grained Visual Reasoning&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.01191v1-perceive-to-reason-decoupling-perception-and-reasoning-for-fine-grained-visual-reasoning&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;为细粒度视觉推理解耦感知与推理&quot;}">Perceive-to-Reason: Decoupling Perception and Reasoning for Fine-Grained Visual Reasoning</a>
   * 2026-07-06 <!--dpr-date:20260706-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/06/2606.29788v1-memleak-diagnosing-information-leaks-in-multimodal-agent-memory" data-sidebar-item="{&quot;title&quot;: &quot;MemLeak: Diagnosing Information Leaks in Multimodal Agent Memory&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2606.29788v1-memleak-diagnosing-information-leaks-in-multimodal-agent-memory&quot;, &quot;score&quot;: &quot;9.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;使用VLM诊断多模态AI代理的信息泄露，VLM是处理图像和文本的大型模型。&quot;}">MemLeak: Diagnosing Information Leaks in Multimodal Agent Memory</a>

@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-07",
+  "date": "2026-07-07",
+  "generated_at": "2026-07-07T22:03:48",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/07/2607.01191v1-perceive-to-reason-decoupling-perception-and-reasoning-for-fine-grained-visual-reasoning",
+      "section": "quick",
+      "title_en": "Perceive-to-Reason: Decoupling Perception and Reasoning for Fine-Grained Visual Reasoning",
+      "authors": "Hongxing Li, Xiufeng Huang, Dingming Li, Wenjing Jiang, Zixuan Wang, Haolei Xu, Hanrong Zhang, Haiwen Hong, Longtao Huang, Hui Xue, Weiming Lu, Jun Xiao, Yueting Zhuang, Yongliang Shen",
+      "date": "2026-07-01",
+      "pdf": "https://arxiv.org/pdf/2607.01191v1",
+      "score": "6.0",
+      "evidence": "为细粒度视觉推理解耦感知与推理",
+      "tldr": "细粒度视觉推理中微小视觉线索易淹没于高分辨率图像，现有方法未显式区分感知与推理。本文提出Perceive-to-Reason框架，将任务解耦为证据定位与问题回答两个阶段，并设计角色感知的强化学习策略PRA-GRPO进行交替优化。基于Qwen3-VL-Instruct，P2R-4B在V-Star达93.2%、HR-Bench-4K达81.9%，显著超越基线。该解耦框架为细粒度视觉推理提供了有效范式。",
+      "tags": "query:xiqa",
+      "abstract_en": "Fine-grained visual reasoning remains challenging for vision-language models, especially when small but critical visual cues are buried in high-resolution images. Existing approaches rely on repeated cropping or test-time visual search to introduce local evidence, but they typically do not explicitly distinguish perception from reasoning. In this paper, we propose Perceive-to-Reason (P2R), a unified framework that formulates fine-grained visual reasoning as a two-stage process: the model first localizes question-relevant evidence as a Perceiver, and then answers the question as a Reasoner based on the annotated image and cropped regions. To better align training with this decoupled formulation, we further introduce Perception-Reasoning Alternating GRPO (PRA-GRPO), a role-aware reinforcement learning strategy that alternates between perception-focused and reasoning-focused updates using only final-answer supervision. Built on top of Qwen3-VL-Instruct-2B/4B/8B, P2R consistently improves performance across model scales. In particular, P2R-4B achieves 93.2% on V-Star, 81.9% on HR-Bench-4K, and 80.5% on HR-Bench-8K, substantially outperforming its corresponding backbone. Further experiments show that the benefits of P2R extend beyond high-resolution benchmarks to broader multimodal reasoning tasks. These results suggest that explicitly decoupling perception from reasoning provides an effective framework for fine-grained visual reasoning.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
