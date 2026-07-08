@@ -1,0 +1,69 @@
+{
+  "label": "2026-07-08",
+  "date": "2026-07-08",
+  "generated_at": "2026-07-08T21:41:11",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202607/08/2607.05798v1-segmentation-before-answering-pixel-grounding-for-mllm-visual-reasoning",
+      "section": "deep",
+      "title_en": "Segmentation before Answering: Pixel Grounding for MLLM Visual Reasoning",
+      "authors": "Yake Wei, Yuan Wang, Fengyun Rao, Jing Lyu, Di Hu",
+      "date": "2026-07-07",
+      "pdf": "https://arxiv.org/pdf/2607.05798v1",
+      "score": "8.0",
+      "evidence": "为MLLM视觉推理提出基于分割的像素级定位",
+      "tldr": "多模态大语言模型（MLLM）的视觉推理往往需要缩放感兴趣区域以获取细节，但传统边界框常引入无关背景和干扰对象。本文提出SegAnswer方法，在回答前对区域进行像素级分割，以精确掩码替代边界框，有效过滤冗余信息，使视觉输入更契合模型处理方式。实验证明，该方法在高分辨率感知、通用视觉和幻觉等多项基准上均带来一致提升，并在分割任务中表现优异，为可靠像素级定位推理提供了新路径。",
+      "tags": "query:xiqa",
+      "abstract_en": "Recent advancements in Multimodal Large Language Models (MLLMs) have evolved from static perception to interleaved visual-language reasoning, often referred to as ``thinking with images''. A basic operation in this reasoning process is to zoom in on regions of interest (often represented with bounding boxes) to acquire finer visual details. In this paper, we propose \\textbf{Seg}mentation before \\textbf{Answer}ing (SegAnswer), which shifts the unit of zoom-in from the popular bounding box to pixel-level segmentation mask. By employing fine-grained masks to isolate the target area from cluttered environments, segmented visual input yields a more precise region of interest, effectively filtering out redundant background and interfering objects. Furthermore, the discrete patches of segmented visual input align more seamlessly with how MLLMs structure visual tokens via positional embeddings. In experiments, we evaluate SegAnswer across diverse benchmarks, including high-resolution perception, general perception, and hallucination. It achieves consistent improvements and also exhibits considerable performance on segmentation tasks, validating its capability for reliable pixel grounding.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/08/2607.06560v1-vision-as-unified-multimodal-generation",
+      "section": "deep",
+      "title_en": "Vision as Unified Multimodal Generation",
+      "authors": "Xiaoyang Han, Jianhua Li, Kewang Deng, Zukai Chen, Xuanke Shi, Sihan Wang, Boxuan Li, Linyan Wang, Siyi Xie, Xin You, Jinsheng Quan, Zhongang Cai, Haiwen Diao, Ziwei Liu, Lei Yang, Dahua Lin, Quan Wang",
+      "date": "2026-07-07",
+      "pdf": "https://arxiv.org/pdf/2607.06560v1",
+      "score": "8.0",
+      "evidence": "统一多模态生成模型处理图像和文本以执行视觉任务",
+      "tldr": "传统计算机视觉依赖于任务特定架构，而统一多模态生成将异构视觉任务表达在同一生成空间中。SenseNova-Vision通过自然语言指令和视觉提示指定任务，生成文本或图像响应，并在大规模构建的指令语料上训练。单一模型在检测、分割、深度估计等广泛视觉任务上达到领先水平，证明了统一多模态生成作为通用视觉基础模型的可扩展路径。",
+      "tags": "query:xiqa",
+      "abstract_en": "We formulate computer vision as unified multimodal generation, where heterogeneous visual tasks are expressed in the native text and image generation spaces of a unified multimodal model, without task-specific architectures. Under this formulation, SenseNova-Vision uses natural-language instructions and optional visual prompts to specify tasks, target regions or views, and decoding conventions, and generates responses as text for symbolic outputs, images for dense spatial predictions, or mixed text-and-image outputs for compositional tasks. To support large-scale training, we convert diverse computer vision annotations into instruction-response examples compatible with these generation spaces, resulting in the SenseNova-Vision Corpus, a computer-vision instruction-response corpus spanning text, image, and mixed targets. Starting from an off-the-shelf pretrained unified multimodal model, SenseNova-Vision is trained primarily on this corpus, with auxiliary multimodal data used as a capability-preserving mixture, and requires no task-specific prediction heads or architectural modifications. The resulting model covers a broad range of vision tasks, including detection, OCR, keypoint estimation, segmentation, depth estimation, surface normal prediction, point maps, and camera pose estimation, while supporting language-defined variants that combine category, color, region, and other visual cues. Experiments show that a single unified model can match leading task-specialized systems across structured visual understanding, dense geometric prediction, segmentation, and multi-view visual geometry. These results suggest unified multimodal generation as a scalable route for integrating computer vision capabilities into general-purpose foundation models. The model and corpus are publicly available.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/08/2607.04606v1-compressedvqa-aev-full-reference-and-no-reference-quality-assessment-models-for-asymmetric-encoded-videos",
+      "section": "quick",
+      "title_en": "CompressedVQA-AEV: Full-Reference and No-Reference Quality Assessment Models for Asymmetric Encoded Videos",
+      "authors": "Wei Sun, Xingwei Liu, Dandan Zhu, Xiangyang Zhu, Weixia Zhang, Guangtao Zhai",
+      "date": "2026-07-06",
+      "pdf": "https://arxiv.org/pdf/2607.04606v1",
+      "score": "7.0",
+      "evidence": "提出针对视频的全参考与无参考质量评价模型",
+      "tldr": "针对非对称编码视频质量评估，现有方法难兼顾全参/无参场景。我们提出CompressedVQA-AEV-FR(全参)和NR(无参)模型：FR用Swin-B提取多级相似性统计；NR用SigLIP2和Swin-B编码帧级特征，经时域均值池化和交叉集成预测。FR在QoMEX 2026挑战全参赛道第1，NR赛道第4，验证有效性。代码开源。",
+      "tags": "query:xiqa",
+      "abstract_en": "This report presents our solutions to the QoMEX 2026 Grand Challenge on Video Quality Assessment for Asymmetric Encoded Videos, comprising a full-reference (FR) model, CompressedVQA-AEV-FR, and a no-reference (NR) model, CompressedVQA-AEV-NR. The FR approach leverages a Swin-B backbone to extract multi-stage similarity statistics between reference and distorted videos for quality prediction. For the NR setting, our model employs complementary frame-level encoders based on SigLIP2 and Swin-B, followed by temporal mean pooling and cross-fold ensembling to estimate perceptual quality without reference data. Our CompressedVQA-AEV-FR achieves first place in the FR track of QoMEX 2026 Grand Challenge, while CompressedVQA-AEV-NR secures fourth place in the NR track, demonstrating the effectiveness of our proposed models. The code is available at https://github.com/sunwei925/CompressedVQA-AEV.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/08/2607.05605v1-patch-knowledge-transfer-for-efficient-ai-generated-image-quality-assessment",
+      "section": "quick",
+      "title_en": "Patch Knowledge Transfer for Efficient AI-Generated Image Quality Assessment",
+      "authors": "Jiquan Yuan",
+      "date": "2026-07-06",
+      "pdf": "https://arxiv.org/pdf/2607.05605v1",
+      "score": "7.0",
+      "evidence": "提出高效的AI生成图像质量评估方法",
+      "tldr": "面对AI生成图像质量评估的高效需求，现有方法或计算复杂难以实时推理，或简单缩放精度低下。为此，提出补丁知识迁移（PKT），构建教师-学生双模型架构，通过局部-全局混合处理教师提供监督，学生仅用全局处理，以多层级知识迁移实现高效评估。在4个AIGIQA数据库上，PKT使学生模型性能媲美教师，计算成本降低67.7%，并在效率与准确率间达到更优平衡，为大规模实时质量评估提供了可行方案。",
+      "tags": "query:xiqa",
+      "abstract_en": "With the rapid advancement of image generation technologies, perceptual quality assessment of AI-generated images has emerged as a crucial research direction in computer vision. The core challenge of this task lies in achieving efficient quality assessment for massive generated images. Current mainstream approaches exhibit two key limitations: 1) Methods employing complex feature extraction strategies, while improving performance, incur prohibitive computational costs that hinder real-time inference; 2) Simple image scaling-based solutions, despite their computational efficiency, demonstrate significantly inferior assessment accuracy. To address this critical issue, we propose Patch Knowledge Transfer (PKT), a knowledge distillation-based optimization framework that achieves synergistic optimization of visual representation capability and inference efficiency through an innovative multi-level knowledge transfer mechanism. Specifically, we design a dual-model architecture: a teacher model with local-global hybrid processing provides high-quality supervision signals, while a student model relying solely on global processing efficiently inherits the teacher's representation capacity through multi-level supervision. Extensive experiments conducted on 4 AIGIQA databases demonstrate that the PKT framework enables the student model to maintain performance comparable to the teacher while reducing computational costs by 67.7\\%. Furthermore, compared to existing methods, our approach achieves a superior balance between model efficiency and assessment accuracy.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
