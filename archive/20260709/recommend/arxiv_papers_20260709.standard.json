@@ -1,0 +1,99 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-09T21:39:53.942785+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2607.04643v1",
+      "source": "arxiv",
+      "title": "Learning Flexible Generalization in Video Quality Assessment by Bringing Device and Viewing Condition Distributions",
+      "abstract": "Video quality assessment (VQA) plays a critical role in optimizing video delivery systems. While numerous objective metrics have been proposed to approximate human perception, the perceived quality strongly depends on viewing conditions and display characteristics. Factors such as ambient lighting, display brightness, and resolution significantly influence the visibility of distortions. In this work, we address the question of the multi-screen quality assessment on mobile devices, as this area still tends to be under-covered. We introduce a first large-scale subjective dataset collected across more than different 300 Android devices, accompanied by metadata on viewing conditions and display properties. We propose a strategy for aggregated score extraction and adaptation of VQA models to device-specific quality estimation. Our results demonstrate that incorporating device and context information enables more accurate and flexible quality prediction, offering new opportunities for fine-grained optimization in streaming services. Ultimately, this work advances the development of perceptual quality models that bridge the gap between laboratory evaluations and the diverse conditions of real-world media consumption. We made the dataset and the code available at https://videoprocessing.github.io/device-viewing-conditions.",
+      "authors": [
+        "Nikolay Safonov",
+        "Dmitriy S. Vatolin"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-06T03:56:13+00:00",
+      "link": "https://arxiv.org/pdf/2607.04643v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Directly addresses video quality assessment across devices and viewing conditions, closely matching image quality evaluation",
+      "llm_evidence_cn": "直接针对不同设备和观看条件下的视频质量评估，与图像质量评价高度匹配",
+      "llm_evidence": "直接针对不同设备和观看条件下的视频质量评估，与图像质量评价高度匹配",
+      "canonical_evidence": "直接针对不同设备和观看条件下的视频质量评估，与图像质量评价高度匹配",
+      "llm_tldr_en": "Proposes a flexible generalization method for video quality assessment across devices, introducing a large-scale dataset of subjective ratings from 300+ Android devices.",
+      "llm_tldr_cn": "本文针对多屏幕视频质量评估问题，提出一种灵活泛化的视频质量评估方法，并引入首个包含300多种安卓设备的大规模主观数据集，结合观看条件和显示属性元数据，有效提升跨设备评估的泛化能力，弥补了该领域数据和方法空白。",
+      "llm_tldr": "本文针对多屏幕视频质量评估问题，提出一种灵活泛化的视频质量评估方法，并引入首个包含300多种安卓设备的大规模主观数据集，结合观看条件和显示属性元数据，有效提升跨设备评估的泛化能力，弥补了该领域数据和方法空白。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.07179v1",
+      "source": "arxiv",
+      "title": "Comparative Study of Domain-adapted VLMs for General Document Visual Question Answering",
+      "abstract": "Document Visual Question Answering (DocVQA) presents a complex multimodal challenge, requiring models to exploit visual, textual, and layout information from documents. Although Vision-Language Models (VLMs) have shown remarkable performance in text-vision tasks, their robustness and transferability to different document domains remains underexplored. In this study, we present a comprehensive evaluation of 8 open-source pretrained VLMs on DocVQA in three different document domains: industrial documents of varying type, infographics, and presentation slides. We systematically assess model performance under zero-shot evaluations, fully supervised finetuning with inter- and intra-dataset evaluations, and few-shot learning evaluations of knowledge transfer between domains. Our findings demonstrate that while large pretrained VLMs possess strong zero-shot baselines for structured layouts, their performance strongly decreases on visually complex layouts of infographics and slides. Although parameter scaling is a dominant factor on performance, supervised finetuning yields higher relative gains in smaller architectures. Furthermore, our cross-domain and few-shot experiments show that visual understanding is the main bottleneck for DocVQA, not a lack of knowledge from the VLMs. Using 50 target domain samples, the models finetuned in DocVQA with datasets of different domains rapidly adapt to the target domain documents, even surpassing their fully supervised counterparts in some cases.",
+      "authors": [
+        "Miguel Lopez-Duran",
+        "Elena Marrero",
+        "Julian Fierrez",
+        "Marta Robledo-Moreno",
+        "Ruben Vera-Rodriguez",
+        "Daniel DeAlcala",
+        "Aythami Morales",
+        "Ruben Tolosana",
+        "Oscar Delgado",
+        "Alvaro Ortigosa",
+        "Javier Ortega-Garcia"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.LG"
+      ],
+      "published": "2026-07-08T09:13:59+00:00",
+      "link": "https://arxiv.org/pdf/2607.07179v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "evaluates vision-language models on document VQA, directly studying large language models that process images and text",
+      "llm_evidence_cn": "评估视觉语言模型在文档视觉问答上的表现，直接研究处理图像和文本的大语言模型",
+      "llm_evidence": "评估视觉语言模型在文档视觉问答上的表现，直接研究处理图像和文本的大语言模型",
+      "canonical_evidence": "评估视觉语言模型在文档视觉问答上的表现，直接研究处理图像和文本的大语言模型",
+      "llm_tldr_en": "This paper benchmarks 8 open-source VLMs on document VQA across three domains, providing insights into their robustness and transferability for multimodal document understanding.",
+      "llm_tldr_cn": "该论文对8个开源视觉语言模型在三个文档领域（工业文档、信息图、演示幻灯片）进行DocVQA综合评估，包括零样本、全监督微调、跨数据集和少样本学习。结果揭示了不同VLM的领域适应性差异，为文档型多模态模型的选择和优化提供了实证参考。",
+      "llm_tldr": "该论文对8个开源视觉语言模型在三个文档领域（工业文档、信息图、演示幻灯片）进行DocVQA综合评估，包括零样本、全监督微调、跨数据集和少样本学习。结果揭示了不同VLM的领域适应性差异，为文档型多模态模型的选择和优化提供了实证参考。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

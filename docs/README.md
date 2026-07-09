@@ -6,34 +6,28 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-08
-- 运行时间：2026-07-08 21:41:00 UTC
+- 最新运行日期：2026-07-09
+- 运行时间：2026-07-09 21:43:31 UTC
 - 运行状态：成功
-- 本次总论文数：4
-- 精读区：2
-- 速读区：2
+- 本次总论文数：2
+- 精读区：1
+- 速读区：1
 
 ### 今日简报（AI）
-今日精读两篇多模态前沿论文，聚焦像素级视觉推理与统一生成框架，并速览两项图像/视频质量评估研究。  
-最值得关注的方向：先分割再回答的策略显著提升了多模态模型的定位推理能力，而视觉统一生成模型正将理解与创作融为一体。  
-建议读者近期密切跟踪像素级视觉推理的落地应用，并关注生成模型在多模态任务中的统一化趋势。
-- 详情：[/202607/08/README](/202607/08/README)
+今日精读了一篇高分视频质量评估论文，速览了通用文档视觉问答的跨域对比，聚焦多模态理解的泛化难题。
+学到的关键方向是：视频质量评估若能对齐真实设备与观看条件的分布变化，就能跳出实验室环境，实现更灵活的跨场景泛化。
+下一步建议关注如何把环境上下文（如设备、光照）直接编码进模型中，让AI在复杂的实际应用中判断更稳。
+- 详情：[/202607/09/README](/202607/09/README)
 
 ### 精读区论文标签
-1. [Segmentation before Answering: Pixel Grounding for MLLM Visual Reasoning](/202607/08/2607.05798v1-segmentation-before-answering-pixel-grounding-for-mllm-visual-reasoning)  
-   标签：评分：8.0/10、query:xiqa
-   evidence：为MLLM视觉推理提出基于分割的像素级定位
-2. [Vision as Unified Multimodal Generation](/202607/08/2607.06560v1-vision-as-unified-multimodal-generation)  
-   标签：评分：8.0/10、query:xiqa
-   evidence：统一多模态生成模型处理图像和文本以执行视觉任务
+1. [Learning Flexible Generalization in Video Quality Assessment by Bringing Device and Viewing Condition Distributions](/202607/09/2607.04643v1-learning-flexible-generalization-in-video-quality-assessment-by-bringing-device-and-viewing-condition-distributions)  
+   标签：评分：9.0/10、query:xiqa
+   evidence：直接针对不同设备和观看条件下的视频质量评估，与图像质量评价高度匹配
 
 ### 速读区论文标签
-1. [CompressedVQA-AEV: Full-Reference and No-Reference Quality Assessment Models for Asymmetric Encoded Videos](/202607/08/2607.04606v1-compressedvqa-aev-full-reference-and-no-reference-quality-assessment-models-for-asymmetric-encoded-videos)  
-   标签：评分：7.0/10、query:xiqa
-   evidence：提出针对视频的全参考与无参考质量评价模型
-2. [Patch Knowledge Transfer for Efficient AI-Generated Image Quality Assessment](/202607/08/2607.05605v1-patch-knowledge-transfer-for-efficient-ai-generated-image-quality-assessment)  
-   标签：评分：7.0/10、query:xiqa
-   evidence：提出高效的AI生成图像质量评估方法
+1. [Comparative Study of Domain-adapted VLMs for General Document Visual Question Answering](/202607/09/2607.07179v1-comparative-study-of-domain-adapted-vlms-for-general-document-visual-question-answering)  
+   标签：评分：6.0/10、query:xiqa
+   evidence：评估视觉语言模型在文档视觉问答上的表现，直接研究处理图像和文本的大语言模型
 
 
 <div class="dpr-home-promo-card">
