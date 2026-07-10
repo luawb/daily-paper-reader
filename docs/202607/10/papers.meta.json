@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-10",
+  "date": "2026-07-10",
+  "generated_at": "2026-07-10T21:42:00",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/10/2607.08563v1-partial-reference-iqa-based-on-hermite-gauss-structural-prediction-and-texture-deviation",
+      "section": "deep",
+      "title_en": "Partial-Reference IQA Based on Hermite-Gauss Structural Prediction and Texture Deviation",
+      "authors": "Paolo Giannitrapani, Elio D. Di Claudio, Giovanni Jacovitti",
+      "date": "2026-07-09",
+      "pdf": "https://arxiv.org/pdf/2607.08563v1",
+      "score": "9.0",
+      "evidence": "提出通过结构和纹理指标评估图像质量的半参考IQA框架",
+      "tldr": "传统图像质量评价大多依赖全参考或无参考，前者开销大、后者精度有限。本文提出PreSPA框架，通过从参考图像仅提取一个标量μ，指导无参考的结构预测与纹理偏差估计，将参考信息压缩至信息论最小。在六个基准上，PreSPA性能比肩甚至超越领先无参考模型，部分场景达到全参考方法精度，且仅需三个可解释参数，计算高效、无需数据集校准。该方法为低参考开销下的准确IQA开辟了新方向。",
+      "tags": "query:xiqa",
+      "abstract_en": "We propose PreSPA (Partial-Reference Structural Prediction Approach), a Partial-Reference Image Quality Assessment framework that decomposes perceptual quality into two complementary indices. A structure-aware index, operating in a No-Reference manner, captures structural degradation through Hermite-Gauss prediction of the distorted gradient field and the angular variance of its curvature. A texture-sensitive index estimates local noise through a scalar prior $μ$, obtained from energy differences between reference and distorted complex gradient maps on strong-edge regions and accumulated over weakly-structured ones, reflecting the perceptual leakage of degraded edges into surrounding textures. Crucially, $μ$ is the only information extracted from the reference and is computed once per image pair, reducing the reference footprint to its information-theoretic minimum. The final score is produced by an affine fusion with only three interpretable parameters, making the method compact, transparent, and computationally efficient, with the viewing distance embedded into the operator scale and no dataset-specific calibration. Extensive evaluations on six standard benchmarks show that PreSPA consistently rivals or exceeds leading No-Reference approaches, while in several cases matching the accuracy of Full-Reference models.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/10/2607.03184v1-bvs-bayesian-visual-search-with-multimodal-large-language-model-for-fine-grained-perception",
+      "section": "quick",
+      "title_en": "BVS: Bayesian Visual Search with Multimodal Large Language Model for Fine-grained Perception",
+      "authors": "Geng Li, Yuxin Peng",
+      "date": "2026-07-03",
+      "pdf": "https://arxiv.org/pdf/2607.03184v1",
+      "score": "6.0",
+      "evidence": "提出基于多模态大语言模型的贝叶斯视觉搜索用于细粒度感知",
+      "tldr": "多模态大语言模型(MLLMs)在超高清图像中难以精细感知微小目标，现有方法或低效扫描或依赖静态先验缺乏校正。BVS框架将该任务建模为连续空间-尺度流形上的贝叶斯视觉搜索，利用注意力展开构建推理感知先验，并通过尺度感知非平稳核与GP-UCB迭代修正噪声与缺失信息。实验表明，BVS显著超越现有方法，实现精度与效率的更优权衡，并具次线性遗憾理论保证，为精细视觉感知提供了有效新范式。",
+      "tags": "query:xiqa",
+      "abstract_en": "While Multimodal Large Language Models (MLLMs) demonstrate impressive general capabilities, they struggle with fine-grained perception in ultra-high-resolution (UHR) images, particularly for tiny objects in cluttered scenes. Existing methods face a dilemma: they either rely on inefficient prior-free scanning, or depend on static prior-driven heuristics that lack posterior correction to rectify initial model biases. To address this, we propose BVS (Bayesian Visual Search), a framework that formulates perception as a global optimization problem over a continuous spatial-scale manifold. Specifically, BVS bridges prior guidance with posterior correction: it utilizes an early-stop attention rollout of MLLM to construct reasoning-aware priors, while employing a scale-aware non-stationary kernel and GP-UCB to dynamically rectify noise and recover missing information in the prior through iterative local observations. We provide theoretical guarantees via sub-linear regret bounds, and extensive experiments demonstrate that BVS significantly outperforms state-of-the-art baselines with a superior trade-off between accuracy and efficiency.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

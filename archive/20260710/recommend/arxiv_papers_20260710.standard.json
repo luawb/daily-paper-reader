@@ -1,0 +1,90 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-10T21:38:28.672201+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2607.08563v1",
+      "source": "arxiv",
+      "title": "Partial-Reference IQA Based on Hermite-Gauss Structural Prediction and Texture Deviation",
+      "abstract": "We propose PreSPA (Partial-Reference Structural Prediction Approach), a Partial-Reference Image Quality Assessment framework that decomposes perceptual quality into two complementary indices. A structure-aware index, operating in a No-Reference manner, captures structural degradation through Hermite-Gauss prediction of the distorted gradient field and the angular variance of its curvature. A texture-sensitive index estimates local noise through a scalar prior $μ$, obtained from energy differences between reference and distorted complex gradient maps on strong-edge regions and accumulated over weakly-structured ones, reflecting the perceptual leakage of degraded edges into surrounding textures. Crucially, $μ$ is the only information extracted from the reference and is computed once per image pair, reducing the reference footprint to its information-theoretic minimum. The final score is produced by an affine fusion with only three interpretable parameters, making the method compact, transparent, and computationally efficient, with the viewing distance embedded into the operator scale and no dataset-specific calibration. Extensive evaluations on six standard benchmarks show that PreSPA consistently rivals or exceeds leading No-Reference approaches, while in several cases matching the accuracy of Full-Reference models.",
+      "authors": [
+        "Paolo Giannitrapani",
+        "Elio D. Di Claudio",
+        "Giovanni Jacovitti"
+      ],
+      "primary_category": "eess.IV",
+      "categories": [
+        "eess.IV"
+      ],
+      "published": "2026-07-09T14:54:16+00:00",
+      "link": "https://arxiv.org/pdf/2607.08563v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Proposes a partial-reference IQA framework that evaluates image quality via structure and texture indices",
+      "llm_evidence_cn": "提出通过结构和纹理指标评估图像质量的半参考IQA框架",
+      "llm_evidence": "提出通过结构和纹理指标评估图像质量的半参考IQA框架",
+      "canonical_evidence": "提出通过结构和纹理指标评估图像质量的半参考IQA框架",
+      "llm_tldr_en": "Proposes PreSPA, a partial-reference IQA method that predicts perceptual quality using Hermite-Gauss structural prediction and texture deviation, requiring only a scalar prior from reference.",
+      "llm_tldr_cn": "该工作针对部分参考图像质量评价，提出PreSPA框架，将感知质量分解为结构和纹理两个互补指标。结构指标无需参考，利用Hermite-Gauss预测失真梯度场；纹理指标利用参考图与失真图在强边缘区域的能量差估计局部噪声。实验表明仅用一个标量先验即可实现高效的质量预测，为轻量级IQA提供了新范式。",
+      "llm_tldr": "该工作针对部分参考图像质量评价，提出PreSPA框架，将感知质量分解为结构和纹理两个互补指标。结构指标无需参考，利用Hermite-Gauss预测失真梯度场；纹理指标利用参考图与失真图在强边缘区域的能量差估计局部噪声。实验表明仅用一个标量先验即可实现高效的质量预测，为轻量级IQA提供了新范式。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.03184v1",
+      "source": "arxiv",
+      "title": "BVS: Bayesian Visual Search with Multimodal Large Language Model for Fine-grained Perception",
+      "abstract": "While Multimodal Large Language Models (MLLMs) demonstrate impressive general capabilities, they struggle with fine-grained perception in ultra-high-resolution (UHR) images, particularly for tiny objects in cluttered scenes. Existing methods face a dilemma: they either rely on inefficient prior-free scanning, or depend on static prior-driven heuristics that lack posterior correction to rectify initial model biases. To address this, we propose BVS (Bayesian Visual Search), a framework that formulates perception as a global optimization problem over a continuous spatial-scale manifold. Specifically, BVS bridges prior guidance with posterior correction: it utilizes an early-stop attention rollout of MLLM to construct reasoning-aware priors, while employing a scale-aware non-stationary kernel and GP-UCB to dynamically rectify noise and recover missing information in the prior through iterative local observations. We provide theoretical guarantees via sub-linear regret bounds, and extensive experiments demonstrate that BVS significantly outperforms state-of-the-art baselines with a superior trade-off between accuracy and efficiency.",
+      "authors": [
+        "Geng Li",
+        "Yuxin Peng"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-03T10:42:34+00:00",
+      "link": "https://arxiv.org/pdf/2607.03184v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Proposes Bayesian visual search with MLLM for fine-grained perception",
+      "llm_evidence_cn": "提出基于多模态大语言模型的贝叶斯视觉搜索用于细粒度感知",
+      "llm_evidence": "提出基于多模态大语言模型的贝叶斯视觉搜索用于细粒度感知",
+      "canonical_evidence": "提出基于多模态大语言模型的贝叶斯视觉搜索用于细粒度感知",
+      "llm_tldr_en": "BVS addresses MLLMs' struggles in fine-grained perception by formulating visual search as Bayesian optimization over spatial-scale manifold, integrating prior and posterior correction with attention rollout priors.",
+      "llm_tldr_cn": "针对多模态大语言模型在超高分辨率图像中难以感知细小物体的问题，BVS将视觉搜索形式化为空间-尺度流形上的贝叶斯全局优化，结合先验引导与后验修正，通过注意力推演构建推理感知先验，显著提升细粒度感知性能。该方法为MLLM在复杂场景下的精细化视觉理解提供了新范式。",
+      "llm_tldr": "针对多模态大语言模型在超高分辨率图像中难以感知细小物体的问题，BVS将视觉搜索形式化为空间-尺度流形上的贝叶斯全局优化，结合先验引导与后验修正，通过注意力推演构建推理感知先验，显著提升细粒度感知性能。该方法为MLLM在复杂场景下的精细化视觉理解提供了新范式。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
