@@ -6,28 +6,28 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-10
-- 运行时间：2026-07-10 21:41:49 UTC
+- 最新运行日期：2026-07-11
+- 运行时间：2026-07-11 20:05:02 UTC
 - 运行状态：成功
 - 本次总论文数：2
 - 精读区：1
 - 速读区：1
 
 ### 今日简报（AI）
-今日精读顶刊图像质量评价新方法，速览多模态视觉搜索模型。  
-高质量评价可仅靠局部纹理与结构预测，无需全图参考；视觉搜索则结合贝叶斯推理提升细粒度感知。  
-若关心图像处理，务必细读9分论文的核心公式；若做视觉交互，可快速了解BVS的搜索思路。
-- 详情：[/202607/10/README](/202607/10/README)
+光场图像质量评价迎来首个标准化混合基准，提出涵盖真实失真与合成失真的主客观对齐框架。
+若只读一篇，看其如何用跨数据集专家评分解决光场质量评价的基准缺失难题；多模态动态质量感知也能提供互补视角。
+对普通读者：关注光场基准中的主观实验设计，可为自动驾驶与VR内容质量评估提供参考。
+- 详情：[/202607/11/README](/202607/11/README)
 
 ### 精读区论文标签
-1. [Partial-Reference IQA Based on Hermite-Gauss Structural Prediction and Texture Deviation](/202607/10/2607.08563v1-partial-reference-iqa-based-on-hermite-gauss-structural-prediction-and-texture-deviation)  
+1. [Towards Standardized Light Field Quality Assessment: Hybrid Subjective Benchmarking and Objective Metric Evaluation](/202607/11/2607.03494v1-towards-standardized-light-field-quality-assessment-hybrid-subjective-benchmarking-and-objective-metric-evaluation)  
    标签：评分：9.0/10、query:xiqa
-   evidence：提出通过结构和纹理指标评估图像质量的半参考IQA框架
+   evidence：通过主观和客观评估实现光场图像质量评价
 
 ### 速读区论文标签
-1. [BVS: Bayesian Visual Search with Multimodal Large Language Model for Fine-grained Perception](/202607/10/2607.03184v1-bvs-bayesian-visual-search-with-multimodal-large-language-model-for-fine-grained-perception)  
+1. [General Incomplete Multimodal Learning via Dynamic Quality Perception](/202607/11/2607.06943v1-general-incomplete-multimodal-learning-via-dynamic-quality-perception)  
    标签：评分：6.0/10、query:xiqa
-   evidence：提出基于多模态大语言模型的贝叶斯视觉搜索用于细粒度感知
+   evidence：动态质量感知评估模态特定的退化
 
 
 <div class="dpr-home-promo-card">

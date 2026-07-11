@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-11",
+  "date": "2026-07-11",
+  "generated_at": "2026-07-11T20:05:13",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/11/2607.03494v1-towards-standardized-light-field-quality-assessment-hybrid-subjective-benchmarking-and-objective-metric-evaluation",
+      "section": "deep",
+      "title_en": "Towards Standardized Light Field Quality Assessment: Hybrid Subjective Benchmarking and Objective Metric Evaluation",
+      "authors": "Saeed Mahmoudpour, Mylene C. Q. Farias, Gi-Mun Um, Myllena A. Prado, Ismael Seidel, Leonardo de Sousa Marques, Leonardo Andrade, Shengyang Zhao, Carla L Pagliari",
+      "date": "2026-07-03",
+      "pdf": "https://arxiv.org/pdf/2607.03494v1",
+      "score": "9.0",
+      "evidence": "通过主观和客观评估实现光场图像质量评价",
+      "tldr": "在JPEG Pleno光场编码标准化中，缺乏能够同时处理编码伪影和视图合成失真的鲁棒质量评估方法。为此，本文提出了一个涵盖基准生成、混合主观评估和客观指标分析的标准化工作流，其中混合主观方法结合参考锚定评分与成对比较细化。实验发现，多个指标对编码失真预测良好，但视图合成失真导致性能骤降，突显视图池策略在指标设计中的关键作用。该工作为光场质量评估提供了标准化就绪框架和公开数据集，同时指出了现有客观指标在新型编码管线下的局限性。",
+      "tags": "query:xiqa",
+      "abstract_en": "Benchmarking immersive media coding solutions, especially in the standardization context, requires reliable and reproducible subjective quality assessment (QA) procedures, along with objective quality metrics that remain accurate across different distortion types. This paper presents a standardized workflow for light field QA, developed and deployed in the context of JPEG Pleno standardization activities, which integrates benchmark generation, a hybrid subjective evaluation, and objective metric analysis into a common workflow. The benchmark is designed to encompass not only traditional coding-only artifacts but also distortions that arise in processing pipelines in which light field encoding is accompanied with view synthesis and reconstruction techniques. A hybrid subjective method is proposed enabling fine-grained assessment by combining reference-anchored quality rating with targeted pairwise refinement in perceptually ambiguous regions. The reliability of subjective scores is verified using statistical consistency analyses between observers of two cohorts. Finally, a large set of objective metrics is systematically evaluated in terms of global prediction accuracy, local agreement in ambiguous quality regions, and robustness across distortion families. The results show that several metrics achieve strong agreement for coding-only stimuli, but their performance consistently drops when view synthesis distortions are included. The analysis further highlights the importance of view-pooling strategy in the design of future light field quality metrics. The work provides a reproducible and standardization-ready framework for fine-grained light field QA, while identifying key limitations of current objective metrics under emerging coding pipelines. The subjectively annotated dataset is publicly available at https://plenodb.jpeg.org/lfqa/objectivecfp.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/11/2607.06943v1-general-incomplete-multimodal-learning-via-dynamic-quality-perception",
+      "section": "quick",
+      "title_en": "General Incomplete Multimodal Learning via Dynamic Quality Perception",
+      "authors": "Xiangyu Meng, Shicai Wei",
+      "date": "2026-07-08",
+      "pdf": "https://arxiv.org/pdf/2607.06943v1",
+      "score": "6.0",
+      "evidence": "动态质量感知评估模态特定的退化",
+      "tldr": "在多模态学习的现实应用中，模态缺失与模态内部损坏问题常同时发生，现有方法大多仅关注整模态缺失，忽略了模态存在但严重退化的情形，难以有效应对共存场景。本文提出通用不完备多模态学习框架GIML，将异构缺失模式统一表示为连续的信息退化过程，并通过动态质量感知实现鲁棒的自适应融合。该框架包含噪声感知质量估计器，通过受控噪声注入学习退化强度，以及噪声-语义解耦模块分离语义与噪声干扰，增强对未知损坏的泛化能力。在多种模态数据集上广泛实验表明，GIML在复杂缺失条件下显著优于现有方法，验证了有效性与通用性，为不完备多模态学习提供了统一解决方案。",
+      "tags": "query:xiqa",
+      "abstract_en": "Multimodal learning robust to missing modalities is essential for real-world applications. Existing methods mainly focus on inter-modality missing, where entire modalities are absent, while overlooking intra-modality degradation, where modalities are present but severely corrupted. In practice, these two types of missing often coexist, making existing approaches ineffective. To address this limitation, we propose General Incomplete Multimodal Learning (GIML), a unified framework that simultaneously handles both inter-modality missing and intra-modality degradation through dynamic quality perception. Specifically, GIML models heterogeneous missing patterns as continuous modality information degradation, enabling degradation-aware adaptive fusion. To achieve reliable quality perception, we introduce a Noise-aware Quality Estimator that learns the mapping from corrupted features to noise intensity through controlled noise injection. Furthermore, we propose a Noise-Semantic Decoupled module that separates semantic information from noise interference. This improves robustness and generalization to unseen corruption patterns. Extensive experiments across datasets with diverse modality types demonstrate the effectiveness and generality of GIML. Code is available at: https://github.com/Yu-Five/GIML.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

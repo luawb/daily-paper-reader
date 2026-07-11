@@ -1,0 +1,397 @@
+Title: Towards Standardized Light Field Quality Assessment: Hybrid Subjective Benchmarking and Objective Metric Evaluation
+
+URL Source: https://arxiv.org/pdf/2607.03494v1
+
+Published Time: Tue, 07 Jul 2026 01:35:21 GMT
+
+Number of Pages: 13
+
+Markdown Content:
+> VOL. XX, NO. X, JULY 2026 1
+
+# Towards Standardized Light Field Quality Assessment: Hybrid Subjective Benchmarking and Objective Metric Evaluation 
+
+Saeed Mahmoudpour, Myl` ene C. Q. Farias, Gi-Mun Um, Myllena A. Prado, Ismael Seidel, Leonardo de Sousa Marques, Leonardo Andrade, Shengyang Zhao, Carla L Pagliari, Senior Member, IEEE 
+
+Abstract —Benchmarking immersive media coding solutions, especially in the standardization context, requires reliable and reproducible subjective quality assessment (QA) procedures, along with objective quality metrics that remain accurate across different distortion types. This paper presents a standardized workflow for light field QA, developed and deployed in the con-text of JPEG Pleno standardization activities, which integrates benchmark generation, a hybrid subjective evaluation, and objec-tive metric analysis into a common workflow. The benchmark is designed to encompass not only traditional coding-only artifacts but also distortions that arise in processing pipelines in which light field encoding is accompanied with view synthesis and reconstruction techniques. A hybrid subjective method is pro-posed enabling fine-grained assessment by combining reference-anchored quality rating with targeted pairwise refinement in perceptually ambiguous regions. The reliability of subjective scores is verified using statistical consistency analyses between observers of two cohorts. Finally, a large set of objective metrics is systematically evaluated in terms of global prediction accuracy, local agreement in ambiguous quality regions, and robustness across distortion families. The results show that several metrics achieve strong agreement for coding-only stimuli, but their performance consistently drops when view synthesis distortions are included. The analysis further highlights the importance of view-pooling strategy in the design of future light field quality metrics. The work provides a reproducible and standardization-ready framework for fine-grained light field QA, while identifying key limitations of current objective metrics under emerging coding pipelines. The subjectively annotated dataset is publicly available at https://plenodb.jpeg.org/lfqa/objectivecfp. 
+
+Index Terms —Light fields, subjective quality assessment, ob-jective quality metrics, standardization, 3D Gaussian Splatting, view interpolation. 
+
+This work is funded by Electronics and Telecommunications Research Institute under Collaboration Agreement - 86203. Saeed Mahmoudpour is with the Dept. of Electronics and Informatics, Vrije Universiteit Brussel, Belgium and with IMEC, Kapeldreef 75, Leuven, B-3001, Belgium. (e-mail: Saeed.Mahmoudpour@vub.be) Myllena A. Prado and Myl` ene C. Q. Farias are with the Department of Computer Science, Texas State University, US. (e-mail: myllena@txstate.edu; mylene@ieee.org) Gi-Mun Um is with the Electronics and Telecommunications Research Institute, Daejeon, Korea. (e-mail: gmum@etri.re.kr) Ismael Seidel and Leonardo de Sousa Marques are with the Embed-ded Computing Lab., Dept. of Computer Science and Statistics, Fed-eral University of Santa Catarina, Brazil. (e-mail: ismael.seidel@ufsc.br; leonardo.sm@grad.ufsc.br) Leonardo Andrade is with the Licks Attorneys and the Federal University of Rio de Janeiro (UFRJ), Rio de Janeiro, Brazil. (e-mail:leonardo.andrade@lickslegal.com.) Shengyang Zhao is with the Ningbo Institute of Digital Twin, Eastern Institute of Technology, Ningbo, China. (e-mail: szhao@idt.eitech.edu.cn) Carla L Pagliari is with the Instituto Militar de Engenharia-IME, PGEE/PGED, Brazil. (e-mail: carla@ime.eb.br) 
+
+I. I NTRODUCTION 
+
+# LIGHT field (LF) imaging extends conventional photog-raphy by capturing both the spatial and angular distri-bution of light, enabling a more complete 3D scene repre-sentation. This supports immersive free-viewpoint rendering, photorealistic view synthesis, depth estimation, and virtual or augmented reality [1]. LF imaging is grounded in the plenoptic function [2], [3], which models radiance as a function of position, direction, wavelength, and time. Because acquiring the full 7D plenoptic function is impractical, it is typically reduced to a 4D LF parameterized by (s, t, u, v ), where (s, t )
+
+are viewpoint coordinates on one plane and (u, v ) are coor-dinates of the corresponding light ray on a parallel plane [3]. In practice, a 4D LF is sampled as an array of sub-aperture images encoding spatial and angular information, providing far richer visual content than conventional 2D images. The richer representation of LFs requires much larger data vol-umes, making efficient acquisition, compression, transmission, reconstruction, and quality assessment (QA) fundamental chal-lenges for practical LF systems. Unlike conventional images, LFs exhibit redundancies both within each spatial view and across neighboring angular views, requiring coding algorithms that jointly exploit spatial and angular correlations while preserving perceptual quality. These challenges led to dedicated standards, most notably the JPEG Pleno framework [4]. JPEG Pleno defines a standardized architecture for emerging imaging modalities, including light fields, point clouds, and holography. Its integrated design covers coding technologies and advanced functionalities such as plenoptic data manipulation, rich metadata, interactive random access, and flexible file formats. The framework also addresses visual quality evaluation, recognizing that reliable QA is critical for developing, optimizing, and benchmarking compression algorithms and other LF processing methods [5]. Visual QA is of fundamental importance for LF coding, as visual degradation in LF content extends well beyond simple spatial coding artifacts (e.g. blur, blocking) within individual views. To rigorously analyze how different types of distortions influence the perceived quality of rendered LFs, a substantial body of recent work has proposed both subjective and ob-jective QA methodologies specifically tailored to this modal-ity [6], [7], [8], [5]. These methods, among other aspects, evaluate angular consistency, parallax, geometric accuracy, and faithful view-dependent appearance attributes, all of which  
+
+> arXiv:2607.03494v1 [cs.CV] 3 Jul 2026 VOL. XX, NO. X, JULY 2026 2
+
+become particularly critical when sparsely sampled data are compressed and subsequently reconstructed into dense LFs. More specifically, objective quality metrics are essential for LF coding and reconstruction pipelines, as they support codec development, parameter optimization, and large-scale perfor-mance analysis [6]. Their reliability however, depends on evaluation against perceptually valid subjective ground truth collected under representative distortion conditions. Therefore, stress testing objective metrics require diverse test stimuli [9] and subjective methods that are reliable, reproducible, and sensitive to small perceptual differences [5]. The need for reproducible QA has also been recognized in standardization activities for plenoptic imaging. To address this, the new Part 7 of the JPEG Pleno is focused on light field quality assessment, aiming to define common procedures for evaluating decoded LF content. Within this activity, sub-jective assessment was first treated as a foundational step, since objective metrics require reliable perceptual ground truth. Earlier work therefore focused on comparing subjective methodologies for LF coding assessment, including rating-and ranking-based protocols, to understand their reliability and discriminability as detailed in [5]. Previous research has demonstrated that conventional rating methods, such as Absolute Category Rating (ACR) and the Double Stimulus Impairment Scale (DSIS) [10], [11], offer valuable reference anchoring for subjective QA, while they may exhibit limited sensitivity when evaluating high-quality stimuli or conditions with small quality differences [12], [5]. In contrast, pairwise comparison (PC) typically yields higher discriminability, albeit at the expense of substantially increased experimental complexity and cost [13], [14], [15]. This mo-tivated the development of a hybrid subjective methodology that combines a coarse reference-anchored rating stage with selective PC in perceptually ambiguous regions. This hybrid approach is being developed within the ongoing JPEG Pleno Part 7 standardization work on subjective light field quality assessment. Building on this subjective QA foundation, the activity is subsequently being complemented by a call for proposals (CfP) on objective quality metrics, supporting the development of standardized objective LF QA tools. The present paper builds on this subjective QA phase [5] and addresses the next step: the implementation of a framework for fine-grained evaluation of the reliability of objective quality metrics for LFs. The proposed workflow includes source-scene selection, stimulus generation, subjective QA using the hybrid protocol, score processing procedure, and metric analysis. The framework serves as a reproducible baseline for analyzing metric behavior across distortion families and scene character-istics, laying the groundwork for a CfP on objective metrics. The aim is therefore not to report or compare submitted metric proposals in this paper, but to present and analyze the standardized test procedure itself as a methodological basis for the development and assessment of objective metrics for LFs. The remainder of the paper is organized as follows. Sec-tion II reviews subjective and objective LF quality assessment methods and discusses current challenges in metric evaluation. Section III describes the source scenes, LF representations, and stimulus-generation procedure. Section IV presents the hybrid subjective test protocol, including test setup, observer screening, and score reconstruction. Section V defines the objective metric evaluation protocol, including anchor metrics, score aggregation, and statistical evaluation criteria. Section VI reports the subjective and objective benchmark results. Sec-tion VII discusses the implications for objective LF metric design, and Section VIII concludes the paper. II. B ACKGROUND AND MOTIVATION 
+
+A. Subjective Quality Assessment Methods 
+
+Visual quality can be evaluated by subjective QA, where hu-mans rate media quality under controlled conditions, or by ob-jective QA, which computationally predicts human judgments. Subjective QA typically follows standardized protocols [10], [11] that maximize measurement precision, consistency, and reliability. Developed mainly for images and videos, these standards define the environment and apparatus, test proce-dures, and criteria for selecting and preparing test content. Methods are generally classified as rating-based or ranking-based (comparative judgment). Within the class of rating-based assessment protocols, the Double Stimulus Continuous Quality Scale (DSCQS) and the Double Stimulus Impairment Scale (DSIS) are among the most frequently employed. In these methods, test and reference stimuli are presented as paired sequences, and observers provide quality judgments for the test stimulus relative to its corresponding reference. Ranking-based protocols, such as pairwise comparison (PC) [16], typically provide higher discriminative power and better statistical robustness [17] than rating-based procedures [14]. PC produces an ordering of stimuli by repeatedly presenting pairs and counting how often one is preferred. However, the resulting perceptual distances are purely relative and do not capture fidelity to an absolute reference [18], [15]. Thus, the derived scales, though often highly predictive of perceived quality [19], lack direct seman-tic meaning in terms of absolute quality levels. A common solution is to use triplet-based schemes, where two test stimuli are evaluated together with a reference [15], [20]. PC-based studies are also time-consuming due to the large number of comparisons, motivating approaches such as active sampling to reduce and streamline experiments [21], [13]. Light field (LF) QA is a demanding and complex subarea of multimedia QA. While LFs can be modeled as collections of sub-aperture images, their perceived quality depends on more than the spatial fidelity of individual views. Angular consistency, parallax stability and view-dependent appearance all shape perceptual quality during interactive viewpoint nav-igation and become particularly critical when LF content undergoes compression, angular subsampling, interpolation, or other reconstruction processes. A substantial body of research has investigated subjective visual QA of LFs [5], [6], [22], [8], deepening understanding of the complex challenges in evaluating immersive LF media. A key difficulty is designing a stimulus presentation protocol that faithfully reproduces LF exploration from multiple view-points. Most studies use pseudo-video sequences or interac-tive multiview presentations to convey angular parallax and VOL. XX, NO. X, JULY 2026 3
+
+depth cues, typically combined with rating-based evaluation schemes. Although dynamic LF visualizations (e.g. pseudo-video or interactive rendering), are effective for rating-based methods with a fixed reference, extending them to a triplet-based paradigm for reference-anchored PCs greatly increases ob-servers’ cognitive load [23], [5]. Because LFs require much longer viewing times than 2D images, exhaustive PC experi-ments become prohibitively time-consuming. This limitation is even more pronounced in dynamic triplet-comparison frame-works, which further increase task complexity and often make the procedure impractical or uncomfortable for subjective QA. The complementary strengths of rating- and ranking-based methods motivate a hybrid protocol. Ratings provide reference-based judgments on interpretable scales, while rank-ing methods, including PC, offer higher sensitivity and dis-crimination. Here we propose a systematic hybrid framework that leverages the strengths of both. In this design, first, a coarse Double Stimulus Comparison Scale (DSCS) defines the global quality structure of stimuli relative to the refer-ence. Next, PC is applied only to stimuli within the same quality category, where ratings lack resolution. This preserves the semantic clarity of ratings while recovering fine-grained perceptual order in ambiguous regions. Finally, psychometric reconstruction fuses both information sources into a continu-ous quality scale using Thurstone scaling and a unified analysis of PC and rating data [17]. A detailed analytical assessment of the hybrid protocol is provided in [24], while the present paper reports its practical implementation and suitability for fine-grained objective metric assessment. 
+
+B. Objective LF Quality Metrics 
+
+While objective QA is well studied for conventional videos and images [25], [26], [27], assessing immersive media quality, especially LF images, remains a distinct and largely unsolved problem. Conventional 2D QA methods ignore the unique, multidimensional characteristics of such content [28], [29]. Unlike conventional image quality metrics, LF metrics must consider both the quality of individual sub-aperture images and the coherence of angular information across viewpoints. Compression- or reconstruction-induced distortions jointly af-fect spatial detail, depth perception, inter-view consistency, and motion parallax. Thus, traditional 2D image QA metrics such as PSNR and SSIM are poor predictors of perceived quality in LF imagery. In this work, we focus on full-reference (FR) methods, which are particularly suitable for compression evaluation, where the objective is to preserve the highest possible fi-delity with respect to the reference content. Early LF QA research mainly tested conventional image quality metrics on LF data. Adhikarla et al. thoroughly evaluated image, video, and multiview metrics on dense LFs, finding that while traditional metrics perform reasonably when an undistorted reference is available, they fail to reliably capture angular artifacts and inter-view inconsistencies between neighboring perspectives [30]. Subsequent work introduced handcrafted FR metrics tai-lored to LFs, typically combining spatial, angular, and geo-metric information. Tian et al. [31], [32] proposed the Sym-metry and Depth Feature-based Model (SDFM), and the LF Coherence (LGF-LFC) metric, which use derivative features, symmetry descriptors, depth cues, and epipolar plane image (EPI) coherence to better capture perceptual distortions. Meng 
+
+et al. [33] further leveraged angular-spatial characteristics via focus stacks, while Huang et al. [34] introduced contourlet transform- and spatial-geometry–based models to jointly ana-lyze texture and geometric consistency. By explicitly modeling LF–specific properties, these methods consistently outperform classical 2D metrics, underscoring the need to preserve both spatial fidelity and angular coherence. Another research direction integrates multiple perceptual cues into unified quality models. Min et al. [35] proposed a metric that combines global spatial quality, local structural degradation, and angular consistency to assess distortions from LF reconstruction, compression, and display. Similarly, Ma et al. [36] used macro-pixel representations with natural scene statistics and texture degradation features to separate spatial and angular information before regression-based quality prediction. These methods acknowledge that no single feature can represent the diverse distortions in practical LF processing pipelines. Deep learning has significantly advanced LF-IQA by en-abling feature representations to be learned directly from data rather than relying on manually engineered descriptors. Zhang 
+
+et al. [37] proposed EDDMF, a convolutional neural network that learns hierarchical discrepancy features between reference and distorted LF patches, achieving improved prediction ac-curacy while maintaining moderate computational complexity. Transformer-based architectures have further enhanced perfor-mance by modeling long-range dependencies across both spa-tial and angular dimensions. The multidimensional attention network proposed by Zhang et al. [38] leverages attention mechanisms to jointly capture local texture degradation and global view correlations. 
+
+C. Challenges of LF Quality Assessment 
+
+Despite progress in LF QA, several challenges remain for reliable assessment. Many existing subjectively-annotated LF datasets are limited in spatio-angular characteristics, or distortion diversity. In particular, several benchmarks are built around narrow LF acquisition configurations, such as lenslet content with limited angular baselines, which may not suf-ficiently stress-test metrics under broader and more diverse LF conditions. Other datasets focus on isolated distortion types, such as compression, angular subsampling, or view synthesis. While these controlled settings are useful, they do not fully reflect modern LF processing pipelines, where content may be sparsely captured or transmitted, compressed at reduced angular density, and then reconstructed into dense angular representations. In this case, perceived quality may be affected by the interaction of compression, interpolation, and neural reconstruction artifacts rather than by a single degradation source. Therefore, objective metrics should be tested on datasets that include both conventional coding arti-facts and sparse-to-dense reconstruction distortions, including VOL. XX, NO. X, JULY 2026 4
+
+interpolation and recent 3D Gaussian Splatting (3DGS)-based processing [39]. A further challenge concerns the practical usability and generalizability of existing LF-specific metrics. Public im-plementations are often unavailable, limiting reproducibility and making systematic cross-dataset benchmarking difficult. Our previous work [5], [7] summarizes the characteristics of existing subjective LF datasets and highlights the limited generalizability of current LF-specific metric families. Conse-quently, despite the limitations of conventional 2D image and video quality metrics for LF content, they remain the most practical and reproducible baselines for large-scale evaluation. In this work, an evaluation framework is designed to provide reliable perceptual ground truth for fine-grained objective met-ric assessment under modern LF compression pipelines. The paper also reports the performance of a set of anchor objective metrics on the proposed dataset, providing a reproducible baseline for future comparison. Given the observed lack of a well-established metric for LFs, the standardization efforts presented in this paper, ultimately aim to establish an assess-ment pipeline, together with LF quality metrics, that is reliable and generalizable across diverse LF processing conditions, openly accessible to the research community, and suitable for consistent evaluation in practical coding workflows. III. E VALUATION DATASET AND STIMULUS GENERATION 
+
+The evaluation dataset was designed to assess objective quality metrics across diverse LF degradations. It includes both coding-only stimuli and densely sampled LFs reconstructed from sparsely coded views. This allows the benchmark to test metric reliability not only for compression artifacts but also for distortions introduced by interpolation and neural reconstruction pipelines. 
+
+A. Source Light Field Scenes 
+
+The source material was selected to cover a broad range of LF characteristics, including spatial resolution, angular sampling density, baseline, scene geometry, texture complex-ity, and non-Lambertian surfaces. Eight source scenes were included in the final evaluation dataset, comprising natural in-door and outdoor captures and synthetic scenes. Representative views of the selected scenes are shown in Fig. 1(a), and their spatial and angular resolutions are summarized in Table I. The Bartender and Cinema scenes are natural indoor content captured with multi-camera arrays with converging optical axes. They feature human-centric content and moderate-to-large baselines, posing challenges for both compression and view synthesis. A 2D camera array with horizontal and vertical baselines of about 50 cm and 25 cm was used. The scenes RuziNiu , Square , and Bookshelf were acquired using a compound-eye multi-camera capture system. These captures provide dense image collections that were subse-quently rendered into regular LF grids. They complement the multi-camera array captures by providing different spatial resolutions and angular sampling patterns. The synthetic scenes Glossyshop1 , Glossyshop2 , and 
+
+Lounge were rendered in Blender to complement real-world TABLE I: Source LF scenes and final angular configurations used for benchmark generation.                                                                                  
+
+> Scene Spatial resolution Dense grid Sparse grid Content type
+> Bartender 1920 ×1080 25 ×47×4Natural indoor Cinema 1920 ×1080 25 ×47×4Natural indoor RuziNiu 1600 ×1190 15 ×15 8×8Natural outdoor Square 1600 ×1200 15 ×15 8×8Natural outdoor Bookshelf 1600 ×1200 15 ×68×6Natural indoor Glossyshop1 1082 ×750 25 ×13 7×7Synthetic Glossyshop2 1082 ×750 25 ×57×3Synthetic Lounge 1082 ×750 25 ×13 7×7Synthetic
+
+data with controlled variations in material properties and light-ing. The Glossyshop scenes emphasize specular reflections and non-Lambertian effects, while Lounge features smoother surfaces and simpler structures. The inter-camera spacing was 3 cm, with virtual cameras using a 35.0 mm focal length and 32.0 mm sensor width. Depth of field was set with an aperture of f / 100 .0 and an 8.0 m focus distance. To assess the diversity of the selected source scenes, Fig. 1(b) shows their spatial information (SI) and tempo-ral/view information (TI). SI measures spatial detail and edge activity in the reference views, while TI captures view-to-view variation across the ordered LF views. Because the content is static, TI reflects angular/viewpoint changes due to parallax, occlusions, and scene geometry rather than physical motion. The SI–TI distribution shows that the benchmark spans a wide range of texture complexity and angular variation, which is crucial for objective metric evaluation, as metric behavior can strongly depend on both spatial detail and inter-view changes. 
+
+B. Dense and Sparse Light Field Representations 
+
+For each source scene, we used dense and sparse angular representations. The dense representation defines the reference LF sampling grid for evaluation and visualization, while the sparse one is a reduced set of viewpoints used in additional coding and reconstruction experiments. This distinction is central to the benchmark, enabling analysis of (i) distortions from direct LF coding and (ii) distortions from reconstructing densely sampled LFs from compressed sparse inputs. It also reflects realistic acquisition and transmission constraints on angular sampling and provides controlled conditions to assess how objective quality metrics respond when compression artifacts combine with reconstruction or interpolation errors. Sparse acquisition configurations were generated via struc-tured angular subsampling. For Bartender , Cinema , and Book-shelf , subsampling was applied along the horizontal angular axis, keeping fewer angular columns while preserving full vertical resolution. In contrast, RuziNiu , Square , and the re-maining synthetic scenes were subsampled along both angu-lar dimensions. The resulting sparse angular grids preserve enough directional information for accurate reconstruction while reducing the number of views to transmit or encode. VOL. XX, NO. X, JULY 2026 5 
+
+> (a) Representative views of the eight source light field scenes. (b) SI–TI distribution of the scenes.
+
+Fig. 1: Source LF scenes used in the benchmark. (a) Representative views. (b) Spatial information (SI) and temporal/view information (TI) characterize the diversity of contents. 
+
+C. Coding-only Stimuli 
+
+Coding-only stimuli were created to serve as a conventional compression baseline for the benchmark. Two coding strate-gies were employed: JPEG PLeno Model (JPLM) [40], using its 4D Transform Mode (4D-TM), and x265/HEVC [41]. A 4D LF can be represented as a 2D grid of images (views). The ( s × t) coordinates specify the individual 2D views, while the pixel positions within each view are given by the (u × v) coordinates [3]. The x265/HEVC encoder applies pseudo-video coding to the s × t views in an IPPP serpentine scan order (left-to-right, top-to-bottom), as specified in the JPEG Pleno Common Test Conditions (CTC) [42]. In this scheme, the x265/HEVC pipeline rearranges the 4D LF data into a sequence of 2D frames so that it can be handled by conventional codecs originally developed for 2D video content. In contrast, the 4D-TM codec is a 4D-native LF coding method that jointly exploits the full redundancy of the LF across all four dimensions, i.e., both between and within views. Consequently, the two codecs leverage 4D redundancy in fundamentally different manners, resulting in distinct types of coding artifacts. All coding/decoding procedures used the JPEG Pleno Light Field Coding Toolkit [43]. This modular toolkit is designed to provide functionalities such as file format conversion, en-coding, and decoding with selected codecs, and quality assess-ment, ensuring all tasks are performed within a unified pipeline to avoid inconsistencies in results. It can be used to compare its outputs with those of other methods for benchmarking and evaluation purposes. The coding-only track uses five bitrate points per codec and scene, covering low to high quality with fine steps to capture slight perceptual differences. In total, 80 coding-only stimuli were generated for the final benchmark. 
+
+D. Coding and Reconstruction from Sparse Light Fields 
+
+In practical LF coding, the full angular content is often not coded directly. Instead, a sparse subset of views is encoded and transmitted, and a dense angular representation is recon-structed at the decoder. This is important for the proposed benchmark because final perceived quality depends not only on compression artifacts but also on how they interact with in-terpolation or reconstruction errors. We considered two dense reconstruction strategies: view interpolation and 3DGS-based reconstruction. Both operate on decoded sparse LFs to produce dense angular representations aligned with the target grids, enabling analysis of metric behavior under spatially localized, angularly inconsistent, or synthesis-dependent distortions. 
+
+1) Interpolation-based Reconstruction: Missing views be-tween decoded sparse samples were synthesized using in-terpolation. Two methods were used, RIFE [44] and Sep-Conv++ [45], with the choice per scene based on visual suitability and baseline. SepConv++ was used for narrow-baseline scenes where preserving local structure is critical, while RIFE was used where motion/flow-based interpolation was more stable. For JPLM, two bitrate points per scene were kept; for x265, three bitrate points were selected, including a high-bitrate anchor so that artifacts are dominated by interpo-lation. This interpolation track yields 40 stimuli in the final benchmark. 
+
+2) 3DGS Reconstruction: Modern reconstruction was im-plemented with 3DGS to introduce artifacts distinct from conventional interpolation and compression. The pipeline esti-mates camera parameters, trains a 3DGS model from decoded sparse views, and renders the target dense LF grid. Sparse LFs are first decoded at selected bitrates using JPLM or x265, and missing views are then reconstructed with 3DGS. This track was generated for six scenes with stable camera pose estimation and reconstruction: Bartender , Cinema , Bookshelf ,
+
+Glossyshop1 , Glossyshop2 , and Lounge . Two bitrate points were kept per codec and per scene, yielding 24 stimuli. The reconstruction and interpolation tracks add 64 stimuli, which, with the 80 coding-only stimuli, yield 144 stimuli in total. IV. H YBRID SUBJECTIVE EVALUATION PROCEDURE 
+
+The subjective assessment protocol used in this study fol-lows the hybrid methodology developed in the JPEG Pleno Part 7: Light Field Quality Assessment standardization activ-ities. This approach combines the Double Stimulus Compari-son Scale (DSCS) with Pairwise Comparison (PC), hereafter DSCS+PC. DSCS is a reference-based, double-stimulus pro-cedure in which each impaired stimulus is rated relative to its reference, whereas PC presents two impaired stimuli and asks observers to choose the preferred one. VOL. XX, NO. X, JULY 2026 6
+
+Fig. 2: Overview of the hybrid DSCS+PC subjective assessment protocol. In Stage I, each distorted stimulus is rated relative to the reference on a four-level DSCS scale, and stimuli are grouped by observer-specific DSCS scores. In Stage II, pairwise comparisons are selectively applied within each DSCS bin to resolve local ambiguities. In Stage III, the DSCS comparison matrix is refined using these PC results and psychometrically scaled into continuous perceptual quality scores. Fidelity-oriented LF-QA needs subjective scores that are both interpretable and discriminative. Rating-based methods express perceived degradation relative to a reference but lose sensitivity when several stimuli fall into the same or neighboring quality categories. This is especially limiting in benchmarks that include fine-grained coding levels. In such cases, PC generally offers better perceptual sensitivity and finer discriminative power between quality levels. Our hybrid design tackles a key challenge in subjectively evaluating extended visual stimuli. In dynamic, immersive, or multi-view assessment, observers explore content over time or across viewpoints rather than judging single still images. Exhaustive PC is highly discriminative but does not scale, while rating-based methods are practical but less sensitive, especially in ambiguous quality ranges. The hybrid DSCS+PC approach resolves this by applying PC only where extra discrimination is most valuable, while preserving the semantic clarity and reference anchoring of DSCS ratings. Although demonstrated for LF QA, the framework is general and applies to videos and other extended visual stimuli where full pairwise test is impractical. Fig. 2 overviews the hybrid workflow, which includes two subjective stages followed by scale reconstruction. In Stage I, observers conduct a DSCS assessment, rating each distorted stimulus relative to its reference on a four-level ordinal scale: 
+
+Same (0), Slightly worse (−1), Worse (−2), and Much worse 
+
+(−3). This yields a coarse but semantically meaningful degra-dation scale and defines observer-specific groups of stimuli mapped to the same perceived quality category. In Stage II, PC is used selectively to resolve locally uncer-tain regions. For each observer, PC trials include only stimulus pairs that received identical DSCS scores from that observer in Stage I. Thus, the PC stage is locally focused and observer-specific, used only when that observer’s initial ratings did not distinguish between stimuli. In Stage III, DSCS and PC responses are combined into a continuous perceptual degradation scale. DSCS provides the global reference-based structure, while selective PC responses refine the ordering of stimuli in ambiguous same-category regions. The resulting DSCS+PC scores preserve the inter-pretability of reference-based ratings, increase sensitivity to subtle perceptual differences, and remain practical for large LF benchmarks. To further limit the test duration into one 20-25 min session, the selective PC stage was restricted to pairs from the Slightly worse (−1) and Worse (−2) categories, which typically contain medium- to high-quality stimuli with subtler perceptual differences and a higher risk of rating-scale saturation, as also found in our previous study [5]. The number of PC trials was capped at 200 comparisons per observer, retaining on average 82% of eligible comparisons while avoiding excessively long sessions. 
+
+A. Test Setup and Participants 
+
+Subjective experiments followed a common evaluation pro-tocol at a primary site (Lab1), with additional cohorts from another site (Lab2). All cohorts used the same test design, stimulus presentation, response scales, training, and score processing. Final scores were obtained by pooling all valid observers after identical screening and processing. After out-lier removal, the final integrated dataset included 50 observers. Lab1 had 20 observers (13 male, 7 female; mean age 30.1 years), and Lab2 had 30 observers (12 male, 18 female; mean age 29.21 years). Na¨ ıve observers first completed visual screening. Visual acuity was verified with a Snellen chart, and normal color vision with the Ishihara test. Before the main experiment, par-ticipants completed a training session to familiarize themselves with the visualization mode, response interface, and rating and comparison tasks. Training stimuli, distinct from those in the main evaluation, were chosen to illustrate different quality levels and distortion characteristics. VOL. XX, NO. X, JULY 2026 7
+
+All stimuli were shown on calibrated 4K 2D displays in a side-by-side format with 1:1 pixel mapping. Calibration used the monitors’ integrated sensors to target sRGB, a D65 white point, 140 cd/m 2 peak luminance, and a black level of ≤ 0.2 cd/m 2. LF views were rendered as passive video sequences in serpentine order. Viewing distance and ambient illumination followed ITU-R BT.500. The experiment con-sisted of two 25-minute sessions corresponding to the DSCS and selective PC stages. A dedicated interface automatically ran the hybrid procedure, generating observer-specific PC trials from each subject’s DSCS responses in the first session. 
+
+B. Subject Screening 
+
+We used a two-stage screening to remove outliers. Observer reliability was first assessed for the DSCS stage; only subjects who passed this step were included in the subsequent PC-stage reliability analysis. DSCS reliability followed ITU-R BT.500-15 [10] with a leave-one-subject-out procedure: for each subject, DMOS values were recomputed without that subject, and agreement between that subject’s DSCS ratings and the leave-one-subject-out DMOS was measured using ρs,the Spearman Rank-Order Correlation Coefficient (SRCC). Subjects with ρs ≥ 0.7 were retained; all others were excluded from further analyses, including the PC stage. For the PC stage, observer reliability was assessed using the likelihood-based outlier analysis in [46]. For each observer, a consensus Thurstone Case V perceptual scale was estimated from the pairwise responses of all other observers, and the excluded observer’s PC responses were evaluated against this scale. The probability of preferring one stimulus over another depends on the difference between their latent quality scores, so responses consistent with the consensus ordering have higher likelihoods. For each observer, the mean log-likelihood of the PC responses was computed and standardized across observers; observers with standardized log-likelihoods below 
+
+z < −3 were deemed inconsistent in the PC stage. 
+
+C. Score Processing and Perceptual Scale Reconstruction 
+
+After subject screening, DSCS and PC responses were com-bined to estimate final quality scores. DSCS ratings define the global, reference-anchored quality structure, and PC responses refine only pairs that were ambiguous in the DSCS stage. Final scores are obtained by mapping both sources to a common comparison space and estimating a latent perceptual scale. For each scene c, let r(c) 
+
+> i,s
+
+∈ { 0, −1, −2, −3} be subject s’s DSCS rating for stimulus i. A scene-wise comparison matrix is then built from these ratings. For any two stimuli i and j,if r(c) 
+
+> i,s
+
+> r (c) 
+
+> j,s
+
+, i is preferred; if r(c) 
+
+> i,s
+
+< r (c) 
+
+> j,s
+
+, j is preferred. Equal ratings are treated as ties, assigning half a vote to each direction. This converts ordinal DSCS ratings into pairwise preferences while preserving the quality ordering. An explicit reference node is added to the comparison matrix to anchor the perceptual scale. When direct PC data exist for a stimulus pair, the DSCS-implied tie is replaced by the observed response. Thus, the PC stage preserves the global ordering across DSCS categories and only refines the local ordering of stimuli within the same coarse quality label. Let C(c) 
+
+> i,j
+
+be the aggregated count of how often stimulus i is preferred to j in scene c, combining DSCS-derived relations and available PC responses. The latent quality scores q(c)
+
+> i
+
+are estimated with a Thurstone Case V model, where the probability that i is preferred to j is 
+
+P (i ≻ j) = Φ 
+
+
+
+q(c) 
+
+> i
+
+− q(c)
+
+> j
+
+
+
+, (1) and Φ( ·) is the standard normal cumulative distribution func-tion. For each scene, the latent scores are estimated by maximizing 
+
+L(c) = X
+
+> i<j
+
+C(c) 
+
+> i,j
+
+log Φ 
+
+
+
+q(c) 
+
+> i
+
+− q(c)
+
+> j
+
+
+
++C(c) 
+
+> j,i
+
+log Φ 
+
+
+
+q(c) 
+
+> j
+
+− q(c)
+
+> i
+
+
+
+,
+
+(2) subject to q(c)ref = 0 . The resulting scores define a continuous perceptual scale per scene. Anchored by the reference and constrained by the DSCS ordering, they retain the meaning of degradation relative to the original LFs, while the selective PC responses refine resolution in ambiguous quality regions. V. O BJECTIVE METRIC EVALUATION PROTOCOL 
+
+A. Anchor Metrics 
+
+The benchmark framework systematically evaluates objec-tive quality metrics and their behavior under coding-only and view-synthesis distortions. It focuses on FR metrics, as the benchmark targets fidelity-oriented assessment with an original reference LF for each stimulus, making FR metrics the natural choice for measuring degradation relative to the reference. Although our previous work [5], [7] also examined no-reference LF quality metrics, they are less suitable as primary anchors here, because many are trained or validated under narrower assumptions (e.g., lenslet content) and may not generalize reliably across datasets and distortion types. The selected metric set includes classical FR image quality metrics (PSNR, SSIM [47], MS-SSIM [48], IW-SSIM [49], VIF [50], FSIM [51], GMSD [52], MAD [53], NLPD [54]) and deep feature-based perceptual metrics (LPIPS [55], DISTS [56], ST-LPIPS [57], DeepDC [58]) to assess their ability to capture perceptual degradations in LF content. Video quality metrics (VMAF [59], CVVDP [60]) are evaluated because the LF stimuli are rendered as passive view sequences, where angular variations and view-to-view inconsistencies may matter. Finally, immersive-video extensions (IV-PSNR, IV-SSIM) are included as metrics that explicitly account for multi-view assessment. 
+
+B. Metric Score Aggregation 
+
+Subjective scores are assigned to complete LF stimuli, so view-level metric predictions should be combined into a single stimulus-level score. The default aggregation is the arithmetic mean over views. Since interpolation and 3DGS artifacts can be confined to specific views or angular regions, we consider alternative pooling strategies. Let mv be the quality-oriented objective score (higher is better) for view v, v = 1 , . . . , N .Worst-X% pooling averages the lowest-quality views: 
+
+Mworst -X = 1
+
+K
+
+X
+
+> v∈W X
+
+mv , (3) VOL. XX, NO. X, JULY 2026 8
+
+where WX contains the K = ⌈N X/ 100 ⌉ lowest-quality views and X ∈ { 5, 10 , 20 , 30 }.Minkowski pooling can also be applied to per-view distor-tion scores dv , obtained by converting each quality score so that larger values indicate stronger perceived degradation: 
+
+DMinkowski = 1
+
+N
+
+> N
+
+X
+
+> v=1
+
+dpv
+
+!1/p 
+
+, (4) where p ∈ { 3, 5, 7, 9}. These two strategies are used to assess whether subjective judgments are driven more by average quality or by localized severe degradations. 
+
+C. Statistical Evaluation Criteria 
+
+Objective metric reliability is assessed by comparing pre-dicted scores with subjective scores using complementary statistical indicators for monotonicity and prediction accuracy. Spearman Rank-Order Correlation Coefficient (SRCC) mea-sures ranking consistency, while Pearson Linear Correlation Coefficient (PLCC) and Root Mean Squared Error (RMSE) measure prediction accuracy after nonlinear mapping. Because objective and subjective quality scores are typically nonlinearly related, a logistic mapping is applied before com-puting PLCC and RMSE. For an objective prediction m, the mapped prediction ˆs(m) is 
+
+ˆs(m) = β2 + β1 − β2
+
+1 + exp 
+
+
+
+− m−β3
+
+> |β4|
+
+ , (5) where β1, . . . , β 4 are fitted parameters. The mapping is fitted separately for each metric and evaluation subset. VI. B ENCHMARK RESULTS 
+
+This section presents subjective and objective benchmark results from the proposed evaluation framework. We first analyze subjective scores, including their distribution, scene-wise behavior, and the impact of selective pairwise refinement. We then compare objective metrics with the final subjective ground truth, focusing on overall prediction accuracy, sensi-tivity to the pooling strategy, local agreement in ambiguous regions, and robustness across distortion families. 
+
+A. Overall Subjective Assessment Results 1) Distribution of Subjective Scores: Figure 3 shows the distribution of final subjective scores after pooling responses from all 50 valid observers across all stimuli. The scores are mapped to a common 0–3 degradation scale, where lower values indicate higher perceived quality and 0 corresponds to reference quality. The scores span a wide perceptual range, from near-reference to strongly degraded conditions, with a denser distribution in the medium- to high-quality range, enabling finer discrimination there. This range is especially relevant for objective metric evaluation, as practical coding systems typically operate where artifacts are visible but not se-vere. It is also a challenging region for subjective assessment, where rating-based methods are more susceptible to saturation. The resulting score distribution thus supports evaluating both metric robustness to strong degradations and sensitivity to subtle perceptual differences in practical quality ranges. 
+
+Fig. 3: Distribution of subjective scores of 144 stimuli. Scores are mapped to a 0–3 degradation scale, where lower values indicate better perceived quality. 
+
+2) Scene-wise Subjective Quality Scores: Figure 4 shows scene-wise subjective scores for coding-only, interpolation-based, and 3DGS-based reconstruction stimuli. The confidence intervals reflect the uncertainty of the pooled scores after integrating valid observer responses. For coding-only stimuli, the chosen bitrate points yield a smooth quality progres-sion within each scene, providing sufficiently fine steps to assess metric sensitivity to small perceptual changes. The interpolation- and 3DGS-based stimuli extend the benchmark by introducing artifacts that differ from conventional coding distortions. The results also reveal clear content dependency as the same processing family does not consistently produce the same subjective degradation across scenes, indicating that quality depends on scene spatio-angular properties. 
+
+B. Validation of the Hybrid Subjective Scores 1) Cross-Cohort Reproducibility and Consistency: A stan-dardized subjective procedure should yield consistent percep-tual data across observer cohorts under the same protocol. To test this, we examined whether hybrid scores from one cohort could predict pairwise responses from another. Here, the primary cohort (Lab1) is the target set of pairwise obser-vations, and the second cohort (Lab2) serves as an independent prediction source. The analysis uses the Thurstone Case V log-likelihood framework introduced in (2). It is applied to pairwise responses from Lab1’s 20 observers, totaling 3,545 individual PC trials collected at the observer level during the selective PC stage. For each PC trial, the two stimuli are assigned predicted quality scores from one of three subjective score sets: the Lab1’s hybrid scores, Lab1’s DMOS (DSCS-only) scores, or the Lab2’s hybrid scores. The score difference is converted to a predicted preference probability using the Thurstone Case V model, and the log-likelihood of the observed Lab1 response is computed. Summing over all trials yields the total log-likelihood; a higher (less negative) value indicates stronger agreement between the predicted perceptual ordering and the observed pairwise choices. VOL. XX, NO. X, JULY 2026 9
+
+Fig. 4: Scene-wise subjective quality scores with confidence intervals. TABLE II: Cross-cohort log-likelihood (LL) evaluation on 3,545 pairs from the first cohort (Lab1). Higher LL indicates better agreement with the observed pairwise choices.             
+
+> Method Total LL Avg. LL / pair ∆LL
+> Lab 1 predicts itself −3608 .24 −1.018 0
+> Lab 2 predicts Lab 1 −3750 .31 −1.058 −142 .07
+> DMOS predicts Lab 1 −3967 .89 −1.119 −359 .64
+
+Table II summarizes the analysis. The highest likelihood occurs when Lab1’s hybrid scores predict its own PC re-sponses, indicating strong within-cohort consistency. Using hybrid scores from Lab2 lowers the likelihood because they come from an independent cohort, but this drop is much smaller than for the DSCS-only DMOS baseline, showing that the hybrid scores capture more cohort-consistent pairwise perceptual structure than the rating-only baseline. As a complementary score-level validation, Fig. 5 compares the final hybrid scores from Lab1 and Lab2. The two sets show strong monotonic agreement, with an SRCC of 0.943 across the benchmark stimuli, indicating highly consistent perceptual rankings. Together with the pairwise log-likelihood analysis, this supports the cross-cohort reliability and reproducibility of the hybrid subjective approach. 
+
+2) Effectiveness of the Selective Pairwise Refinement: The selective pairwise comparison stage refines ambiguous regions of the DSCS scale while preserving the global reference-anchored structure from the first-stage ratings. DSCS-only and hybrid scores show strong agreement (SRCC = 0.984 over 144 benchmark stimuli), confirming that the hybrid reconstruction 
+
+Fig. 5: Cross-laboratory consistency of final subjective scores. Each point corresponds to one benchmark stimulus, and col-ors/markers indicate different scenes. maintains the DSCS-derived quality structure. This stability in global ranking is desirable, as the PC stage is meant to make local adjustments without altering the reference-based structure or interpretability of the DSCS scale. To assess the added value of the selective PC stage, we focus on PC trials where the rating stage has low resolution: same-category comparisons within Slightly worse (−1) and Worse 
+
+(−2) DSCS levels, which were targeted for refinement. We test whether the hybrid reconstruction explains these locally VOL. XX, NO. X, JULY 2026 10 
+
+TABLE III: Leave-one-observer-out evaluation log-likelihoods (LL) of ambiguous pairwise trials. Higher LL indicates better agreement with the observed pairwise choices. The hybrid DSCS+PC model improves over the DSCS-only baseline by 
+
+∆LL= +572 .92 .      
+
+> Score model Total LL Avg. LL/trial
+> DSCS-only −10534 .19 −1.1233
+> Hybrid DSCS+PC −9961 .26 −1.0622
+
+ambiguous pairwise judgments better than DSCS-only scores. We conducted a leave-one-observer-out evaluation on the integrated observer set ( N = 50 ). For each observer, we estimated DSCS-only and hybrid DSCS+PC scores from the other 49 observers, then evaluated these scores on the held-out observer’s PC responses. As in the previous log-likelihood analysis, for each held-out pairwise trial between stimuli i and 
+
+j, we converted the score difference to a predicted preference probability via the Thurstone Case V model and computed the log-likelihood of the observer’s choice under this probability. This yielded one likelihood for DSCS-only and one for the hybrid scores; their difference indicates whether the hybrid refinement better predicts held-out pairwise judgments than the DSCS-only scale. Table III reports leave-one-observer-out log-likelihoods over 9,378 ambiguous pairwise trials from 50 observers. Hybrid DSCS+PC scores yield a much higher likelihood, with a total log-likelihood gain of 572.92 and an average gain of 0.0611 per trial. This indicates that the selective PC stage captures perceptual information that is not present in DSCS-only scores, even when the tested observer is excluded from the score estimation. The likelihood gain was positive for all eight scenes, which shows that the refinement effect is not driven by a single content. 
+
+C. Objective Metrics Analysis 1) Overall Performance: Table IV reports the performance of objective metrics on the coding-only subset and the full benchmark in terms of SRCC, PLCC, and RMSE, using the final hybrid subjective scores as ground truth. Objective metrics perform substantially better on the coding-only subset, indicating that conventional coding distortions are easier to predict than the heterogeneous distortions from interpolation and 3DGS reconstruction. Among the evaluated metrics, ST-LPIPS, CVVDP, and IW-SSIM perform best overall. Deep learning-based metrics such as LPIPS and DISTS are also competitive, suggesting that deep feature-space distances cap-ture perceptual degradations not fully represented by tradi-tional signal-fidelity measures. In contrast, classical fidelity metrics such as PSNR, SSIM, and FSIM agree less with subjective scores, as interpolation and 3DGS-based reconstruc-tion can introduce geometric shifts, view-dependent inconsis-tencies, and local pixel misalignment that strongly penalize pixel-based metrics, while feature-based and shift-tolerant approaches like ST-LPIPS remain more consistent. 
+
+2) Objective Metric Resolving Power: Beyond global per-formance, we analyze metric behavior in locally ambiguous TABLE IV: Metrics performance on the coding-only subset and on the full benchmark in terms of SRCC, PLCC, and RMSE.                                                                                                                        
+
+> Metric Coding-only (N= 80 )Full (N= 144 )
+> SRCC ↑PLCC ↑RMSE ↓SRCC ↑PLCC ↑RMSE ↓
+> ST-LPIPS 0.889 0.903 0.353 0.776 0.812 0.448
+> CVVDP 0.896 0.908 0.346 0.756 0.768 0.491 IW-SSIM 0.896 0.907 0.347 0.739 0.755 0.502 LPIPS 0.826 0.843 0.444 0.727 0.765 0.489 MAD 0.857 0.871 0.405 0.702 0.729 0.525 DeepDC 0.757 0.761 0.535 0.690 0.702 0.546 GMSD 0.873 0.884 0.386 0.686 0.698 0.549 DISTS 0.755 0.761 0.535 0.684 0.689 0.556 MS-SSIM 0.841 0.861 0.418 0.675 0.698 0.549 VMAF 0.785 0.764 0.532 0.625 0.615 0.605 NLPD 0.794 0.810 0.484 0.623 0.647 0.584 VIF 0.788 0.793 0.462 0.662 0.661 0.550 PSNR 0.713 0.750 0.545 0.553 0.601 0.613 IV-PSNR 0.620 0.675 0.608 0.531 0.601 0.613 SSIM 0.650 0.699 0.589 0.513 0.558 0.636 FSIM 0.652 0.659 0.620 0.489 0.505 0.662 IV-SSIM 0.496 0.514 0.707 0.406 0.487 0.670
+
+regions of the subjective scale. This relates to objective-metric resolving power, i.e., the ability to detect small quality dif-ferences between perceptually similar stimuli. We assess how consistently objective metric differences match local subjective score differences for stimulus pairs ambiguous under DSCS. Besides characterizing objective metrics, this shows whether hybrid DSCS+PC scores provide a more finely resolved local subjective target for metric evaluation. Let A be the set of unique ambiguous stimulus pairs. In total, 1,150 unique within-scene pairs were identified. A pair 
+
+(i, j ) is in A if at least one observer, in Stage I, placed both stimuli in the same DSCS category, Slightly worse (−1) or 
+
+Worse (−2), and the pair was then shown in the selective PC stage, where a PC judgment was collected. For each stimulus i,let di be the pooled DSCS-only degradation score, hi the final hybrid score, and mi the score produced by a given objective metric. All scores are converted to a common degradation-oriented scale, denoted by ˜di, ˜hi, and ˜mi, where larger values indicate stronger degradation. For each ambiguous pair 
+
+(i, j ) ∈ A , we computed signed pairwise differences for the DSCS-only, hybrid, and objective metric scores, denoted as 
+
+∆ ˜dij , ∆˜hij , and ∆ ˜ mij , respectively. The agreement between objective metric differences and local subjective differences is then measured with SRCC: 
+
+ρDSCS = SRCC 
+
+
+
+{∆ ˜ mij }(i,j )∈A , {∆ ˜dij }(i,j )∈A 
+
+
+
+, (6) 
+
+ρHybrid = SRCC 
+
+
+
+{∆ ˜ mij }(i,j )∈A , {∆˜hij }(i,j )∈A 
+
+
+
+. (7) The gain reported is ∆ρ = ρHybrid − ρDSCS . A positive 
+
+∆ρ means that the objective metric differences align better with the hybrid DSCS+PC ordering than with the DSCS-only ordering. The metric-difference analysis shows modest but consistent gains (Table V), indicating that the refined hybrid target provides clearer local ordering in ambiguous regions and better assesses metric sensitivity to small perceptual differences than the DSCS-only target. These gains show that VOL. XX, NO. X, JULY 2026 11 
+
+TABLE V: Local subjective resolution and metric agreement in ambiguous regions for the full benchmark. The analysis is computed over 1150 ambiguous pairs.                                                             
+
+> Target / metric DSCS Hybrid Change Metric ρDSCS ρHybrid ∆ρ
+> ST-LPIPS 0.719 0.737 +0 .018
+> SSIM 0.735 0.751 +0 .016
+> MS-SSIM 0.761 0.775 +0 .014
+> LPIPS 0.699 0.712 +0 .013
+> IV-SSIM 0.728 0.741 +0 .013
+> NLPD 0.733 0.745 +0 .012
+> VIF 0.762 0.774 +0 .012
+> GMSD 0.763 0.775 +0 .012
+> IV-PSNR 0.808 0.820 +0 .012
+> IW-SSIM 0.760 0.771 +0 .011
+> VMAF 0.663 0.674 +0 .011
+> PSNR 0.746 0.756 +0 .010
+> MAD 0.819 0.828 +0 .009
+> CVVDP 0.771 0.780 +0 .009
+> DISTS 0.645 0.653 +0 .008
+> DeepDC 0.742 0.747 +0 .005
+> FSIM 0.713 0.717 +0 .004
+> Mean gain ––+0.011
+
+the hybrid target improves local subjective resolution over DSCS-only scores, enabling more informative evaluation of metric sensitivity to small perceptual differences. 
+
+3) Metric Robustness Across Distortion Families: To better understand the performance drop when view synthesis artifacts are included, we analyze how objective metrics transfer across distortion families. For each metric, a four-parameter logistic mapping was fitted using only coding-only stimuli, then ap-plied to interpolation- and 3DGS-based stimuli. Thus, each reconstruction stimulus receives a predicted subjective score based solely on the coding-distortion relationship. Let ˆhcod  
+
+> i
+
+be the predicted hybrid degradation score for reconstruction stimulus i obtained by applying the coding-trained logistic mapping, and let hi be the corresponding hybrid subjective degradation score. The residual is defined as ri = hi − ˆhcod  
+
+> i
+
+. Its distribution shows whether a metric calibrated on coding artifacts transfers reliably to reconstruc-tion artifacts. Positive residuals mean the coding-trained model underestimates reconstruction degradation; negative residuals mean it overestimates it. Figure 6 shows the residual distributions for reconstruction-based stimuli. Metrics that perform well on coding-only stim-uli can still show systematic bias and large residual spread on reconstruction-based stimuli. For most top metrics, the median residual is positive, indicating that, after calibration on coding-only distortions, they tend to under-predict the perceived degradation of reconstruction-based stimuli. This suggests that view synthesis artifacts are not fully captured by metric behavior learned from coding-only conditions. 
+
+4) Impact of Pooling: Table VI reports how view-pooling strategies affect image quality metric performance on the full benchmark. Mean pooling serves as the baseline, while Minkowski and worst-view pooling emphasize views with stronger predicted degradation. Pooling noticeably affects SRCC in a metric-dependent way. Learning-based metrics, including ST-LPIPS, LPIPS, DISTS, and DeepDC, generally 
+
+Fig. 6: Cross-distortion residual distribution. For each metric, a four-parameter logistic mapping was fitted using coding-only stimuli and then applied to reconstruction-based stimuli. improve with non-mean pooling. In particular, worst-view pooling gives clear gains for ST-LPIPS, LPIPS, and DISTS, suggesting that perceived quality is influenced not only by average view quality but also by localized poor views caused by view-dependent artifacts. In contrast, traditional fidelity metrics such as IW-SSIM, MS-SSIM, PSNR, and VIF are of-ten best or near-best with mean pooling, and their performance can drop by other pooling methods. The results show that view pooling is important for LF metric evaluation and should be considered in future LF-specific metric design, especially for learning-based perceptual metrics. VII. D ISCUSSION AND IMPLICATIONS FOR OBJECTIVE 
+
+METRIC DESIGN 
+
+The results validate the hybrid DSCS+PC method for ob-jective metric evaluation. Rating methods like DSCS provide a stable, interpretable quality scale but lose sensitivity when stimuli are perceptually close. By adding selective pairwise comparisons in these ambiguous regions, the hybrid method produces a finer-grained subjective target for testing metrics under small perceptual differences, while preserving the DSCS reference-based structure. The benchmark reveals clear limitations of current objective metrics under LF processing pipelines based on interpolation and view reconstruction. While several metrics match subjec-tive scores for coding-only stimuli, their performance degrades for interpolation- and 3DGS-based reconstructions, which in-troduce non-traditional artifacts such as view-dependent incon-sistencies, geometric shifts, local misalignments, and rendering distortions. As a result, metrics effective for compression do not reliably generalize to reconstruction-based scenarios, a cru-cial issue for future LF systems that will combine compression and view reconstruction. Results show that robust objective LF metrics must capture more than spatial fidelity in single views. Classical pixel-based VOL. XX, NO. X, JULY 2026 12 
+
+TABLE VI: Effect of pooling strategy on SRCC for the full benchmark ( N = 144 ). Green cells indicate higher SRCC than mean pooling, while red cells indicate lower SRCC. 
+
+Metric Mean Mink.-3 Mink.-5 Mink.-7 Mink.-9 Worst 5% Worst 10% Worst 20% Worst 30% 
+
+ST-LPIPS 0.776 0.783 0.786 0.784 0.783 0.795 0.795 0.798 0.798 
+
+LPIPS 0.727 0.736 0.739 0.742 0.745 0.766 0.763 0.757 0.752 DISTS 0.684 0.691 0.693 0.695 0.697 0.708 0.707 0.708 0.705 DeepDC 0.690 0.697 0.692 0.684 0.681 0.695 0.697 0.695 0.695 SSIM 0.513 0.516 0.518 0.517 0.516 0.524 0.530 0.532 0.531 IW-SSIM 0.739 0.739 0.739 0.731 0.714 0.682 0.694 0.706 0.712 MS-SSIM 0.675 0.674 0.673 0.673 0.671 0.634 0.646 0.657 0.661 VIF 0.662 0.663 0.659 0.650 0.638 0.645 0.651 0.654 0.656 PSNR 0.553 0.540 0.535 0.527 0.510 0.476 0.486 0.501 0.513 
+
+metrics (PSNR, SSIM, etc.) correlate poorly with subjective scores over the full benchmark and fail to reflect perceptual tolerance to local geometric shifts or angular inconsistencies. Feature-based metrics (ST-LPIPS, CVVDP, IW-SSIM, LPIPS) agree better with subjective ground truth, indicating that ef-fective LF quality prediction requires feature-level similarity modeling and mechanisms aligned with human visual sensi-tivity to distortions. The pooling analysis further shows that stimulus-level LF quality is not always well represented by simple mean ag-gregation. For several perceptual metrics, weighting lower-quality views more heavily improves correlation with subjec-tive scores, indicating that observers are strongly influenced by localized poor views, especially when only some views contain severe view-dependent artifacts. Therefore, a reliable LF metric should accurately estimate per-view quality and model how quality variations across views determine overall perceived quality. These findings underscore the need for standardized objec-tive metrics for LF content. As LF coding and representation move beyond traditional coding pipelines, metrics must be evaluated under both compression and reconstruction artifacts. A standardized framework is therefore essential to define sub-jective methods, stimulus generation, and statistical criteria in a transparent, reproducible way. The benchmark and analysis in this work advance such a framework by providing shared subjective ground truth, diverse distortions, and a structured protocol for evaluating objective metric performance. VIII. C ONCLUSION 
+
+This paper presents a framework for light field QA that unifies benchmark generation, hybrid subjective evaluation, and anchor objective metric analysis. The hybrid DSCS+PC method selectively uses pairwise comparison only to refine ambiguous parts of a reference-based DSCS scale. This preserves the interpretability and efficiency of rating-based assessment while adding perceptual detail where ratings are less discriminative, without the high complexity of exhaus-tive pairwise comparison. Benchmark results show that cur-rent objective metrics remain limited for reconstruction- and interpolation-based processing, even when they perform well for coding-only distortions. The analysis further shows that metric evaluation should consider distortion-family robustness, view-pooling strategy, and local resolving power. Overall, the framework offers a reproducible subjective target and evaluation protocol to support more reliable development, comparison, and standardization of objective light field quality metrics. REFERENCES [1] M. Levoy, “Light fields and computational imaging,” Computer , vol. 39, no. 8, pp. 46–55, 2006. [2] E. H. Adelson and J. R. Bergen, “The Plenoptic Function and the Elements of Early Vision,” M. Landy and J. A. Movshon, (eds) Compu-tational Models of Visual Processing , 1991. [3] M. Levoy and P. Hanrahan, “Light field rendering,” in Proceedings of the 23rd Annual Conference on Computer Graphics and Interactive Techniques . New York, NY, USA: ACM, 1996, pp. 31–42. [4] “Information technology — Plenoptic image coding system (JPEG Pleno) — Part 2: light field coding,” ISO/IEC 21794-2:2021, Apr. 2021. [Online]. Available: https://www.iso.org/standard/74532.html [5] S. Mahmoudpour, M. A. Prado, S. Zhao, C. L. Pagliari, J. Prazeres, M. C. Farias, A. M. Pinheiro, A. Munteanu, and P. Schelkens, “Bench-marking subjective quality assessment methodologies for light field compression,” IEEE Transactions on Broadcasting , 2026. [6] S. Alamgeer and M. C. Farias, “A survey on visual quality assessment methods for light fields,” Signal Processing: Image Communication , vol. 110, p. 116873, 2023. [7] S. Mahmoudpour and P. Schelkens, “On the performance of objective quality metrics for lightfields,” Signal Processing: Image Communica-tion , vol. 93, p. 116179, 2021. [8] I. Viola and T. Ebrahimi, “Quality assessment of compression solutions for ICIP 2017 grand challenge on light field image coding,” in 2018 IEEE International Conference on Multimedia & Expo Workshops (ICMEW) . IEEE, 2018, pp. 1–6. [9] E. Shafiee and M. G. Martini, “Datasets for the quality assessment of light field imaging: Comparison and future directions,” IEEE Access ,vol. 11, pp. 15 014–15 029, 2023. [10] ITU-R, “Methodologies for the subjective assessment of the quality of television images,” International Telecommunication Union, Geneva, CH, Recommendation ITU-R BT.500-15, 2023. [Online]. Available: https://www.itu.int/rec/R-REC-BT.500-15-202305-I/en [11] ITU-T, “Subjective video quality assessment methods for multimedia applications,” International Telecommunication Union, Geneva, CH, Recommendation ITU-T P.910, 10 2023. [Online]. Available: https: //www.itu.int/rec/T-REC-P.910-202310-I/en [12] B. Rania, “Subjective quality assessment: a study on the grading scales: illustrations for stereoscopic and 2d video content,” Ph.D. dissertation, Institut National des T´ el´ ecommunications, 2018. [13] A. Mikhailiuk, C. Wilmot, M. Perez-Ortiz, D. Yue, and R. K. Mantiuk, “Active sampling for pairwise comparisons via approximate message passing and information gain maximization,” in 2020 25th International Conference on Pattern Recognition (ICPR) . IEEE, 2021, pp. 2559– 2566. [14] N. B. Shah, S. Balakrishnan, J. Bradley, A. Parekh, K. Ramchandran, and M. J. Wainwright, “Estimation from pairwise comparisons: Sharp minimax bounds with topology dependence,” Journal of Machine Learn-ing Research , vol. 17, no. 58, pp. 1–47, 2016. VOL. XX, NO. X, JULY 2026 13 
+
+[15] A. Pastor, P. Le Callet, V. Baroncini, Z. Li, and C. Bampis, “Comparison of subjective methodologies for local perception of distortion in videos and impact on objective metrics resolving power,” in Electronic Imaging ,vol. 36, no. 11. Society for Imaging Science and Technology, 2024, pp. 1–6. [16] H. A. David, The Method of Paired Comparisons . London, 1963, vol. 12. [17] M. Perez-Ortiz, R. K. Mantiuk, P. Knuchel, and P. Szwirowski, “From pairwise comparisons and rating to a unified quality scale,” IEEE Transactions on Image Processing , vol. 29, pp. 1139–1151, 2019. [18] A. Pastor, Z. Li, C. Bampis, and P. Le Callet, “”discriminability-experimental cost” tradeoff in subjective video quality assessment of codec: Dcr with evp rating scale versus acr-hr,” arXiv preprint arXiv:2309.06227 , 2023. [19] A. B. Watson and L. Kreslake, “Measurement of visual impairment scales for digital video,” in Human Vision and Electronic Imaging VI ,vol. 4299. SPIE, 2001, pp. 79–89. [20] H. Men, H. Lin, M. Jenadeleh, and D. Saupe, “Subjective image quality assessment with boosted triplet comparisons,” IEEE Access , vol. 9, pp. 138 939–138 975, 2021. [21] S. Ling, J. Li, A. F. Perrin, Z. Li, L. Krasula, and P. L. Callet, “Strategy for boosting pair comparison and improving quality assessment accu-racy,” arXiv preprint arXiv:2010.00370 , 2020. [22] I. Viola and T. Ebrahimi, “A new framework for interactive quality assessment with application to light field coding,” in Applications of Digital Image Processing XL , vol. 10396. SPIE, 2017, pp. 282–298. [23] D. Saraiva, J. Prazeres, M. Pereira, and A. M. Pinheiro, “Subjective evaluation of low distortion coded light fields with view synthesis,” arXiv preprint arXiv:2509.14761 , 2025. [24] S. Mahmoudpour, M. C. Q. Farias, and S. Zhao, “A hybrid subjective quality assessment framework for light field coding,” in Proceedings of the 18th International Conference on Quality of Multimedia Experience (QoMEX) , 2026. [25] X. Min, H. Duan, W. Sun, Y. Zhu, and G. Zhai, “Perceptual video quality assessment: A survey,” Science China Information Sciences , vol. 67, no. 11, p. 211301, 2024. [26] M. Shahid, A. Rossholm, B. L¨ ovstr¨ om, and H.-J. Zepernick, “No-reference image and video quality assessment: a classification and review of recent approaches,” EURASIP Journal on image and Video Processing , vol. 2014, no. 1, p. 40, 2014. [27] Q. Zheng, Y. Fan, L. Huang, T. Zhu, J. Liu, Z. Hao, S. Xing, C.-J. Chen, X. Min, A. C. Bovik et al. , “Video quality assessment: A comprehensive survey,” arXiv preprint arXiv:2412.04508 , 2024. [28] L. Shi, S. Zhao, W. Zhou, and Z. Chen, “Perceptual evaluation of light field image,” in IEEE International Conference on Image Processing (ICIP) , 2018. [29] H. Amirpour, A. M. G. Pinheiro, M. Pereira, and C. Guillemot, “Re-liability of the most common objective metrics for light field quality assessment,” in ICASSP , 2019. [30] V. Kiran Adhikarla, M. Vinkler, D. Sumin, R. K. Mantiuk, K. Myszkowski, H.-P. Seidel, and P. Didyk, “Towards a quality metric for dense light fields,” in IEEE Conference on Computer Vision and Pattern Recognition (CVPR) , July 2017. [31] Y. Tian, H. Zeng, J. Hou, J. Chen, and J. Zhu, “A light field image quality assessment model based on symmetry and depth features,” IEEE Transactions on Computational Imaging , vol. 6, pp. 526–538, 2020. [32] Y. Tian, H. Zeng, J. Hou, and J. Chen, “Light field image quality assessment via the light field coherence,” IEEE Transactions on Image Processing , vol. 29, pp. 7945–7956, 2020. [33] C. Meng, P. An, X. Huang, C. Yang, and D. Liu, “Full reference light field image quality evaluation based on angular-spatial characteristic,” 
+
+IEEE Signal Processing Letters , vol. 27, pp. 525–529, 2020. [34] H. Huang, H. Zeng, J. Hou, and J. Chen, “Light field image quality as-sessment using contourlet transform,” in IEEE International Conference on Multimedia and Expo Workshops (ICMEW) , 2021. [35] X. Min, J. Zhou, G. Zhai, P. L. Callet et al. , “A metric for light field reconstruction, compression, and display quality evaluation,” IEEE Transactions on Image Processing , vol. 29, pp. 8188–8201, 2020. [36] J. Ma, X. Zhang, C. Jin, P. An, and G. Xu, “Light field image quality assessment using natural scene statistics and texture degradation,” IEEE Transactions on Circuits and Systems for Video Technology , 2023. [37] Z. Zhang, S. Tian, W. Zou, L. Morin, and L. Zhang, “Eddmf: An efficient deep discrepancy measuring framework for full-reference light field image quality assessment,” IEEE Transactions on Image Processing ,vol. 32, pp. 6426–6440, 2023. [38] Y. Zhang, J. Jiang, D. Liu, X. Zhou et al. , “Multi-dimension attention network for full-reference light field image quality assessment,” IEEE Transactions on Image Processing , 2025. [39] B. Kerbl, G. Kopanas, T. Leimk¨ uhler, G. Drettakis et al. , “3d gaussian splatting for real-time radiance field rendering.” ACM Trans. Graph. ,vol. 42, no. 4, pp. 139–1, 2023. [40] JPEG Pleno Reference Software. https://gitlab.com/wg1/ jpeg-pleno-refsw. Accessed: 2025-08-27. [41] x265 HEVC Encoder / H.265 Video Codec. https://x265.org. Accessed: 2025-08-27. [42] F. Pereira, C. Pagliari, E. A. B. da Silva, I. Tabus, H. Amirpour, M. Bernardo, and A. Pinheiro, “JPEG Pleno light field coding common test conditions v3.4,” ISO/IEC JTC 1/SC29/WG1, Covilh˜ a, Portugal, Document ISO/IEC JTC 1/SC29/WG1 N100556, July 2023. [Online]. Available: https: //ds.jpeg.org/documents/jpegpleno/wg1n100556-100-PCQ-Common Test Conditions for JPEG Pleno Light Field Coding v3 4.pdf [43] I. Seidel, L. de Sousa Marques, A. F. S. Fernandes 
+
+et al. (2026) JPEG Pleno light field coding toolkit (LFC toolkit). BSD 3-Clause License. [Online]. Available: https://gitlab.com/eclufsc/light-field-coding/jpeg-pleno-ctc-tools [44] Z. Huang, T. Zhang, W. Heng, B. Shi, and S. Zhou, “Real-time intermediate flow estimation for video frame interpolation,” in European conference on computer vision . Springer, 2022, pp. 624–642. [45] S. Niklaus, L. Mai, and O. Wang, “Revisiting adaptive convolutions for video frame interpolation,” in IEEE Winter Conference on Applications of Computer Vision , 2021. [46] M. Perez-Ortiz and R. K. Mantiuk, “A practical guide and soft-ware for analysing pairwise comparison experiments,” arXiv preprint arXiv:1712.03686 , 2017. [47] Z. Wang, A. C. Bovik, H. R. Sheikh, and E. P. Simoncelli, “Image quality assessment: from error visibility to structural similarity,” IEEE transactions on image processing , vol. 13, no. 4, pp. 600–612, 2004. [48] Z. Wang, E. P. Simoncelli, and A. C. Bovik, “Multiscale structural similarity for image quality assessment,” in The Thrity-Seventh Asilomar Conference on Signals, Systems Computers, 2003 , vol. 2, Nov 2003, pp. 1398–1402 Vol.2. [49] Z. Wang and Q. Li, “Information content weighting for perceptual image quality assessment,” IEEE Transactions on Image Processing , vol. 20, no. 5, pp. 1185–1198, 2011. [50] H. R. Sheikh and A. C. Bovik, “Image information and visual quality,” 
+
+IEEE Transactions on Image Processing , vol. 15, no. 2, pp. 430–444, Feb 2006. [51] L. Zhang, L. Zhang, X. Mou, and D. Zhang, “FSIM: A feature similarity index for image quality assessment,” IEEE Transactions on Image Processing , vol. 20, no. 8, pp. 2378–2386, 2011. [52] W. Xue, L. Zhang, X. Mou, and A. C. Bovik, “Gradient magnitude similarity deviation: A highly efficient perceptual image quality index,” 
+
+IEEE Transactions on Image Processing , vol. 23, no. 2, pp. 684–695, Feb 2014. [53] E. Larson and D. Chandler, “Most apparent distortion: Full-reference image quality assessment and the role of strategy,” J. Electronic Imaging ,vol. 19, p. 011006, 01 2010. [54] V. Laparra, A. Berardino, J. Ball´ e, and E. P. Simoncelli, “Perceptually optimized image rendering,” Journal of the Optical Society of America A, vol. 34, no. 9, pp. 1511–1525, 2017. [55] R. Zhang, P. Isola, A. A. Efros, E. Shechtman, and O. Wang, “The unreasonable effectiveness of deep features as a perceptual metric,” in 
+
+2018 IEEE/CVF Conference on Computer Vision and Pattern Recogni-tion , 2018, pp. 586–595. [56] K. Ding, K. Ma, S. Wang, and E. P. Simoncelli, “Image quality assess-ment: Unifying structure and texture similarity,” IEEE Transactions on Pattern Analysis and Machine Intelligence , vol. 44, no. 5, pp. 2567– 2581, 2022. [57] A. Ghildyal and F. Liu, “Shift-tolerant perceptual similarity metric,” in 
+
+European Conference on Computer Vision , 2022. [58] H. Zhu, B. Chen, L. Zhu, S. Wang, and W. Lin, “Deepdc: Deep distance correlation as a perceptual image quality evaluator,” 
+
+CoRR , vol. abs/2211.04927v2, 2023. [Online]. Available: https: //arxiv.org/pdf/2211.04927v2.pdf [59] Netflix Inc., “VMAF: The Video Multi-Method Assessment Fusion tool,” GitHub repository, 2016, https://github.com/Netflix/vmaf. [60] R. K. Mantiuk, P. Hanji, M. Ashraf, Y. Asano, and A. Chapiro, “Colorvideovdp: A visual difference predictor for image, video and display distortions,” arXiv preprint arXiv:2401.11485 , 2024.
