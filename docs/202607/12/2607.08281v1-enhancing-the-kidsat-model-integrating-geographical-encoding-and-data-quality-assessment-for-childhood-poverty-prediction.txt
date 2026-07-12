@@ -1,0 +1,289 @@
+Title: Enhancing the KidSat Model: Integrating Geographical Encoding and Data Quality Assessment for Childhood Poverty Prediction
+
+URL Source: https://arxiv.org/pdf/2607.08281v1
+
+Published Time: Fri, 10 Jul 2026 00:55:13 GMT
+
+Number of Pages: 16
+
+Markdown Content:
+# ENHANCING THE KID SAT MODEL : I NTEGRATING 
+
+# GEOGRAPHICAL ENCODING AND DATA QUALITY ASSESSMENT FOR CHILDHOOD POVERTY PREDICTION 
+
+Hou Hin Ip ⋆
+
+School of Mathematics University of Bristol 
+
+le230360@bristol.ac.uk 
+
+Ka Nam Lam ⋆
+
+School of Mathematics University of Bristol 
+
+cy23765@bristol.ac.uk 
+
+Joshua Man Yu Ng ⋆
+
+School of Mathematics University of Bristol 
+
+jq22530@bristol.ac.uk 
+
+Makkunda Sharma 
+
+Department of Computer Science University of Oxford 
+
+makkunda.sharma@st-hughs.ox.ac.uk 
+
+Seth Flaxman 
+
+Department of Computer Science University of Oxford 
+
+seth.flaxman@cs.ox.ac.uk 
+
+Codie Gerlach-Wood 
+
+School of Mathematics University of Bristol 
+
+codie.gerlach-wood@bristol.ac.uk 
+
+H. Juliette T. Unwin 
+
+School of Mathematics University of Bristol 
+
+juliette.unwin@bristol.ac.uk 
+
+## ABSTRACT 
+
+Accurate poverty mapping using satellite imagery is often hindered by (i) noisy and sparse survey-derived supervision, (ii) image quality issues such as cloud cover and image corruption, and (iii) lack of explicit spatial structure in image-only models. Building on the KidSat framework, we develop an enhanced pipeline that improves predictive accuracy via refined data preprocessing, systematic image quality assessment, and mathematically defined geographic encoding. First, we refine the fine-tuning target matrix by resolving high-cardinality sparsity and reducing one-hot dimensionality from 103 to 51 via DHS re-aggregation. Second, we introduce a simple two-stage quality-screening procedure to filter heavily clouded or corrupted observations. Third, we fuse DINOv2 visual embeddings with Spherical Harmonics (SH) location features. Across extensive experiments, these changes reduce MAE from 0.2167 to 0.1759, corresponding to an 18.83% relative reduction on the cluster-level severe-deprivation proportion scale. When extended from 16 to 33 African countries, the best-performing configuration achieves an overall MAE of 0.1658. We find that SH features consistently improve performance over the image-only backbone, whereas higher-capacity coordinate Multi Layer Perception augmentation (SH+SIREN) can underperform without carefully designed objectives. Finally, gradient-boosted tree heads (XGBoost/LightGBM) most effectively exploit nonlinear interactions in the fused visual-geographic representation. These findings provide a scalable and principled recipe for improving satellite-based socioeconomic predictions using only publicly accessible data. 
+
+## 1 Introduction 
+
+Accurate assessment of social indicators is crucial to evidence-based governance, enabling policy makers and organi-sations to target and evaluate public service delivery effectively [ 1, 2 ]. However, the data required to construct such indicators remain scarce and limited. Traditional approaches rely on large-scale household surveys, including the Demo-graphic and Health Surveys (DHS) [ 3 ] and Multiple Indicator Cluster Surveys (MICS) [ 4], which are time-consuming to conduct, infrequent and in many regions depend on external funding approvals to conduct [ 5 ]. For example, between arXiv:2607.08281v1 [cs.CV] 9 Jul 2026 2000 and 2016, 39 of 59 African countries conducted fewer than two nationally representative consumption surveys, demonstrating a significant data gap that prevents the timely reflection of demographic change [6]. Remote sensing offers a promising complement to conventional surveys. An early and influential strand of this literature used nighttime lights as a proxy for local economic activity. Henderson et al. (2012) [ 7] demonstrated that night-time satellite observations could augment official income growth measures in countries with weak national statistical systems, and Jean et al. (2016) [ 8 ] showed that daytime satellite imagery, combined with convolutional neural networks (CNNs), could explain up to 75% of asset wealth across five African countries. Subsequent work by Yeh et al. (2020) [ 6 ] extended these methods to incorporate publicly available multispectral imagery from approximately 20,000 African villages, adequately explaining 70% of the variation in village-level wealth in their corresponding countries. Chi et al. (2022) [ 9]further demonstrated the global scalability of this approach by combining high-resolution satellite imagery at 2.4 km resolution with mobile phone connectivity data and produced micro wealth estimates covering the populated surface of 135 low- and middle-income countries. Taken together, this body of work establishes that computer vision applied to freely available satellite data can provide accurate and frequently updated estimates of socioeconomic conditions [ 10 ]. Building on this approach, the KidSat project [ 11 ] introduced a computer vision framework to estimate childhood poverty using 33,608 publicly available satellite images paired with DHS survey data from 16 countries in Southern and Eastern Africa. The model targets the proportion of children under the age of 18 within a region who experience severe deprivation, defined by UNICEF as deprivation in at least one of six dimensions: health, nutrition, water, education, sanitation, or housing [ 12 ]. To construct this target variable, 17 key DHS variables are combined to generate a binary indicator for each child, denoting whether they fulfill the criteria for severe deprivation or not. Individuals residing within the same geographic area are then aggregated into sampling units known as clusters [ 13 ], expressed on a continuous [0 , 1] scale, serves as the prediction target. To learn predictive representations from satellite imagery, KidSat employs self-supervised computer vision architectures. The original study evaluated several models, including DINOv2 [ 14 ], SatMAE [ 15 ], and MOSAIKS [ 16 ], finding that the DINOv2 Vision Transformer (ViT) achieved the lowest mean absolute error (MAE) across both spatial and temporal benchmarks. Under this framework, each satellite image was processed through the DINOv2 encoder and fine-tuned against the 17 DHS variables to output a 768-dimensional feature vector, which was subsequently passed through a linear regression head to estimate the cluster-level proportion of severe deprivation. Despite these advances, we identify three limitations in the original pipeline that constrain predictive accuracy. First, the fine-tuning matrix suffers from high sparsity, arising from the one-hot encoding of high-cardinality categorical DHS variables, which weakens gradient signals and introduces numerical instability. Second, the original pipeline lacks a systematic image quality selection procedure, defaulting to the first available satellite image per cluster regardless of cloud contamination or sensor corruption, which introduces noise and causes replication inconsistencies across computational environments. Third, the model exhibits a robustness limitation due to its exclusive reliance on visual features. The lack of integration of complementary spatial information constrains its ability to capture location-specific patterns and dependencies, thereby reducing resilience to variability in visual inputs and limiting generalisation across heterogeneous regions. To address these limitations, we propose an enhanced data-processing pipeline that improves predictive accuracy through three targeted contributions. (1) We refine the fine-tuning target matrix by resolving high-cardinality sparsity via informed DHS re-aggregation, incorporating two additional socioeconomic predictors (the rural–urban residence indicator and the household wealth index), and reducing one-hot dimensionality from 103 to 51 columns. (2) We introduce a two-stage image quality screening procedure, combining scan-line gap detection with physics-based cloud detection inspired by FMASK [ 17 , 18 ], to systematically identify and replace corrupted or heavily cloud-affected observations. (3) We augment the DINOv2 visual embeddings with Spherical Harmonics (SH) geographic encodings, providing structured spatial context that complements image-based features. This paper is structured as follows. Section 2 details our methodological improvements. Section 3 presents the experimental setup, and Sections 4 and 5 report experimental results and discuss their implications. 
+
+## 2 Methods 
+
+We propose two complementary methodological enhancements to improve the robustness of the KidSat framework. First, we refine the original dataset and preprocessing pipeline to address limitations in feature representation, sparsity and satellite image quality. Second, we incorporate geographical location information through SH and SIREN encoder to provide additional spatial context that is not captured by satellite imagery alone. These improvements aim to reduce the model’s sensitivity to data quality issues and enhance its predictive performance. 22.1 Refinement of the Fine-tuning Matrix 
+
+The original KidSat paper fine-tuned the model solely on the 17 DHS variables that construct the severe deprivation target. Using one-hot encoding (OHE) [ 19 ], this expanded into a 103-dimensional matrix with high sparsity, where 50 of the initial 103 dimensions contained fewer than 5% non-zero entries, weakening gradient signals [ 20 , 21 ] and causing numerical instability during normalisation [ 21 ]. We address this in two ways. First, we augment the variable set with the rural–urban residence indicator [ 22 ] and the household wealth index [ 23 ], both of which exhibit strong correlations with poverty in prior work [ 24 ]. Second, rather than applying generic frequency-based grouping [ 25 ], we implied an informed re-aggregation strategy that manually merging sparse categorical columns based on evidence from DHS codebooks [ 26 ] and prior literature [ 27 , 28 ]; where no empirical justification existed, rare categories were consolidated into a single “Other” class. These changes reduce the fine-tuning matrix from 103 to 48 dimensions. The full details of the retained dimensions are provided in Appendix B. 
+
+2.2 Image Quality Assessment and Selection 
+
+While the original KidSat paper utilised both Sentinel-2 and Landsat 5/7/8 imagery, our study focuses solely on Landsat 7/8 imagery with images at a resolution of 336 × 336 pixels. The original pipeline defaulted to select the first available image per cluster regardless of degradation, which caused replication inconsistencies across GPU configurations (MAE variation < 0.0005 ). Figure 1 illustrates the two principal degradation sources affecting Landsat 7/8 imagery: null pixels arising from scan-line errors [29] and cloud cover contamination. We developed a two-stage detection algorithm to address these issues. Stage one identified sensor corruption by detecting scan-line gaps in Landsat 7 imagery and null pixels (RGB = (0 , 0, 0) ) in Landsat 7/8 imagery. Stage two implemented physics-based cloud detection, inspired by FMASK [ 17 , 18 ], to compute four spectral indices to characterise cloud presence: brightness, NDVI, blue-to-red ratio, and whiteness index. Adaptive percentile-based thresholds were then applied, set at the 85th percentile for Landsat 7 and the 90th percentile for Landsat 8 to reduce false positives over bright urban areas and to reflect the higher radiometric sensitivity of Landsat 8. Morphological filtering was applied to refine the resulting binary cloud masks [30]. We computed an image quality metric based on the proportion of degraded pixels that integrated both stages. Applying a 30% degradation threshold, approximately 15% of images were replaced or excluded, with the lowest-degradation image selected per cluster to ensure consistency across training and evaluation phases. 
+
+Figure 1: Three multi-band (RGB) images from Luanda, Angola (early 2015) captured at 16–18 day intervals. The left and middle images are corrupted by heavy cloud cover and dark pixels, limiting their predictive information. 
+
+2.3 Integrating Geographical Encoding 
+
+Satellite imagery alone may be insufficient to capture broader spatial and socioeconomic context, particularly under conditions of degraded image quality. Early studies demonstrated that high-resolution daytime imagery, when coupled with appropriate supervision signals, enables convolutional representations to capture meaningful socioeconomic gradients [ 8]. Subsequent work using publicly available multispectral imagery further emphasised the role of spatial structure in enhancing village-level predictions and improving cross-country generalisation [ 6]. Motivated by these findings, we incorporate explicit location information through a dedicated encoding mechanism to complement visual features and enhance model robustness. Representing location is non-trivial at a global scale because geographic coordinates lie on a spherical surface rather than a Euclidean plane. A simple choice is to use raw latitude and longitude, but this ignores essential spherical 3Figure 2: The Extended KidSat Model Architecture. Left: DINOv2 is fine-tuned against the poverty vector. Right: the SH+SIREN network is pre-trained on poverty indicators. Centre: the resulting visual and geographic embeddings are concatenated and passed through a regression head to predict severe deprivation. geometry and periodicity. Prior work has explored a range of encoding strategies to address these limitations. Fixed sinusoidal positional encodings popularised in Transformers [ 31 ] and related Fourier feature mappings [ 32 ] inject a multi-scale periodic structure, which aids models to recover high-frequency signals. Random Fourier Features (RFF) approximate stationary kernels with finite-dimensional embeddings suitable for linear models [ 33 ]. Learning-based approaches further extend these ideas: Space2Vec learns multi-scale periodic encodings inspired by grid cells [ 34 ], while Sphere2Vec operates directly on the S2 manifold to preserve great-circle distances, thereby improving robustness in polar and data-sparse regions [ 35 ]. Building on this landscape of methods, and following recent evaluations by Rußwurm et al. [36], we adopt two geographic encoders: Spherical Harmonics (SH) and a hybrid SH+SIREN model. 
+
+SH encoding. Given geographic coordinates (θ, ϕ ), the SH encoder computes the real and imaginary parts of spherical harmonics Y mℓ up to degree L = 15 , producing a fixed-dimensional feature vector that captures multi-scale spatial structure without any learnable parameters. 
+
+SH+SIREN encoding. The hybrid encoder passes SH features through a SIREN network, which defaults to four hidden layers with 256 neurons each and sinusoidal activations, producing a 128-dimensional learned geographic embedding. Training follows two stages: 1. Pre-training Stage: Given the geographic coordinates, the SH encoder generates a vector that contains harmonic with different degrees. The SIREN network is pre-trained to predict poverty indicators using the harmonic vector to learn location-specific spatial patterns and relationships. geo = SIREN   [ℜY mℓ , ℑY mℓ ]ℓ≤L
+
+. (1) 2. Feature Fusion Stage: The learned geographic embeddings from the pre-trained SH+SIREN network are concatenated with visual features extracted from satellite imagery: 
+
+z =  geo(loc) ∥ (image embedding) . (2) The fused representation z is then passed to a regression head for severe deprivation estimation as shown in Figure 2. When using SH encoding alone, the raw SH feature vector is concatenated directly with the visual embedding, bypassing the pre-training stage. 43 Experiments 
+
+3.1 Experimental Setup 
+
+We evaluate the effect of geographic encoding through an ablation study comparing three configurations: the image-only DINOv2 baseline, DINOv2 with SH features, and DINOv2 with the hybrid SH+SIREN encoder. This setup allows us to isolate whether explicit geographic information improves prediction performance beyond visual features alone. We follow the 5-fold cross-validation protocol used in KidSat: 5-fold cross-validation is applied across the entire dataset. For every fold, DINOv2 fine-tuning, geographic encoder training and the regression head are trained only on 80% of the clusters, while the remaining 20% held-out fold is reserved exclusively for evaluation. The same fold partitions are used across all three experiments to ensure a fair comparison. All experiments are run using an NVIDIA A40 GPU, and performance is assessed using mean absolute error (MAE) for fine-tuning and evaluation. Since the prediction target is the cluster-level proportion of severely deprived children, all MAE values are reported on a [0 , 1] prevalence scale. Further hyperparameter configurations can be found at Appendix D. 
+
+3.2 Geographic Encoder Ablation 
+
+We conduct three experiments to isolate the effect of each geographic encoding component. These ablation experiments are performed on the original KidSat country set, before extending the best-performing configuration to the expanded 33-country dataset. 1. Baseline (DINOv2 only): The original KidSat pipeline based on DINOv2 only. 2. SH only: DINOv2 visual features concatenated with spherical harmonics geographic embeddings. 3. SH + SIREN: DINOv2 visual features concatenated with SH + SIRENNET embeddings. For each experiment, the fused feature representation is passed to a cross-validated ridge regression model with a sigmoid link function to estimate the probability of severe deprivation. The details of how SH and SIREN embeddings are generated are provided in the two-stage training subsection and are not repeated here. Each of the three experiments follows the same overall process: 1. Fine-tune DINOv2 using the DHS poverty factor. 2. Generate geographic embeddings according to the experiment configuration. 3. Concatenate features to form the fused representation. 4. Train a cross-validated ridge regression model. 5. Evaluate MAE on held-out folds. 
+
+3.3 Regression Heads Comparison 
+
+While the original KidSat pipeline used a simple linear regression head (e.g., ridge regression), the fused space introduces non-trivial cross-modal interactions that linear models cannot capture without explicitly engineering interaction terms. In our setting, the same visual cue can carry different poverty-related meanings across geographic contexts. For example, "sparse vegetation" (captured by DINOv2) is typical in arid regions (e.g., the Sahel) and therefore weakly informative about poverty level, whereas in humid regions (e.g., the Congo Basin) unusually sparse vegetation can indicate soil degradation or limited irrigation and thus correlate with higher deprivation. These conditional relationships are inherently multiplicative or non-linear, motivating predictors that can learn interactions directly. Beyond the ridge-regression baseline used in prior work, and motivated by the limitation of a linear head, we assessed a broader family of predictors on the fused vector: • Ridge regression (baseline): A linear predictor with ℓ2 regularization, providing a well-regularized and interpretable point of comparison and a lower bound for performance without cross-modal interactions. • Tree ensembles (Random Forest [ 37 ], LightGBM [ 38 ], XGBoost [ 39 ]): These models naturally capture piecewise non-linear relationships and feature interactions without manual engineering. In the fused space, they can reweight visual cues conditionally on geography (e.g., downweighting sparse vegetation as a poverty indicator in arid zones where it is geographically normal). Their bagging/boosting regularization also suits the high dimensionality of z.5• Shallow Deep Neural Network (3/4 layer multi layer perception (MLP)): A small MLP provides smooth, parametric modelling of non-linear interactions with small capacity and standard regularization. In this set of experiments, different regression heads are evaluated by replacing the ridge regression model used in the geographic encoder experiments. The fused embedding generated from the selected encoder configuration remains fixed, and only the final regression component is varied. Each regression head is trained using five-fold cross-validation, and MAE is computed on the held-out validation folds to ensure a fair and consistent comparison. 
+
+3.4 Extension to additional countries in Africa 
+
+We expanded the original KidSat dataset from 16 countries (46 surveys) in Southern and Eastern Africa to 33 countries total, adding 16 countries (33 surveys) from Central and Western Africa, yielding 43,823 clusters for prediction. The best-performing configuration (SH + LightGBM with improved preprocessing) was applied to this expanded dataset. 
+
+## 4 Results 
+
+4.1 Results for geographic encoder ablation and regression heads 
+
+Table 1 summarises model performance across the three geographical encoder configurations and five regression head settings. Our model replicates the original KidSat training pipeline as the baseline for comparison, achieving an MAE of 0.2167 ( ± 0.0013) . Refining the fine-tuning matrix through variable augmentation and re-categorisation of sparse categorical features, combined with enhanced image quality assessment, reduced the MAE to 0.1980 ( ± 0.0008) .This corresponds to an absolute reduction of 0.0187 on the severe-deprivation proportion scale, or an 8.63% relative reduction compared with the baseline. At the same time, incorporating geographic information further improved prediction accuracy. Under the configuration without processing improvement, adding the SH encoder alone produced the strongest gains across all regression heads, achieving MAEs between 0.1833 ( ± 0.0007) (XGBoost) and 0.2031 ( ± 0.0010) (Ridge), with XGBoost yielding the largest absolute improvement of 0.0334 relative to the baseline. By contrast, the SH + SIREN encoder yielded only marginal improvements, with MAEs ranging from 0.2110 ( ± 0.0009) (XGBoost) to 0.2149 ( ± 0.0011) (MLP). These trends also held if data and imagery processing improvement is performed with SH encoding again led to the largest performance gains, with the best MAE of 0.1759 ± 0.0016 (LightGBM), representing a 0.0221 reduction compared to the improved baseline. This confirm that harmonic features provide consistent predictive benefit across model classes. Surprisingly, the SH + SIREN encoder underperformed plain SH in nearly all settings. Under improved imagery and preprocessing, the best SH + SIREN result reached an MAE of 0.1853 ± 0.0022 using XGBoost, which is 0.0094 higher than the corresponding SH-only configuration. In contrast, SH encoding alone consistently achieved the strongest performance across regression heads. LightGBM combined with SH yielded the lowest observed MAE of 0.1759 ± 0.0016. Tree-based models, including XGBoost and LightGBM, achieved lower errors than both linear and neural regression heads. Ridge regression, used as the standardised evaluation model, produced weaker results across all encoder settings. Across regression heads, the tree-based models (XGBoost and LightGBM) consistently achieved the best performance. When combined with SH encoding, LightGBM yielded the lowest observed MAE of 0.1759 ± 0.0016, highlighting the advantage of modeling nonlinear interactions between visual and geographic features. Random Forest also outperformed linear models but lagged behind gradient-boosted approaches. Ridge regression, used as the standardised evaluation head, showed stable but weaker performance, suggesting that geographic context introduces nonlinear feature interactions that linear models cannot fully capture. 
+
+4.2 Results for extending to additional countries in Africa 
+
+By combining the improved data pre-processing strategy with spherical harmonic encoding and the LightGBM model, the training was expanded to include 17 additional countries and 33 surveys comprising 20,271 new clusters. This configuration achieved an MAE of 0.1658 ( ± 0.0005), demonstrating the robustness and consistency of the model across geographically diverse regions (Figure 3). 
+
+## 5 Discussion 
+
+Building on the KidSat project’s demonstration that combining satellite imagery with household survey data can predict socioeconomic outcomes, our study establishes an enhanced methodology that improves predictive accuracy through 6Table 1: Comparison of MAEs on regression heads under different geo-encoder and regression head settings. 
+
+Encoder / Regression Head evaluated on A40 GPU Without Improvement on Data and Imagery Processing With Improvement on Data and Imagery Processing 
+
+Without Geo Encoder 0.2167 ± 0.0013 0.1980 ± 0.0008 
+
+Adding SH + SIREN 
+
+Ridge 0.2154 ± 0.0008 0.1885 ± 0.0018 XGBoost 0.2110 ± 0.0009 0.1853 ± 0.0022 LightGBM 0.2110 ± 0.0014 0.1847 ± 0.0018 Random Forest 0.2146 ± 0.0010 0.1855 ± 0.0018 MLP 0.2149 ± 0.0011 0.1897 ± 0.0013 
+
+Adding SH Encoder 
+
+Ridge 0.2031 ± 0.0010 0.1888 ± 0.0011 XGBoost 0.1833 ± 0.0007 0.1771 ± 0.0020 LightGBM 0.1835 ± 0.0006 0.1759 ± 0.0016 
+
+Random Forest 0.1888 ± 0.0010 0.1797 ± 0.0018 MLP 0.1902 ± 0.0007 0.1823 ± 0.0024 
+
+Figure 3: Visualisation demonstrating comparison between Baseline method (Left) and visualisation with modified process (Right), with a total of 33 African countries. refined data preprocessing, systematic image quality assessment, and explicit geographic encoding. Specifically, by reducing fine-tuning dimensionality and incorporating explicit geographic context via SH, our framework achieved a relative 18.83% reduction in MAE compared with the baseline model. The approach also maintained robust performance when scaled from 16 to 33 African countries, achieving an overall MAE of 0.1658. 
+
+5.1 Data Preprocessing and Image Selection 
+
+Our key findings indicated that the quality of the fine-tuning matrix remained fundamental constraints on model performance. While UNICEF’s six deprivation dimensions underpinned the predictors, optimal performance required incorporating correlated but distinct DHS variables, such as the rural–urban indicator and household wealth index. Therefore, the selection of fine-tuning variables needed to be guided by independent empirical justification rather than limited to components defining the target outcome. Furthermore, our re-aggregation strategy, informed by DHS codebooks and prior literature, successfully improved MAE without information loss. To further strengthen the fine-tuning matrix, future work could employ machine learning algorithms such as GLM and XGBoost to identify the most informative DHS predictors [ 30 ], and evaluate alternative mathematical encoding strategies, such as adoption of Gamma-Poisson matrix factorization and in-hash encoding [ 21 ]to mitigate sparsity. 7Finally, we illustrated that image quality assessment was essential for ensuring data reliability. When 15% of available images exhibited over 30% cloud or corruption coverage, poor image selection reduced accuracy by introducing noise or meaningless information. Further research could investigate restoration techniques, such as image inpainting based on deep image prior [ 40 , 41 , 42 ], or diffusion prior [ 43 ] to enhance performance by recovering partially degraded imagery. 
+
+5.2 Geo-encoding and Feature Fusion 
+
+Integrating publicly accessible information, such as geographic coordinates, during model training significantly enhanced predictive accuracy by providing supplementary contextual information. This multi-source feature integration framework enhanced coverage in under-surveyed regions and mitigated data gaps arising from incomplete surveys or limited information due to low-resolution satellite imagery. Across all experiments for geo-encoder, the spherical harmonics (SH) encoder consistently improved performance over the image-only DINOv2 baseline, indicating that structured, low-frequency geographic priors provide complementary information to the visual backbone. In contrast, the combined SH+SIREN encoder underperformed relative to SH alone. This behaviour suggests that the SIREN network, when trained using the same poverty vector that supervises DINOv2 fine-tuning, may have introduced representation overlap rather than supplying an independent spatial signal, thereby reducing the overall complementarity of the fused representation. The consistently strong performance of tree-based regression heads, particularly XGBoost and LightGBM, indicates that the fused visual–geographic representation contains meaningful nonlinear interactions that linear models cannot fully exploit. This accords with prior evidence that gradient boosting methods are well-suited to heterogeneous, high-dimensional feature fusion settings. Compared with neural regressors, boosted decision trees have been shown to capture nonlinear interactions effectively while maintaining robustness in limited-data regimes [ 44 ]. This likely explains their superior performance when integrating DINOv2 visual embeddings with SH geographic features. Looking forward, multiple avenues could address the limitations observed. One direction is to revisit the SIREN training objective: training it on auxiliary demographic variables rather than the same poverty vector used by the vision model may yield more complementary spatial representations. Future research should systematically explore additional low-cost and accessible datasets that correlate with the underlying causes of poverty, including nighttime satellite imagery [ 45 ], conflict event repositories (e.g., the Uppsala Conflict Data Program) [ 46 ], to further enrich this integrated prediction framework. Another direction is to explore alternative geospatial representation learning methods. Contrastive coordinate–image alignment approaches such as GeoCLIP [ 47 ] provide continuous geo-embeddings that could be fused with DINOv2 features. Retrieval-augmented neural fields such as RANGE [ 48 ] supply multi-resolution geospatial priors that may complement both low- and high-frequency encoders. Meanwhile, LocDiff [ 49 ] demonstrates the benefit of constructing coordinate embeddings in structured Hilbert spaces to avoid instability and representational collapse. Exploring these geo-encoder families may yield richer spatial representations and reduce redundancy when combined with vision backbones. Overall, the results indicate that well-structured geographic priors such as spherical harmonics can meaningfully improve satellite-based poverty prediction, whereas high-capacity coordinate MLPs require carefully designed objectives to avoid duplicating visual information and overfitting. The strong performance of tree-based regression heads further highlights the value of robust, nonparametric models for integrating visual and spatial modalities. Future work incorporating modern geo-encoding methods, multi-scale spatial priors, and alternative training objectives may produce even more expressive and stable poverty-prediction systems. 
+
+## References 
+
+[1] Ayse Hancioglu and Fred Arnold. Measuring coverage in mnch: Tracking progress in health for women and children using dhs and mics household surveys. PLOS Medicine , 10(5):e1001391, 2013. [2] Natalie J. Gray, Peter Azzopardi, Elissa Kennedy, Elise Willersdorf, and Mick Creati. Improving adolescent reproductive health in asia and the pacific: Do we have the data? a review of dhs and mics surveys in nine countries. Asia-Pacific Journal of Public Health , 25(2):134–144, 2013. [3] The DHS Program. The dhs program: Demographic and health surveys. https://dhsprogram.com/ , 2025. Accessed: 2025-11-11. [4] The National Centre for Social Research (NatCen). The multiple indicator clus-ter surveys (mics) programme of unicef [webinar]. https://natcen.ac.uk/events/ multiple-indicator-cluster-surveys-mics-programme-unicef , May 2024. Online webinar, 1May 2024, 17:00–18:00. 8[5] Géraldine Duthé, Arlette Simo Fotso, and Heini Väisänen. The end of the dhs programme: A major issue for research and sustainable development. International Union for the Scientific Study of Population Bulletin , March 2025. [6] Christopher Yeh, Anthony Perez, Anne Driscoll, George Azzari, Zhongyi Tang, David Lobell, Stefano Ermon, and Marshall Burke. Using publicly available satellite imagery and deep learning to understand economic well-being in africa. Nature Communications , 11(1):2583, 2020. [7] J Vernon Henderson, Adam Storeygard, and David N Weil. Measuring economic growth from outer space. 
+
+American economic review , 102(2):994–1028, 2012. [8] Neal Jean, Marshall Burke, Michael Xie, W Matthew Alampay Davis, David B Lobell, and Stefano Ermon. Combining satellite imagery and machine learning to predict poverty. Science , 353(6301):790–794, 2016. [9] Guanghua Chi, Han Fang, Sourav Chatterjee, and Joshua E Blumenstock. Microestimates of wealth for all low-and middle-income countries. Proceedings of the National Academy of Sciences , 119(3):e2113658119, 2022. [10] Ola Hall, Francis Dompae, Ibrahim Wahab, and Fred Mawunyo Dzanku. A review of machine learning and satellite imagery for poverty prediction: Implications for development research and applications. Journal of International Development , 35(7):1753–1768, 2023. [11] Makkunda Sharma, Fan Yang, Duy-Nhat Vo, Esra Suel, Swapnil Mishra, Samir Bhatt, Oliver Fiala, William Rudgard, and Seth Flaxman. Kidsat: Satellite imagery to map childhood poverty dataset and benchmark. arXiv preprint arXiv:2407.05986 , 2024. [12] UNICEF. Dimensions, indicators, and thresholds for moderate and severe ma-terial shortcomings. https://data.unicef.org/wp-content/uploads/2019/12/ Child-poverty-moderate-and-severe-material-deprivations-SUMMARY.pdf , 2019. Summary document. [13] DHS Program. Gps data collection. https://www.dhsprogram.com/Methodology/GPS-Data.cfm , 2025. Accessed: 2025-11-07. [14] Maxime Oquab, Timothée Darcet, Theo Moutakanni, Huy T. Vo, Marc Szafraniec, Vladislav Khalidov, Pierre Fernandez, Daniel Haziza, Francisco Massa, Alaaeldin El-Nouby, Mahmoud Assran, Nicolas Ballas, Wojciech Galuba, Russell Howes, Po-Yao Huang, Shang-Wen Li, Ishan Misra, Michael Rabbat, Gabriel Synnaeve, Hu Xu, Ivan Laptev, Yann LeCun, and Hervé Jegou. Dinov2: Learning robust visual features without supervision. arXiv preprint arXiv:2304.07193 , 2023. [15] Yezhen Cong, Zongyu Chen, Chenlin Huang, Chuang Zhang, Zheng Zhang, Ming Li, Haoyu Li, and Gong Cheng. Satmae: Pre-training transformers for temporal and multi-spectral satellite imagery. In Advances in Neural Information Processing Systems , volume 35, pages 197–211, 2022. [16] Esther Rolf, Jonathan Proctor, Tamma Carleton, Ian Bolliger, Vaishaal Shankar, Miyabi Ishihara, Benjamin Recht, and Solomon Hsiang. A generalizable and accessible approach to machine learning with global satellite imagery. 
+
+Nature Communications , 12:4392, 2021. [17] Zhe Zhu and Curtis E. Woodcock. Object-based cloud and cloud shadow detection in landsat imagery. Remote Sensing of Environment , 118:83–94, 2012. [18] Zhe Zhu, Shixiong Wang, and Curtis E. Woodcock. Improvement and expansion of the fmask algorithm: cloud, cloud shadow, and snow detection for landsats 4–7, 8, and sentinel 2 images. Remote Sensing of Environment ,159:269–277, 2015. [19] Pau Rodríguez, Miguel A. Bautista, Jordi Gonzàlez, and Sergio Escalera. Beyond one-hot encoding: Lower dimensional target embedding. Image and Vision Computing , 75:21–31, 2018. [20] Patricio Cerda, Gaël Varoquaux, and Balázs Kégl. Similarity encoding for learning with dirty categorical variables. 
+
+Machine Learning , 107(2):1477–1494, 2018. [21] Patricio Cerdá and Gaël Varoquaux. Encoding high-cardinality string categorical variables. arXiv preprint arXiv:1907.01860 , 2019. [22] Mathieu J. P. Poirier, Karen A. Grépin, and Michel Grignon. Approaches and alternatives to the wealth index to measure socioeconomic status using survey data: A critical interpretive synthesis. Social Indicators Research ,148:1–46, 2020. [23] Neeti Pokhriyal and Damien Christophe Jacques. Combining disparate data sources for improved poverty prediction and mapping. Proceedings of the National Academy of Sciences , 114(46):E9783–E9792, 2017. [24] Qing Li, Shuai Yu, Damien Échevin, and Min Fan. Is poverty predictable with machine learning? a study of dhs data from kyrgyzstan. Socio-Economic Planning Sciences , 81:101195, 2022. 9[25] Kedar Potdar, Taher S. Pardawala, and Chinmay D. Pai. A comparative study of categorical variable encoding techniques for neural network classifiers. International Journal of Computer Applications , 175(4):7–9, October 2017. [26] The DHS Program. Standard Recode Manual for DHS-VII (Recode7) , September 2018. Accessed: 2025-11-11. [27] James Trussell. Contraceptive failure in the united states. Contraception , 83(5):397–404, May 2011. [28] Lidetu Demoze, Kassaw Chekole Adane, Jember Azanaw, Eyob Akalewold, Tenagne Enawugaw, Mitkie Tigabie, Amensisa Hailu Tesfaye, and Gelila Yitageasu. Spatial analysis of unimproved drinking water source in east africa: Using demographic and health survey (dhs) data from 2012–2023. PLOS ONE , 20(3):e0318189, 2025. [29] M. S. Hossain, J. S. Bujang, M. H. Zakaria, and M. Hashim. Assessment of landsat 7 scan line corrector-off data gap-filling methods for seagrass distribution mapping. International Journal of Remote Sensing , 36(4):1188–1215, 2015. [30] Shi Qiu, Zhe Zhu, and Binbin He. Fmask 4.0: Improved cloud and cloud shadow detection in landsats 4–8 and sentinel-2 imagery. Remote Sensing of Environment , 231:111205, 2019. [31] Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Łukasz Kaiser, and Illia Polosukhin. Attention is all you need. In Advances in Neural Information Processing Systems (NeurIPS) ,2017. [32] Matthew Tancik, Pratul P. Srinivasan, Ben Mildenhall, Sara Fridovich-Keil, Nithin Raghavan, Utkarsh Singhal, Ravi Ramamoorthi, Jonathan T. Barron, and Ren Ng. Fourier features let networks learn high frequency functions in low dimensional domains. In Advances in Neural Information Processing Systems (NeurIPS) , 2020. [33] Ali Rahimi and Ben Recht. Random features for large-scale kernel machines. In Advances in Neural Information Processing Systems (NIPS) , 2007. [34] Gengchen Mai, Krzysztof Janowicz, Yingjie Hu, Song Gao, Grant McKenzie, et al. Multi-scale representation learning for spatial feature distributions using grid cells. arXiv preprint arXiv:2003.00824 , 2020. [35] Gengchen Mai, Yao Xuan, Wenyun Zuo, Yutong He, Jiaming Song, Stefano Ermon, Krzysztof Janowicz, and Ni Lao. Sphere2vec: A general-purpose location representation learning over a spherical surface for large-scale geospatial predictions. arXiv preprint arXiv:2306.17624 , 2023. [36] Marc Rußwurm, Konstantin Klemmer, Esther Rolf, Robin Zbinden, and Devis Tuia. Geographic location encoding with spherical harmonics and sinusoidal representation networks. arXiv preprint arXiv:2310.06743 , 2023. [37] Leo Breiman. Random forests. Machine Learning , 45(1):5–32, 2001. [38] Guolin Ke, Qi Meng, Thomas Finley, Taifeng Wang, Wei Chen, Weidong Ma, Qiwei Ye, and Tie-Yan Liu. Lightgbm: A highly efficient gradient boosting decision tree. In Advances in Neural Information Processing Systems (NeurIPS 2017) , pages 3146–3154, 2017. [39] Tianqi Chen and Carlos Guestrin. Xgboost: A scalable tree boosting system. In Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (KDD 2016) , pages 785–794, 2016. [40] Anna Petrovskaia, Raghavendra Jana, and Ivan Oseledets. A single image deep learning approach to restoration of corrupted landsat-7 satellite images. Sensors , 22(23):9273, 2022. [41] Mikolaj Czerkawski, Priti Upadhyay, Christopher Davison, Astrid Werkmeister, Javier Cardona, Robert Atkinson, Craig Michie, Ivan Andonovic, Malcolm Macdonald, and Christos Tachtatzis. Deep internal learning for inpainting of cloud-affected regions in satellite imagery. Remote Sensing , 14(6):1342, 2022. [42] Dmitry Ulyanov, Andrea Vedaldi, and Victor Lempitsky. Deep image prior. arXiv preprint arXiv:1711.10925 ,2017. [43] Jonathan Ho, Ajay Jain, and Pieter Abbeel. Denoising diffusion probabilistic models, 2020. [44] Shenyuan Xu, Size Liu, Hua Wang, Wenjie Chen, Fan Zhang, and Zhu Xiao. A hyperspectral image classification approach based on feature fusion and multi-layered gradient boosting decision trees. Entropy , 23(1), 2021. [45] Christopher N.H. Doll, Jan-Peter Muller, and Jeremy G. Morley. Mapping regional economic activity from night-time light satellite imagery. Ecological Economics , 57(1):75–92, 2006. [46] Uppsala Conflict Data Program. Ucdp: The world’s main provider of data on organized violence. https://www. uu.se/en/department/peace-and-conflict-research/research/ucdp/ , 2025. Accessed: 2025-11-12. [47] Vicente Vivanco, Gaurav Kumar Nayak, and Mubarak Shah. Geoclip: Clip-inspired alignment between locations and images for effective worldwide geo-localization. In Advances in Neural Information Processing Systems ,2023. arXiv:2309.16020. 10 [48] Aayush Dhakal, Srikumar Sastry, Subash Khanal, Adeel Ahmad, Eric Xing, and Nathan Jacobs. Range: Retrieval augmented neural fields for multi-resolution geo-embeddings, 2025. [49] Zhangyu Wang, Zeping Liu, Jielu Zhang, Zhongliang Zhou, Qian Cao, Nemin Wu, Lan Mu, Yang Song, Yiqun Xie, Ni Lao, and Gengchen Mai. Locdiff: Identifying locations on earth by diffusing in the hilbert space, 2025. 11 Appendix A DHS Variables Used in the KidSat Setup 
+
+The table below presents the 17 DHS variables used in the original setup, as well as the new variables introduced in the modified configuration: Table A: Summary of Variables and Definitions of Severe Deprivation 
+
+Categories Variables Description Definition of Severe Deprivation 
+
+Housing hv216 Sleeping rooms in household The sleeping density (hv216 / no. household) exceeds 5 persons per room. hv271 Wealth index score Water hv201 Main drinking water source The household’s source of drinking water is from an unprotected well, spring, river, or other unprotected sources. hv204 Time to water source Sanitation hv205 Type of toilet facility The household uses unimproved toilet facilities or has no toilet facilities at all. hv225 Toilet sharing status Nutrition hc70 Height-for-age z-score The child’s height-for-age z-score is more than 3 standard deviations below. Health h10 Child received any vaccination Meeting any one of the following: 1. Children aged 12–35 months did not receive immunization against measles nor any dose of DPT. 2. Girls aged 15–17 years have an unmet need for contraception and are not using any contraceptive method. 3. Children experienced an acute respiratory infection (fever or cough) and received no treatment. h3 DPT 1 vaccination h5 DPT 2 vaccination h7 DPT 3 vaccination h9 Measles 1 vaccination h31 Child had cough recently v312 Current contraceptive method Education hv106 Highest education level in house-hold Meeting any one of the following: 1. Children aged 6–14 who have never been to school. 2. Children aged 15–17 who have not com-pleted primary school. hv109 Educational attainment recoded hv121 School attendance current year New Indicators hv025 Rural/Urban Status New indicators. hv270 Wealth index 12 B Re-aggregation of One-Hot Encoding Columns 
+
+> Note: In DHS surveys, each indicator corresponds to the response to a particular question, and each response is encoded using the unique DHS codebook[  26  ], with interpretations that are standardised across all participating countries.
+> Variables  Type  Sparse Columns
+> (ε = 0.05)
+> No. of Columns Final Columns Adjustment
+> hv201  Categorical  16  26  5 Adjustment of the main drinking water source, in which the following categories are merged: • hv201_protected_pipes : [11, 12, 13, 14] • hv201_protected_wells : [21, 22, 23, 24, 25, 31] • hv201_protected_spring : [41] • hv201_protected_others : [51, 61, 62, 63, 71] • hv201_unprotected_source : [32, 33, 34, 35, 36, 42, 43, 44, 45, 46] hv205  Categorical  17  22  5 Adjustment of the variable  hv205 , which is the type of toilet facility based on whether it is a protected facility: • hv205_protected_flush : [11–19] • hv205_protected_ventilated_pit_latrine : [21] • hv205_protected_pit_latrine : [22, 24–29] • hv205_protected_composting_toilet : [41] • hv205_unprotected_source : [23, 31, 42, 43, 96] v312  Categorical  14  15  4 Adjustment of the variable  v312 : current contraceptive method. Defined groups of contraceptive use are created as follows: • v312_no_contracept : [0] (no method used) • v312_trad_contracept : [8, 9, 10] (traditional methods) • v312_ineffective_contracept : [15, 16, 18] (ineffective methods) • v312_contracept : [1–7, 11–14, 17, 19, 20] (modern or other methods) h3  Categorical  0 4 3 Variables  h3 , h5 , h7 , and  h9  represent vaccination status. In the original data pipeline, these statuses were one-hot encoded differently, even though the questionnaire options are identical. To maintain consistency, vaccination status is refined as follows: • [0, 8] — Not vaccinated / Don’t know • [1, 3] — Vaccinated (confirmed) • [2] — Reported by mother h5  Categorical  0 4 3h7  Categorical  0 4 3h9  Categorical  2 6 3hv106  Categorical  0 1 4 Categorical column — no need for re-aggregation. h10  Categorical  0 2 2 Categorical column — no need for re-aggregation. h31  Categorical  0 2 2 Categorical column — no need for re-aggregation. hv109  Categorical  0 6 6 Categorical column — no need for re-aggregation. hv121  Categorical  0 3 3 Categorical column — no need for re-aggregation. hv025  Categorical  0 2 2 Categorical column — no need for re-aggregation. hv216  Numerical  0 1 1 Numerical column — no one-hot encoding applied. hv204  Numerical  0 1 1 Numerical column — no one-hot encoding applied. hv225  Numerical  0 1 1 Numerical column — no one-hot encoding applied. hc70  Numerical  0 1 1 Numerical column — no one-hot encoding applied. hv271  Numerical  0 1 1 Numerical column — no one-hot encoding applied. hv270  Numerical  0 1 1 Numerical column — no one-hot encoding applied.
+> Table B: Summary of DHS Variables Used for Fine-Tuning and Adjustments
+
+13 C List of Countries Included in the KidSat Model 
+
+Table C: KidSat Country Summary 
+
+KidSat Status Country Code Region No_Clusters No_Images No_Survey Survey Year 
+
+Original Burundi BU Eastern Africa 928 2784 2 2000, 2016 Original Ethiopia ET Eastern Africa 2561 7683 5 2000, 2005, 2010, 2016, 2019 Original Kenya KE Eastern Africa 4072 12216 4 2003, 2008, 2014, 2022 Original Comoros KM Eastern Africa 242 726 1 2012 Original Madagascar MD Eastern Africa 1235 3705 3 1997, 2008, 2021 Original Malawi MW Eastern Africa 2757 8271 4 2000, 2004, 2010, 2015 Original Mozambique MZ Eastern Africa 610 1830 1 2011 Original Rwanda RW Eastern Africa 2186 6558 5 2005, 2008, 2010, 2014, 2019 Original Tanzania TZ Eastern Africa 1694 5082 4 1999, 2010, 2015, 2022 Original Uganda UG Eastern Africa 1688 5064 4 2000, 2006, 2011, 2016 Original Zambia ZM Eastern Africa 1574 4722 3 2007, 2013, 2018 Original Zimbabwe ZW Eastern Africa 1189 3567 4 1999, 2005, 2010, 2015 Original Angola AO Middle Africa 625 1875 1 2015 Original Lesotho LS Southern Africa 1175 3525 3 2004, 2009, 2014 Original Eswatini SZ Southern Africa 270 810 1 2006 Original South Africa ZA Southern Africa 746 2238 1 2017 New Congo Democratic Republic CD Middle Africa 492 1476 1 2013 New Cameroon CM Middle Africa 1471 4413 2 2011, 2018 New Gabon GA Middle Africa 722 2166 2 2012, 2019 New Chad TD Middle Africa 624 1872 1 2014 New Namibia NM Southern Africa 1301 3903 1 2013 New Burkina Faso BF Western Africa 1452 4356 2 2010, 2021 New Benin BJ Western Africa 1290 3870 2 2012, 2017 New Cote d’Ivoire CI Western Africa 880 2640 2 2012, 2021 New Ghana GH Western Africa 1445 4335 2 2014, 2022 New Guinea GN Western Africa 992 2976 2 2012, 2018 New Liberia LB Western Africa 934 2802 2 2013, 2019 New Mali ML Western Africa 1562 4686 3 2016, 2012, 2018 New Nigeria NG Western Africa 3517 10551 2 2013, 2018 New Niger NI Western Africa 476 1428 1 2012 New Sierra Leone SL Western Africa 1342 4026 2 2008 New Senegal SN Western Africa 1441 4323 5 2016, 2017, 2018, 2019, 2023 New Togo TG Western Africa 330 990 1 2013 
+
+Total 43823 131469 79 
+
+## D Hyperparameters and Settings for Geographical Encoding Evaluation 
+
+This section summarises the hyperparameters and settings used for the visual backbone, geographic encoders and downstream regression heads. All experiments were performed on an NVIDIA A40 GPU to maintain consistent training behaviour across cross-validation runs with seed = 42 used to ensure reproducibility. All configuration and training scripts are available in our public GitHub repository for reference and replication. 
+
+D.0.1 DINOv2 Fine-tuning 
+
+We fine-tune the dinov2_vitb14 backbone, which outputs a 768-dimensional embedding, together with a linear prediction head with sigmoid activation. The backbone and head are optimised jointly within each cross-validation fold using the following settings: • learning rate: 1 × 10 −6
+
+• weight decay: 1 × 10 −6
+
+• optimizer: Adam (PyTorch defaults for betas and eps )• loss: MAE (L1 loss) • epochs: 20 
+
+• batch size: 8
+
+• reproducibility: seed = 42 
+
+No learning-rate scheduling or additional regularisation is applied. 
+
+D.0.2 SH Encoder 
+
+The SH encoder computes the real and imaginary parts of spherical harmonics up to degree L = 15 , producing a fixed 
+
+(L + 1) 2 × 2-dimensional feature vector. This encoder has no learnable parameter. 14 D.0.3 SIREN-based Spatial Encoder 
+
+The SIREN encoder receives spherical harmonics (SH) features and produces a 128-dimensional learned spatial embedding. The encoder uses four hidden layers of width 256 with sinusoidal activation sin( ω0x) where ω0 = 30 .Weights follow standard SIREN initialisation: • first layer: weights are initialized uniformly in 
+
+h
+
+− 1 
+
+> nin
+
+, 1
+
+> nin
+
+i
+
+• hidden layers: weights are initialized uniformly in 
+
+
+
+−√6/n in  
+
+> ω0
+
+,
+
+√6/n in 
+
+> ω0
+
+
+
+The SIREN and its prediction head are trained jointly using: • learning rate: 1 × 10 −4
+
+• weight decay: 1 × 10 −6
+
+• optimizer: Adam • loss: L1 loss • epochs: 200 
+
+• batch size: 32 
+
+• scheduler: ReduceLROnPlateau (factor 0.5, patience 10 , monitored on validation MAE) • gradient clipping: max_norm = 1 .0
+
+• early stopping: triggered when LR < 1 × 10 −7
+
+The resulting 128-dimensional embedding is concatenated with DINOv2 features for downstream regression. 
+
+D.0.4 Regression Heads on Learned Representations 
+
+For experiments on extracted representations, we evaluate a range of regression models. All models are trained on 
+
+StandardScaler -normalised features and evaluated using 5-fold cross-validated MAE. 
+
+Ridge Regression 
+
+• implemented using RidgeCV 
+
+• alphas: {10 −6, . . . , 10 6} (log-spaced) • cross-validation: 5-fold • scoring: negative MAE 
+
+Tree-based Models 
+
+• XGBoost : XGBRegressor 
+
+– nestimators = 1000 , max _depth = 6 
+
+– learning _rate = 0 .1
+
+– subsample = 0 .8, colsample _bytree = 0 .8
+
+– random _state = 42 
+
+• LightGBM : LGBMRegressor 
+
+– nestimators = 1000 , max _depth = 8 
+
+– learning _rate = 0 .1
+
+– f eature _f raction = 0 .8, bagging _f raction = 0 .8
+
+– random _state = 42 
+
+• Random Forest : RandomForestRegressor 
+
+– nestimators = 500 
+
+– max _depth = 15 
+
+– min _samples _split = 5 , min _samples _leaf = 2 
+
+– n_jobs = −1, random _state = 42 
+
+15 Neural Network Regression Model 
+
+• architecture: hidden layers of sizes 512 , 256 , 128 , 64 , each followed by ReLU, BatchNorm1d, Dropout( p =0.2)• output: Linear( 64 , 1) + Sigmoid • optimizer: Adam ( lr = 1 × 10 −3, weight _decay = 1 × 10 −5)• batch size: 64 • loss: L1 Loss (MAE) • early stopping: patience = 15 , maximum 100 epochs 16

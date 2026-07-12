@@ -1,0 +1,138 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-12T20:19:26.693884+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.05716v2",
+      "source": "arxiv",
+      "title": "Scene Graph Thinking: Reinforcing Structured Visual Reasoning for Multimodal Large Language Models",
+      "abstract": "Multimodal Large Language Models (MLLMs) have demonstrated strong perception and reasoning capabilities. However, most existing models focus on isolated objects and neglect structured relationships for efficient target navigation, limiting their performance on visually intensive tasks. To address this challenge, we introduce Scene Graph Thinking (SaGe), a novel paradigm that enables fine-grained and structured visual reasoning through explicit scene-graph representations. Specifically, we first introduce an automated data engine that converts flat image-text corpora into structured scene graphs, where hierarchical entities constitute the nodes and diverse visual relations define the edges. Building upon this, we construct 120K high-quality training data by sampling reasoning traces from scene graphs. Then, two-stage graph-aligned post-training paradigms are introduced, where supervised fine-tuning internalizes MLLMs with structured reasoning, and subsequent reinforcement fine-tuning proposes node-as-proxy graph rewards to consolidate efficient graph exploration. With curated data and graph-aligned training, our approach achieves significant improvements across eight multimodal benchmarks, demonstrating strong effectiveness on fine-grained perception and reasoning tasks. Code is available at https://github.com/zwyang6/SaGe.",
+      "authors": [
+        "Zhiwei Yang",
+        "Yuanchen Wu",
+        "Nan Zhang",
+        "Yucong Meng",
+        "Ke Yan",
+        "Shouhong Ding"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-07T01:00:51+00:00",
+      "link": "https://arxiv.org/pdf/2607.05716v2",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "proposes scene graph thinking to reinforce structured visual reasoning in MLLMs",
+      "llm_evidence_cn": "提出场景图思维以加强多模态大语言模型的结构化视觉推理",
+      "llm_evidence": "提出场景图思维以加强多模态大语言模型的结构化视觉推理",
+      "canonical_evidence": "提出场景图思维以加强多模态大语言模型的结构化视觉推理",
+      "llm_tldr_en": "Scene Graph Thinking (SaGe) introduces an automated data engine to convert image-text pairs into scene graphs and trains MLLMs to perform fine-grained, structured visual reasoning, improving performance on visually intensive tasks.",
+      "llm_tldr_cn": "针对现有MLLMs忽略结构化关系导致视觉密集任务性能受限的问题，Scene Graph Thinking (SaGe) 提出自动数据引擎将扁平图文对转化为层次化场景图，并以此训练模型基于实体节点和关系边进行精细化、结构化的视觉推理，从而显著提升复杂视觉任务的表现。",
+      "llm_tldr": "针对现有MLLMs忽略结构化关系导致视觉密集任务性能受限的问题，Scene Graph Thinking (SaGe) 提出自动数据引擎将扁平图文对转化为层次化场景图，并以此训练模型基于实体节点和关系边进行精细化、结构化的视觉推理，从而显著提升复杂视觉任务的表现。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "image quality reasoning and explanation generation via multimodal large models",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.07264v1",
+      "source": "arxiv",
+      "title": "Naming the Concepts Classifiers Rely On: Language-Anchored Decomposition for Faithful Explanation",
+      "abstract": "Deep neural networks are widely deployed in high-stakes visual applications where interpretability is critical, yet existing explanations face a trade-off: post-hoc concept methods recover factors that are faithful to a model's behavior but unnamed, while naming and by-design methods attach human-readable concepts only by retraining or altering the classifier. We propose Language-Anchored Decomposition (LAD), a post-hoc framework that delivers concepts which are simultaneously named, faithful, and obtained without modifying the model. For each class, a large language model proposes a concept vocabulary that CLIP-based similarity maps localize across image regions. Inverting standard non-negative matrix factorization, LAD fixes these language-grounded maps as the coefficient matrix and learns only a concept basis that reconstructs the frozen encoder's activations, so naming becomes a structural constraint and the model's own feature geometry determines which concepts are retained. Removing this anchor preserves accuracy but collapses attribution faithfulness. Across natural-image, scene, and medical-imaging benchmarks, LAD produces spatially precise explanations that are decision-relevant under both concept insertion and deletion, while uniquely providing stable, human-interpretable concept names.",
+      "authors": [
+        "Ahsan Habib Akash",
+        "Dipkamal Bhusal",
+        "Stacey Jones",
+        "Donald A. Adjeroh",
+        "Binod Bhattarai",
+        "Prashnna Kumar Gyawali"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-08T10:50:04+00:00",
+      "link": "https://arxiv.org/pdf/2607.07264v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "large language model generates concept vocabulary and CLIP localizes concepts in images",
+      "llm_evidence_cn": "大语言模型生成概念词汇，CLIP在图像中定位概念",
+      "llm_evidence": "大语言模型生成概念词汇，CLIP在图像中定位概念",
+      "canonical_evidence": "大语言模型生成概念词汇，CLIP在图像中定位概念",
+      "llm_tldr_en": "LAD proposes a post-hoc explanation framework that uses a large language model to name concepts faithful to a classifier's decisions, combined with CLIP-based spatial localization.",
+      "llm_tldr_cn": "针对深度学习解释中概念不可命名的问题，LAD提出语言锚定分解框架，利用大语言模型为每个类别生成概念词汇，并通过CLIP相似度图定位区域，无需修改模型即可获得既具名又忠实的概念解释。实验表明该方法在保真度和可解释性上优于现有方法，为可信赖视觉系统提供新途径。",
+      "llm_tldr": "针对深度学习解释中概念不可命名的问题，LAD提出语言锚定分解框架，利用大语言模型为每个类别生成概念词汇，并通过CLIP相似度图定位区域，无需修改模型即可获得既具名又忠实的概念解释。实验表明该方法在保真度和可解释性上优于现有方法，为可信赖视觉系统提供新途径。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.08281v1",
+      "source": "arxiv",
+      "title": "Enhancing the KidSat Model: Integrating Geographical Encoding and Data Quality Assessment for Childhood Poverty Prediction",
+      "abstract": "Accurate poverty mapping using satellite imagery is often hindered by (i) noisy and sparse survey-derived supervision, (ii) image quality issues such as cloud cover and image corruption, and (iii) lack of explicit spatial structure in image-only models. Building on the KidSat framework, we develop an enhanced pipeline that improves predictive accuracy via refined data preprocessing, systematic image quality assessment, and mathematically defined geographic encoding. First, we refine the fine-tuning target matrix by resolving high-cardinality sparsity and reducing one-hot dimensionality from 103 to 51 via DHS re-aggregation. Second, we introduce a simple two-stage quality-screening procedure to filter heavily clouded or corrupted observations. Third, we fuse DINOv2 visual embeddings with Spherical Harmonics (SH) location features. Across extensive experiments, these changes reduce MAE from 0.2167 to 0.1759, corresponding to an 18.83% relative reduction on the cluster-level severe-deprivation proportion scale. When extended from 16 to 33 African countries, the best-performing configuration achieves an overall MAE of 0.1658. We find that SH features consistently improve performance over the image-only backbone, whereas higher-capacity coordinate Multi Layer Perception augmentation (SH+SIREN) can underperform without carefully designed objectives. Finally, gradient-boosted tree heads (XGBoost/LightGBM) most effectively exploit nonlinear interactions in the fused visual-geographic representation. These findings provide a scalable and principled recipe for improving satellite-based socioeconomic predictions using only publicly accessible data.",
+      "authors": [
+        "Hou Hin Ip",
+        "Ka Nam Lam",
+        "Joshua Man Yu Ng",
+        "Makkunda Sharma",
+        "Seth Flaxman",
+        "Codie Gerlach-Wood",
+        "H Juliette T Unwin"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "stat.AP"
+      ],
+      "published": "2026-07-09T09:22:38+00:00",
+      "link": "https://arxiv.org/pdf/2607.08281v1",
+      "tags": [
+        "keyword:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "systematic image quality assessment to filter cloud cover and corruption",
+      "llm_evidence_cn": "通过系统图像质量评估过滤云覆盖和图像损坏",
+      "llm_evidence": "通过系统图像质量评估过滤云覆盖和图像损坏",
+      "canonical_evidence": "通过系统图像质量评估过滤云覆盖和图像损坏",
+      "llm_tldr_en": "This paper enhances poverty prediction from satellite imagery by integrating a two-stage image quality screening procedure to remove low-quality images affected by cloud cover and corruption.",
+      "llm_tldr_cn": "针对卫星图像中云覆盖和损坏等质量问题影响贫困预测的问题，本文在KidSat框架基础上引入简单的两阶段质量筛选方法，结合地理编码，显著提升了预测准确性。该方法通过滤除低质量样本，使模型聚焦于可用数据，证明了数据质量对下游任务的关键作用。",
+      "llm_tldr": "针对卫星图像中云覆盖和损坏等质量问题影响贫困预测的问题，本文在KidSat框架基础上引入简单的两阶段质量筛选方法，结合地理编码，显著提升了预测准确性。该方法通过滤除低质量样本，使模型聚焦于可用数据，证明了数据质量对下游任务的关键作用。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

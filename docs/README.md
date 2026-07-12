@@ -6,28 +6,32 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-11
-- 运行时间：2026-07-11 20:05:02 UTC
+- 最新运行日期：2026-07-12
+- 运行时间：2026-07-12 20:22:33 UTC
 - 运行状态：成功
-- 本次总论文数：2
-- 精读区：1
-- 速读区：1
+- 本次总论文数：3
+- 精读区：0
+- 速读区：3
 
 ### 今日简报（AI）
-光场图像质量评价迎来首个标准化混合基准，提出涵盖真实失真与合成失真的主客观对齐框架。
-若只读一篇，看其如何用跨数据集专家评分解决光场质量评价的基准缺失难题；多模态动态质量感知也能提供互补视角。
-对普通读者：关注光场基准中的主观实验设计，可为自动驾驶与VR内容质量评估提供参考。
-- 详情：[/202607/11/README](/202607/11/README)
+今日速览三篇AI新作，从多模态视觉推理、可解释分类到贫困预测卫星模型，涵盖了结构化与可解释性方向。  
+最值得关注的是用场景图强化语言模型视觉推理的方法，以及用语言锚定为分类器提供忠实解释的思路。  
+建议从“场景图思维”那篇入手，关注结构化知识如何让多模态模型更可靠，也适合想了解AI可解释进展的读者。
+- 详情：[/202607/12/README](/202607/12/README)
 
 ### 精读区论文标签
-1. [Towards Standardized Light Field Quality Assessment: Hybrid Subjective Benchmarking and Objective Metric Evaluation](/202607/11/2607.03494v1-towards-standardized-light-field-quality-assessment-hybrid-subjective-benchmarking-and-objective-metric-evaluation)  
-   标签：评分：9.0/10、query:xiqa
-   evidence：通过主观和客观评估实现光场图像质量评价
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [General Incomplete Multimodal Learning via Dynamic Quality Perception](/202607/11/2607.06943v1-general-incomplete-multimodal-learning-via-dynamic-quality-perception)  
-   标签：评分：6.0/10、query:xiqa
-   evidence：动态质量感知评估模态特定的退化
+1. [Scene Graph Thinking: Reinforcing Structured Visual Reasoning for Multimodal Large Language Models](/202607/12/2607.05716v2-scene-graph-thinking-reinforcing-structured-visual-reasoning-for-multimodal-large-language-models)  
+   标签：评分：7.0/10、query:xiqa
+   evidence：提出场景图思维以加强多模态大语言模型的结构化视觉推理
+2. [Naming the Concepts Classifiers Rely On: Language-Anchored Decomposition for Faithful Explanation](/202607/12/2607.07264v1-naming-the-concepts-classifiers-rely-on-language-anchored-decomposition-for-faithful-explanation)  
+   标签：评分：7.0/10、query:xiqa
+   evidence：大语言模型生成概念词汇，CLIP在图像中定位概念
+3. [Enhancing the KidSat Model: Integrating Geographical Encoding and Data Quality Assessment for Childhood Poverty Prediction](/202607/12/2607.08281v1-enhancing-the-kidsat-model-integrating-geographical-encoding-and-data-quality-assessment-for-childhood-poverty-prediction)  
+   标签：评分：7.0/10、query:xiqa
+   evidence：通过系统图像质量评估过滤云覆盖和图像损坏
 
 
 <div class="dpr-home-promo-card">
