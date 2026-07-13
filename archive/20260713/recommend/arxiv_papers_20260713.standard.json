@@ -1,0 +1,53 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-13T21:25:19.172401+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 0,
+    "quick_skim_target": 11,
+    "quick_selected": 0
+  },
+  "deep_dive": [
+    {
+      "id": "2607.08563v2",
+      "source": "arxiv",
+      "title": "Partial-Reference IQA Based on Hermite-Gauss Structural Prediction and Texture Deviation",
+      "abstract": "We propose PreSPA (Partial-Reference Structural Prediction Approach), a Partial-Reference Image Quality Assessment framework that decomposes perceptual quality into two complementary indices. A structure-aware index, operating in a No-Reference manner, captures structural degradation through Hermite-Gauss prediction of the distorted gradient field and the angular variance of its curvature. A texture-sensitive index estimates local noise through a scalar prior $μ$, obtained from energy differences between reference and distorted complex gradient maps on strong-edge regions and accumulated over weakly-structured ones, reflecting the perceptual leakage of degraded edges into surrounding textures. Crucially, $μ$ is the only information extracted from the reference and is computed once per image pair, reducing the reference footprint to a single scalar value. The final score is produced by an affine fusion with only three interpretable parameters, making the method compact, transparent, and computationally efficient, with the viewing distance embedded into the operator scale and no dataset-specific calibration. Extensive evaluations on six standard benchmarks show that PreSPA consistently rivals or exceeds leading No-Reference approaches, while in several cases matching the accuracy of Full-Reference models.",
+      "authors": [
+        "Paolo Giannitrapani",
+        "Elio D. Di Claudio",
+        "Giovanni Jacovitti"
+      ],
+      "primary_category": "eess.IV",
+      "categories": [
+        "eess.IV"
+      ],
+      "published": "2026-07-09T14:54:16+00:00",
+      "link": "https://arxiv.org/pdf/2607.08563v2",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Partial-Reference Image Quality Assessment framework",
+      "llm_evidence_cn": "部分参考图像质量评估框架",
+      "llm_evidence": "部分参考图像质量评估框架",
+      "canonical_evidence": "部分参考图像质量评估框架",
+      "llm_tldr_en": "Proposes a partial-reference IQA method using structure-aware and texture-sensitive indices for perceptual quality evaluation with minimal reference information.",
+      "llm_tldr_cn": "针对部分参考图像质量评估问题，提出PreSPA框架，将感知质量分解为结构感知和纹理敏感两个互补指标。结构索引通过厄米-高斯预测失真梯度场及其曲率角度方差来捕捉结构退化；纹理索引利用来自参考图像的标量先验μ，从强边缘区域的能量差异中估计局部噪声。实验表明，该方法在仅需极少量参考信息的情况下，能够准确评估图像质量。这一贡献为有限参考信息下的质量评估提供了有效方案。",
+      "llm_tldr": "针对部分参考图像质量评估问题，提出PreSPA框架，将感知质量分解为结构感知和纹理敏感两个互补指标。结构索引通过厄米-高斯预测失真梯度场及其曲率角度方差来捕捉结构退化；纹理索引利用来自参考图像的标量先验μ，从强边缘区域的能量差异中估计局部噪声。实验表明，该方法在仅需极少量参考信息的情况下，能够准确评估图像质量。这一贡献为有限参考信息下的质量评估提供了有效方案。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": []
+}

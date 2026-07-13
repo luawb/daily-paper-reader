@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-13 <!--dpr-date:20260713-->
+    * 精读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/13/2607.08563v2-partial-reference-iqa-based-on-hermite-gauss-structural-prediction-and-texture-deviation" data-sidebar-item="{&quot;title&quot;: &quot;Partial-Reference IQA Based on Hermite-Gauss Structural Prediction and Texture Deviation&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.08563v2-partial-reference-iqa-based-on-hermite-gauss-structural-prediction-and-texture-deviation&quot;, &quot;score&quot;: &quot;9.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;部分参考图像质量评估框架&quot;}">Partial-Reference IQA Based on Hermite-Gauss Structural Prediction and Texture Deviation</a>
   * 2026-07-12 <!--dpr-date:20260712-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/12/2607.05716v2-scene-graph-thinking-reinforcing-structured-visual-reasoning-for-multimodal-large-language-models" data-sidebar-item="{&quot;title&quot;: &quot;Scene Graph Thinking: Reinforcing Structured Visual Reasoning for Multimodal Large Language Models&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.05716v2-scene-graph-thinking-reinforcing-structured-visual-reasoning-for-multimodal-large-language-models&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;提出场景图思维以加强多模态大语言模型的结构化视觉推理&quot;}">Scene Graph Thinking: Reinforcing Structured Visual Reasoning for Multimodal Large Language Models</a>

@@ -6,32 +6,26 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-12
-- 运行时间：2026-07-12 20:22:33 UTC
+- 最新运行日期：2026-07-13
+- 运行时间：2026-07-13 21:27:00 UTC
 - 运行状态：成功
-- 本次总论文数：3
-- 精读区：0
-- 速读区：3
+- 本次总论文数：1
+- 精读区：1
+- 速读区：0
 
 ### 今日简报（AI）
-今日速览三篇AI新作，从多模态视觉推理、可解释分类到贫困预测卫星模型，涵盖了结构化与可解释性方向。  
-最值得关注的是用场景图强化语言模型视觉推理的方法，以及用语言锚定为分类器提供忠实解释的思路。  
-建议从“场景图思维”那篇入手，关注结构化知识如何让多模态模型更可靠，也适合想了解AI可解释进展的读者。
-- 详情：[/202607/12/README](/202607/12/README)
+今日精读一篇高分图像质量评价论文，探索部分参考条件下利用 Hermite-Gauss 结构预测与纹理偏差的新方法。  
+该文将结构性预测与纹理失真量化巧妙结合，在只有部分参考信息时仍能准确衡量图像质量。  
+对普通读者而言，可以关注这种“轻量参考、精细评估”的思路在视频监控和画质修复中的落地可能。
+- 详情：[/202607/13/README](/202607/13/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [Partial-Reference IQA Based on Hermite-Gauss Structural Prediction and Texture Deviation](/202607/13/2607.08563v2-partial-reference-iqa-based-on-hermite-gauss-structural-prediction-and-texture-deviation)  
+   标签：评分：9.0/10、query:xiqa
+   evidence：部分参考图像质量评估框架
 
 ### 速读区论文标签
-1. [Scene Graph Thinking: Reinforcing Structured Visual Reasoning for Multimodal Large Language Models](/202607/12/2607.05716v2-scene-graph-thinking-reinforcing-structured-visual-reasoning-for-multimodal-large-language-models)  
-   标签：评分：7.0/10、query:xiqa
-   evidence：提出场景图思维以加强多模态大语言模型的结构化视觉推理
-2. [Naming the Concepts Classifiers Rely On: Language-Anchored Decomposition for Faithful Explanation](/202607/12/2607.07264v1-naming-the-concepts-classifiers-rely-on-language-anchored-decomposition-for-faithful-explanation)  
-   标签：评分：7.0/10、query:xiqa
-   evidence：大语言模型生成概念词汇，CLIP在图像中定位概念
-3. [Enhancing the KidSat Model: Integrating Geographical Encoding and Data Quality Assessment for Childhood Poverty Prediction](/202607/12/2607.08281v1-enhancing-the-kidsat-model-integrating-geographical-encoding-and-data-quality-assessment-for-childhood-poverty-prediction)  
-   标签：评分：7.0/10、query:xiqa
-   evidence：通过系统图像质量评估过滤云覆盖和图像损坏
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">
