@@ -6,26 +6,34 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-13
-- 运行时间：2026-07-13 21:27:00 UTC
+- 最新运行日期：2026-07-14
+- 运行时间：2026-07-14 20:22:23 UTC
 - 运行状态：成功
-- 本次总论文数：1
-- 精读区：1
-- 速读区：0
+- 本次总论文数：4
+- 精读区：2
+- 速读区：2
 
 ### 今日简报（AI）
-今日精读一篇高分图像质量评价论文，探索部分参考条件下利用 Hermite-Gauss 结构预测与纹理偏差的新方法。  
-该文将结构性预测与纹理失真量化巧妙结合，在只有部分参考信息时仍能准确衡量图像质量。  
-对普通读者而言，可以关注这种“轻量参考、精细评估”的思路在视频监控和画质修复中的落地可能。
-- 详情：[/202607/13/README](/202607/13/README)
+今日解码视觉语言模型十年进化：准确率飙升背后，核心视觉认知错误依然顽固。  
+最值得关注的是「认知专家混合」架构如何打破瓶颈，以及场景图结构化推理与动态视觉状态更新的新解法。  
+想跟上多模态AI的窗口期，建议从这两篇精读切入，理解模型“看”的缺陷与思维突破。
+- 详情：[/202607/14/README](/202607/14/README)
 
 ### 精读区论文标签
-1. [Partial-Reference IQA Based on Hermite-Gauss Structural Prediction and Texture Deviation](/202607/13/2607.08563v2-partial-reference-iqa-based-on-hermite-gauss-structural-prediction-and-texture-deviation)  
+1. [Evolution of Accuracy and Visual-Cognitive Errors in a Decade of Vision-Language AI Models](/202607/14/2607.09654v1-evolution-of-accuracy-and-visual-cognitive-errors-in-a-decade-of-vision-language-ai-models)  
    标签：评分：9.0/10、query:xiqa
-   evidence：部分参考图像质量评估框架
+   evidence：评估处理图像和文本的大型视觉语言模型
+2. [Mixture of Cognitive Experts in Large Vision-Language Models](/202607/14/2607.10796v1-mixture-of-cognitive-experts-in-large-vision-language-models)  
+   标签：评分：9.0/10、query:xiqa
+   evidence：提出处理图像和文本的大型视觉语言模型方法
 
 ### 速读区论文标签
-- 本次无速读推荐。
+1. [Scene Graph Thinking: Reinforcing Structured Visual Reasoning for Multimodal Large Language Models](/202607/14/2607.05716v3-scene-graph-thinking-reinforcing-structured-visual-reasoning-for-multimodal-large-language-models)  
+   标签：评分：7.0/10、query:xiqa
+   evidence：提出通过场景图实现MLLMs的结构化视觉推理，可应用于图像质量推理
+2. [DeltaV: Thinking with Visual State Updates in Unified Large Multimodal Models](/202607/14/2607.08434v1-deltav-thinking-with-visual-state-updates-in-unified-large-multimodal-models)  
+   标签：评分：7.0/10、query:xiqa
+   evidence：引入视觉状态更新实现高效多模态推理，可用于图像质量解释生成
 
 
 <div class="dpr-home-promo-card">

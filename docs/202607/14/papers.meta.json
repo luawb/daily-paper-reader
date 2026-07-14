@@ -1,0 +1,69 @@
+{
+  "label": "2026-07-14",
+  "date": "2026-07-14",
+  "generated_at": "2026-07-14T20:22:38",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202607/14/2607.09654v1-evolution-of-accuracy-and-visual-cognitive-errors-in-a-decade-of-vision-language-ai-models",
+      "section": "deep",
+      "title_en": "Evolution of Accuracy and Visual-Cognitive Errors in a Decade of Vision-Language AI Models",
+      "authors": "Shravan Murlidaran, Miguel P. Eckstein",
+      "date": "2026-07-10",
+      "pdf": "https://arxiv.org/pdf/2607.09654v1",
+      "score": "9.0",
+      "evidence": "评估处理图像和文本的大型视觉语言模型",
+      "tldr": "现有视觉语言模型评估多基于简单场景，忽视复杂社会互动中的表现与错误分析。本研究构建复杂社会行为数据集，梳理2017至2025年间预多模态大语言模型与多模态大语言模型的进展。结果显示多模态大语言模型在复杂场景描述上已比肩人类最高水平，仅残余空间依赖错误。该工作为模型演进提供了更全面深入的评估基准。",
+      "tags": "query:xiqa",
+      "abstract_en": "Vision language models (VLMs) have made remarkable progress in visual reasoning during the last decade. Most evaluations have used simple scenes (MS-COCO) that do not showcase complex human interactions or behaviors, only a handful of non-curated human descriptions as a benchmark, and have not focused on understanding the model's error types. Here, we introduce the Complex Social Behavior (CSB) dataset, containing 100 images depicting complex social interactions/behaviors. We analyze the progression of scene descriptions over a decade (2017-2025) of VLMs (four pre-Multimodal Large Language Models, MLLMs, and five MLLMs). We evaluate the accuracy of the models and 20 human descriptions relative to a gold standard on the CSB dataset and on a sample from MS-COCO. We analyzed five visual-cognitive error types: object detection, recognition, hallucination, scene understanding, and spatial dependence. The CSB dataset showed a more pronounced improvement than MS-COCO in scene description accuracy, with pre-MLLMs achieving much lower accuracy than the bottom-ranked human descriptions and MLLMs attaining accuracies similar to the top-ranked human descriptions. We show that MLLMs have eliminated the gap in scene description accuracy between simpler MS-COCO scenes and scenes depicting complex behaviors (CSB). MLLMs have almost eliminated all error types in our tested datasets, except for occasionally relying on different image regions for scene descriptions than humans do (spatial dependence error). We also show that detection, recognition, and hallucination errors have the highest impact on scene description accuracy. Together, our findings provide a more thorough evaluation of how visual language models have advanced over the last decade.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/14/2607.10796v1-mixture-of-cognitive-experts-in-large-vision-language-models",
+      "section": "deep",
+      "title_en": "Mixture of Cognitive Experts in Large Vision-Language Models",
+      "authors": "Robert Wijaya, Ngai-Man Cheung",
+      "date": "2026-07-12",
+      "pdf": "https://arxiv.org/pdf/2607.10796v1",
+      "score": "9.0",
+      "evidence": "提出处理图像和文本的大型视觉语言模型方法",
+      "tldr": "当前大型视觉语言模型对所有查询采用相同感知推理路由，忽略认知水平差异，导致可解释性差与幻觉。为此，提出基于Bloom分类层次的两阶段认知语言化框架，先提取文字证据再展开Bloom推理，并用轨迹模块量化分析。集成多专家后模型感知与推理能力显著提升，且不同查询展现出差异化认知路径与证据使用模式，从而增强可信度与细粒度分析能力。",
+      "tags": "query:xiqa",
+      "abstract_en": "Large Vision Language Models (LVLMs) require strong reasoning over both visual and textual input. Recent work suggests that cognitive elements, especially diverse representations and metacognition, correlate with better performance. Many of the needed perceptual functions are already provided by specialized domain-specific computer vision models, which act as the perceptual subsystem for detecting objects, localizing them, inferring states, recovering spatial layout, and reading text. The key challenge is to integrate these multi-encoder experts into a trustworthy, interpretable, and coherent representation that improves verifiability and reduces hallucinations. This is difficult because vision-language questions span different cognitive levels, yet most LVLM pipelines apply the same perception-reasoning routing regardless of the demand of each query. We propose an evidence-driven multimodal reasoning framework that utilizes a Bloom-inspired taxonomy as a hierarchical reasoning protocol. The two-stage cognitive verbalization first produces a Literal Evidence Summary by decomposing expert outputs into short, atomic evidence statements. It then performs Bloom Verbalization to turn these evidence items into a staged reasoning trace, and a lightweight Reasoning Trace Module quantitatively analyzes the trace to make evidence usage and reasoning progression explicit. Through this integration, we observed several improvements in perception and reasoning abilities. Moreover, the trace module provides quantitative evidence that different queries induce different cognitive entry levels and evidence-use trajectories that enable fine-grained analysis.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/14/2607.05716v3-scene-graph-thinking-reinforcing-structured-visual-reasoning-for-multimodal-large-language-models",
+      "section": "quick",
+      "title_en": "Scene Graph Thinking: Reinforcing Structured Visual Reasoning for Multimodal Large Language Models",
+      "authors": "Zhiwei Yang, Yuanchen Wu, Nan Zhang, Yucong Meng, Ke Yan, Shouhong Ding",
+      "date": "2026-07-07",
+      "pdf": "https://arxiv.org/pdf/2607.05716v3",
+      "score": "7.0",
+      "evidence": "提出通过场景图实现MLLMs的结构化视觉推理，可应用于图像质量推理",
+      "tldr": "现有MLLMs在处理视觉任务时常孤立对象，忽略结构化关系，限制了复杂场景下的推理能力。Scene Graph Thinking (SaGe) 通过构建场景图显式表示实体与关系，并利用图对齐后训练（监督微调与强化微调）强化结构化推理。在8个多模态基准上取得显著提升，尤其在细粒度感知与推理任务中效果突出。该工作为MLLMs的结构化视觉推理提供了一种有效范式。",
+      "tags": "query:xiqa",
+      "abstract_en": "Multimodal Large Language Models (MLLMs) have demonstrated strong perception and reasoning capabilities. However, most existing models focus on isolated objects and neglect structured relationships for efficient target navigation, limiting their performance on visually intensive tasks. To address this challenge, we introduce Scene Graph Thinking (SaGe), a novel paradigm that enables fine-grained and structured visual reasoning through explicit scene-graph representations. Specifically, we first introduce an automated data engine that converts flat image-text corpora into structured scene graphs, where hierarchical entities constitute the nodes and diverse visual relations define the edges. Building upon this, we construct 120K high-quality training data by sampling reasoning traces from scene graphs. Then, two-stage graph-aligned post-training paradigms are introduced, where supervised fine-tuning internalizes MLLMs with structured reasoning, and subsequent reinforcement fine-tuning proposes node-as-proxy graph rewards to consolidate efficient graph exploration. With curated data and graph-aligned training, our approach achieves significant improvements across eight multimodal benchmarks, demonstrating strong effectiveness on fine-grained perception and reasoning tasks. Code is available at https://github.com/zwyang6/SaGe.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/14/2607.08434v1-deltav-thinking-with-visual-state-updates-in-unified-large-multimodal-models",
+      "section": "quick",
+      "title_en": "DeltaV: Thinking with Visual State Updates in Unified Large Multimodal Models",
+      "authors": "Pengjie Wang, Linger Deng, Zujia Zhang, Shaojie Zhang, Zhenbo Luo, Pei Fu, Jian Luan, Xiang Bai, Yuliang Liu",
+      "date": "2026-07-09",
+      "pdf": "https://arxiv.org/pdf/2607.08434v1",
+      "score": "7.0",
+      "evidence": "引入视觉状态更新实现高效多模态推理，可用于图像质量解释生成",
+      "tldr": "当前统一大型多模态模型在推理中需多次生成完整中间图像，带来大量视觉令牌冗余，且细粒度推理转变监督信号被稀释。DeltaV提出以视觉更新替代全图生成，通过增量预测紧凑更新令牌捕捉跨步骤变化，并利用时间相似度路由器动态分配令牌预算，仅对重建增益不足的变化停止分配。实验显示，该方法平均节省55.6%新生成视觉令牌，多模态推理性能提高3.3%。基于StructCoT数据集训练的DeltaV-2B，在域内多模态推理评估中超越更大模型8.4%，并在外部基准上比Qwen3-VL-2B高出5.9%，证实视觉更新范式的高效与强泛化能力。",
+      "tags": "query:xiqa",
+      "abstract_en": "Current Unified Large Multimodal Models (ULMMs) support interleaved multimodal reasoning through textual reasoning and intermediate visual states, but typically generate each visual state as a full image. This full-image generation paradigm introduces substantial visual-token redundancy and dilutes supervision on sparse yet reasoning-critical state transitions. We propose DeltaV, a ULMM that replaces full-image generation with visual updates. Conditioned on historical visual states, DeltaV incrementally predicts compact update tokens that capture the visual changes across reasoning steps, avoiding repeated modeling of unchanged content. To align the token budget of each update with the magnitude of visual change, DeltaV introduces a temporal similarity (TSIM) Router, which stops allocating tokens once the marginal reconstruction gain falls below a threshold. To support more diverse and generalizable reasoning, we further construct StructCoT, a large-scale interleaved multimodal reasoning dataset with 1.05M samples spanning 44 task domains. Experiments show that the visual-update paradigm reduces newly generated visual tokens by 55.6\\% on average without compromising reconstruction fidelity, and improves multimodal reasoning by 3.3\\% over full-image generation. Trained with StructCoT and large-scale multimodal data, DeltaV-2B further outperforms substantially larger open-source models by 8.4\\% on in-domain multimodal reasoning evaluations and surpasses the comparable-scale Qwen3-VL-2B by 5.9\\% on external multimodal reasoning and understanding benchmarks. Code, models, and StructCoT will be released at https://github.com/Pengjie-W/DeltaV.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
