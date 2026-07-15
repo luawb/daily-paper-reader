@@ -1,0 +1,136 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-15T21:12:30.953157+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 3,
+    "deep_cap": 6,
+    "deep_selected": 3,
+    "quick_candidates": 0,
+    "quick_skim_target": 11,
+    "quick_selected": 0
+  },
+  "deep_dive": [
+    {
+      "id": "2607.12375v1",
+      "source": "arxiv",
+      "title": "IQA-T1: Tool-based Visual Evidence Reasoning for Image Quality Assessment",
+      "abstract": "Image Quality Assessment (IQA) in open-world environments remains challenging due to limited generalization and interpretability. Recent approaches based on multimodal large language models (MLLMs) introduce textual reasoning for quality prediction, yet their judgments rely heavily on semantically biased internal representations, making them insensitive to low-level perceptual degradations. We propose IQA-T1, a tool-based visual evidence reasoning framework that augments MLLM reasoning with explicit perceptual observations. During inference, the model autonomously invokes specialized analysis tools to generate structured visual evidence, such as noise residual maps, gradient statistics, and frequency spectra, which are progressively integrated into the reasoning process. To support this paradigm, we construct Q-Tool, a dataset containing 11k multimodal reasoning chains grounded in tool-generated evidence. Extensive experiments on seven IQA benchmarks show that IQA-T1 achieves the best overall performance across datasets while producing interpretable and evidence-grounded quality assessments. Code and dataset are available at https://github.com/zibuyu-02/IQA-T1.",
+      "authors": [
+        "Jinjian Wu",
+        "Jiaqi Tang",
+        "Wei Wei",
+        "Yingying Yan",
+        "Jianmin Chen",
+        "Botong Geng",
+        "Lei Zhang",
+        "Qifeng Chen"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI",
+        "eess.IV"
+      ],
+      "published": "2026-07-14T05:47:32+00:00",
+      "link": "https://arxiv.org/pdf/2607.12375v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "Tool-based visual evidence reasoning framework for IQA using MLLMs, generating structured perceptual observations",
+      "llm_evidence_cn": "基于工具视觉证据推理的多模态大模型图像质量评估框架，生成结构化感知观察",
+      "llm_evidence": "基于工具视觉证据推理的多模态大模型图像质量评估框架，生成结构化感知观察",
+      "canonical_evidence": "基于工具视觉证据推理的多模态大模型图像质量评估框架，生成结构化感知观察",
+      "llm_tldr_en": "IQA-T1 addresses the limited interpretability of MLLM-based IQA by autonomously invoking analysis tools to generate noise maps, gradient stats, and frequency spectra as visual evidence for quality reasoning.",
+      "llm_tldr_cn": "IQA-T1针对多模态大语言模型在图像质量评估中解释性不足的问题，提出一种工具驱动的视觉证据推理框架。它让模型在推理时自主调用专用分析工具，生成噪声残差图、梯度统计和频谱等结构化感知证据，并逐步融入质量推理过程。该方法增强了模型对低层失真的敏感性，有望提升开集环境下图像质量评估的准确性与可解释性。",
+      "llm_tldr": "IQA-T1针对多模态大语言模型在图像质量评估中解释性不足的问题，提出一种工具驱动的视觉证据推理框架。它让模型在推理时自主调用专用分析工具，生成噪声残差图、梯度统计和频谱等结构化感知证据，并逐步融入质量推理过程。该方法增强了模型对低层失真的敏感性，有望提升开集环境下图像质量评估的准确性与可解释性。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "image quality reasoning and explanation generation via multimodal large models",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.10666v1",
+      "source": "arxiv",
+      "title": "Answer-Conditioned Chain-of-Thought Distillation for Few-Shot Industrial Vision with Small VLMs",
+      "abstract": "Deploying AI-based visual inspection in manufacturing is hard because requirements change often, new defect types appear, and large labeled datasets are rarely available. We propose answer-conditioned chain-of-thought (CoT) distillation for rapidly adapting small vision-language models (VLMs) to new industrial tasks using minimal labeled data. A frontier VLM receives each training image along with its correct label and generates a justified visual explanation. A 3B-parameter model is then fine-tuned on these reasoning-augmented examples via LoRA. By conditioning on correct answers, we ensure all training reasoning is directed toward the correct conclusion, which is critical because frontier models score as low as 24.1% on our hardest task. We validate on four industrial classification tasks spanning three image modalities using only 18 to 30 labeled images per task. Across 4 seeds per task (32 training runs), our method outperforms direct fine-tuning on all 16 seed-task combinations, with mean improvements of +1.7 to +4.4 percentage points. A controlled equal-budget experiment confirms the improvement comes from reasoning quality, not additional training steps. An unconditioned baseline demonstrates that with out answer-conditioning, wrong reasoning degrades performance by 17.8 percentage points. On weld radiograph classification, the fine-tuned 3B model outperforms GPT-4.1 by 10.0pp using just 24 training images.",
+      "authors": [
+        "Shubham Rao"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cond-mat.mtrl-sci",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-07-12T09:23:05+00:00",
+      "link": "https://arxiv.org/pdf/2607.10666v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Uses multimodal LLM to generate chain-of-thought explanations for defect detection, i.e., image quality reasoning and explanation",
+      "llm_evidence_cn": "使用多模态大语言模型为缺陷检测生成思维链解释，即图像质量推理与解释生成",
+      "llm_evidence": "使用多模态大语言模型为缺陷检测生成思维链解释，即图像质量推理与解释生成",
+      "canonical_evidence": "使用多模态大语言模型为缺陷检测生成思维链解释，即图像质量推理与解释生成",
+      "llm_tldr_en": "Proposes answer-conditioned chain-of-thought distillation to adapt small VLMs for few-shot industrial visual inspection, generating reasoning explanations that improve defect detection and provide interpretable quality assessment.",
+      "llm_tldr_cn": "针对制造中视觉检测需求多变、新缺陷频繁出现且标注数据稀缺的问题，提出答案条件化思维链蒸馏，利用前沿大模型基于正确答案生成带视觉解释的推理增强示例，再通过LoRA微调小模型，使其在少样本条件下快速适应新工业任务。实验表明该方法有效提升缺陷分类精度和解释质量，为可解释的图像质量评估提供了新范式。",
+      "llm_tldr": "针对制造中视觉检测需求多变、新缺陷频繁出现且标注数据稀缺的问题，提出答案条件化思维链蒸馏，利用前沿大模型基于正确答案生成带视觉解释的推理增强示例，再通过LoRA微调小模型，使其在少样本条件下快速适应新工业任务。实验表明该方法有效提升缺陷分类精度和解释质量，为可解释的图像质量评估提供了新范式。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "image quality reasoning and explanation generation via multimodal large models",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.11199v1",
+      "source": "arxiv",
+      "title": "DynEval: Holistic Evaluations of T2I Generative Models in the Wild",
+      "abstract": "Recent advances in text-to-image (T2I) generation have led to models capable of producing highly realistic images. Yet, reliably evaluating their outputs remains challenging, especially at scale. Existing automatic evaluators, often relying on a static prompt set, struggle to capture subtle failure modes such as partial prompt misalignment, compositional errors, or visually plausible but semantically incorrect generations. In this work, we introduce DynEval, a Dynamic Evaluation framework designed to jointly assess text-to-image alignment and image quality of T2I models. To support scalable training beyond limited human-annotated data, we construct two large datasets. First, we build GenDB, a collection of 500K prompt-image pairs generated from human-written prompts drawn from DiffusionDB using a tiered prompt-model generation strategy. Second, building upon GenDB, we construct DynEvalInstruct, a 250K instruction dataset comprising prompt-image-response triplets distilled from a structured evaluation pipeline that decomposes evaluation into text-image alignment and visual quality reasoning. Using this dataset, we perform full fine-tuning of a compact evaluator through a curriculum learning strategy to effectively distill the superior evaluation capabilities of a larger teacher vision-language model, resulting in DynEval-2B and DynEval-4B. In extensive comparisons against existing evaluators across 11 benchmarks, our evaluator achieves a higher overall correlation with human judgments. Furthermore, it provides fine-grained analysis of the capabilities and failure modes of 36 T2I models across 42 subcategories and 9 semantic dimensions.",
+      "authors": [
+        "Shyam Marjit",
+        "Dheeraj Baiju",
+        "Anuj Shikarkhane",
+        "Akhil Sakthieswaran",
+        "Sayak Paul",
+        "Anirban Chakraborty"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-13T07:50:54+00:00",
+      "link": "https://arxiv.org/pdf/2607.11199v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "jointly evaluates text-to-image alignment and image quality for T2I generative models",
+      "llm_evidence_cn": "联合评估文生图模型的对齐与图像质量",
+      "llm_evidence": "联合评估文生图模型的对齐与图像质量",
+      "canonical_evidence": "联合评估文生图模型的对齐与图像质量",
+      "llm_tldr_en": "DynEval introduces a dynamic evaluation framework to assess T2I models by jointly measuring alignment and image quality, supported by a large-scale synthetic dataset. It captures nuanced failure modes often missed by static evaluators.",
+      "llm_tldr_cn": "现有文生图模型评估多依赖静态提示集，难以发现提示对齐偏差、组合错误等微妙失败。DynEval提出动态评估框架，联合量化文本-图像对齐与图像质量，并构建包含50万图文对的大型数据集GenDB以支持可扩展训练。该方法提供了更全面、更贴近真实场景的评估手段。",
+      "llm_tldr": "现有文生图模型评估多依赖静态提示集，难以发现提示对齐偏差、组合错误等微妙失败。DynEval提出动态评估框架，联合量化文本-图像对齐与图像质量，并构建包含50万图文对的大型数据集GenDB以支持可扩展训练。该方法提供了更全面、更贴近真实场景的评估手段。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": []
+}

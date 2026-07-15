@@ -1,0 +1,54 @@
+{
+  "label": "2026-07-15",
+  "date": "2026-07-15",
+  "generated_at": "2026-07-15T21:16:14",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202607/15/2607.12375v1-iqa-t1-tool-based-visual-evidence-reasoning-for-image-quality-assessment",
+      "section": "deep",
+      "title_en": "IQA-T1: Tool-based Visual Evidence Reasoning for Image Quality Assessment",
+      "authors": "Jinjian Wu, Jiaqi Tang, Wei Wei, Yingying Yan, Jianmin Chen, Botong Geng, Lei Zhang, Qifeng Chen",
+      "date": "2026-07-14",
+      "pdf": "https://arxiv.org/pdf/2607.12375v1",
+      "score": "10.0",
+      "evidence": "基于工具视觉证据推理的多模态大模型图像质量评估框架，生成结构化感知观察",
+      "tldr": "开放世界中图像质量评估（IQA）面临泛化性差与可解释性不足的挑战，现有基于多模态大语言模型（MLLM）的方法依赖语义偏差，对低层感知退化不敏感。IQA-T1通过自主调用工具生成噪声残差图、梯度统计等视觉证据，并将结构化观测注入推理链，显著提升了评估的准确性与可解释性。在七个基准上取得最优性能，并构建了包含1.1万条工具证据推理链的Q-Tool数据集，为可解释IQA提供新范式。",
+      "tags": "query:xiqa",
+      "abstract_en": "Image Quality Assessment (IQA) in open-world environments remains challenging due to limited generalization and interpretability. Recent approaches based on multimodal large language models (MLLMs) introduce textual reasoning for quality prediction, yet their judgments rely heavily on semantically biased internal representations, making them insensitive to low-level perceptual degradations. We propose IQA-T1, a tool-based visual evidence reasoning framework that augments MLLM reasoning with explicit perceptual observations. During inference, the model autonomously invokes specialized analysis tools to generate structured visual evidence, such as noise residual maps, gradient statistics, and frequency spectra, which are progressively integrated into the reasoning process. To support this paradigm, we construct Q-Tool, a dataset containing 11k multimodal reasoning chains grounded in tool-generated evidence. Extensive experiments on seven IQA benchmarks show that IQA-T1 achieves the best overall performance across datasets while producing interpretable and evidence-grounded quality assessments. Code and dataset are available at https://github.com/zibuyu-02/IQA-T1.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/15/2607.10666v1-answer-conditioned-chain-of-thought-distillation-for-few-shot-industrial-vision-with-small-vlms",
+      "section": "deep",
+      "title_en": "Answer-Conditioned Chain-of-Thought Distillation for Few-Shot Industrial Vision with Small VLMs",
+      "authors": "Shubham Rao",
+      "date": "2026-07-12",
+      "pdf": "https://arxiv.org/pdf/2607.10666v1",
+      "score": "8.0",
+      "evidence": "使用多模态大语言模型为缺陷检测生成思维链解释，即图像质量推理与解释生成",
+      "tldr": "制造业视觉检测面临需求多变、新缺陷涌现和标注数据稀缺的挑战。本文提出答案条件化思维链蒸馏方法，利用大模型为少量标注样本生成正确结论引导的推理解释，再微调小型视觉语言模型。在四个工业分类任务中，仅用18-30张图像训练，即在所有组合上超越直接微调，平均提升1.7-4.4个百分点，并在焊接射线分类上以10个百分点优势胜过GPT-4.1。该方法为工业小样本学习提供了高效且可靠的适应方案。",
+      "tags": "query:xiqa",
+      "abstract_en": "Deploying AI-based visual inspection in manufacturing is hard because requirements change often, new defect types appear, and large labeled datasets are rarely available. We propose answer-conditioned chain-of-thought (CoT) distillation for rapidly adapting small vision-language models (VLMs) to new industrial tasks using minimal labeled data. A frontier VLM receives each training image along with its correct label and generates a justified visual explanation. A 3B-parameter model is then fine-tuned on these reasoning-augmented examples via LoRA. By conditioning on correct answers, we ensure all training reasoning is directed toward the correct conclusion, which is critical because frontier models score as low as 24.1% on our hardest task. We validate on four industrial classification tasks spanning three image modalities using only 18 to 30 labeled images per task. Across 4 seeds per task (32 training runs), our method outperforms direct fine-tuning on all 16 seed-task combinations, with mean improvements of +1.7 to +4.4 percentage points. A controlled equal-budget experiment confirms the improvement comes from reasoning quality, not additional training steps. An unconditioned baseline demonstrates that with out answer-conditioning, wrong reasoning degrades performance by 17.8 percentage points. On weld radiograph classification, the fine-tuned 3B model outperforms GPT-4.1 by 10.0pp using just 24 training images.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/15/2607.11199v1-dyneval-holistic-evaluations-of-t2i-generative-models-in-the-wild",
+      "section": "deep",
+      "title_en": "DynEval: Holistic Evaluations of T2I Generative Models in the Wild",
+      "authors": "Shyam Marjit, Dheeraj Baiju, Anuj Shikarkhane, Akhil Sakthieswaran, Sayak Paul, Anirban Chakraborty",
+      "date": "2026-07-13",
+      "pdf": "https://arxiv.org/pdf/2607.11199v1",
+      "score": "8.0",
+      "evidence": "联合评估文生图模型的对齐与图像质量",
+      "tldr": "近年来，文本到图像生成模型飞速进步，能生成高度逼真图像，但大规模可靠评估仍困难，现有自动评估器难以捕捉部分提示错位、组合错误等细微失败。为此，DynEval提出动态评估框架，联合评估文本-图像对齐与图像质量，并构建50万提示-图像对GenDB和25万指令数据DynEvalInstruct，通过课程学习微调紧凑模型蒸馏大VLM评估能力。在11个基准上，DynEval-2B/4B与人类判断相关性更高，且能对36个T2I模型在42子类别和9语义维度上进行细粒度失败分析。",
+      "tags": "query:xiqa",
+      "abstract_en": "Recent advances in text-to-image (T2I) generation have led to models capable of producing highly realistic images. Yet, reliably evaluating their outputs remains challenging, especially at scale. Existing automatic evaluators, often relying on a static prompt set, struggle to capture subtle failure modes such as partial prompt misalignment, compositional errors, or visually plausible but semantically incorrect generations. In this work, we introduce DynEval, a Dynamic Evaluation framework designed to jointly assess text-to-image alignment and image quality of T2I models. To support scalable training beyond limited human-annotated data, we construct two large datasets. First, we build GenDB, a collection of 500K prompt-image pairs generated from human-written prompts drawn from DiffusionDB using a tiered prompt-model generation strategy. Second, building upon GenDB, we construct DynEvalInstruct, a 250K instruction dataset comprising prompt-image-response triplets distilled from a structured evaluation pipeline that decomposes evaluation into text-image alignment and visual quality reasoning. Using this dataset, we perform full fine-tuning of a compact evaluator through a curriculum learning strategy to effectively distill the superior evaluation capabilities of a larger teacher vision-language model, resulting in DynEval-2B and DynEval-4B. In extensive comparisons against existing evaluators across 11 benchmarks, our evaluator achieves a higher overall correlation with human judgments. Furthermore, it provides fine-grained analysis of the capabilities and failure modes of 36 T2I models across 42 subcategories and 9 semantic dimensions.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

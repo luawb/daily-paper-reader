@@ -6,34 +6,32 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-14
-- 运行时间：2026-07-14 20:22:23 UTC
+- 最新运行日期：2026-07-15
+- 运行时间：2026-07-15 21:15:57 UTC
 - 运行状态：成功
-- 本次总论文数：4
-- 精读区：2
-- 速读区：2
+- 本次总论文数：3
+- 精读区：3
+- 速读区：0
 
 ### 今日简报（AI）
-今日解码视觉语言模型十年进化：准确率飙升背后，核心视觉认知错误依然顽固。  
-最值得关注的是「认知专家混合」架构如何打破瓶颈，以及场景图结构化推理与动态视觉状态更新的新解法。  
-想跟上多模态AI的窗口期，建议从这两篇精读切入，理解模型“看”的缺陷与思维突破。
-- 详情：[/202607/14/README](/202607/14/README)
+今日精读两篇顶会论文，聚焦视觉语言模型的推理增强与小样本工业落地。  
+最值得关注的方向：一是用工具化证据推理革新图像质量评估（IQA），二是答案条件化思维链蒸馏让小VLM在工业场景实现高效少样本学习。  
+建议从业者优先尝试将工具调用与推理蒸馏结合，直接解决你手头的质量检测或缺陷识别任务。
+- 详情：[/202607/15/README](/202607/15/README)
 
 ### 精读区论文标签
-1. [Evolution of Accuracy and Visual-Cognitive Errors in a Decade of Vision-Language AI Models](/202607/14/2607.09654v1-evolution-of-accuracy-and-visual-cognitive-errors-in-a-decade-of-vision-language-ai-models)  
-   标签：评分：9.0/10、query:xiqa
-   evidence：评估处理图像和文本的大型视觉语言模型
-2. [Mixture of Cognitive Experts in Large Vision-Language Models](/202607/14/2607.10796v1-mixture-of-cognitive-experts-in-large-vision-language-models)  
-   标签：评分：9.0/10、query:xiqa
-   evidence：提出处理图像和文本的大型视觉语言模型方法
+1. [IQA-T1: Tool-based Visual Evidence Reasoning for Image Quality Assessment](/202607/15/2607.12375v1-iqa-t1-tool-based-visual-evidence-reasoning-for-image-quality-assessment)  
+   标签：评分：10.0/10、query:xiqa
+   evidence：基于工具视觉证据推理的多模态大模型图像质量评估框架，生成结构化感知观察
+2. [Answer-Conditioned Chain-of-Thought Distillation for Few-Shot Industrial Vision with Small VLMs](/202607/15/2607.10666v1-answer-conditioned-chain-of-thought-distillation-for-few-shot-industrial-vision-with-small-vlms)  
+   标签：评分：8.0/10、query:xiqa
+   evidence：使用多模态大语言模型为缺陷检测生成思维链解释，即图像质量推理与解释生成
+3. [DynEval: Holistic Evaluations of T2I Generative Models in the Wild](/202607/15/2607.11199v1-dyneval-holistic-evaluations-of-t2i-generative-models-in-the-wild)  
+   标签：评分：8.0/10、query:xiqa
+   evidence：联合评估文生图模型的对齐与图像质量
 
 ### 速读区论文标签
-1. [Scene Graph Thinking: Reinforcing Structured Visual Reasoning for Multimodal Large Language Models](/202607/14/2607.05716v3-scene-graph-thinking-reinforcing-structured-visual-reasoning-for-multimodal-large-language-models)  
-   标签：评分：7.0/10、query:xiqa
-   evidence：提出通过场景图实现MLLMs的结构化视觉推理，可应用于图像质量推理
-2. [DeltaV: Thinking with Visual State Updates in Unified Large Multimodal Models](/202607/14/2607.08434v1-deltav-thinking-with-visual-state-updates-in-unified-large-multimodal-models)  
-   标签：评分：7.0/10、query:xiqa
-   evidence：引入视觉状态更新实现高效多模态推理，可用于图像质量解释生成
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">
