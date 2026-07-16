@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-16 <!--dpr-date:20260716-->
+    * 精读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/16/2607.10093v1-embrace-a-multi-task-framework-for-comprehensive-quality-assessment-in-cleavage-stage-embryo" data-sidebar-item="{&quot;title&quot;: &quot;EMBRACE: A Multi-task Framework for Comprehensive Quality Assessment in Cleavage-stage Embryo&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.10093v1-embrace-a-multi-task-framework-for-comprehensive-quality-assessment-in-cleavage-stage-embryo&quot;, &quot;score&quot;: &quot;9.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;用于胚胎图像综合质量评估的多任务框架&quot;}">EMBRACE: A Multi-task Framework for Comprehensive Quality Assessment in Cleavage-stage Embryo</a>
   * 2026-07-15 <!--dpr-date:20260715-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/15/2607.12375v1-iqa-t1-tool-based-visual-evidence-reasoning-for-image-quality-assessment" data-sidebar-item="{&quot;title&quot;: &quot;IQA-T1: Tool-based Visual Evidence Reasoning for Image Quality Assessment&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.12375v1-iqa-t1-tool-based-visual-evidence-reasoning-for-image-quality-assessment&quot;, &quot;score&quot;: &quot;10.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;基于工具视觉证据推理的多模态大模型图像质量评估框架，生成结构化感知观察&quot;}">IQA-T1: Tool-based Visual Evidence Reasoning for Image Quality Assessment</a>
