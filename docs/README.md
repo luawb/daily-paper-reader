@@ -6,25 +6,19 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-16
-- 运行时间：2026-07-16 20:11:17 UTC
+- 最新运行日期：2026-07-17
+- 运行时间：2026-07-17 20:49:06 UTC
 - 运行状态：成功
-- 本次总论文数：1
-- 精读区：1
+- 本次总论文数：0
+- 精读区：0
 - 速读区：0
 
 ### 今日简报（AI）
-今日精读了一篇关于卵裂期胚胎综合质量评估的多任务框架论文，评分高达9.0。
-
-该研究提出的EMBRACE框架能同时预测多种胚胎发育指标，有望提升试管婴儿筛选的准确性和效率。
-
-建议关注该技术如何简化临床流程，并思考AI在辅助生殖中的实际落地前景。
-- 详情：[/202607/16/README](/202607/16/README)
+> 今日无新推荐，系统未产出可展示论文。
+- 详情：[/202607/17/README](/202607/17/README)
 
 ### 精读区论文标签
-1. [EMBRACE: A Multi-task Framework for Comprehensive Quality Assessment in Cleavage-stage Embryo](/202607/16/2607.10093v1-embrace-a-multi-task-framework-for-comprehensive-quality-assessment-in-cleavage-stage-embryo)  
-   标签：评分：9.0/10、query:xiqa
-   evidence：用于胚胎图像综合质量评估的多任务框架
+- 本次无精读推荐。
 
 ### 速读区论文标签
 - 本次无速读推荐。
