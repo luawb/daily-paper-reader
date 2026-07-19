@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-19",
+  "date": "2026-07-19",
+  "generated_at": "2026-07-19T21:08:42",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/19/2607.13941v1-peak-end-net-a-peak-end-rule-inspired-framework-for-generalizable-video-aesthetic-assessment",
+      "section": "quick",
+      "title_en": "Peak-End-Net: A Peak-End Rule Inspired Framework for Generalizable Video Aesthetic Assessment",
+      "authors": "Geng Li, Haiwen Li, Rui Chen, Jing Tang, Lei Sun, Xiangxiang Chu",
+      "date": "2026-07-15",
+      "pdf": "https://arxiv.org/pdf/2607.13941v1",
+      "score": "6.0",
+      "evidence": "提出受峰终定律启发的视频美学评估框架，评价视觉质量。",
+      "tldr": "视频美学评估因标注数据稀缺与高度主观性，现有模型跨域泛化能力不足，阻碍实际应用。为此，本文从心理学峰终定律汲取灵感，提出轻量框架Peak-End-Net：以冻结ViT为骨干，利用预训练图像美学头生成帧级先验，识别显著时刻与结尾帧并执行峰终聚合；还引入美学节奏编码器捕捉时序演进，辅以动态门控融合增强鲁棒性。在VADB域内和DIVIDE-3K跨域测试中均取得最优性能，跨域优势尤为突出。该工作以极低参数量实现了可解释的通用视频美学评估，彰显心理启发建模的前景。",
+      "tags": "query:xiqa",
+      "abstract_en": "Video aesthetic assessment (VAA) aims to predict how aesthetically pleasing a video is, yet remains far less explored than other visual assessment tasks. Its progress is hindered not only by the scarcity of large-scale benchmarks, but also by the intrinsic subjectivity of aesthetic judgment, which is shaped by human perception. In this paper, we revisit VAA from a psychological perspective and propose \\textit{Peak-End-Net}, a lightweight and interpretable framework inspired by the \\textit{peak-end rule}, which suggests that people tend to judge a temporal experience mainly according to its salient moments and the ending. Building on this intuition, we first transfer knowledge from image aesthetic assessment (IAA) to VAA by introducing a pretrained IAA head to produce frame-wise aesthetic priors, which serve as surrogate signals for identifying aesthetically salient moments and guiding \\textit{peak-end rule}-based temporal aggregation. To further capture how a video evolves aesthetically over time, we design an aesthetic rhythm encoder that models temporal progression beyond isolated moments. Additionally, we refine the overall assessment through a dynamic gated fusion mechanism to improve robustness under distribution shift. Our method is built on a frozen vision transformer (ViT) and requires only a small number of trainable parameters, making it scalable and parameter-efficient. Extensive experiments on two existing VAA benchmarks, including in-domain evaluation on VADB and cross-domain testing on DIVIDE-3K, demonstrate that our approach achieves state-of-the-art performance, affirming the value of psychologically grounded modeling for VAA. Our code and models are available at https://github.com/AMAP-ML/Peak-End-Net.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

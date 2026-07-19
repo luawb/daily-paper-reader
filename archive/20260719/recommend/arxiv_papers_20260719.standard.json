@@ -1,0 +1,57 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-19T21:06:53.511837+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.13941v1",
+      "source": "arxiv",
+      "title": "Peak-End-Net: A Peak-End Rule Inspired Framework for Generalizable Video Aesthetic Assessment",
+      "abstract": "Video aesthetic assessment (VAA) aims to predict how aesthetically pleasing a video is, yet remains far less explored than other visual assessment tasks. Its progress is hindered not only by the scarcity of large-scale benchmarks, but also by the intrinsic subjectivity of aesthetic judgment, which is shaped by human perception. In this paper, we revisit VAA from a psychological perspective and propose \\textit{Peak-End-Net}, a lightweight and interpretable framework inspired by the \\textit{peak-end rule}, which suggests that people tend to judge a temporal experience mainly according to its salient moments and the ending. Building on this intuition, we first transfer knowledge from image aesthetic assessment (IAA) to VAA by introducing a pretrained IAA head to produce frame-wise aesthetic priors, which serve as surrogate signals for identifying aesthetically salient moments and guiding \\textit{peak-end rule}-based temporal aggregation. To further capture how a video evolves aesthetically over time, we design an aesthetic rhythm encoder that models temporal progression beyond isolated moments. Additionally, we refine the overall assessment through a dynamic gated fusion mechanism to improve robustness under distribution shift. Our method is built on a frozen vision transformer (ViT) and requires only a small number of trainable parameters, making it scalable and parameter-efficient. Extensive experiments on two existing VAA benchmarks, including in-domain evaluation on VADB and cross-domain testing on DIVIDE-3K, demonstrate that our approach achieves state-of-the-art performance, affirming the value of psychologically grounded modeling for VAA. Our code and models are available at https://github.com/AMAP-ML/Peak-End-Net.",
+      "authors": [
+        "Geng Li",
+        "Haiwen Li",
+        "Rui Chen",
+        "Jing Tang",
+        "Lei Sun",
+        "Xiangxiang Chu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-15T15:24:19+00:00",
+      "link": "https://arxiv.org/pdf/2607.13941v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Proposes video aesthetic assessment framework inspired by peak-end rule, evaluating visual quality.",
+      "llm_evidence_cn": "提出受峰终定律启发的视频美学评估框架，评价视觉质量。",
+      "llm_evidence": "提出受峰终定律启发的视频美学评估框架，评价视觉质量。",
+      "canonical_evidence": "提出受峰终定律启发的视频美学评估框架，评价视觉质量。",
+      "llm_tldr_en": "Peak-End-Net transfers knowledge from image aesthetic assessment to video aesthetic assessment, using a lightweight and interpretable framework based on the peak-end rule from psychology.",
+      "llm_tldr_cn": "针对视频美学评估的主观性和基准稀缺问题，本文从心理学峰终定律出发，提出轻量可解释的Peak-End-Net，通过迁移图像美学知识，重点关注视频的显著瞬间和结尾时刻，实现泛化的美学质量预测。",
+      "llm_tldr": "针对视频美学评估的主观性和基准稀缺问题，本文从心理学峰终定律出发，提出轻量可解释的Peak-End-Net，通过迁移图像美学知识，重点关注视频的显著瞬间和结尾时刻，实现泛化的美学质量预测。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
