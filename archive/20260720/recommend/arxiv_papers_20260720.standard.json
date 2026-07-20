@@ -1,0 +1,112 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-20T21:38:50.155451+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2607.15686v1",
+      "source": "arxiv",
+      "title": "S1-Omni: A Unified Multimodal Reasoning Model for Scientific Understanding, Prediction, and Generation",
+      "abstract": "We present S1-Omni, a unified multimodal reasoning model for scientific understanding, prediction, and generation. AI for Science (AI4S) has advanced significantly through domain-specific models, tool-augmented LLMs, and scientific language models. However, model capabilities remain highly fragmented, limiting the joint modeling of heterogeneous data, scientific laws, and expert knowledge. S1-Omni addresses this gap by consolidating these capabilities into a single, coherent scientific reasoning model. The architecture of S1-Omni is built upon three core components: unified representation of scientific data, natural-world knowledge alignment, and decoding for domain-specific tasks. First, S1-Omni maps natural-language instructions and scientific objects, including CIF, SMILES, protein sequences, spectra, and scientific images, into a shared representation space. Second, it incorporates scientific laws and expert knowledge into data construction and training, enabling the model to reason from scientific evidence. Third, it performs task-specific decoding to support a broad range of applications, including property prediction, spectrum-to-molecular generation, protein site and structure prediction, and scientific image generation and editing. S1-Omni is trained on S1-Omni-Corpus, which covers 200 scientific tasks and contains millions of reasoning samples, and is evaluated on over 60 scientific benchmarks. It outperforms GPT-5.5 and Gemini-3.1-Pro on most benchmarks and matches or surpasses domain-specific models on several benchmarks. Overall, S1-Omni provides a practical path toward unified scientific modeling.",
+      "authors": [
+        "Jiahao Zhao",
+        "Junyi Liu",
+        "Lifeng Xu",
+        "Nan Xu",
+        "Qingli Wang",
+        "Qingxiao Li",
+        "Tianle Chen",
+        "Xiaoyu Wu",
+        "Yawen Zheng",
+        "Zikai Wang",
+        "Guanming Liu",
+        "Hequn Zhou",
+        "Jingyi Wang",
+        "Jingyuan Shu",
+        "Keqi Wang",
+        "Li He",
+        "Songyang Diao",
+        "Wenhui Xu",
+        "Xinyu Ren",
+        "Yaqin Fan",
+        "Yujin Zhou",
+        "Zhanao Yao"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-07-17T06:56:08+00:00",
+      "link": "https://arxiv.org/pdf/2607.15686v1",
+      "tags": [
+        "keyword:XIQA"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "unified multimodal reasoning model processing images and text",
+      "llm_evidence_cn": "统一多模态推理模型处理图像和文本",
+      "llm_evidence": "统一多模态推理模型处理图像和文本",
+      "canonical_evidence": "统一多模态推理模型处理图像和文本",
+      "llm_tldr_en": "S1-Omni is a unified multimodal reasoning model for scientific tasks that processes images and text, enabling joint modeling of heterogeneous data.",
+      "llm_tldr_cn": "S1-Omni提出统一多模态推理模型，用于科学理解、预测与生成。它通过整合异构数据、科学规律与专家知识，突破现有模型碎片化局限，实现图像与文本的联合处理。实验显示该模型在多个科学任务中具有有效推理能力，为AI for Science提供通用基础。",
+      "llm_tldr": "S1-Omni提出统一多模态推理模型，用于科学理解、预测与生成。它通过整合异构数据、科学规律与专家知识，突破现有模型碎片化局限，实现图像与文本的联合处理。实验显示该模型在多个科学任务中具有有效推理能力，为AI for Science提供通用基础。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.15752v1",
+      "source": "arxiv",
+      "title": "Personalized Image Aesthetic Assessment via Preference-rich Sample Mining and Cohort Merging",
+      "abstract": "Personalized Image Aesthetic Assessment (PIAA) aims to predict aesthetic ratings of images that vary across individuals. The aesthetic preferences manifest to different extents across distinct visual stimuli and exhibit cohort-specific patterns. Motivated by the above fact, this paper presents a Multimodal Large Language Model (MLLM)-based approach, which models individual aesthetic preferences by Preference-Rich sample mining and Aesthetically-resonant Cohort merging (PRAC). Specifically, PRAC first identifies preference-rich samples by analyzing both Collective Controversy and Personalized Deviation of images, maximizing the utility of limited user data. Based upon the preference-rich samples, cross-user preference similarities are measured by comparing preference embeddings. Then, a cohort-based model merging strategy, is proposed by aggregating preference patterns from aesthetically-resonant users, which further enhances the personalization for the target individual. Extensive experiments and comparisons on four benchmark PIAA databases demonstrate the superiority of the proposed PRAC model over the state-of-the-arts. The code and model will be public at https://github.com/yzc-ippl/PRAC.",
+      "authors": [
+        "Zhichao Yang",
+        "Tianjiao Gu",
+        "Zhixianhe Zhang",
+        "Xiangfei Sheng",
+        "Pengfei Chen",
+        "Leida Li"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-17T08:40:18+00:00",
+      "link": "https://arxiv.org/pdf/2607.15752v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "uses Multimodal Large Language Model for personalized image aesthetic rating prediction",
+      "llm_evidence_cn": "使用多模态大语言模型进行个性化图像美学评分预测",
+      "llm_evidence": "使用多模态大语言模型进行个性化图像美学评分预测",
+      "canonical_evidence": "使用多模态大语言模型进行个性化图像美学评分预测",
+      "llm_tldr_en": "The paper proposes a personalized image aesthetic assessment method that leverages a multimodal large language model with preference-rich sample mining and cohort merging to predict individual ratings.",
+      "llm_tldr_cn": "现有图像美学评估主要关注通用平均评分，忽视了个体审美差异。本文提出PRAC方法，利用多模态大语言模型，通过分析集体争议性和个性化偏差识别偏好丰富样本，并基于用户间偏好相似性合并审美共鸣群体，从而建模个体审美偏好。实验表明，该方法能有效利用有限用户数据，实现个性化评分预测。",
+      "llm_tldr": "现有图像美学评估主要关注通用平均评分，忽视了个体审美差异。本文提出PRAC方法，利用多模态大语言模型，通过分析集体争议性和个性化偏差识别偏好丰富样本，并基于用户间偏好相似性合并审美共鸣群体，从而建模个体审美偏好。实验表明，该方法能有效利用有限用户数据，实现个性化评分预测。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-20",
+  "date": "2026-07-20",
+  "generated_at": "2026-07-20T21:43:12",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/20/2607.15686v1-s1-omni-a-unified-multimodal-reasoning-model-for-scientific-understanding-prediction-and-generation",
+      "section": "deep",
+      "title_en": "S1-Omni: A Unified Multimodal Reasoning Model for Scientific Understanding, Prediction, and Generation",
+      "authors": "Jiahao Zhao, Junyi Liu, Lifeng Xu, Nan Xu, Qingli Wang, Qingxiao Li, Tianle Chen, Xiaoyu Wu, Yawen Zheng, Zikai Wang, Guanming Liu, Hequn Zhou, Jingyi Wang, Jingyuan Shu, Keqi Wang, Li He, Songyang Diao, Wenhui Xu, Xinyu Ren, Yaqin Fan, Yujin Zhou, Zhanao Yao",
+      "date": "2026-07-17",
+      "pdf": "https://arxiv.org/pdf/2607.15686v1",
+      "score": "8.0",
+      "evidence": "统一多模态推理模型处理图像和文本",
+      "tldr": "AI for Science领域模型能力高度碎片化，难以联合多模态数据与科学知识。S1-Omni提出统一推理框架，将CIF、SMILES、蛋白序列、光谱等映射到共享空间，并融合科学规律与任务解码，实现性质预测、逆向生成和图像编辑等200项任务。在60余项基准上超越GPT-5.5和Gemini-3.1-Pro，部分任务达到领域专用模型水平。该工作为一体化科学建模提供了可行路径。",
+      "tags": "query:xiqa",
+      "abstract_en": "We present S1-Omni, a unified multimodal reasoning model for scientific understanding, prediction, and generation. AI for Science (AI4S) has advanced significantly through domain-specific models, tool-augmented LLMs, and scientific language models. However, model capabilities remain highly fragmented, limiting the joint modeling of heterogeneous data, scientific laws, and expert knowledge. S1-Omni addresses this gap by consolidating these capabilities into a single, coherent scientific reasoning model. The architecture of S1-Omni is built upon three core components: unified representation of scientific data, natural-world knowledge alignment, and decoding for domain-specific tasks. First, S1-Omni maps natural-language instructions and scientific objects, including CIF, SMILES, protein sequences, spectra, and scientific images, into a shared representation space. Second, it incorporates scientific laws and expert knowledge into data construction and training, enabling the model to reason from scientific evidence. Third, it performs task-specific decoding to support a broad range of applications, including property prediction, spectrum-to-molecular generation, protein site and structure prediction, and scientific image generation and editing. S1-Omni is trained on S1-Omni-Corpus, which covers 200 scientific tasks and contains millions of reasoning samples, and is evaluated on over 60 scientific benchmarks. It outperforms GPT-5.5 and Gemini-3.1-Pro on most benchmarks and matches or surpasses domain-specific models on several benchmarks. Overall, S1-Omni provides a practical path toward unified scientific modeling.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/20/2607.15752v1-personalized-image-aesthetic-assessment-via-preference-rich-sample-mining-and-cohort-merging",
+      "section": "quick",
+      "title_en": "Personalized Image Aesthetic Assessment via Preference-rich Sample Mining and Cohort Merging",
+      "authors": "Zhichao Yang, Tianjiao Gu, Zhixianhe Zhang, Xiangfei Sheng, Pengfei Chen, Leida Li",
+      "date": "2026-07-17",
+      "pdf": "https://arxiv.org/pdf/2607.15752v1",
+      "score": "7.0",
+      "evidence": "使用多模态大语言模型进行个性化图像美学评分预测",
+      "tldr": "个性化图像美学评估需预测因人而异的审美评分，但个体偏好差异显著且标注数据稀少，造成模型泛化困难。PRAC方法通过集体争议性和个性化偏差双重指标，自动筛选偏好丰富样本，最大化有限用户数据的效用；随后，在偏好嵌入空间中计算用户相似度，并采用群体模型合并策略，将美学共鸣用户的偏好模式融入目标模型，实现知识迁移与个性化增强。在四个基准PIAA数据集上的全面实验显示，PRAC性能大幅超越现有最优方法，验证了基于共鸣群体合并的有效性。本研究为个性化美学评估提供了新颖的样本挖掘与群体学习范式，对推荐系统等应用具有重要参考价值。",
+      "tags": "query:xiqa",
+      "abstract_en": "Personalized Image Aesthetic Assessment (PIAA) aims to predict aesthetic ratings of images that vary across individuals. The aesthetic preferences manifest to different extents across distinct visual stimuli and exhibit cohort-specific patterns. Motivated by the above fact, this paper presents a Multimodal Large Language Model (MLLM)-based approach, which models individual aesthetic preferences by Preference-Rich sample mining and Aesthetically-resonant Cohort merging (PRAC). Specifically, PRAC first identifies preference-rich samples by analyzing both Collective Controversy and Personalized Deviation of images, maximizing the utility of limited user data. Based upon the preference-rich samples, cross-user preference similarities are measured by comparing preference embeddings. Then, a cohort-based model merging strategy, is proposed by aggregating preference patterns from aesthetically-resonant users, which further enhances the personalization for the target individual. Extensive experiments and comparisons on four benchmark PIAA databases demonstrate the superiority of the proposed PRAC model over the state-of-the-arts. The code and model will be public at https://github.com/yzc-ippl/PRAC.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
