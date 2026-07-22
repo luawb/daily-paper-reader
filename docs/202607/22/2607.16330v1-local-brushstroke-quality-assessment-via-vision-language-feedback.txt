@@ -1,0 +1,137 @@
+Title: Local Brushstroke Quality Assessment via Vision-Language Feedback
+
+URL Source: https://arxiv.org/pdf/2607.16330v1
+
+Published Time: Tue, 21 Jul 2026 00:05:33 GMT
+
+Number of Pages: 6
+
+Markdown Content:
+# Local Brushstroke Quality Assessment via Vision-Language Feedback 
+
+## Mio Mitamura 1
+
+1Tokyo Institute of Science High School Hirokatsu Kataoka 2,3 
+
+2National Institute of Advanced Industrial Science and Technology (AIST) 
+
+3Visual Geometry Group, University of Oxford 
+
+## Abstract 
+
+This paper investigates whether multimodal LLMs can eval-uate local brushstroke quality in calligraphy and gener-ate educationally useful natural language feedback. We construct an evaluation framework in which three multi-modal LLMs (GPT-4o [8], Claude Sonnet 4 [10], and Gem-ini 2.5 Flash [9]) assess before-after image pairs of calli-graphic works using a five-point ordinal scale, and compare their outputs against scores assigned by three expert callig-raphers. We additionally examine a Retrieval-Augmented Generation (RAG) [14] variant of Claude as a preliminary condition. Results show that all models achieve useful levels of absolute score accuracy (MAE), with GPT-4o perform-ing best (MAE = 0.885). However, none of the models pro-duce statistically significant overall rank correlations with human experts (Kendall’s τ ). Vocabulary analysis of gen-erated rationales reveals characteristic evaluative biases in each model, and RAG is shown to improve rank correlation while worsening absolute accuracy, constituting an impor-tant negative result for text-based rule injection. 
+
+Keywords: Calligraphy Assessment, Multimodal LLMs, Brushstroke Evaluation, Natural Language Feedback, Retrieval-Augmented Generation 
+
+## 1. Introduction 
+
+Calligraphy is a traditional art form deeply rooted in Chi-nese and Japanese culture. Unlike ordinary writing, callig-raphy demands not only accurate character shape but also mastery of brushstroke techniques such as tome (stop), hane 
+
+(hook), and harai (sweep). These techniques are fundamen-tal to calligraphic quality, yet their assessment has tradition-ally relied on skilled instructors, making objective and au-tomated evaluation extremely difficult. Recent advances in AI-driven automated assessment have transformed several educational domains, including foreign language learning and mathematics [16]. However, Before Image                  
+
+> After Image
+> 文(Fumi)
+> Stroke 1: tome (stop)
+> Claude Sonnet 4
+> After applies firm brush pressure at the final withdrawal of the
+> horizontal stroke, so the tome is clearly formed. Before drifts somewhat.
+> In After the final segment swells roundly and the brush is not gathered,
+> leaving a muddied shape . Before is tighter ,and the tome is handled
+> more straightforwardly .
+> GPT -4o
+> Gemini 2.5 Flash
+> In Before the shape collapses slightly and feels heavy ; in After the
+> withdrawal is well formed and one senses an intent toward the next
+> stroke, making it more refined.
+> -1
+> +1
+> +1
+
+Figure 1. Three multimodal LLMs evaluate the same local stroke (文, Stroke 1: tome ). Scores range from −2 (before clearly bet-ter) to +2 (after clearly better). Claude and Gemini both score +1 ,while GPT-4o scores −1 on the identical stroke. Highlighted spans mark the terms in which each model grounds its judgment: Claude cites brush-execution terms ( brush pressure , final withdrawal ), whereas GPT-4o cites impressionistic ones ( swells roundly , mud-died shape ). The models disagree not only in score but in the kind of language they use. 
+
+calligraphy presents unique challenges: in addition to static character form, evaluation must capture dynamic qualities such as brush pressure and the rhythm of stroke execution— aspects that existing image-based methods are ill-equipped to address. Prior work on automated calligraphy assessment has pri-marily focused on static features such as character shape and structural regularity [4, 7]. The importance of dy-namic brushstroke characteristics has also been noted [5, 6]. However, existing approaches generally output only a nu-merical score, without providing the stroke-specific instruc-tional feedback that learners and educators require. Fur-thermore, inferring the dynamic qualities of a brushstroke from a static two-dimensional image remains a fundamen-tal open challenge, paralleling challenges in action quality assessment [18]. Multimodal LLMs are a class of models that encode vi-sual inputs through an image encoder and inject the result-arXiv:2607.16330v1 [cs.CV] 15 Jul 2026 ing visual features into a Large Language Model (LLM), enabling the generation of natural language descriptions and reasoning grounded in visual content [8–10]. This ar-chitecture offers two properties that are potentially relevant to calligraphy assessment. First, the visual encoder may capture fine-grained spatial features of brushstrokes, such as the tapering of a harai sweep or the curvature at the tip of a hane hook, that are difficult to quantify with hand-crafted metrics, though the extent to which current models successfully do so remains an open question. Second, the language generation capability of the LLM component en-ables the model to produce stroke-specific natural language feedback, going beyond a scalar score to articulate the qual-itative characteristics of brushstroke technique. These two properties motivate the investigation of multimodal LLMs as candidates for automated calligraphy assessment and in-structional feedback generation. Recent work has applied multimodal LLMs to calligraphy-related tasks. Luo et al. [15] proposed CalliReader, a multimodal LLM-based framework for Chinese Calligraphy Contextualization (CC 2), demonstrat-ing that multimodal LLMs can recognize and interpret calligraphic content at a level surpassing human experts in character recognition tasks. However, their focus is on text content recognition rather than brushstroke tech-nique evaluation. The capability of multimodal LLMs to assess fine-grained local stroke quality and generate stroke-specific instructional feedback remains unexplored. The broader landscape of multimodal LLMs has ad-vanced rapidly. Zhang et al. [11] showed that GPT-4V can serve as a generalist evaluator for vision-language tasks, showing promising agreement with human judgment across diverse settings. However, recent work has also re-vealed that LLMs used as evaluators exhibit systematic bi-ases [12, 13], tending to collapse multi-dimensional judg-ment into dominant single perspectives. These findings mo-tivate our investigation into whether such biases also mani-fest in the specialized domain of calligraphy assessment. Compounding these technical difficulties is a broader so-cietal trend: the number of calligraphy instructors and learn-ers is declining. Between 2012 and 2021, the number of employees in calligraphy instruction businesses in Japan de-creased by 33.1% [1–3]. AI-assisted evaluation therefore holds promise as a means of expanding learning opportuni-ties and maintaining educational quality. In this work, we investigate whether multimodal LLMs can evaluate local brushstroke quality and generate edu-cationally useful natural language feedback. Beyond pro-ducing numerical scores, we explore the extent to which multimodal LLMs can articulate, in natural language, the strengths and weaknesses of specific brushstroke tech-niques. We additionally conduct a preliminary investiga-tion into Retrieval-Augmented Generation (RAG) [14], ex-amining its effectiveness and limitations when expert eval-uation criteria are provided as external knowledge. As il-lustrated in Fig. 1, multimodal LLMs evaluating the same local stroke can disagree not only in their scores but in the kind of language they use to justify them. The contributions of this paper are threefold. First, we provide a quantitative evaluation of multimodal LLM-based local brushstroke assessment in calligraphy. Second, we analyze the natural language feedback generated by each model to clarify the differences in evaluation perspective between AI systems and human experts. Third, as a pre-liminary analysis, we examine the effects and limitations of RAG and demonstrate how providing external evaluation criteria alters model behavior. 
+
+## 2. Method 
+
+We constructed an evaluation framework in which mul-timodal LLMs assess brushstroke quality in calligraphy works. The framework takes as input a before image and an after image of the same calligraphic work, along with visual markers indicating the local stroke region of inter-est, and produces a comparative assessment of brushstroke technique quality (see Fig. 2). For each work, three stroke regions exhibiting salient brushstroke characteristics were selected and annotated with markers. Each region was associated with a specific stroke type: tome (stop), hane (hook), or harai (sweep, ei-ther left or right). The model was asked to judge which of the two images (before or after images) demonstrated supe-rior technique, using a five-point ordinal scale: −2 (before clearly better), −1 (before slightly better), 0 (equivalent), 
+
++1 (after slightly better), +2 (after clearly better). For each annotated region, the model output both a numerical score and a natural language rationale, enabling both quantitative measurement and qualitative analysis. The models evaluated were Claude Sonnet 4 [10], Gem-ini 2.5 Flash [9], and GPT-4o [8], all assessed in a zero-shot setting without an additional training. In addition, a RAG-augmented [14] variant of Claude was examined as a preliminary condition. In the RAG condition, a knowl-edge base was constructed from expert evaluation exam-ples (comprising calligraphy images, assigned scores, and written rationales) together with stroke-specific evaluation guidelines. All models received identical prompt instructions spec-ifying the target character, the stroke region under evalua-tion, the five-point scoring rubric, and the required output format. To avoid anchoring bias, models were explicitly in-structed not to assume that either the before or after image was superior and to evaluate solely on technical grounds. To mitigate score distribution skew, conditions for assign-ing extreme scores ( ±2) and the neutral score ( 0) were ex-plicitly stated. Figure 2. Overview of the proposed evaluation pipeline. Before and After calligraphy images with stroke markers are input to zero-shot multimodal LLMs and multimodal LLM+RAG, each outputting a score ( −2 to +2 ) and natural language rationale. 
+
+To reduce output variability, each model was run three independent times per stroke region, and the mean score across runs was taken as the final evaluation. Performance was assessed against the mean scores of three human ex-perts using Mean Absolute Error (MAE), Kendall’s τ rank correlation, and standard deviation (SD). Generated natu-ral language rationales were further subjected to vocabulary analysis to characterize the evaluative perspectives of each model. 
+
+## 3. Experiment 
+
+3.1. Experimental Setup 
+
+Dataset. The dataset consisted of calligraphy images col-lected during a user study conducted at a school cultural festival. Three Japanese kanji characters were included: 文
+
+(Fumi), 化 (Ka), and 祭 (Matsuri). Each sample comprised a before-after image pair, yielding 45 works in total. For each work, three stroke regions showing pronounced brush-stroke characteristics were selected for evaluation. The stroke regions evaluated per character were as fol-lows. For 文: Stroke 1 ( tome /stop), Stroke 2 ( hidari-harai /left sweep), Stroke 3 ( migi-harai /right sweep). For 
+
+化: Stroke 1 ( hidari-harai /left sweep), Stroke 2 ( tome /stop), Stroke 3 (hane /hook). For 祭: Stroke 1 (hidari-harai /left sweep), Stroke 2 ( migi-harai /right sweep), Stroke 3 ( hane /hook). For the RAG condition, 35 of the 45 works were used to construct the knowledge base, and the remaining 10 works were reserved as a held-out test set. 
+
+Ground Truth Labels. Ground truth labels were defined as the mean score assigned by three expert calligraphers, each with at least ten years of practice. Rather than evaluat-ing overall character shape, experts focused exclusively on local brushstroke technique in each annotated region. The evaluation criteria were as follows: • hane : whether the brush is firmly stopped before being lifted with a controlled release of pressure. • migi-harai : whether the brush flows smoothly downward and to the right after stopping, tapering gradually. • hidari-harai : whether the brush flows smoothly down-ward and to the left after stopping, tapering gradually. • tome : whether the brush stops firmly to form a stable, well-defined endpoint. Each evaluation compared the before and after images using the five-point scale ( −2 to +2 ). The mean of the three experts’ scores served as the ground truth ( human avg ). In addition to numerical scores, written rationales were col-lected for subsequent qualitative analysis. 
+
+Models Evaluated. Three multimodal LLMs were evalu-ated: GPT-4o [8], Gemini 2.5 Flash [9], and Claude Sonnet 4 [10] (zero-shot). A RAG-augmented [14] Claude condi-tion was additionally examined as a preliminary study. The RAG model was evaluated only on the held-out test set (10 works, 30 strokes). All models received identical input con-ditions, and each stroke region was evaluated in three inde-pendent runs. 
+
+Evaluation Metrics. Quantitative metrics comprised: MAE (Mean Absolute Error); Kendall’s τ rank correlation; and SD (Standard Deviation). For qualitative analysis, vo-cabulary was coded into four categories: Static , Dynamic-Action , Dynamic-Impression , and Quality .
+
+3.2. Main Results on 45 Works 
+
+Quantitative Evaluation. Tab. 1 presents the quantitative results. GPT-4o achieved the best MAE (0.885), followed by Claude (0.902). Claude achieved the lowest SD (0.481). For Kendall’s τ , GPT-4o achieved τ = 0 .093 , Claude τ =0.053 , and Gemini τ = −0.025 . None reached statistical significance (all p > 0.05 ), suggesting that reliable rank ordering remains a substantially harder task than absolute scoring.    
+
+> Table 1. Quantitative evaluation results of multimodal LLMs vs. human expert scores. GPT-4o achieves the best MAE (0.885), Claude shows the most stable output (SD: 0.481). None achieve statistically significant overall rank correlation with human experts (all p > 0.05 ).
+
+Analysis by Character and Stroke Type. Fig. 3 shows Kendall’s τ by character. Claude ( τ = 0 .248 , p = 0 .025 )and GPT-4o ( τ = 0.242 , p = 0.027 ) achieved signifi-cant correlations only for 文 (Fumi, simple 4-stroke). Both Claude and Gemini showed negative correlations for 化
+
+(τ = −0.191 and −0.222 ), suggesting multimodal LLMs are implicitly influenced by overall structural complexity. Fig. 4 shows MAE by stroke type. Tome (stop) yielded the lowest MAE (Claude: 0.600, GPT-4o: 0.627), while 
+
+hane (hook) produced the largest errors (Claude: 1.095, GPT-4o: 1.173, Gemini: 1.405). The hane stroke demands inferring a multi-phase 3D process from a static 2D image, reflecting inherent limits consistent with challenges in ac-tion quality assessment [18].      
+
+> Figure 3. Kendall τby character type. Significant correlations (p < 0.05 ) appear only for “Fumi” ( 文), the simplest character. Complex characters show no significant correlations, suggesting multimodal LLMs cannot ignore overall visual complexity.
+
+Analysis of Natural Language Feedback. Fig. 5 shows vocabulary distributions. Human evaluators used all four categories (Dynamic-Action: 73.9%, Static: 9.7%). By contrast, AI models exhibited characteristic biases: Claude collapsed into Dynamic-Action (84.1%), while GPT-4o and 
+
+> Figure 4. MAE by stroke type. All models show lowest error for Tome (Stop) and highest error for Hane (Hook), which requires inferring a multi-phase 3D brushstroke process from a static 2D image.
+
+Gemini both shifted toward Dynamic-Impression (36.6% and 22.5%, vs. 6.7% for humans). Among the models, Gemini showed the highest proportion of Quality vocabu-lary (10.1%). Static vocabulary was virtually absent in all AI outputs (at most 5.5% for GPT-4o). These characteris-tic biases are consistent with known tendencies of LLMs as evaluators [12, 13], and with prior observations that auto-mated scoring systems tend to collapse multi-dimensional human judgment [16, 17].     
+
+> Figure 5. Vocabulary distribution by model. Human evaluators use all four categories, while each AI model exhibits a character-istic bias: Claude collapses into dynamic-action, and both GPT-4o and Gemini shift toward dynamic-impression. Among the models, Gemini shows the highest Quality proportion. Static vocabulary is virtually absent from all AI outputs.
+
+3.3. Preliminary Analysis of RAG-Augmented Eval-uation 
+
+Experimental Setup. We compared Claude zero-shot with Claude+RAG [14] on 30 held-out strokes, providing stroke-specific checklist items as external knowledge. 
+
+Quantitative Comparison. The results (Fig. 6) revealed a trade-off: MAE increased from 0.902 to 1.067, while Kendall’s τ improved from 0.053 to 0.119. Explicit crite-ria stabilize relative comparisons but introduce divergence from holistic human scoring.           
+
+> Figure 6. Claude Zero-shot vs. Claude RAG ( n= 30 ). RAG improves rank correlation ( τ:0.053 →0.119 ) while increasing absolute error (MAE: 0.902 →1.067 ), revealing a fundamental trade-off.
+
+Changes in Feedback Content. In the RAG condition, 93.7% of vocabulary was dynamic-action (up from 84.1%), and Static vocabulary disappeared entirely (Fig. 7). Fig. 8 illustrates the qualitative shift: zero-shot output integrates aesthetic language, while RAG output reduces to mechan-ical checklist-checking. These findings indicate that text-based rule injection does not induce human-like holistic evaluation, and more sophisticated approaches are needed.    
+
+> Figure 7. Vocabulary: Claude Zero-shot vs. Claude RAG. RAG concentrates language toward dynamic-action ( 84 .1% →
+> 93 .7% ), causing near-complete disappearance of Static, Quality, and dynamic-impression terms.
+
+## 4. Conclusion 
+
+4.1. Summary 
+
+Experiments on 45 works showed that GPT-4o [8], Claude [10], and Gemini [9] achieve useful absolute ac-curacy (best MAE = 0.885), but none produce statistically  
+
+> Figure 8. Feedback differences ( 文, right harai ). Zero-shot gener-ates holistic aesthetic feedback, while RAG over-concentrates on dynamic-action vocabulary, losing the multi-dimensional balance that human experts naturally integrate.
+
+significant overall rank correlations. Vocabulary analy-sis revealed characteristic evaluative biases in each model, consistent with known LLM evaluation biases [12, 13]. RAG [14] constitutes an important negative result: rule injection does not induce human-like holistic evaluation. This contrasts with calligraphy content recognition [15], where multimodal LLMs surpass humans, suggesting that brushstroke quality evaluation poses fundamentally differ-ent challenges. 
+
+4.2. Implications 
+
+Two structural limitations emerge. First, multimodal LLMs cannot fully ignore overall visual complexity when in-structed to evaluate local regions. Second, despite mul-timodal LLMs’ ability to inject visual features into an LLM and generate natural language descriptions, the re-sulting evaluations collapse multi-dimensional human judg-ment into a single dominant perspective, consistent with challenges in action quality assessment [18] and automated scoring [16]. 
+
+4.3. Future Work 
+
+Future work includes fine-tuning on expert evaluation data, developing multimodal attention mechanisms capable of in-dependently capturing local brushstroke process and static form, larger-scale RAG [14] validation, and practical edu-cational validation with calligraphy learners. 
+
+Acknowledgment. The authors thank the student participants who contributed calligraphy works during the school cultural fes-tival user study, and the expert calligraphers who provided ground truth evaluations. This work was conducted as part of the Ex-perts in Information Science Program of the National Institute of Informatics (NII), which also provided financial support for this research. References 
+
+[1] Ministry of Internal Affairs and Communications and Min-istry of Economy, Trade and Industry, “Economic Census for Business Activity 2012.” https://www.e-stat.go. jp/dbview?sid=0003085710 2[2] Ministry of Internal Affairs and Communications and Min-istry of Economy, Trade and Industry, “Economic Census for Business Activity 2016.” https://www.e-stat.go. jp/dbview?sid=0003218723 
+
+[3] Ministry of Internal Affairs and Communications and Min-istry of Economy, Trade and Industry, “Economic Census for Business Activity 2021.” https://www.e-stat.go. jp/dbview?sid=0004006323 2[4] S. Yoshida, N. Yatoh, and M. Muneyasu, “Aesthetic Evalu-ation of Chinese Calligraphy Using TabNet: Interpretability and Novel Features for Improved Accuracy,” IEICE Trans-actions on Fundamentals , vol. E108-A, no. 3, pp. 357–361, 2025. 1 [5] P. Xu, L. Wang, Z. Guan, X. Zheng, X. Chen, Z. Tang, D. Fang, X. Gong, and Z. Wang, “Evaluating Brush Move-ments for Chinese Calligraphy: A Computer Vision Based Approach,” Proceedings of IJCAI , pp. 1050–1056, 2018. 1 [6] Q. Yuan, G. Yang, and R. Lyu, “Aesthetic Judgment in Calli-graphic Tracing: The Dominant Role of Dynamic Features,” 
+
+Behavioral Sciences , vol. 15, no. 4, article 525, 2025. 1 [7] M. Li and G. Ren, “Intelligent Evaluation Method of Cal-ligraphy Characters Based on Deep Stroke Extraction,” Ad-vances in Computer, Signals and Systems , vol. 7, pp. 99–106, 2023. 1 [8] OpenAI, “GPT-4o System Card,” arXiv:2410.21276, 2024. 1, 2, 3, 5 [9] Gemini Team Google, “Gemini 2.5: Pushing the Fron-tier with Advanced Reasoning, Multimodality, Long Context, and Next Generation Agentic Capabilities,” arXiv:2507.06261, 2025. 1, 2, 3, 5 [10] Anthropic, “System Card: Claude Opus 4 & Claude Son-net 4,” 2025. https://www-cdn.anthropic.com/ 4263b940cabb546aa0e3283f35b686f4f3b2ff47. pdf 1, 2, 3, 5 [11] X. Zhang, Y. Lu, W. Wang, A. Yan, J. Yan, L. Qin, H. Wang, X. Yan, W. Y. Wang, and L. R. Petzold, “GPT-4V(ision) as a Generalist Evaluator for Vision-Language Tasks,” arXiv:2311.01361, 2023. 2 [12] L. Zheng, W.-L. Chiang, Y. Sheng, S. Zhuang, Z. Wu, Y. Zhuang, Z. Lin, Z. Li, D. Li, E. P. Xing, H. Zhang, J. E. Gonzalez, and I. Stoica, “Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena,” Advances in Neural Infor-mation Processing Systems (NeurIPS) , 2023. 2, 4, 5 [13] J. Ye, Y. Wang, Y. Huang, D. Chen, Q. Zhang, N. Moniz, T. Gao, W. Geyer, C. Huang, P.-Y. Chen, N. V. Chawla, and X. Zhang, “Justice or Prejudice? Quantifying Biases in LLM-as-a-Judge,” arXiv:2410.02736, 2024. 2, 4, 5 [14] P. Lewis, E. Perez, A. Piktus, F. Petroni, V. Karpukhin, N. Goyal, H. K¨ uttler, M. Lewis, W. Yih, T. Rockt¨ aschel, S. Riedel, and D. Kiela, “Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks,” Advances in Neural Information Processing Systems (NeurIPS) , 2020. 1, 2, 3, 4, 5[15] Y. Luo, J. Tang, C. Huang, F. Hao, and Z. Lian, “Cal-liReader: Contextualizing Chinese Calligraphy via an Embedding-Aligned Vision-Language Model,” Proceedings of the IEEE/CVF International Conference on Computer Vi-sion (ICCV) , pp. 23030–23040, 2025. 2, 5 [16] D. Ramesh and S. K. Sanampudi, “An Automated Essay Scoring Systems: A Systematic Literature Review,” Artifi-cial Intelligence Review , vol. 55, pp. 2495–2527, 2022. 1, 4, 5[17] H. Misgna, B.-W. On, I. Lee, and G. S. Choi, “A Survey on Deep Learning-Based Automated Essay Scoring and Feed-back Generation,” Artificial Intelligence Review , vol. 58, no. 2, article 36, 2024. 4 [18] H. Yin, P. Parmar, D. Xu, Y. Zhang, T. Zheng, and W. Fu, “A Decade of Action Quality Assessment: Largest Systematic Survey of Trends, Challenges, and Future Directions,” Inter-national Journal of Computer Vision , vol. 134, no. 2, 2026. 1, 4, 5

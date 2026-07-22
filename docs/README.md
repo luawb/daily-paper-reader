@@ -6,29 +6,29 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-21
-- 运行时间：2026-07-21 21:11:13 UTC
+- 最新运行日期：2026-07-22
+- 运行时间：2026-07-22 21:29:14 UTC
 - 运行状态：成功
 - 本次总论文数：2
-- 精读区：0
-- 速读区：2
+- 精读区：2
+- 速读区：0
 
 ### 今日简报（AI）
-今日速览两篇AI前沿论文：一篇用文本提示重新定义图像相似度感知，另一篇为推理链装上约束锚点。  
-新指标让机器更懂“视觉像不像”，而约束推理则让大模型思考更透明、可控。  
-关注多模态评估与可解释推理的交叉，或许是下一步值得尝试的方向。
-- 详情：[/202607/21/README](/202607/21/README)
+1) 今日精读两篇论文，聚焦AI如何“看懂”艺术笔触与人物视频质量。
+2) 最值得关注的是，用视觉-语言反馈精评局部笔触，以及用多维框架为AI生成的人物视频建立立体质量标尺。
+3) 不妨从视觉语言模型入手，尝试将这种“精细品味”能力迁移到你自己的创作审查或内容筛选流程中。
+- 详情：[/202607/22/README](/202607/22/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [Local Brushstroke Quality Assessment via Vision-Language Feedback](/202607/22/2607.16330v1-local-brushstroke-quality-assessment-via-vision-language-feedback)  
+   标签：评分：10.0/10、query:xiqa
+   evidence：利用多模态大语言模型评估笔触质量并生成自然语言反馈
+2. [Multi-Dimensional Quality Assessment for AI-Generated Human-Centric Videos: Dataset and Model](/202607/22/2607.16742v1-multi-dimensional-quality-assessment-for-ai-generated-human-centric-videos-dataset-and-model)  
+   标签：评分：8.0/10、query:xiqa
+   evidence：直接进行AI生成人像视频的质量评价
 
 ### 速读区论文标签
-1. [The Many Senses of Visual Similarity: A Text-Prompted Image Perceptual Metric](/202607/21/2607.18237v1-the-many-senses-of-visual-similarity-a-text-prompted-image-perceptual-metric)  
-   标签：评分：7.0/10、query:xiqa
-   evidence：引入文本提示的图像感知相似度度量，用于评估图像感知质量
-2. [Constraint-Anchored Reasoning Traces](/202607/21/2607.16727v1-constraint-anchored-reasoning-traces)  
-   标签：评分：6.0/10、query:xiqa
-   evidence：提升多模态LLM的链式推理可靠性，对图像质量推理与解释生成有直接促进作用
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">
