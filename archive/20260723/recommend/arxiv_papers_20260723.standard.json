@@ -1,0 +1,99 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-23T21:32:25.327931+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.18850v1",
+      "source": "arxiv",
+      "title": "OPD-IAD: From Language Judgment to Industrial Anomaly Detection via On-Policy Self-Distillation",
+      "abstract": "Large vision-language models (LVLMs) have recently shown strong potential for industrial anomaly detection (IAD) by providing image-level anomaly judgments and interpretable defect reasoning. However, current LVLM-based IAD methods still struggle to produce precise pixel-level anomaly maps from generated language judgments. We aim to achieve precise pixel-level localization while using language as guidance rather than letting it dominate the visual response. Specifically, we propose \\textbf{OPD-IAD}, an evidence-privileged dense on-policy self-distillation framework for LVLM-based IAD. OPD-IAD distills privileged defect evidence onto the model's own on-policy judgment trajectory, enabling the final generated judgment to be learned under dense supervision rather than treated only as a textual answer. The resulting judgment serves as a semantic condition for dense anomaly perception. To turn this condition into dense visual evidence, we introduce \\textbf{Language-guided Visual Anchoring}, which uses a judgment reforward to re-encode the image and question under the final-judgment condition into semantic anchors and contrasts them with dense visual features through a contrastive heatmap head to generate anomaly maps. The language judgment therefore provides compact semantic guidance, while dense visual features remain the basis for pixel-level scoring, allowing language to guide anomaly localization without letting language quality directly dictate the pixel-level response. Extensive experiments show that OPD-IAD achieves the best overall performance among LVLM-based IAD methods, leading on most image-level, pixel-level, and QA metrics.",
+      "authors": [
+        "Shuimu Chen",
+        "Jing Jin",
+        "Nan Su",
+        "Hongbo Xu",
+        "Zebang Cheng",
+        "Wenming Yang",
+        "Fei Ma",
+        "Guijin Wang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-07-21T08:37:01+00:00",
+      "link": "https://arxiv.org/pdf/2607.18850v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Uses large vision-language models for anomaly judgment and interpretable defect reasoning",
+      "llm_evidence_cn": "使用大型视觉语言模型进行异常判断和可解释缺陷推理",
+      "llm_evidence": "使用大型视觉语言模型进行异常判断和可解释缺陷推理",
+      "canonical_evidence": "使用大型视觉语言模型进行异常判断和可解释缺陷推理",
+      "llm_tldr_en": "Proposes OPD-IAD, an on-policy self-distillation framework that distills privileged defect evidence from LVLMs to produce accurate pixel-level anomaly maps, using language judgments as guidance for interpretable industrial anomaly detection.",
+      "llm_tldr_cn": "现有基于LVLM的工业异常检测方法难以从语言判断生成精确的像素级异常图。本文提出OPD-IAD，一种证据优先的密集在线策略自蒸馏框架，将特权缺陷证据蒸馏到模型自身的判断轨迹中，实现精准像素级定位与可解释推理。实验表明该方法在异常检测精度和解释性上优于现有方法。",
+      "llm_tldr": "现有基于LVLM的工业异常检测方法难以从语言判断生成精确的像素级异常图。本文提出OPD-IAD，一种证据优先的密集在线策略自蒸馏框架，将特权缺陷证据蒸馏到模型自身的判断轨迹中，实现精准像素级定位与可解释推理。实验表明该方法在异常检测精度和解释性上优于现有方法。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "image quality reasoning and explanation generation via multimodal large models",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.19315v1",
+      "source": "arxiv",
+      "title": "ERank in Latent Space as an Image-Complexity and Richness Measure",
+      "abstract": "We propose the effective rank (ERank) of the channel covariance of an image's deep feature map as a per-sample, label-free measure of visual richness, computed from a single forward pass through a frozen pretrained encoder. ERank counts how many decorrelated channel directions an image activates, and we characterize its properties, including its behavior under noise. Empirically, ERank orders images from plain to visually rich, correlates with codec bitrate, sharpness, and edge density, and correlates with human complexity annotations on IC9600 with $r = 0.72$. As a data-selection criterion, removing low-ERank samples improves super-resolution and removing high-ERank samples improves OCR, in both pretraining and finetuning, while selection does not help classification, segmentation, or denoising. ERank is thus a cheap richness signal, useful exactly when task difficulty is governed by input richness.",
+      "authors": [
+        "Maksim Smirnov",
+        "Grigory Kononov",
+        "Anastasiia Linich",
+        "Egor Surkov",
+        "Egor Shvetsov"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-21T17:32:44+00:00",
+      "link": "https://arxiv.org/pdf/2607.19315v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Proposes an image complexity measure (ERank) correlated with human quality annotations, useful for image quality assessment.",
+      "llm_evidence_cn": "提出一种与人类质量标注相关的图像复杂度度量（ERank），可用于图像质量评价。",
+      "llm_evidence": "提出一种与人类质量标注相关的图像复杂度度量（ERank），可用于图像质量评价。",
+      "canonical_evidence": "提出一种与人类质量标注相关的图像复杂度度量（ERank），可用于图像质量评价。",
+      "llm_tldr_en": "This paper introduces ERank, a per-sample measure of visual richness based on the effective rank of deep feature covariance. It correlates with human complexity ratings and sharpness, and as a data-selection criterion it improves tasks like super-resolution and OCR, showing utility for image quality-related evaluations.",
+      "llm_tldr_cn": "该文提出基于深度特征协方差有效秩的每样本视觉丰富度度量ERank，仅需单次前向传播即可计算。ERank与人类复杂度标注（r=0.72）、码率、锐度等质量相关指标密切相关。实验表明，去除低ERank样本可提升超分辨率性能，去除高ERank样本则改善OCR，证明了该度量在图像质量相关评估中的数据筛选价值。该方法为无标签的图像质量评估提供了简洁有效的工具。",
+      "llm_tldr": "该文提出基于深度特征协方差有效秩的每样本视觉丰富度度量ERank，仅需单次前向传播即可计算。ERank与人类复杂度标注（r=0.72）、码率、锐度等质量相关指标密切相关。实验表明，去除低ERank样本可提升超分辨率性能，去除高ERank样本则改善OCR，证明了该度量在图像质量相关评估中的数据筛选价值。该方法为无标签的图像质量评估提供了简洁有效的工具。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

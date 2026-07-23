@@ -6,29 +6,29 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-22
-- 运行时间：2026-07-22 21:29:14 UTC
+- 最新运行日期：2026-07-23
+- 运行时间：2026-07-23 21:33:58 UTC
 - 运行状态：成功
 - 本次总论文数：2
-- 精读区：2
-- 速读区：0
+- 精读区：0
+- 速读区：2
 
 ### 今日简报（AI）
-1) 今日精读两篇论文，聚焦AI如何“看懂”艺术笔触与人物视频质量。
-2) 最值得关注的是，用视觉-语言反馈精评局部笔触，以及用多维框架为AI生成的人物视频建立立体质量标尺。
-3) 不妨从视觉语言模型入手，尝试将这种“精细品味”能力迁移到你自己的创作审查或内容筛选流程中。
-- 详情：[/202607/22/README](/202607/22/README)
+今日速读两篇前沿论文，聚焦视觉语言结合工业异常检测与图像潜在空间复杂度度量。  
+从语言判断到异常检测的自蒸馏方法，及用潜在空间有效秩衡量图像复杂度，值得关注。  
+建议普通读者先理解预训练模型如何跨界解决工业缺陷难题，再探索图像内在丰富性的量化新视角。
+- 详情：[/202607/23/README](/202607/23/README)
 
 ### 精读区论文标签
-1. [Local Brushstroke Quality Assessment via Vision-Language Feedback](/202607/22/2607.16330v1-local-brushstroke-quality-assessment-via-vision-language-feedback)  
-   标签：评分：10.0/10、query:xiqa
-   evidence：利用多模态大语言模型评估笔触质量并生成自然语言反馈
-2. [Multi-Dimensional Quality Assessment for AI-Generated Human-Centric Videos: Dataset and Model](/202607/22/2607.16742v1-multi-dimensional-quality-assessment-for-ai-generated-human-centric-videos-dataset-and-model)  
-   标签：评分：8.0/10、query:xiqa
-   evidence：直接进行AI生成人像视频的质量评价
+- 本次无精读推荐。
 
 ### 速读区论文标签
-- 本次无速读推荐。
+1. [OPD-IAD: From Language Judgment to Industrial Anomaly Detection via On-Policy Self-Distillation](/202607/23/2607.18850v1-opd-iad-from-language-judgment-to-industrial-anomaly-detection-via-on-policy-self-distillation)  
+   标签：评分：7.0/10、query:xiqa
+   evidence：使用大型视觉语言模型进行异常判断和可解释缺陷推理
+2. [ERank in Latent Space as an Image-Complexity and Richness Measure](/202607/23/2607.19315v1-erank-in-latent-space-as-an-image-complexity-and-richness-measure)  
+   标签：评分：6.0/10、query:xiqa
+   evidence：提出一种与人类质量标注相关的图像复杂度度量（ERank），可用于图像质量评价。
 
 
 <div class="dpr-home-promo-card">

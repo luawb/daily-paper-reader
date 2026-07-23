@@ -1,0 +1,39 @@
+{
+  "label": "2026-07-23",
+  "date": "2026-07-23",
+  "generated_at": "2026-07-23T21:34:08",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202607/23/2607.18850v1-opd-iad-from-language-judgment-to-industrial-anomaly-detection-via-on-policy-self-distillation",
+      "section": "quick",
+      "title_en": "OPD-IAD: From Language Judgment to Industrial Anomaly Detection via On-Policy Self-Distillation",
+      "authors": "Shuimu Chen, Jing Jin, Nan Su, Hongbo Xu, Zebang Cheng, Wenming Yang, Fei Ma, Guijin Wang",
+      "date": "2026-07-21",
+      "pdf": "https://arxiv.org/pdf/2607.18850v1",
+      "score": "7.0",
+      "evidence": "使用大型视觉语言模型进行异常判断和可解释缺陷推理",
+      "tldr": "在现有LVLM应用于工业异常检测中，语言判断虽可提供异常解释，但难以生成精确像素级异常图。为此，本文提出OPD-IAD，一种基于on-policy自蒸馏的框架，通过特权缺陷证据蒸馏和语言引导视觉锚定，将语义条件转化为密集视觉证据，实现语言指导下的异常定位。实验表明，该方法在MVTec等数据集上取得最优图像级、像素级及问答性能，验证了语言作为紧凑语义指导可有效提升工业异常检测的像素精度。",
+      "tags": "query:xiqa",
+      "abstract_en": "Large vision-language models (LVLMs) have recently shown strong potential for industrial anomaly detection (IAD) by providing image-level anomaly judgments and interpretable defect reasoning. However, current LVLM-based IAD methods still struggle to produce precise pixel-level anomaly maps from generated language judgments. We aim to achieve precise pixel-level localization while using language as guidance rather than letting it dominate the visual response. Specifically, we propose \\textbf{OPD-IAD}, an evidence-privileged dense on-policy self-distillation framework for LVLM-based IAD. OPD-IAD distills privileged defect evidence onto the model's own on-policy judgment trajectory, enabling the final generated judgment to be learned under dense supervision rather than treated only as a textual answer. The resulting judgment serves as a semantic condition for dense anomaly perception. To turn this condition into dense visual evidence, we introduce \\textbf{Language-guided Visual Anchoring}, which uses a judgment reforward to re-encode the image and question under the final-judgment condition into semantic anchors and contrasts them with dense visual features through a contrastive heatmap head to generate anomaly maps. The language judgment therefore provides compact semantic guidance, while dense visual features remain the basis for pixel-level scoring, allowing language to guide anomaly localization without letting language quality directly dictate the pixel-level response. Extensive experiments show that OPD-IAD achieves the best overall performance among LVLM-based IAD methods, leading on most image-level, pixel-level, and QA metrics.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/23/2607.19315v1-erank-in-latent-space-as-an-image-complexity-and-richness-measure",
+      "section": "quick",
+      "title_en": "ERank in Latent Space as an Image-Complexity and Richness Measure",
+      "authors": "Maksim Smirnov, Grigory Kononov, Anastasiia Linich, Egor Surkov, Egor Shvetsov",
+      "date": "2026-07-21",
+      "pdf": "https://arxiv.org/pdf/2607.19315v1",
+      "score": "6.0",
+      "evidence": "提出一种与人类质量标注相关的图像复杂度度量（ERank），可用于图像质量评价。",
+      "tldr": "衡量图像视觉复杂度通常需要人工标注或任务特定特征，缺乏通用且计算低廉的指标。ERank利用冻结预训练编码器的深层特征图通道协方差的有效秩，作为无需标签的每样本图像丰富度度量。实验表明ERank与码率、清晰度和人类标注高度相关，并按ERank筛选样本能提升超分和OCR等对输入丰富度敏感的任务。该指标提供了一种廉价、可扩展的图像复杂度评估新工具。",
+      "tags": "query:xiqa",
+      "abstract_en": "We propose the effective rank (ERank) of the channel covariance of an image's deep feature map as a per-sample, label-free measure of visual richness, computed from a single forward pass through a frozen pretrained encoder. ERank counts how many decorrelated channel directions an image activates, and we characterize its properties, including its behavior under noise. Empirically, ERank orders images from plain to visually rich, correlates with codec bitrate, sharpness, and edge density, and correlates with human complexity annotations on IC9600 with $r = 0.72$. As a data-selection criterion, removing low-ERank samples improves super-resolution and removing high-ERank samples improves OCR, in both pretraining and finetuning, while selection does not help classification, segmentation, or denoising. ERank is thus a cheap richness signal, useful exactly when task difficulty is governed by input richness.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
