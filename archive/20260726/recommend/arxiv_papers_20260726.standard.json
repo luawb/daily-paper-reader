@@ -1,0 +1,59 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-26T21:11:05.777748+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.16841v1",
+      "source": "arxiv",
+      "title": "Look Clearly Before Answering: Mitigating Hallucinations in LVLMs via Saliency-Driven Perceptual Realignment",
+      "abstract": "Large vision-language models (LVLMs) have demonstrated remarkable capabilities in multimodal understanding. However, they remain prone to hallucinations, generating responses that are inconsistent with the visual evidence. Existing mitigation methods largely address language-prior bias or cross-modal imbalance, while progressive visual degradation across perception and memory remains underexplored. In this work, we propose Saliency-Driven Perceptual Realignment (SDPR), a training-free framework that mitigates the degradation of visual awareness throughout inference. Specifically, we first introduce saliency-driven attention redistribution to release attention hijacked by non-semantic sink tokens, thereby recovering critical visual evidence. Second, we identify spatial distortion in the KV cache and propose saliency-driven cache alignment to preserve query-relevant visual features during generation. Finally, we introduce prior-constrained contrastive decoding to penalize unfaithful predictions induced by dominant language priors. Our proposed SDPR is robust against hallucinations due to its holistic alignment of visual awareness across the entire generative trajectory. Extensive experiments across diverse LVLM architectures show that SDPR outperforms state-of-the-art methods on both hallucination and general-purpose benchmarks, requiring no additional training and incurring minimal runtime overhead. The code is available \\href{https://github.com/PengSyuChen/SDPR}{\\color{blue}{here}}.",
+      "authors": [
+        "Pengxu Chen",
+        "Yao Zhu",
+        "Guangming Zhu",
+        "Jun Sheng",
+        "Jincai Huang",
+        "Xiangyang Ji",
+        "Liang Zhang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.MM"
+      ],
+      "published": "2026-07-18T14:39:16+00:00",
+      "link": "https://arxiv.org/pdf/2607.16841v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Improves visual grounding of LVLMs, enabling more reliable image descriptions for quality assessment",
+      "llm_evidence_cn": "提高大视觉语言模型的视觉基础，使图像质量描述更可靠",
+      "llm_evidence": "提高大视觉语言模型的视觉基础，使图像质量描述更可靠",
+      "canonical_evidence": "提高大视觉语言模型的视觉基础，使图像质量描述更可靠",
+      "llm_tldr_en": "Proposes SDPR, a training-free framework that reduces hallucinations in LVLMs by realigning attention via saliency maps, enhancing perceptual fidelity for tasks like image quality explanation.",
+      "llm_tldr_cn": "现有大视觉语言模型常产生与视觉证据不一致的响应，即幻觉问题。本文提出SDPR，一种无需训练的方法，通过显著性驱动的注意力重分布和感知重对齐来恢复视觉意识，缓解幻觉。实验表明该方法能显著提升模型响应与图像内容的一致性，为基于多模态大模型的图像质量推理等任务提供了更可信的感知基础。",
+      "llm_tldr": "现有大视觉语言模型常产生与视觉证据不一致的响应，即幻觉问题。本文提出SDPR，一种无需训练的方法，通过显著性驱动的注意力重分布和感知重对齐来恢复视觉意识，缓解幻觉。实验表明该方法能显著提升模型响应与图像内容的一致性，为基于多模态大模型的图像质量推理等任务提供了更可信的感知基础。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "image quality reasoning and explanation generation via multimodal large models",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

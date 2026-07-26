@@ -6,22 +6,26 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-25
-- 运行时间：2026-07-25 21:13:35 UTC
+- 最新运行日期：2026-07-26
+- 运行时间：2026-07-26 21:12:24 UTC
 - 运行状态：成功
-- 本次总论文数：0
+- 本次总论文数：1
 - 精读区：0
-- 速读区：0
+- 速读区：1
 
 ### 今日简报（AI）
-> 今日无新推荐，系统未产出可展示论文。
-- 详情：[/202607/25/README](/202607/25/README)
+今日速读一篇关于缓解大视觉语言模型幻觉的新研究，提出用显著性驱动感知重对齐方法让模型“看清再答”。  
+核心发现是模型常因过度关注图像局部或错误区域而产生幻觉，强制其聚焦于显著信息能显著提升回答的事实准确性。  
+感兴趣可查看论文中的注意力可视化示例，直观理解模型如何“走神”以及该方法如何纠偏。
+- 详情：[/202607/26/README](/202607/26/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-- 本次无速读推荐。
+1. [Look Clearly Before Answering: Mitigating Hallucinations in LVLMs via Saliency-Driven Perceptual Realignment](/202607/26/2607.16841v1-look-clearly-before-answering-mitigating-hallucinations-in-lvlms-via-saliency-driven-perceptual-realignment)  
+   标签：评分：7.0/10、query:xiqa
+   evidence：提高大视觉语言模型的视觉基础，使图像质量描述更可靠
 
 
 <div class="dpr-home-promo-card">
