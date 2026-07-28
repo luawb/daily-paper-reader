@@ -1,0 +1,54 @@
+{
+  "label": "2026-07-28",
+  "date": "2026-07-28",
+  "generated_at": "2026-07-28T21:35:10",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202607/28/2607.24353v1-prism-prompt-refinement-via-image-grounded-self-rewarding-mechanism-for-text-to-image-generation",
+      "section": "deep",
+      "title_en": "PRISM: Prompt Refinement via Image-grounded Self-rewarding Mechanism for Text-to-Image Generation",
+      "authors": "Guo Tang, HongJie Luo, Tianxu Wang, Ying Zhang, Hao Wang",
+      "date": "2026-07-27",
+      "pdf": "https://arxiv.org/pdf/2607.24353v1",
+      "score": "8.0",
+      "evidence": "PRISM利用自奖励强化学习评估图像美学质量，实现图像质量评估。",
+      "tldr": "文本到图像生成对提示词高度敏感，现有优化方法缺乏基于生成图像的结构化诊断和反馈闭环。为此，我们提出PRISM框架，通过图像基础的自奖励机制闭合提示-图像-反馈环路，利用统一视觉语言模型对生成图像进行语义一致性、美学质量和人类偏好对齐的评分，并采用混合理想点与Chebyshev奖励进行自奖励优化。实验表明，PRISM有效提升图像质量和细粒度语义对齐，同时提供可解释反馈。该框架为可解释、自进化的提示优化提供了新方法。",
+      "tags": "query:xiqa",
+      "abstract_en": "Text-to-image generation models can synthesize high-quality images from natural language descriptions, but their performance remains highly sensitive to prompt formulation. Existing prompt optimization methods mainly rely on text-side rewriting, prompt expansion, or external reward signals, offering limited image-grounded diagnosis and weak support for learning reusable optimisation policies. In this paper, we propose PRISM, a Prompt Refinement framework via Image-grounded Self-rewarding Mechanism. PRISM closes the prompt-image-feedback loop by interpreting generated images with structured visual diagnosis and scoring them along semantic consistency, aesthetic quality, and human preference alignment. It first initializes a unified VLM through multi-task supervised fine-tuning, and then improves the prompt policy via self-rewarding optimization with a hybrid ideal-point and Chebyshev reward. Extensive experiments show that PRISM improves holistic image quality and fine-grained semantic alignment, while providing interpretable feedback for targeted prompt refinement. The code is available at https://anonymous.4open.science/r/PRISM-FF81.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/28/2607.22783v1-jpeg-aic2026-a-large-scale-dataset-for-fine-grained-assessment-of-image-coding",
+      "section": "quick",
+      "title_en": "JPEG AIC2026: A large-scale dataset for fine-grained assessment of image coding",
+      "authors": "Mohsen Jenadeleh, Jon Sneyers, João Ascenso, Thomas Richter, Alexander Karabutov, Panqi Jia, Elena Alshina, Osamu Watanabe, António Pinheiro, Touradj Ebrahimi, Dietmar Saupe",
+      "date": "2026-07-24",
+      "pdf": "https://arxiv.org/pdf/2607.22783v1",
+      "score": "7.0",
+      "evidence": "引入大规模数据集用于压缩图像质量的细粒度评估",
+      "tldr": "随着传统和基于学习的图像压缩技术发展，对压缩图像质量进行精细评估的基准数据集需求日益增加。为此，本文提出AIC2026数据集，包含70张从2787候选图中精选的源图像，覆盖8种传统和4种学习编解码器的17种配置，每张图像用7种编解码器在20个感知分级的失真级别上编码，共9618张失真图像。使用24种传统和12种学习型客观质量评价方法进行分析，结果显示现有方法对精细质量差异的评价存在显著分歧，特别是对于学习编解码器的压缩伪影。该数据集为研究率失真行为和客观度量的精细评估提供了重要基准。",
+      "tags": "query:xiqa",
+      "abstract_en": "Recent advances in conventional and learning-based image coding have increased the demand for benchmark datasets that support fine-grained assessment of compressed image quality, particularly for learning-based image compression methods. This paper introduces Assessment of Image Coding 2026 (AIC2026), a large-scale dataset for high-fidelity image compression containing 70 source images selected from 2,787 candidates using semantic clustering, inter-metric disagreement among objective image quality assessment (IQA) methods, and manual inspection and refinement. The dataset covers a wide range of compression artifacts produced by eight conventional and four learning-based codecs across 17 coding configurations. Each source image is encoded using seven codecs. For each source-codec pair, decoded images are provided at 20 perceptually spaced distortion levels, corresponding approximately to 0.2-4.0 just-noticeable difference (JND) units using the ColorVideoVDP (CVVDP) metric for distortion estimation, yielding 9,618 distorted images. This fine-grained sampling enables analysis of rate-distortion behavior and objective metric evaluation for subtle quality differences across a wide range of compression artifacts. We report an extensive objective analysis using 24 conventional and 12 learning-based IQA methods. The results show substantial disagreement among current IQA methods for fine-grained quality differences, particularly for artifacts introduced by learning-based codecs. The complete dataset is publicly available at https://doi.org/10.18419/DARUS-6156.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202607/28/2607.23321v1-a-reference-free-framework-for-evaluating-single-frame-isp-pipelines",
+      "section": "quick",
+      "title_en": "A Reference-Free Framework for Evaluating Single-Frame ISP Pipelines",
+      "authors": "Yujin Cho, Sira Ferradans, Jean-Michel Morel, Gabriele Facciolo, Thomas Eboli",
+      "date": "2026-07-25",
+      "pdf": "https://arxiv.org/pdf/2607.23321v1",
+      "score": "7.0",
+      "evidence": "提出基于盲图像质量评估的无参考框架评估ISP管线",
+      "tldr": "相机ISP管线评估需量化低层处理伪影，全参考指标虽准确但依赖难以获得的对齐图像对，传统盲IQA侧重语义难以适用。本文提出无参考框架，从处理图像和ISO元数据预测代理参考，以计算标准PSNR、SSIM和LPIPS指标。合成数据训练后可迁移至真实数据，LoRA微调高效适应管线变更，性能超越直接回归与盲IQA方法。这证明了无参考评估全参考指标的可行性，为实际相机评估提供可靠方案。",
+      "tags": "query:xiqa",
+      "abstract_en": "Evaluating camera image signal processing (ISP) pipelines requires measuring low-level artifacts introduced by operations such as denoising, demosaicing, tone mapping, and compression. Blind image quality assessment (IQA) techniques can grade visual quality without a reference, but they typically focus on semantic and high-level visual cues or human perceptual scores rather than the low-level image-processing artifacts introduced by camera pipelines. In contrast, full-reference metrics such as PSNR and SSIM measure pixel-level differences and structural similarity, while LPIPS measures perceptual similarity in deep feature space. However, these metrics require perfectly aligned image pairs, which are difficult to collect in practical settings. We propose a reference-free learning framework that estimates full-reference image quality metrics from a processed sRGB image and its ISO metadata. Our method predicts a proxy sRGB reference, which is then compared with the processed image to compute PSNR, SSIM, and LPIPS in their standard full-reference form. Our experiments show that the proxy-reference model can be learned from synthetic data and applied to real camera data. We further show that lightweight LoRA fine-tuning enables efficient adaptation when ISP components or pipeline configurations are changed. The proposed method outperforms direct metric regression in estimating metric values and achieves higher agreement with full-reference rankings than conventional blind IQA methods. These results demonstrate the feasibility of reference-free estimation of full-reference metrics for practical camera-pipeline evaluation.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

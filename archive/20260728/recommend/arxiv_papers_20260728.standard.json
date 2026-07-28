@@ -1,0 +1,142 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-28T21:31:15.477187+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2607.24353v1",
+      "source": "arxiv",
+      "title": "PRISM: Prompt Refinement via Image-grounded Self-rewarding Mechanism for Text-to-Image Generation",
+      "abstract": "Text-to-image generation models can synthesize high-quality images from natural language descriptions, but their performance remains highly sensitive to prompt formulation. Existing prompt optimization methods mainly rely on text-side rewriting, prompt expansion, or external reward signals, offering limited image-grounded diagnosis and weak support for learning reusable optimisation policies. In this paper, we propose PRISM, a Prompt Refinement framework via Image-grounded Self-rewarding Mechanism. PRISM closes the prompt-image-feedback loop by interpreting generated images with structured visual diagnosis and scoring them along semantic consistency, aesthetic quality, and human preference alignment. It first initializes a unified VLM through multi-task supervised fine-tuning, and then improves the prompt policy via self-rewarding optimization with a hybrid ideal-point and Chebyshev reward. Extensive experiments show that PRISM improves holistic image quality and fine-grained semantic alignment, while providing interpretable feedback for targeted prompt refinement. The code is available at https://anonymous.4open.science/r/PRISM-FF81.",
+      "authors": [
+        "Guo Tang",
+        "HongJie Luo",
+        "Tianxu Wang",
+        "Ying Zhang",
+        "Hao Wang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-27T12:31:32+00:00",
+      "link": "https://arxiv.org/pdf/2607.24353v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "PRISM uses self-rewarding RL to score aesthetic quality of generated images, enabling image quality assessment.",
+      "llm_evidence_cn": "PRISM利用自奖励强化学习评估图像美学质量，实现图像质量评估。",
+      "llm_evidence": "PRISM利用自奖励强化学习评估图像美学质量，实现图像质量评估。",
+      "canonical_evidence": "PRISM利用自奖励强化学习评估图像美学质量，实现图像质量评估。",
+      "llm_tldr_en": "PRISM closes the prompt-image-feedback loop by scoring generated images on quality dimensions and using self-rewarding RL to learn policy for prompt refinement, improving text-to-image generation.",
+      "llm_tldr_cn": "现有文本到图像生成模型对提示词高度敏感，但传统提示词优化主要依赖文本侧改写或外部奖励，缺乏基于图像的诊断和可复用策略。本文提出PRISM框架，通过结构化视觉诊断将生成图像评分与语义一致性、美学质量和人类偏好对齐，并采用自奖励机制从反馈中学习可复用的优化策略，从而闭合提示词-图像-反馈回路。实验表明PRISM能有效提升生成质量，为提示词优化提供了可学习的闭环方案。",
+      "llm_tldr": "现有文本到图像生成模型对提示词高度敏感，但传统提示词优化主要依赖文本侧改写或外部奖励，缺乏基于图像的诊断和可复用策略。本文提出PRISM框架，通过结构化视觉诊断将生成图像评分与语义一致性、美学质量和人类偏好对齐，并采用自奖励机制从反馈中学习可复用的优化策略，从而闭合提示词-图像-反馈回路。实验表明PRISM能有效提升生成质量，为提示词优化提供了可学习的闭环方案。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "reinforcement learning for image quality assessment and description",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.22783v1",
+      "source": "arxiv",
+      "title": "JPEG AIC2026: A large-scale dataset for fine-grained assessment of image coding",
+      "abstract": "Recent advances in conventional and learning-based image coding have increased the demand for benchmark datasets that support fine-grained assessment of compressed image quality, particularly for learning-based image compression methods. This paper introduces Assessment of Image Coding 2026 (AIC2026), a large-scale dataset for high-fidelity image compression containing 70 source images selected from 2,787 candidates using semantic clustering, inter-metric disagreement among objective image quality assessment (IQA) methods, and manual inspection and refinement. The dataset covers a wide range of compression artifacts produced by eight conventional and four learning-based codecs across 17 coding configurations. Each source image is encoded using seven codecs. For each source-codec pair, decoded images are provided at 20 perceptually spaced distortion levels, corresponding approximately to 0.2-4.0 just-noticeable difference (JND) units using the ColorVideoVDP (CVVDP) metric for distortion estimation, yielding 9,618 distorted images. This fine-grained sampling enables analysis of rate-distortion behavior and objective metric evaluation for subtle quality differences across a wide range of compression artifacts. We report an extensive objective analysis using 24 conventional and 12 learning-based IQA methods. The results show substantial disagreement among current IQA methods for fine-grained quality differences, particularly for artifacts introduced by learning-based codecs. The complete dataset is publicly available at https://doi.org/10.18419/DARUS-6156.",
+      "authors": [
+        "Mohsen Jenadeleh",
+        "Jon Sneyers",
+        "João Ascenso",
+        "Thomas Richter",
+        "Alexander Karabutov",
+        "Panqi Jia",
+        "Elena Alshina",
+        "Osamu Watanabe",
+        "António Pinheiro",
+        "Touradj Ebrahimi",
+        "Dietmar Saupe"
+      ],
+      "primary_category": "eess.IV",
+      "categories": [
+        "eess.IV",
+        "cs.CV"
+      ],
+      "published": "2026-07-24T10:45:43+00:00",
+      "link": "https://arxiv.org/pdf/2607.22783v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "introduces a large-scale dataset for fine-grained compressed image quality assessment",
+      "llm_evidence_cn": "引入大规模数据集用于压缩图像质量的细粒度评估",
+      "llm_evidence": "引入大规模数据集用于压缩图像质量的细粒度评估",
+      "canonical_evidence": "引入大规模数据集用于压缩图像质量的细粒度评估",
+      "llm_tldr_en": "The paper presents AIC2026, a large dataset with 70 source images encoded by 12 codecs in 17 configurations, designed for fine-grained IQA benchmarking of image compression methods.",
+      "llm_tldr_cn": "该论文提出了AIC2026数据集，专门用于高保真图像压缩的细粒度质量评估。数据集包含70幅源图像，经8种传统和4种学习型编码器在17种配置下压缩，覆盖丰富伪影类型。通过语义聚类和IQA方法间分歧筛选内容，该数据集为传统与学习型压缩方法的对比提供了严格基准。实验证明其能细致区分不同编码器产生的质量差异，推动了图像压缩评估的标准化发展。",
+      "llm_tldr": "该论文提出了AIC2026数据集，专门用于高保真图像压缩的细粒度质量评估。数据集包含70幅源图像，经8种传统和4种学习型编码器在17种配置下压缩，覆盖丰富伪影类型。通过语义聚类和IQA方法间分歧筛选内容，该数据集为传统与学习型压缩方法的对比提供了严格基准。实验证明其能细致区分不同编码器产生的质量差异，推动了图像压缩评估的标准化发展。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.23321v1",
+      "source": "arxiv",
+      "title": "A Reference-Free Framework for Evaluating Single-Frame ISP Pipelines",
+      "abstract": "Evaluating camera image signal processing (ISP) pipelines requires measuring low-level artifacts introduced by operations such as denoising, demosaicing, tone mapping, and compression. Blind image quality assessment (IQA) techniques can grade visual quality without a reference, but they typically focus on semantic and high-level visual cues or human perceptual scores rather than the low-level image-processing artifacts introduced by camera pipelines. In contrast, full-reference metrics such as PSNR and SSIM measure pixel-level differences and structural similarity, while LPIPS measures perceptual similarity in deep feature space. However, these metrics require perfectly aligned image pairs, which are difficult to collect in practical settings. We propose a reference-free learning framework that estimates full-reference image quality metrics from a processed sRGB image and its ISO metadata. Our method predicts a proxy sRGB reference, which is then compared with the processed image to compute PSNR, SSIM, and LPIPS in their standard full-reference form. Our experiments show that the proxy-reference model can be learned from synthetic data and applied to real camera data. We further show that lightweight LoRA fine-tuning enables efficient adaptation when ISP components or pipeline configurations are changed. The proposed method outperforms direct metric regression in estimating metric values and achieves higher agreement with full-reference rankings than conventional blind IQA methods. These results demonstrate the feasibility of reference-free estimation of full-reference metrics for practical camera-pipeline evaluation.",
+      "authors": [
+        "Yujin Cho",
+        "Sira Ferradans",
+        "Jean-Michel Morel",
+        "Gabriele Facciolo",
+        "Thomas Eboli"
+      ],
+      "primary_category": "eess.IV",
+      "categories": [
+        "eess.IV",
+        "cs.CV"
+      ],
+      "published": "2026-07-25T18:28:35+00:00",
+      "link": "https://arxiv.org/pdf/2607.23321v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "proposes a reference-free framework for evaluating ISP pipelines using blind IQA",
+      "llm_evidence_cn": "提出基于盲图像质量评估的无参考框架评估ISP管线",
+      "llm_evidence": "提出基于盲图像质量评估的无参考框架评估ISP管线",
+      "canonical_evidence": "提出基于盲图像质量评估的无参考框架评估ISP管线",
+      "llm_tldr_en": "This paper introduces a reference-free framework for evaluating camera ISP pipelines by measuring low-level processing artifacts, addressing the gap where blind IQA methods miss camera-specific distortions.",
+      "llm_tldr_cn": "该论文针对相机ISP管线评估中无参考质量度量的需求，提出一种新型无参考评估框架，专门测量去噪、去马赛克等低层次伪影。与传统盲IQA侧重高层语义不同，该框架直接针对相机处理引入的低级图像失真，无需对齐参考图像，解决了实用场景下参考图像难以获取的难题。实验表明其能够有效评价ISP管线的视觉质量，为相机系统开发提供了实用工具。",
+      "llm_tldr": "该论文针对相机ISP管线评估中无参考质量度量的需求，提出一种新型无参考评估框架，专门测量去噪、去马赛克等低层次伪影。与传统盲IQA侧重高层语义不同，该框架直接针对相机处理引入的低级图像失真，无需对齐参考图像，解决了实用场景下参考图像难以获取的难题。实验表明其能够有效评价ISP管线的视觉质量，为相机系统开发提供了实用工具。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
