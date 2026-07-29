@@ -1,0 +1,56 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-29T21:30:31.065461+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.22752v1",
+      "source": "arxiv",
+      "title": "Beyond Error-vs-Discard Characteristic: Toward Stable and Reliable Evaluation for Face Image Quality Assessment",
+      "abstract": "Face Image Quality Assessment (FIQA) aims to estimate the utility of facial images for reliable recognition. The evaluation of FIQA methods is predominantly based on the Error-versus-Discard Characteristic (EDC), which evaluates performance by progressively discarding low-quality samples and measuring recognition error on the retained subset. In this work, we demonstrate that the widely used EDC protocol has fundamental limitations: Test-Set Divergence and Threshold Drift, which together limit the reliability and comparability of FIQA methods. To address this, we propose discard-based EDC variants and a rank-based Rank Consistency Evaluation (RCE) metric that operates on the entire test set without discarding samples, using a fixed decision threshold. Extensive experiments on five datasets, four face recognition models, and 15 state-of-the-art FIQA methods demonstrate both the limitations of EDC and the effectiveness of the proposed approaches in enabling a more reliable and comparable evaluation. Despite evaluated on face images only, the limitations arise from the EDC protocol rather than the biometric modality, suggesting a broader applicability to biometric quality assessment in general.",
+      "authors": [
+        "Bhavesh Wani",
+        "Žiga Babnik",
+        "Vitomir Štruc",
+        "Philipp Terhörst"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.LG"
+      ],
+      "published": "2026-07-23T14:38:59+00:00",
+      "link": "https://arxiv.org/pdf/2607.22752v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "proposes new evaluation metrics for face image quality assessment methods",
+      "llm_evidence_cn": "提出用于人脸图像质量评估方法的新评价指标",
+      "llm_evidence": "提出用于人脸图像质量评估方法的新评价指标",
+      "canonical_evidence": "提出用于人脸图像质量评估方法的新评价指标",
+      "llm_tldr_en": "This paper identifies limitations in the Error-vs-Discard Characteristic protocol for evaluating face image quality assessment and proposes improved variants and a rank-based metric for more stable and reliable comparisons.",
+      "llm_tldr_cn": "该论文指出广泛使用的错误-丢弃特性（EDC）协议在评估人脸图像质量评估方法时存在测试集分歧和阈值漂移等根本局限性，并提出改进的丢弃式EDC变体以及基于排序的排序一致性评估（RCE）指标，无需丢弃样本即可实现更稳定可靠的比较。",
+      "llm_tldr": "该论文指出广泛使用的错误-丢弃特性（EDC）协议在评估人脸图像质量评估方法时存在测试集分歧和阈值漂移等根本局限性，并提出改进的丢弃式EDC变体以及基于排序的排序一致性评估（RCE）指标，无需丢弃样本即可实现更稳定可靠的比较。",
+      "llm_tags": [
+        "query:xiqa:composite"
+      ],
+      "matched_query_tag": "query:xiqa:composite",
+      "matched_query_text": "Papers central to 科学、图像质量评价与推理方法，仅限2024年1月1日后发表, especially work that connects or combines: advanced image quality assessment using reasoning methods; image quality assessment with explanations; large language model that processes images and text; generating natural language descriptions of image quality; describing the quality of images; evaluating the quality of images; image quality reasoning and explanation generation via multimodal large models; multimodal large language models for image quality reasoning and explanation generation; reinforcement learning for image quality assessment and description; reasoning based perceptual image quality evaluation with explanations.",
+      "matched_requirement_id": "req-composite-xiqa",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

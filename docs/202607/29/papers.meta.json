@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-29",
+  "date": "2026-07-29",
+  "generated_at": "2026-07-29T21:31:53",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/29/2607.22752v1-beyond-error-vs-discard-characteristic-toward-stable-and-reliable-evaluation-for-face-image-quality-assessment",
+      "section": "quick",
+      "title_en": "Beyond Error-vs-Discard Characteristic: Toward Stable and Reliable Evaluation for Face Image Quality Assessment",
+      "authors": "Bhavesh Wani, Žiga Babnik, Vitomir Štruc, Philipp Terhörst",
+      "date": "2026-07-23",
+      "pdf": "https://arxiv.org/pdf/2607.22752v1",
+      "score": "7.0",
+      "evidence": "提出用于人脸图像质量评估方法的新评价指标",
+      "tldr": "人脸图像质量评估(FIQA)旨在预测样本效用，其主流评价协议错误率-丢弃特性(EDC)存在测试集发散和阈值漂移两大缺陷，导致方法对比不可靠。本文提出丢弃变体及无需丢弃样本的排名一致性度量(RCE)，通过固定阈值在全测试集上评估。在五数据集、四模型、15种方法上的实验证实EDC局限和所提方法有效性，并指出该改进可推广至广义生物特征质量评估。",
+      "tags": "query:xiqa",
+      "abstract_en": "Face Image Quality Assessment (FIQA) aims to estimate the utility of facial images for reliable recognition. The evaluation of FIQA methods is predominantly based on the Error-versus-Discard Characteristic (EDC), which evaluates performance by progressively discarding low-quality samples and measuring recognition error on the retained subset. In this work, we demonstrate that the widely used EDC protocol has fundamental limitations: Test-Set Divergence and Threshold Drift, which together limit the reliability and comparability of FIQA methods. To address this, we propose discard-based EDC variants and a rank-based Rank Consistency Evaluation (RCE) metric that operates on the entire test set without discarding samples, using a fixed decision threshold. Extensive experiments on five datasets, four face recognition models, and 15 state-of-the-art FIQA methods demonstrate both the limitations of EDC and the effectiveness of the proposed approaches in enabling a more reliable and comparable evaluation. Despite evaluated on face images only, the limitations arise from the EDC protocol rather than the biometric modality, suggesting a broader applicability to biometric quality assessment in general.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

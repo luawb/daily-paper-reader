@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-29 <!--dpr-date:20260729-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/29/2607.22752v1-beyond-error-vs-discard-characteristic-toward-stable-and-reliable-evaluation-for-face-image-quality-assessment" data-sidebar-item="{&quot;title&quot;: &quot;Beyond Error-vs-Discard Characteristic: Toward Stable and Reliable Evaluation for Face Image Quality Assessment&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.22752v1-beyond-error-vs-discard-characteristic-toward-stable-and-reliable-evaluation-for-face-image-quality-assessment&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;提出用于人脸图像质量评估方法的新评价指标&quot;}">Beyond Error-vs-Discard Characteristic: Toward Stable and Reliable Evaluation for Face Image Quality Assessment</a>
   * 2026-07-28 <!--dpr-date:20260728-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/28/2607.24353v1-prism-prompt-refinement-via-image-grounded-self-rewarding-mechanism-for-text-to-image-generation" data-sidebar-item="{&quot;title&quot;: &quot;PRISM: Prompt Refinement via Image-grounded Self-rewarding Mechanism for Text-to-Image Generation&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.24353v1-prism-prompt-refinement-via-image-grounded-self-rewarding-mechanism-for-text-to-image-generation&quot;, &quot;score&quot;: &quot;8.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;PRISM利用自奖励强化学习评估图像美学质量，实现图像质量评估。&quot;}">PRISM: Prompt Refinement via Image-grounded Self-rewarding Mechanism for Text-to-Image Generation</a>
