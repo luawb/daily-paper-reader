@@ -1,0 +1,995 @@
+Title: SciFigQual-Bench: A Benchmark for Scientific Figure Quality Assessment with Full-Manuscript Context
+
+URL Source: https://arxiv.org/pdf/2607.27084v1
+
+Published Time: Thu, 30 Jul 2026 01:09:02 GMT
+
+Number of Pages: 15
+
+Markdown Content:
+# SciFigQual-Bench: A Benchmark for Scientific Figure Quality Assessment with Full-Manuscript Context 
+
+Zihan Deng 1†∗† , Chuanzhi Xu 2†∗, Huiqi Liang 2, Haoyang Li 2, Xiaozhen Zhong 3, Lequan Yu 1
+
+1 The University of Hong Kong 
+
+2 The University of Sydney 
+
+3 University of Electronic Science and Technology of China 
+
+ Project Page 
+
+Abstract 
+
+Scientific images are the core elements of presenting experi-mental conclusions, elaborating system architecture, and sup-porting comparative arguments in scientific papers. However, existing image quality assessment (IQA) are predominantly designed for natural photographs or AI-generated content, which cannot be directly applied to scientific papers. The few existing studies on scholarly charts remain confined to visual-surface comparisons, failing to verify caption alignment, cita-tion relevance, or visual misleadingness. To address this, we propose SciFigQual-Bench , a full-text contextual benchmark that evaluates scientific image across five dimensions (clarity, layout, caption fit, context relevance, and misleading risk). The data covers the top computer-science conferences from 2020 to 2025, 6,308 images were independently scored by multiple domain experts in five dimensions and aggregated into the gold-standard annotations. Unlike previous scientific figure benchmarks, our dataset binds each image to its caption, citing sentence, and manuscript context. To enable automated eval-uation on this benchmark, we designed a staged cross-modal evaluation SFQ-Agent to achieve auditable and refined scor-ing through the collection and fusion of modal evidence. Mul-tiple mainstream large models were evaluated on the test sub-set eval1200 , and the SFQ-Agent (F3) equipped with GPT-5.6-Sol achieved the lowest overall average absolute error (0.418) and the highest ±1-point consistency rate (93.4%), consis-tently outperforming both direct evaluation and auxiliary (Sidecar) visual language model evaluation schemes. Project page: https://frankdengai.github.io/SciFigQual-Bench/ (code: https://github.com/FrankDengAI/SciFigQual-Bench). 
+
+1 Introduction 
+
+Natural images arise from light, shadows, and objects in the real world, and their evaluation criteria mostly remain at the level of human visual perception. In Image Quality Assessment (IQA), for example, a landscape photo is often evaluated from the aspects of natural color, clarity, aesthetic perception, etc. There is no "right or wrong" standard at the content level (Li et al. 2025). These types of images are often unrelated to language and text, and can be evaluated solely based on the image itself (Chen et al. 2024). However, scientific images are naturally bound to the com-plete academic text context, and they must be combined with descriptions, specific data, or conclusions in order to have evaluative value (Tufte 2001; Cleveland and McGill 1984). 
+
+> ∗
+
+Equal contribution. 
+
+> †
+
+Email: zhdeng@hku.hk, chuanzhi.xu@sydney.edu.au. Natural IQA AIGC Alignment Isolated                 
+
+> Schematics
+> Figure
+> Understanding
+> PSNR / SSIM / NIQE
+> (Pixel -level/Perceptual
+> Metrics)
+> CLIP/BLIP
+> (Text -to -Image Similarity)
+> VGG -16/ResNet (Feature -
+> based Classification)
+> QA Accuracy /
+> Reasoning Score
+> SciFigQual -Bench: full -manuscript, evidence -grounded evaluation
+> Experimental
+> Results
+> VC
+> SL
+> CC
+> MR
+> CTX
+> Visual Clarity
+> Structure Layout
+> Caption Consistency
+> Misleading Risk
+> Context Consistency
+> T1: 4.2 As shown in
+> Fig. 3 , method A
+> significantly
+> outperforms the
+> baseline...
+> T2: 5.1 Ablation
+> results shown in
+> Fig. 3 ...
+> Image
+> Reference
+> Image
+> GenAI
+> Prompt
+> Scientific Figure Evaluation
+> Real paper figures often fail under isolated evaluation
+> CC ❌Caption -figure
+> mismatch
+> Staged Cross -modal
+> Scoring
+> SFQ -Agent
+> evidence -grounded
+> 5D judging
+> CTX ❌Body claim
+> conflicts with figure
+> MR ❌Misleading
+> visual design
+> Caption :❌
+> Red Line=The
+> highest
+> Paragraph: ❌
+> As shown in
+> Fig. 3 ,
+> Structure
+> significantly
+> outperforms
+> Context...
+> Paragraph:
+> ❌
+> no error bars
+> /no baseline
+> PDF Paper
+
+Figure 1: From isolated-figure evaluation to full-manuscript context binding. Prior paradigms evaluate figures without manuscript evidence, whereas SciFigQual-Bench grounds assessment in figure-relevant text and scores five orthogonal dimensions on a unified 1–10 scale. If there are errors in the figures in a scientific paper that are closely related to the data or conclusions, such as axis trun-cation, missing baseline data, or inconsistencies between the data in the figures and the description in the text, visual in-spection at the pixel level alone cannot identify such defects. In scientific paper peer review, quality assessment of sci-entific paper is therefore inherently tri-modal: it depends on what is visible in image, what is claimed in caption, and what the manuscript asserts in citing paragraphs. However, exist-ing paradigms for natural IQA and AIGC alignment operate on a single visual modality, inherently decoupling the im-age from both its caption and the citing manuscript context. As illustrated in Figure 1, four mainstream paradigms high-light this gap. Natural IQA (Mittal, Moorthy, and Bovik 2012; Mittal, Soundararajan, and Bovik 2013; Prashnani et al. 2018; Wang, Chan, and Loy 2023) evaluates perceptual image quality relying on low-level statistics. AIGC align-ment (Radford et al. 2021; Xu et al. 2023; Wu et al. 2023; Hu arXiv:2607.27084v1 [cs.CV] 29 Jul 2026 Comparison dimension SIQA SCIEval VisJudge SPUR GENFIG1 Ours                                                                     
+
+> Real figures from published CS papers ✗✗△△✗✓
+> Source PDF + section binding ✗✗✗△△✓
+> Full-text citing paragraphs (index-driven) ✗✗✗△✗✓
+> Evaluation dimensions (multi-dim. rubric) ✓✓✓△✓✓
+> End-to-end Acquire →Annotate pipeline ✗△✗✗△✓
+> Learnable multi-dimensional regressor △✓✗✗✗✓
+> Auditable scoring rationale △△△✗△✓
+> Multi-venue ×multi-year (CS top-tier) △✗△△△✓
+> # Images (test bench.) 2,240 6,000 3,090 1,084 584 7,609 # Text items ≈2.2k ≈6.0k ≈3.1k ≈4.3k ≈584 ≈355k # Papers (crawl scope) –––≈5k ≈584 ≈63.6k
+
+Table 1: Capability and scale comparison against related benchmarks. Symbols: ✓=fully supported; △=partial; ✗=not targeted. et al. 2023; Kirstain et al. 2023) measures text-image similar-ity for generated content. Schematic understanding (Masry et al. 2022; Methani et al. 2020; Kafle et al. 2018; Liu et al. 2023; Masry et al. 2023) uses the model to implement im-age classification recognition and visual question answering functions, and the model’s judgment results cannot be di-rectly associated with the quoted paragraphs in the original PDF document. Figure reasoning QA (Siegel et al. 2016; Mathew, Karatzas, and Jawahar 2021) tests whether a model can read a figure but does not offer a rubric for holistic quality or misleading risk. In each case, evaluation proceeds on a detached visual input, decoupled from captions, citing paragraphs, and full-text context. In this paper, we propose SciFigQual-Bench, an evidence-grounded staged judging framework for evaluating human-published scientific images under authentic full-manuscript context. We binding each figure image with its caption and the citing paragraph set from the source PDF to form com-plete experimental context (CTX). Instead of adopting a sin-gle end-to-end vision-language model (VLM) prompt, we employ an evidence-grounded staged judging process: first collect multi-modal evidence from each component, then per-form cross-modal fusion, and finally output traceable multi-dimensional scores covering Visual Clarity (VC), Structure Layout (SL), Caption Consistency (CC), Misleading Risk (MR), and Context Consistency (CTX). Unlike faithfulness benchmarks for AI-generated scientific images (Ye et al. 2026; Li et al. 2024a; Hsu, Giles, and Huang 2021), our task evaluates human-published figures in a real manuscript context, forming a complementary evaluation objective. Our contributions can be summarized as follows: 
+
+• First , we release SciFigQual-Bench : 7,609 curated fig-ures from 1,144 qualified papers, 6,308 expert-aggregated gold instances, and index-driven context records spanning top-tier conference papers (2020–2025). 
+
+• Second , we propose SFQ-Agent , a staged cross-modal judge that operationalizes full-manuscript figure evalua-tion by binding figure, caption, and citing text as tri-modal evidence, fusing vision-language for text-grounded di-mensions, and aggregating deterministic rubric-aligned scores to ensure each dimension is traceable to structured evidence rather than an opaque VLM verdict. 
+
+• Third , on the fixed public test subset eval1200 
+
+(n=1 ,200 ), we benchmark a broad suite of state-of-the-art vision–language models against human gold labels, es-tablishing baselines and showing that SFQ-Agent consis-tently outperforms direct and auxiliary judging schemes while revealing caption consistency and context consis-tency as the dominant human–model disagreement axes. 
+
+2 Related Work 
+
+Existing research that can be applied in scientific figure qual-ity assessment and multimodal figure-text evaluation falls into four major categories: perceptual image quality eval-uation, chart comprehension, text-to-figure generation and multimodal corpus construction, and LLM-based automated evaluation frameworks. 
+
+Perceptual IQA and isolated image quality. Classical no-reference IQA (BRISQUE, NIQE) and learned perceptual metrics (PieAPP, CLIP-IQA) estimate quality from low-level statistics or deep features (Mittal, Moorthy, and Bovik 2012; Mittal, Soundararajan, and Bovik 2013); SIQA defines a four-dimensional rubric for schematic scientific figures and trains learned regressors on expert ratings, yet its instances are not drawn from published CS PDFs and carry no index-resolved citing paragraphs (Li et al. 2026). VisJudge-Bench 
+
+employs MLLM judges for visualization aesthetics and qual-ity on chart and diagram crops (Xie et al. 2026), but likewise omits source-PDF binding and manuscript-level CC/CTX. However, these approaches are confined to visual-only qual-ity assessment on isolated crops, and none grounds its scores on the full manuscript context or caption consistency. 
+
+Chart and scientific figure understanding. ChartQA and SciFIBench benchmark chart reasoning and multiple-choice scientific figure interpretation (Masry et al. 2022; Roberts et al. 2024). SPUR extends to biomedical experimental im-ages with perception–understanding–reasoning QA and par-tial figure–text linkage (Ding et al. 2026), yet targets VQA accuracy rather than a calibrated multi-dimensional quality rubric and covers neither CS top-tier venues nor index-driven citing paragraphs at our scale. These benchmarks focus on the analysis of scientific images, but lack a multidimensional quality assessment system: they cannot measure the matching degree between chart titles and images, the consistency be-tween charts and the context of the text, nor can they quantify the risk of misleading information in computer conference official charts. Generation faithfulness Generation faithfulness. SCI-Eval trains and benchmarks CLIP/LMM modules on multi-dimensional faithfulness of generated scientific images, which covering relevance, accuracy, and interpretability in text-to-image and captioning settings (Ye et al. 2026). 
+
+GENFIG1 focuses on visual summaries automatically pro-duced for scientific papers, challenging VLMs to judge whether such generated overviews faithfully reflect paper content (Guan et al. 2026). At only hundreds of instances, it targets quality control of newly synthesized academic illustra-tions rather than retrospective assessment of human-authored conference figures. These resources support generation or retrieval, but extraction and captioning alone do not certify figure quality in peer-review terms. 
+
+LMM-as-judge. Rubric-conditioned VLM evaluators (Prometheus-Vision, VIEScore) enable fine-grained multi-modal scoring (Lee et al. 2024; Ku et al. 2024); evidence-grounded NLP cautions against plausible but unfaithful ra-tionales (Jacovi and Goldberg 2020). Monolithic judges con-flate visual perception with textual verification and halluci-nate evidence when scoring CC, CTX, and MR jointly. SciFigQual-Bench links each figure to its citing para-graphs resolved from the PDF, gathers modality-specific ev-idence stepwise, and fuses them only after these stages. It is designed for real published figures, not isolated crops, synthetic substitutes, or multiple-choice interpretation tasks. Table 1 compares our benchmark with the five closest 2024–2026 efforts in terms of capability and data scale. 
+
+3 SciFigQual-Bench 
+
+This section first provides a formal definition of benchmark instances and a five dimensional scoring scale, and then in-troduces the data construction process and the SFQ-Agent phased scoring framework. 
+
+3.1 Task Formulation and Rubric 
+
+The benchmark instance is a tuple (I, c, T , m ) where I is the figure crop, c the caption (possibly empty), T citing paragraphs (possibly empty), and m lightweight metadata (venue, year, figure index, section tags). Instances are always anchored to a source PDF so that T is resolved by figure index rather than layout heuristics alone. Human experts and SFQ-Agent assign scores on five orthogonal dimensions, each on 
+
+[1 , 10] : Visual Clarity (VC) , legibility of text, marks, and encoding at publication scale; Structure & Layout (SL) ,composition, panel organization, and chartjunk (Tufte 2001); 
+
+Caption Consistency (CC) , alignment between c and visi-ble content, including subpanels and trends; Context Con-sistency (CTX) , alignment between evidentiary claims in T
+
+and what I supports; Misleading Risk (MR) , likelihood of reader misinterpretation (higher score = lower risk), includ-ing truncated axes or undisclosed baselines (Rückert, Bloch, and Friedrich 2026). Overall quality is the mean over avail-able dimensions, enabling fair comparison when captions or citing text are missing. Let D = {VC , SL , CC , CTX , MR }
+
+and gi(d) ∈ { 0, 1} indicate whether dimension d is evaluable for instance i under L1 gating. Human and model outputs are 63,634  papers                                 
+
+> 4venues ·
+> 2020 -2025
+> ACL, EMNLP, ICML, NeurIPS Scientific/ CS
+> Papers
+> The results
+> presented in Fig .
+> 3further validate
+> the effectiveness
+> of our approach...
+> As shown in Fig .3 ,
+> our method
+> significantly out
+> performs the
+> base line...
+> Fig3. Overall pipeline
+> of the method.
+> STEP 1:Multi -Venue Paper
+> Corpus Collection
+> STEP 2:Structure -Aware
+> Figure Extraction & Curation
+> Preprocessing &
+> index
+> OpenReview ACL
+> Anthology PMLR
+> source PDFs
+> Marker parser
+> 300 DPI PDF →
+> Structured
+> layout parsing
+> Caption -
+> anchored
+> figure indexing
+> Five -stage
+> quality curation
+> (S1 –S5)
+> 123
+> STEP 3:Index -Driven
+> Context Binding
+> raw noisy
+> crop
+> clean figure
+> 7,609 Clean
+> figs
+> STEP 4:Evidence -
+> Grounded 5D Scoring
+> No Isolated figure
+> Bind text →figure, not figure alone
+> Structure &
+> Layout
+> Visual Clarity
+> Misleading
+> Risk
+> Context
+> Consistency
+> Caption
+> Consistency
+> Score
+> STEP 5:
+> Benchmark Release
+> SciFigQual -
+> Bench
+> Human expert
+> annotation
+> Benchmark
+> Instances Diagnostic Panel
+
+Figure 2: SciFigQual-Bench construction pipeline: corpus collection, structure-aware extraction, context binding, five-dimensional rubric, and expert validation. vectors si, ˆsi ∈ [1 , 10] |D| . The gated overall label is 
+
+yi = 1
+
+P 
+
+> d∈D
+
+gi(d)
+
+X
+
+> d∈D
+
+gi(d) si(d), (1) with yi undefined only when both c and T are absent (the instance is excluded). If c=∅, CC is marked null ( gi(CC)=0 ); if T =∅, CTX is null; instances lacking both are excluded from scoring. This L1 evidence gating prevents penalizing missing metadata as low quality (Krippendorff 2011) and mirrors annotation practice in SciCap+ (Yang et al. 2024). MR may still be scored from visual hazards when text is partial. 
+
+3.2 Benchmark Construction 
+
+Figure 2 summarizes our pipeline over CS papers from ACL, EMNLP, ICML, and NeurIPS (2020–2025). We formalize the released benchmark as B = {(Ij , c j , Tj , m j )}Nj=1 with 
+
+N =7 ,609 figures from P =1 ,144 qualified papers, of which 
+
+Nrat =6 ,308 carry human five-dimensional scores.The re-maining figures retain image–caption–context bindings for protocol development and future labeling, but are excluded from gold-based evaluation on eval1200 . Each module below is deterministic given source PDFs and fixed preprocessing seeds. 
+
+Step 1: Corpus acquisition. We acquire the corpus from multiple venues: we crawl PDFs and bibliographic metadata from OpenReview (Idahl and Ahmadi 2025), ACL Anthol-ogy (Gildea et al. 2018), and PMLR, tagging each file with 
+
+(venue , year , paper _id ). Next, we normalize PDFs by lin-earizing, stripping publisher watermarks where possible, and hashing by content fingerprint h(p) = SHA256(bytes( p)) 
+
+to remove exact duplicates. Finally, we apply venue–year indexing, discarding records that fail year filters (outside 2020–2025) or missing parseable metadata. The surviving raw corpus is 
+
+C0 = {pk}K0
+
+> k=1
+
+, K0 = 62 ,694 , (2) subsuming the scale of DocFigure and SciFIBench sources (Jobin, Mondal, and Jawahar 2019; Roberts et al. 2024; Li et al. 2024b) but curated for quality evaluation rather than MCQ or type classification. 
+
+Step 2: Structure-aware figure extraction. We rasterize each PDF at 300 DPI and parse its layout with Marker, ob-taining text blocks, figure bounding boxes, and caption candi-dates. For each figure, we rank candidate captions using spa-tial overlap, vertical distance, and a figure-caption cue (Song et al. 2025), selecting the best match above a threshold. The extracted pairs then undergo a five-stage curation pipeline that removes duplicates and non-figures, filters anomalous crops, recovers clipped panels, flags borderline cases, and discards irrecoverable layouts. This yields a clean set of figure–caption pairs from qualified papers. 
+
+Step 3: Index-driven context binding. We detect fig-ure references in the body text using PyMuPDF (Artifex Software, Inc. 2026) by matching index patterns anchored to figure indices. For each matched reference, we collect its hosting paragraph and merge multi-sentence windows within the same section, yielding per-figure context sets 
+
+Tk = S  
+
+> τ∈match (k)
+
+u(τ ), each capped at Lmax tokens. This corpus-wide process produces approximately 355,000 citing-paragraph records—resolved directly from the PDF index rather than relying on abstract or introduction heuristics, dis-tinguishing our approach from caption-only corpora (Wang et al. 2026; Li et al. 2024b). Finally, we apply a quality filter that down-weights paragraphs lacking explicit figure-specific claims and retains those with comparative or trend language for subsequent CTX annotation. 
+
+Step 4: Five-dimensional human annotation. We first cali-brated domain experts with a 50-figure pilot using the rubric in appendix A.1. During formal annotation, each instance received scores under Eq. (1) with L1 gating—CC and CTX were hidden whenever the necessary evidence was absent. Following faithful-NLP guidelines (Jacovi and Goldberg 2020), annotators had to justify every score with specific visible marks, caption phrases, or citing sentences; any ra-tionale lacking evidence was sent back for revision. To en-sure quality, we performed dual annotation on an ACL 2025 holdout and measured inter-rater agreement; disagreements exceeding two points triggered adjudication. The final set comprises 6,308 rated figures with venue-balanced splits. 
+
+Step 5: Release and evaluation packaging. We release all rated instances, context bundles T , and model-score out-puts as a unified JSONL dataset. To support fair and re-producible cross-protocol comparisons, we construct a fixed public test split, eval1200 , containing 1,200 stratified in-stances—balanced by venue and figure type. For evaluation, we implement three judge protocols (Direct, Sidecar, and SFQ-Agent), all using the same input fields (I, c, T , m ) and outputting scores in the same five-dimensional schema; any performance gap thus reflects the judgment strategy itself, not differences in data representation. 
+
+3.3 Dataset Statistics 
+
+Figure 4 summarizes the scale, diversity, and quality dis-tribution of our dataset relative to prior scientific-figure benchmarks. (a) Radar coverage spans 18 research categories across four venues, covering broader CS topics than chart-only sets like CharXiv (Wang et al. 2024). (b) The funnel yields P =1 ,144 qualified papers and N =7 ,609 clean figures from K0=62 ,694 raw PDFs (Eq. (2)); 6,308 are human-rated with balanced venue splits, surpassing SIQA-U (2,240) and SPUR (1,084) in comparable settings (Li et al. 2026; Ding et al. 2026). The overall yield η = N/K 0 ≈ 12 .1% re-flects our strict curation standards. (c) Overall scores center near 8.05, indicating solid quality with sufficient variance for effective discrimination. (d) The largest share of rated figures comes from NLP (2,813), followed by ML (1,891) and CV (873). (e) Temporal coverage peaks in 2024–2025 with over 1,400 rated figures per year, supporting evaluation on modern plotting styles. (f) Mean dimension scores show CC (7.42) as the weakest axis versus SL (8.58), confirm-ing that caption–figure mismatches—rather than low-level blur—are the dominant real-world defects, which motivates our manuscript-grounded CC and CTX evaluation. 
+
+3.4 SFQ-Agent 
+
+Based on the previous statistics, the main bottleneck is the consistency of captions and context, which makes it difficult for a single visual language model to perform end-to-end scoring. To this end, we propose SFQ Agent: under a unified five dimensional scale, collect visual and linguistic evidence in stages and perform cross modal fusion to achieve au-ditable and refined decision-making. SFQ-Agent (Figure 3) implements evidence-grounded judging in four stages, de-signed as an auditable alternative to monolithic LMM-as-judge pipelines (Zheng et al. 2023; Lee et al. 2024; Ku et al. 2024). 
+
+Step 0: Input and gating. The system loads (I, c, T ); figures without caption and citing text are discarded; partial evidence triggers dimension hiding. 
+
+Step 1: Vision evidence. We extract visual evidence from each figure via PaddleOCR-VL (a compact OCR model) and classical CV descriptors (blur, edge density, color his-togram). The OCR module supplies text regions, confidence scores, and layout cues; we also derive side features such as text density, caption-token overlap, and numeric consistency. These are packaged as visual_facts together with axis units and legend notes to support VC and SL scoring. This parallels low-level perceptual auditing in prior work (Wu et al. 2024a; Rückert, Bloch, and Friedrich 2026), but our structured outputs are explicitly designed for downstream fusion. The language module never accesses pixels, ensuring clean modality separation. 
+
+Step 2: Language evidence. To complement the vision track, an LLM reads only the caption, citing paragraphs, and meta-data, without any pixel input. It extracts textual evidence, implied claims, and rule violations to support CC and CTX scoring. This strict separation prevents the LLM from gener-ating plausible but unfaithful rationales, a documented risk in prior work (Jacovi and Goldberg 2020). Scientific/ CS Papers        
+
+> The results
+> presented in Fig .3
+> further validate the
+> effectiveness of our
+> approach...
+> As shown in Fig .3 ,
+> our method
+> significantly out
+> performs the base
+> line...
+> Fig3. Overall pipeline of
+> the method.
+> Image
+> ICaption
+> cCiting paragraphs
+> T
+
+Has 
+
+caption? 
+
+Has Citing 
+
+paragraphs ?  
+
+> Hide CC
+> (Null)
+> Hide CTX
+> (Null) Skip figure
+> No
+> No Neither
+> Both
+
+Input Initialization SFQ -Agent         
+
+> VC -Visual Clarity
+> Evidence : pixels,axes,labels
+> SL -Structure & Layout
+> Evidence : panels, reading path
+> CC -Caption Consistency
+> Evidence : caption text figure content
+> CTX -Context Consistency ★
+> Evidence: ALL citing paragraphs figure
+> OCR /CV
+> features
+
+VLM 
+
+Vision Evidence Module language Evidence Module 
+
+LLM      
+
+> Small chips
+> [paper meta
+> | fig map |
+> avail dims]
+> Visual facts
+> VC
+> Legend notes
+> Axes units
+> Metrics
+> Text facts
+> Text MR Adjust
+> Caption implied
+> Context implied
+> Panels ref.
+> Rule flags
+> MERGE
+> Cross -modal Judge
+> CC
+> Runner
+> Misleading Risk (MR) ←fuse(visual risk
+> level, text conflict severity)
+> CTX MR Reasons
+> Results
+> Scores
+> SL
+> Intrinsic risk band
+> MR -Misleading Risk ★
+> Evidence: axes/units/comparisons text claims
+> Ablation comparison
+
+[I, C, T] VLM Juddage 
+
+OCR+CV Sidecar Judge 
+
+[I, C, T] Figure 3: SFQ-Agent scoring pipeline: L1 gating, parallel vision and language evidence modules, cross-modal judge, and deterministic Runner aggregation. Direct and Sidecar judges serve as ablations. 
+
+Step 3: Cross-modal judge. Once both tracks have pro-duced structured evidence, the cross-modal judge fuses them to score CC, CTX, and MR. Specifically, it aligns visual haz-ard indicators with textual cues and detects conflicts, such as a figure showing an upward trend while the text describes degradation. VC and SL are copied from Stage 1 rather than re-estimated from text summaries, so fluent language evi-dence cannot re-inflate visual scores. 
+
+Step 4: Runner. Finally, a deterministic post-processor locks VC and SL to the vision module outputs, imposes rule-based CC/CTX/MR caps informed by visualization guide-lines (Rückert, Bloch, and Friedrich 2026; Tufte 2001), and aggregates all available dimensions under L1 gating. This design prevents score inflation from unconstrained LLM ar-bitration and keeps each final score traceable to its originating evidence track. Frozen prompt contracts and the MR fusion mapping are reported in the supplementary appendix C. 
+
+Judge protocols. We evaluate three judge protocols along a spectrum of increasing complexity. The Direct Judge serves as the simplest baseline, issuing a single VLM prompt over 
+
+(I, c, T )—similar to zero-shot judging in Prometheus-Vision and Q-Align (Lee et al. 2024; Wu et al. 2024b). The Side-car Judge augments this setup with PaddleOCR-VL and CV side features within the same single-pass call, testing whether additional visual cues alone bring gains. The SFQ-Agent 
+
+implements our full staged pipeline, reusing the same fea-ture bundle across three sequential calls (Stage 1 for vision, Stage 2 for language, Stage 3 for fusion). Together, these vari-ants isolate two design choices (OCR-VL side signals versus explicit evidence staging), especially on CC and CTX, where monolithic judges most often conflate perception with text verification. 
+
+4 Experiments and Results 
+
+4.1 Experimental Setup 
+
+We evaluate on eval1200 , a fixed subset of 1,200 human-rated figures stratified by venue (300 per conference) and figure type (plot, diagram, table, composite), with gold labels from Eq. (1) and the same L1 gating applied to model outputs (supplementary appendix B.1 “eval1200 Split Definition”). We test 11 VLM backends (Gemini-3.5-Flash, GPT-5.6-Sol, Claude-Sonnet-5, Claude-Opus-4.8, Qwen-VL-Max, GLM-4.6V, Doubao-Seed-2.0-pro, Llama-4-Maverick, Pixtral-Large, Nova-Pro, and InternVL3-78B) under three protocols that share inputs (I, c, T , m ) and dif-fer only in how evidence is staged. Reproducible run IDs and per-protocol call budgets are listed in the supplementary appendix B.2. 
+
+Protocol ladder. Direct (1 call/figure) issues a single end-to-end VLM prompt over (I, c, T ) and returns all evaluable dimensions jointly. Sidecar (1 call/figure) keeps that inter-face but injects PaddleOCR-VL and CV side features, testing whether auxiliary visual cues alone help without changing the decision topology. SFQ-Agent (3 calls/figure) follows §3.4: Stage 1 locks VC/SL from vision evidence; Stage 2 extracts caption/context facts without pixels; Stage 3 fuses the two evidence reports for CC, CTX, and MR; the Run-ner then re-applies visual-score ownership and score caps in code. Except for the heterogeneous F5 pairing (Qwen-VL-Max vision + Qwen-Plus language), Agent runs use matched vision/language backends within a configuration. This ladder separates two effects that a monolithic judge conflates: denser OCR-side observation (Sidecar) versus explicit modality sep-aration and fusion (Agent). Prompt templates for all three protocols appear in the supplementary appendix C. 
+
+Alignment metrics. We measure agreement with gold over-all scores using MAE, Within-1 (fraction within ±1), Spear-man correlation (Spearman 1904), and signed bias (positive （a）  
+
+> （c）（d）
+> （e）（f）
+> （b）
+
+Figure 4: Corpus overview of SciFigQual-Bench. From 62 ,694 PDFs we retain 7,609 figures ( 6,308 human-rated) across ACL/EMNLP/ICML/NeurIPS (2020–2025), with NLP/ML/CV as the dominant domains. Overall scores concentrate near 8.05 ;caption consistency is the weakest axis, motivating manuscript-grounded CC/CTX evaluation. 
+
+= lenient). For CC, CTX, and MR we additionally report per-dimension MAE on L1-evaluable samples only; CTX is fur-ther restricted to figures with citing text. These text-grounded errors are expected to exceed MR, because they require veri-fying claims against c and T rather than reading pixels alone. Unless noted in Table 2, metrics use the full eval1200 split; measurement coverage and any projected rows are docu-mented in the supplementary appendix, Sec. B.3. 
+
+4.2 Protocol Ablation Results 
+
+Table 2 consolidates our main evaluation and protocol ablation on eval1200 : 29 protocol–backend configurations spanning Direct (1 call), Sidecar (1 call + PaddleOCR-VL/CV), and SFQ-Agent (3-call staged fusion). We ablate along two axes, judge protocol (Direct, Sidecar, Agent) and VLM backend, under identical inputs (I, c, T ) and L1 gating, so every row in the table is directly comparable. 
+
+Direct baseline. Claude-Opus-4.8 leads Direct protocols (MAE 0.443, W-1 92.4%, SRCC 0.582), closely followed by GPT-5.6-Sol. Qwen-VL-Max achieves reasonable cal-ibration (W-1 88.8%) but poor ordinal ranking (SRCC 0.416), driven by high CC/CTX errors ( MAE CC ≈ 0.99 ,
+
+MAE CTX ≈ 1.04 ). Doubao-Seed-2.0-pro shows strong neg-ative bias ( −0.120 ), indicating systematic harshness, while GLM-4.6V lags with the largest errors across dimensions. 
+
+Sidecar ablation. Adding PaddleOCR-VL and CV features uniformly reduces MAE across all backends, with the largest gain on GLM ( ∆MAE=0.044), suggesting that explicit text and layout cues particularly benefit weaker encoders on dense scientific plots. GPT-5.6-Sol also sees modest CC/CTX im-provements (e.g., CC 0.922 →0.912), confirming that Side-car strengthens text-heavy visual evidence more than holistic reasoning. 
+
+SFQ-Agent ablation. Full staged judging monotonically im-proves all strong backends. GPT-5.6-Sol achieves the best overall result (MAE 0.418, W-1 93.4%, SRCC 0.598, bias 
+
++0 .012 ) and lowest MR error (0.678), showing that deter-ministic fusion and evidence separation enhance both cali-bration and misleading-risk detection. Claude-Sonnet-5 at-tains the lowest CTX MAE (0.842) among Agent runs, sug-gesting language-centric backends excel at manuscript con-sistency even when overall MAE lags GPT-5.6-Sol. Con-versely, Qwen Agent exhibits elevated MR MAE (0.938), indicating that pairing vision and language models does not guarantee cross-modal conflict resolution without explicit fusion. 
+
+4.3 Analysis and Discussion 
+
+Ablation analysis. The progressive improvement from Di-rect to Sidecar to Agent confirms that gains stem from protocol–evidence alignment, not model scale. These vari-ants sequentially address three orthogonal failure modes of monolithic VLM judges: Sidecar fixes missed OCR details; Agent tackles perception-text conflation and score inflation via explicit visual-textual separation and fusion. Architec-turally, Agent’s edge is not mere multiple calls. Stage 1 locks VC/SL to visual evidence, preventing fluent text from re-inflating visual scores; Stage 2 extracts captions and citing claims without pixel access, blocking unfaithful visual ratio-nales for CC/CTX; Stage 3 fuses the two evidence reports only for CC, CTX, and MR; finally, the Runner applies own-ership and score caps in code. On matched backends, this yields near-zero bias and largest gains on text-grounded dimensions where Direct fails, not uniform polishing. Our design distinguishes from prior scientific-figure work: SIQA regressors lack index-Protocol Backend MAE ↓ W-1 ↑ SRCC ↑ Bias → 0 CC MAE ↓ CTX MAE ↓ MR MAE ↓                                                                                                                                                                                                           
+
+> Direct Gemini-3.5-Flash 0.464 91.0% 0.532 0.032 0.942 0.972 0.724 GPT-5.6-Sol 0.448 92.0% 0.565 0.022 0.922 0.928 0.708 Claude-Sonnet-5 0.478 90.2% 0.518 0.038 0.968 0.862 0.732 Qwen-VL-Max 0.520 88.8% 0.416 0.065 0.985 1.044 0.758 GLM-4.6V 0.662 81.0% 0.438 0.102 1.082 1.128 0.812 Doubao-Seed-2.0-pro 0.609 83.2% 0.570 -0.120 0.878 0.918 0.752 Llama-4-Maverick 0.486 89.8% 0.512 0.035 0.958 0.948 0.728 Pixtral-Large 0.502 89.2% 0.498 0.042 0.972 0.968 0.742 Nova-Pro 0.471 90.6% 0.528 0.028 0.938 0.912 0.716
+> Claude-Opus-4.8 0.443 92.4% 0.582 0.015 0.908 0.888 0.692
+> InternVL3-78B 0.538 87.6% 0.445 0.058 1.012 1.052 0.768 Sidecar Gemini-3.5-Flash + OCR 0.452 91.8% 0.546 0.026 0.928 0.958 0.712
+> GPT-5.6-Sol + OCR 0.436 92.6% 0.578 0.018 0.912 0.918 0.698
+> Qwen-VL-Max + OCR 0.516 89.1% 0.470 0.050 0.972 0.962 0.778 GLM-4.6V + OCR 0.618 83.8% 0.472 0.088 1.048 1.088 0.792 Doubao-Seed-2.0-pro + OCR 0.596 84.6% 0.584 -0.098 0.862 0.898 0.738 Nova-Pro + OCR 0.459 91.2% 0.538 0.022 0.928 0.902 0.708 Llama-4-Maverick + OCR 0.474 90.4% 0.524 0.030 0.948 0.938 0.718 Pixtral-Large + OCR 0.490 89.6% 0.508 0.036 0.962 0.958 0.732 InternVL3-78B + OCR 0.524 88.2% 0.458 0.052 0.998 1.038 0.758 SFQ-Agent Gemini-3.5-Flash 0.440 92.6% 0.560 0.020 0.914 0.942 0.698 Gemini-3.1-Pro 0.428 92.9% 0.572 0.016 0.906 0.932 0.692
+> GPT-5.6-Sol 0.418 93.4% 0.598 0.012 0.892 0.896 0.678
+> Claude-Sonnet-5 0.456 91.2% 0.542 0.028 0.948 0.842 0.718 Qwen-VL-Max + Qwen-Plus 0.511 89.3% 0.519 0.030 1.007 0.833 0.938 GLM-4.6V 0.574 86.4% 0.508 0.072 1.012 1.052 0.768 Llama-4-Maverick 0.462 91.0% 0.532 0.022 0.942 0.932 0.712 Claude-Opus-4.8 0.424 93.1% 0.588 0.014 0.898 0.882 0.686 Nova-Pro 0.446 92.2% 0.548 0.018 0.924 0.906 0.702
+
+Table 2: Protocol–backend ablation against human ratings on eval1200 (n=1200 ). ↑ higher is better; ↓ lower is better. Bold rows : . best per protocol (lowest MAE). “+ OCR” in Sidecar rows denotes PaddleOCR-VL side features. resolved citations, missing caption–manuscript conflicts; ChartQA/SciFIBench probes discrete accuracy, not continu-ous [1,10] review quality. Our graded evidence-gated score aligns with annotation practice—hiding CC/CTX on partial evidence—and provides auditable rationales beyond MCQ accuracy. 
+
+Backend behavior. Cross-protocol rankings reveal system-atic heterogeneity. GPT-5.6-Sol is the most balanced, with near-zero bias under Agent. Qwen-VL-Max shows a dis-sociation between calibration (W-1 88.8%) and ranking (SRCC 0.416) under Direct; staging recovers ranking (SRCC 0.519) but leaves CC error intact ( MAE CC = 1 .007 ), sug-gesting caption verification requires fundamentally better vision-language grounding than ordinal judgment. GLM-4.6V benefits the most from protocol enrichment ( ∆MAE 
+
+= 0 .662 → 0.574 ), implying that pipeline design can com-pensate for weaker encoders. Doubao’s persistent negative bias ( −0.120 to −0.097 ) suggests systematic harshness is baked into its training. 
+
+Benchmark contributions. SciFigQual-Bench serves three diagnostic roles beyond leaderboard ranking. First, per-dimension MAE localizes failure modes (legibility, cap-tion fidelity, narrative alignment, misleading risk). Second, the protocol ladder establishes judge architecture as a first-class design choice; staging shifts MAE by 0.03–0.09 on matched backends, comparable to inter-VLM gaps under Direct. Third, persistent CC/CTX deficits define an open frontier: cross-modal verification over citing paragraphs that neither chart QA nor text QA communities have jointly ad-dressed. SciFigQual-Bench is thus a stress test for tri-modal scientific literacy; success demands reviewer-like integration of visual, textual, and contextual evidence. 
+
+5 Conclusion 
+
+We introduce SciFigQual-Bench , a full-manuscript-context benchmark tailored for published CS figures, and SFQ-Agent , a staged protocol that synthesizes visual, caption, and textual evidence into auditable five-dimensional scores. On 
+
+eval1200 , SFQ-Agent (F3) achieves the lowest MAE ( 0.418 )and the highest Within-1 rate ( 93 .4% ), consistently outper-forming both Direct and Sidecar VLM judges. By anchoring each figure to its caption and citing paragraphs, our frame-work establishes a reproducible, evidence-grounded testbed that elevates AI-assisted figure inspection from isolated vi-sual QA to context-aware scientific reasoning. References 
+
+Artifex Software, Inc. 2026. PyMuPDF Documentation. Software documentation. Accessed 2026-07-29. Chen, C.; Mo, J.; Hou, J.; Wu, H.; Liao, L.; Sun, W.; Yan, Q.; and Lin, W. 2024. TOPIQ: A Top-Down Approach From Se-mantics to Distortions for Image Quality Assessment. IEEE Transactions on Image Processing , 33: 2404–2418. Cleveland, W. S.; and McGill, R. 1984. Graphical Percep-tion: Theory, Experimentation, and Application to the De-velopment of Graphical Methods. Journal of the American Statistical Association , 79(387): 531–554. Cui, C.; Sun, T.; Liang, S.; Gao, T.; Zhang, Z.; Liu, J.; Wang, X.; Zhou, C.; Liu, H.; Lin, M.; Zhang, Y.; Zhang, Y.; Zheng, H.; Zhang, J.; Zhang, J.; Liu, Y.; Yu, D.; and Ma, Y. 2025. PaddleOCR-VL: Boosting Multilingual Document Parsing via a 0.9B Ultra-Compact Vision-Language Model. arXiv:2510.14528. Ding, J.; Tang, Z.; E, H.; Ji, M.; Liu, Y.; Tian, H.; Sun, H.; Sun, P.; Xu, Y.; Liu, Y.; Gao, H.; Xi, Z.; Jiang, R.; Zhao, P.; Li, R.; Li, Y.; Liu, J.; Yang, Z.; Chen, J.; and Lin, S. 2026. Decoding Scientific Experimental Images: The SPUR Benchmark for Perception, Understanding, and Reasoning. In Proceedings of the 64th Annual Meeting of the Associa-tion for Computational Linguistics (Volume 1: Long Papers) ,12859–12882. Association for Computational Linguistics. Gildea, D.; Kan, M.-Y.; Madnani, N.; Teichmann, C.; and Villalba, M. 2018. The ACL Anthology: Current State and Future Directions. In Proceedings of Workshop for NLP Open Source Software (NLP-OSS) , 23–28. Association for Computational Linguistics. Guan, Y.; Wang, P.; Dehak, N.; Yuille, A.; Chen, J.; and Khashabi, D. 2026. GENFIG1: Visual Summaries of Schol-arly Work as a Challenge for Vision-Language Models. arXiv:2604.04172. Hsu, T.-Y.; Giles, C. L.; and Huang, T.-H. 2021. SciCap: Generating Captions for Scientific Figures. In Findings of the Association for Computational Linguistics: EMNLP 2021 ,3258–3264. Association for Computational Linguistics. Hu, Y.; Liu, B.; Kasai, J.; Wang, Y.; Ostendorf, M.; Krishna, R.; and Smith, N. A. 2023. TIFA: Accurate and Interpretable Text-to-Image Faithfulness Evaluation with Question An-swering. In 2023 IEEE/CVF International Conference on Computer Vision (ICCV) , 20349–20360. Idahl, M.; and Ahmadi, Z. 2025. OpenReviewer: A Special-ized Large Language Model for Generating Critical Scientific Paper Reviews. In Proceedings of the 2025 Conference of the Nations of the Americas Chapter of the Association for Computational Linguistics: Human Language Technologies (System Demonstrations) , 550–562. Association for Compu-tational Linguistics. Jacovi, A.; and Goldberg, Y. 2020. Towards Faithfully Inter-pretable NLP Systems: How Should We Define and Evaluate Faithfulness? In Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics , 4198–4205. Association for Computational Linguistics. Jobin, K. V.; Mondal, A.; and Jawahar, C. V. 2019. DocFig-ure: A Dataset for Scientific Document Figure Classification. In 2019 International Conference on Document Analysis and Recognition Workshops (ICDARW) , volume 1, 74–79. Insti-tute of Electrical and Electronics Engineers. Kafle, K.; Price, B.; Cohen, S.; and Kanan, C. 2018. DVQA: Understanding Data Visualizations via Question Answering. In 2018 IEEE/CVF Conference on Computer Vision and Pat-tern Recognition (CVPR) , 5648–5656. Kirstain, Y.; Polyak, A.; Singer, U.; Matiana, S.; Penna, J.; and Levy, O. 2023. Pick-a-Pic: An Open Dataset of User Preferences for Text-to-Image Generation. In Advances in Neural Information Processing Systems , volume 36, 36652– 36663. Krippendorff, K. 2011. Computing Krippendorff’s Alpha-Reliability. Departmental Paper 43, Annenberg School for Communication, University of Pennsylvania. Ku, M.; Jiang, D.; Wei, C.; Yue, X.; and Chen, W. 2024. VIEScore: Towards Explainable Metrics for Conditional Im-age Synthesis Evaluation. In Proceedings of the 62nd An-nual Meeting of the Association for Computational Linguis-tics (Volume 1: Long Papers) , 12268–12290. Association for Computational Linguistics. Lee, S.; Kim, S.; Park, S. H.; Kim, G.; and Seo, M. 2024. Prometheus-Vision: Vision-Language Model as a Judge for Fine-Grained Evaluation. In Findings of the Association for Computational Linguistics: ACL 2024 , 11286–11315. Asso-ciation for Computational Linguistics. Li, L.; Wang, Y.; Xu, R.; Wang, P.; Feng, X.; Kong, L.; and Liu, Q. 2024a. Multimodal ArXiv: A Dataset for Improving Scientific Comprehension of Large Vision-Language Mod-els. In Proceedings of the 62nd Annual Meeting of the As-sociation for Computational Linguistics (Volume 1: Long Papers) , 14369–14387. Association for Computational Lin-guistics. Li, L.; Wang, Y.; Xu, R.; Wang, P.; Feng, X.; Kong, L.; and Liu, Q. 2024b. Multimodal ArXiv: A Dataset for Improving Scientific Comprehension of Large Vision-Language Mod-els. In Proceedings of the 62nd Annual Meeting of the As-sociation for Computational Linguistics (Volume 1: Long Papers) , 14369–14387. Association for Computational Lin-guistics. Li, W.; Chen, L.; Wang, J.; Guo, Y.; Shen, Y.; Wen, F.; Li, C.; Zhang, Z.; and Zhai, G. 2026. SIQA: Toward Reliable Scientific Image Quality Assessment. arXiv:2603.06700. Li, X.; Nie, W.; Zhang, Y.; Hu, R.; Li, K.; Zheng, X.; and Cao, L. 2025. Distilling Spatially-Heterogeneous Distor-tion Perception for Blind Image Quality Assessment. In 
+
+2025 IEEE/CVF Conference on Computer Vision and Pat-tern Recognition (CVPR) , 2344–2354. Liu, F.; Eisenschlos, J.; Piccinno, F.; Krichene, S.; Pang, C.; Lee, K.; Joshi, M.; Chen, W.; Collier, N.; and Altun, Y. 2023. DePlot: One-Shot Visual Language Reasoning by Plot-to-Table Translation. In Findings of the Association for Computational Linguistics: ACL 2023 , 10381–10399. Asso-ciation for Computational Linguistics. Masry, A.; Kavehzadeh, P.; Do, X. L.; Hoque, E.; and Joty, S. 2023. UniChart: A Universal Vision-Language Pretrained Model for Chart Comprehension and Reasoning. In Pro-ceedings of the 2023 Conference on Empirical Methods in Natural Language Processing , 14662–14684. Association for Computational Linguistics. Masry, A.; Long, D. X.; Tan, J. Q.; Joty, S.; and Hoque, E. 2022. ChartQA: A Benchmark for Question Answering about Charts with Visual and Logical Reasoning. In Findings of the Association for Computational Linguistics: ACL 2022 ,2263–2279. Association for Computational Linguistics. Mathew, M.; Karatzas, D.; and Jawahar, C. V. 2021. DocVQA: A Dataset for VQA on Document Images. In 
+
+2021 IEEE Winter Conference on Applications of Computer Vision (WACV) , 2199–2208. Methani, N.; Ganguly, P.; Khapra, M. M.; and Kumar, P. 2020. PlotQA: Reasoning over Scientific Plots. In 2020 IEEE Winter Conference on Applications of Computer Vision (WACV) , 1516–1525. Mittal, A.; Moorthy, A. K.; and Bovik, A. C. 2012. No-Reference Image Quality Assessment in the Spatial Do-main. IEEE Transactions on Image Processing , 21(12): 4695–4708. Mittal, A.; Soundararajan, R.; and Bovik, A. C. 2013. Making a “Completely Blind” Image Quality Analyzer. IEEE Signal Processing Letters , 20(3): 209–212. Prashnani, E.; Cai, H.; Mostofi, Y.; and Sen, P. 2018. PieAPP: Perceptual Image-Error Assessment Through Pairwise Pref-erence. In 2018 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) , 1808–1817. Radford, A.; Kim, J. W.; Hallacy, C.; Ramesh, A.; Goh, G.; Agarwal, S.; Sastry, G.; Askell, A.; Mishkin, P.; Clark, J.; Krueger, G.; and Sutskever, I. 2021. Learning Transferable Visual Models From Natural Language Supervision. In Pro-ceedings of the 38th International Conference on Machine Learning , volume 139 of Proceedings of Machine Learning Research , 8748–8763. Roberts, J.; Han, K.; Houlsby, N.; and Albanie, S. 2024. Sci-FIBench: Benchmarking Large Multimodal Models for Sci-entific Figure Interpretation. In Advances in Neural Informa-tion Processing Systems , volume 37, 18695–18728. Datasets and Benchmarks Track. Rückert, J.; Bloch, L.; and Friedrich, C. M. 2026. Evaluating Compliance with Visualization Guidelines in Diagrams for Scientific Publications Using Large Vision Language Mod-els. In Document Analysis and Recognition – ICDAR 2025: 19th International Conference, Wuhan, China, September 16–21, 2025, Proceedings, Part V , volume 16027 of Lecture Notes in Computer Science , 3–21. Springer Nature Switzer-land. Siegel, N.; Horvitz, Z.; Levin, R.; Divvala, S.; and Farhadi, A. 2016. FigureSeer: Parsing Result-Figures in Research Papers. In Computer Vision – ECCV 2016: 14th European Conference, Amsterdam, The Netherlands, October 11–14, 2016, Proceedings, Part VII , volume 9911 of Lecture Notes in Computer Science , 664–680. Springer International Pub-lishing. Song, J.; Das, A.; Cui, G.; and Huang, Y. 2025. FigEx: Aligned Extraction of Scientific Figures and Captions. In 
+
+Findings of the Association for Computational Linguistics: EMNLP 2025 , 16558–16571. Association for Computational Linguistics. Spearman, C. 1904. The Proof and Measurement of As-sociation Between Two Things. The American Journal of Psychology , 15(1): 72–101. Tufte, E. R. 2001. The Visual Display of Quantitative In-formation . Cheshire, Connecticut: Graphics Press, 2 edition. ISBN 978-0-9613921-4-7. Wang, H.; Guo, L.; Huo, P.; Lin, X.; Yuan, Y.; Jiang, J.; and Liu, J. 2026. S1-MMAlign: A Large-Scale, Multi-Disciplinary Dataset for Scientific Figure-Text Understand-ing. arXiv:2601.00264. Wang, J.; Chan, K. C. K.; and Loy, C. C. 2023. Exploring CLIP for Assessing the Look and Feel of Images. Proceed-ings of the AAAI Conference on Artificial Intelligence , 37(2): 2555–2563. Wang, Z.; Xia, M.; He, L.; Chen, H.; Liu, Y.; Zhu, R.; Liang, K.; Wu, X.; Liu, H.; Malladi, S.; Chevalier, A.; Arora, S.; and Chen, D. 2024. CharXiv: Charting Gaps in Realistic Chart Understanding in Multimodal LLMs. In Advances in Neural Information Processing Systems , volume 37, 113569– 113697. Datasets and Benchmarks Track. Wu, H.; Zhang, Z.; Zhang, E.; Chen, C.; Liao, L.; Wang, A.; Xu, K.; Li, C.; Hou, J.; Zhai, G.; Xue, G.; Sun, W.; Yan, Q.; and Lin, W. 2024a. Q-Instruct: Improving Low-Level Visual Abilities for Multi-Modality Foundation Models. In 
+
+2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) , 25490–25500. Wu, H.; Zhang, Z.; Zhang, W.; Chen, C.; Liao, L.; Li, C.; Gao, Y.; Wang, A.; Zhang, E.; Sun, W.; Yan, Q.; Min, X.; Zhai, G.; and Lin, W. 2024b. Q-Align: Teaching LMMs for Visual Scoring via Discrete Text-Defined Levels. In Proceedings of the 41st International Conference on Machine Learning ,volume 235 of Proceedings of Machine Learning Research ,54015–54029. Wu, X.; Hao, Y.; Sun, K.; Chen, Y.; Zhu, F.; Zhao, R.; and Li, H. 2023. Human Preference Score v2: A Solid Benchmark for Evaluating Human Preferences of Text-to-Image Synthesis. arXiv:2306.09341. Xie, Y.; Zhang, Z.; Wu, Y.; Lu, S.; Zhang, J.; Yu, Z.; Wang, J.; Hong, S.; Liu, B.; Wu, C.; and Luo, Y. 2026. VisJudge-Bench: Aesthetics and Quality Assessment of Visualizations. In The Fourteenth International Conference on Learning Representations .Xu, J.; Liu, X.; Wu, Y.; Tong, Y.; Li, Q.; Ding, M.; Tang, J.; and Dong, Y. 2023. ImageReward: Learning and Evalu-ating Human Preferences for Text-to-Image Generation. In 
+
+Advances in Neural Information Processing Systems , vol-ume 36, 15903–15935. Yang, Z.; Dabre, R.; Tanaka, H.; and Okazaki, N. 2024. Sci-Cap+: A Knowledge Augmented Dataset to Study the Chal-lenges of Scientific Figure Captioning. Journal of Natural Language Processing , 31(3): 1140–1165. Ye, G.; Zhao, H.; Zhao, Z.; Ma, T.; Wang, K.; Eger, S.; and Jiang, Z. 2026. SCIEval: Evaluating and Benchmarking the Faithfulness of Scientific Image Generation and Interpre-tation with Large Multimodal Models. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) , 29760–29770. Zheng, L.; Chiang, W.-L.; Sheng, Y.; Zhuang, S.; Wu, Z.; Zhuang, Y.; Lin, Z.; Li, Z.; Li, D.; Xing, E. P.; Zhang, H.; Gonzalez, J. E.; and Stoica, I. 2023. Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena. In Advances in Neural Information Processing Systems , volume 36, 46595–46623. Datasets and Benchmarks Track. Supplementary Appendix A Benchmark Construction Details 
+
+A.1 Five-Dimensional Rubric 
+
+In SciFigQual-bench, all manual scoring rules are uniform and follow a unified standard. Every score is an integer on 
+
+[1 , 10] . VC, SL, CC, and CTX increase with quality. MR uses the same range with positive polarity: higher means a careful reader is less likely to be misled. Dimensions are indepen-dent. For example, a sharp figure can still fail CC/CTX, and a weak caption must not automatically lower VC/SL. Direct, Sidecar, and SFQ-Agent reuse one rubric text; they differ only in how evidence is collected. Humans and all models share one rubric, only the evidence path differs. All human raters and models have consistent scoring rules. Specifically, 9–10 means near-absence of relevant defects; 7– 8 minor defects that do not block the main reading; 5–6 no-ticeable friction; 3–4 serious impedance; 1–2 near-unusable or severely misleading content. In the dimensions of CC, CTX, and MR, the tie between adjacent scores (when it cannot be determined) is judged towards the lower score di-rection. Most mixed-quality CS figures land in 5–8 rather than at the top of the scale. Appendix Table 1 lists operational anchors. VC checks publication-scale legibility (blur, contrast, ticks, legends). 
+
+SL checks reading path, panel labels, spacing, and chartjunk (Tufte 2001). CC checks whether caption c names the right objects, metrics, panels, and trends. CTX checks whether citing paragraphs T make claims that I supports; it is not a writing-quality score. MR checks truncated axes, missing baselines/error bars, unfair comparison, and visual– text conflicts (Rückert, Bloch, and Friedrich 2026), kept sep-arate from CC/CTX so that a vague caption alone does not collapse trust when the plot is fair. To prevent fluent but content-empty text from receiving inflated scores, we impose hard caps on CC and CTX. A caption that describes the figure but omits the key metric or compared groups receives CC at most 5–6 (cap = 6 ). A citation that merely points to the figure without articulating any finding (e.g., “see Figure 3”) is capped at 5–6 on CTX, never above 6. By contrast, a citation that reverses the ac-tual trend receives 1–2 on both CTX and MR. These caps apply independently of visual quality: a visually pristine fig-ure cannot compensate for substantive textual misalignment. OCR- or CV-derived evidence may support VC/SL but can-not override the pixel-level content. Inapplicable sub-criteria are ignored. 
+
+A.2 L1 Evidence Gating 
+
+Missing metadata must not be scored as low quality (Krip-pendorff 2011). Appendix Table 2 is the mask shared by human gold and every model protocol. If both c and T are empty, the instance is dropped. Otherwise VC/SL/MR stay available from the image; CC requires a caption; CTX re-quires citing text. The overall is the arithmetic mean of the remaining dimension scores. Appendix Table 1: Operational anchors for the five scoring dimensions.                                
+
+> Dim. Primary cues High band Low band
+> VC Resolution, blur, axis/legend legi-bility Readable at publi-cation scale Effortful (5–6); il-legible key labels (3–4); unreadable (1–2) SL Whitespace, panel order, (a)/(b),flow Clear path and complete labels Costly structure (5–6); disordered (3–4); no hierar-chy (1–2) CC Entities, metrics, panels, numeric alignment Covers ob-jects/metrics/panels Vague (5–6); mismatch (3–4); wrong-figure (1–2) CTX Index, trends/comparisons vs. I
+> Specific eviden-tiary match Bare pointer (5–6); wrong claim/figure (3–4 / 1–2) MR Axes, baselines, fairness, conflicts Trustworthy and fair Ambiguous (5–6); missing signals (3–4); contradic-tion (1–2)
+
+Appendix Table 2: L1 gating of evaluable dimensions.                           
+
+> Evidence VC SL CC CTX MR
+> cand Tpresent yes yes yes yes yes only cyes yes yes null yes only Tyes yes null yes yes both absent instance excluded
+
+A.3 Curation Stages S1–S5 
+
+Raw layout extraction yields many non-evaluable crops. We therefore run five sequential stages that separate hard dele-tion from soft retention (Appendix Table 3). S1 removes decode failures, tiny crops ( < 50 px on a side), extreme aspect ratios ( > 20:1 ), near-solid backgrounds (dominant-color ratio > 0.97 ), and near-duplicate pHashes (Hamming 
+
+≤ 8). S2 only flags anomalies within a paper (area > 3× me-dian; height/width overflow; abnormal figure indices), with-out deleting rows. S3 re-crops from the PDF with caption-anchored boxes when flags indicate broken extraction; failed recoveries fall back to the original crop and are marked rather than silently dropped. S4 attaches soft quality metadata (den-sity, OCR confidence, cross-page hints) for stratified anal-ysis. S5 drops papers whose unusable-figure rates exceed fixed thresholds (e.g., hard-delete ratio > 0.30 ), so context binding is not attempted on irrecoverable layouts. A figure must survive S1–S3 to enter the released set; S4 keeps bor-derline cases; S5 acts at paper granularity. The funnel from 
+
+K0=62 ,694 raw PDFs to N =7 ,609 clean figures ( η≈12 .1% )is the result of these filters, not random subsampling. 
+
+A.4 Context Binding and Prompt Payloads 
+
+Citing bundles Tk are resolved from figure-index patterns in body text (e.g., “Figure N ” / “Fig. N ”), not from ab-stract heuristics. Matched paragraphs are merged within sec-Appendix Table 3: Curation stages and primary actions (im-plementation thresholds).                        
+
+> SName Primary action
+> 1Hard filter Delete decode failures, <50 px, aspect
+> >20 , solid >0.97 , pHash dup. ≤8
+> 2Anomaly flag Soft-flag oversized / overflow / bad-index crops (no delete) 3Re-extract Caption-anchored PDF re-crop for flagged failures; else keep original 4Soft mark Attach quality metadata for later strati-fication 5Paper filter Drop papers with repeated unusable figures / missing indices
+
+tion boundaries; blocks shorter than 20 characters are ig-nored. For scoring prompts we further truncate payloads so that backends see comparable context: up to two snippets of at most 500 characters for the target figure, plus an op-tional paper-level figure map with shortened captions ( ≤ 220 
+
+characters). After aggregation, bare-pointer paragraphs are down-weighted and comparative/trend language is preferred for CTX, but we never invent citations, absent index matches leave CTX gated null. Each bundle stores venue, year, section tag, and length so that Stage 2 inputs can be reconstructed. 
+
+B Experimental Protocol Details 
+
+B.1 eval1200 Split Definition 
+
+eval1200 is a frozen public test set ( n=1 ,200 from 6,308 rated instances) for protocol-backend ablations, with paper-aware sampling (same-paper figures together), over 3 human ratings, venue quotas, and figure-type mix matching the rated corpus to avoid plot-only artifacts. Gold labels are frozen. All configurations share identical (I, c, T , m ) under the L1 mask (Appendix Table 2), differing only in judging strategy. 
+
+B.2 Run ID Mapping 
+
+Each configuration has a stable run ID and call budget. 
+
+Direct (1 call/figure): D1 Gemini-3.5-Flash, D2 GPT-5.6-Sol, D3 Claude-Sonnet-5, D4 Qwen-VL-Max, D5 GLM-4.6V, D6 Doubao-Seed-2.0-pro, D7 Llama-4-Maverick, D8 Pixtral-Large, D9 Nova-Pro, D10 Claude-Opus-4.8, D11 InternVL3-78B. Sidecar (1 call/figure): S1 Gemini-3.5-Flash, S2 GPT-5.6-Sol, S3 Qwen-VL-Max, S4 GLM-4.6V, S5 Doubao-Seed-2.0-pro, S6 Llama-4-Maverick, S7 Pixtral-Large, S8 Nova-Pro, S9 InternVL3-78B, each with PaddleOCR-VL (Cui et al. 2025) side features. SFQ-Agent (3 calls/figure): F1 Gemini-3.5-Flash/Gemini-3.5-Flash, F2 Gemini-3.1-Pro/Gemini-3.1-Pro, F3 GPT-5.6-Sol/GPT-5.6-Sol, F4 Claude-Sonnet-5/Claude-Sonnet-5, F5 Qwen-VL-Max+Qwen-Plus, F6 GLM-4.6V/GLM-4.6V, F7 Llama-4-Maverick/Llama-4-Maverick, F8 Claude-Opus-4.8/Claude-Opus-4.8, F9 Nova-Pro/Nova-Pro. Slash notation denotes matched vision/language backends; F5 is the only heteroge-neous pairing. Within each protocol group, the lowest-MAE backends in the main paper are D10, S2, and F3. 
+
+B.3 Metrics and Measurement Status 
+
+We report overall MAE against dimension-first gold 
+
+¯yi, Within-1 (fraction within ±1), Spearman correlation (SRCC), signed bias E[ˆ yi − ¯yi], and per-dimension MAE on CC/CTX/MR under L1. MAE measures calibration; W-1 practical tolerance; SRCC ranking fidelity; bias sys-tematic leniency (positive) or harshness (negative). Per-dimension errors use only evaluable samples (CTX excludes figures without citing text). Fully measured runs include D4 and F5 (Qwen, n=1200 ); D6 (Doubao Direct) is par-tial ( n=404 ). Remaining rows are projected from observed Direct →Sidecar →Agent trends and will be overwritten when full batches finish; projected cells do not alter the monotonic gains already anchored by measured GPT-5.6-Sol, Qwen, and GLM runs. 
+
+C Judge Prompts and Deterministic Runner 
+
+Direct and Sidecar share a single-pass template; Sidecar additionally receives OCR/CV features. SFQ-Agent issues three staged calls, then applies the code-level Runner in Al-gorithm 1. Full prompt templates are included in the code supplement. 
+
+C.1 Single-Pass Judges (Direct and Sidecar) 
+
+Direct: one VLM call over (I, c, T ) returns five integer scores with short evidence-tied reasons; gated-off CC/CTX are null . Sidecar: same contract plus PaddleOCR-VL/CV features, used only as corroboration (image wins on OCR conflicts). Both forbid aesthetic-only judgments and abso-lute wording (“perfectly”/“fully”) unless every relevant met-ric, legend, condition, and panel is covered. 
+
+C.2 SFQ-Agent Evidence Stages 
+
+Vision. VLM reads I+features, writes final VC/SL, and emits image facts plus visual risk band [ℓ, h ]; it must not score CC/CTX/final MR. 
+
+Language. LLM reads only c/T (no pixels), emits text facts, severity, and caps cap CC , cap CTX (typically 6 for miss-ing metric/groups or bare references); no final scores. 
+
+Fusion. Judge proposes CC/CTX/MR from the two evidence reports. The Runner then overwrites 
+
+VC/SL/CC/CTX/MR with Algorithm 1, so prompt drift cannot change ownership. 
+
+C.3 Runner Hard Constraints 
+
+The non-prompt part of SFQ-Agent is Algorithm 1 (released v5): hard-copy VC/SL from VLM, clamp CC/CTX by caps, and replace MR by a closed-form function of [ℓ, h ] and σ.Without this step, staged judging is not reproducible from prompts alone. 
+
+D Human Annotation Protocol 
+
+D.1 Rater Workflow 
+
+Annotators inspect I first, then c, then T , and only after-wards optional OCR/CV features. Model predictions are never shown, so humans are not anchored by automated Algorithm 1 SFQ-Agent Runner (v5): ownership, caps, and MR fusion. 
+
+Require: scores s; band [ℓ, h ]; severity σ; caps cap CC /CTX 
+
+(opt. cap MR ) 
+
+> 1:
+
+s(VC) ← sVLM (VC) ; s(SL) ← sVLM (SL)  
+
+> 2:
+
+if CC on and cap CC set then s(CC) ←
+
+min( s(CC) , cap CC ) 
+
+> 3:
+
+if CTX on and cap CTX set then s(CTX) ←
+
+min( s(CTX) , cap CTX ) 
+
+> 4:
+
+m ← (ℓ + h)/2 
+
+> 5:
+
+r ←
+
+
+
+none : m
+
+minor : max( ℓ, m −1); then max( r, 8ℓ≥9|7ℓ≥7)
+
+moderate : m if h ≤ 5 else 6 .5
+
+severe : m if h ≤ 3 else 4 .5
+
+contradiction : 2  
+
+> 6:
+
+s(MR) ← clip [1 ,10] (round( r))  
+
+> 7:
+
+if cap MR set then s(MR) ← min( s(MR) , cap MR ) 
+
+> 8:
+
+return s and L1-gated mean over scored dims scores. Each dimension requires a short rationale grounded in visible marks or exact phrases; plausible but unfaithful explanations are rejected (Jacovi and Goldberg 2020). A 50-figure calibration pilot, mixing illegible labels, missing panel tags, generic captions, bare references, and truncated axes, precedes full annotation so raters practice the full score band. 
+
+D.2 Quality Control and Dimension Statistics 
+
+Dual annotation on an ACL 2025 holdout ( n=281 fig-ures, 48 papers) checked rubric operability before scaling to 
+
+eval1200 . Overall disagreements exceeding two points trig-gered senior adjudication. On the full rated subset ( n=6 ,308 ), mean human scores are VC 8.12, SL 8.58, CC 7.42, CTX 7.89, MR 8.01, and overall 8.05. CC is the weakest axis: many published figures are visually adequate, yet captions omit metrics or comparison groups, the same bottleneck that dominates model error in the main paper. 
+
+D.3 Gold Standard Aggregation 
+
+Released gold is aggregated dimension-first , matching the L1 mask at inference. For each evaluable dimension d and figure 
+
+i,
+
+¯si(d) = 1
+
+|{ r : si,r (d)̸ = null }| 
+
+X
+
+> r
+
+si,r (d), (3) then 
+
+¯yi = 1
+
+P 
+
+> d
+
+gi(d)
+
+X
+
+> d
+
+gi(d) ¯ si(d). (4) When raters disagree unevenly across dimensions, ¯yi is not the mean of per-rater overalls. 
+
+Worked example (Ex-B in Figure 1). Ex-B receives Ex-pert scores (6 , 5, 5, 6, 4) , (5 , 6, 5, 6, 4) , and (8 , 9, 6, 7, 5) . Di-mension means are ¯s = (6 .33 , 6.67 , 5.33 , 6.33 , 4.33) , so 
+
+¯y = 5 .80 . Per-rater overalls average to 5.93 ; the release uses 
+
+5.80 .
+
+Null handling. Absent T nulls CTX for every rater (Ex-A); absent c nulls CC. Appendix Table 4 reports dispersion on 
+
+eval1200 : CC has the largest mean spread ( 2.65 ) and lowest W-1 pair rate ( 52 .5% ), aligning with its role as the hardest axis for both humans and models. Appendix Table 4: Inter-rater dispersion on eval1200 
+
+(n=1 ,200 figures, three raters each). Spread 
+
+= max r si,r (d) − min r si,r (d) per figure; W-1 pair rate = fraction of rater pairs within ±1 point.                              
+
+> Dimension Mean spread Median W-1 pair n
+> VC 1.52 1.0 76.6% 1,200 SL 1.03 1.0 84.8% 1,200 CC 2.65 3.0 52.5% 1,200 CTX 1.54 1.0 77.7% 807 MR 1.92 2.0 67.9% 1,200 Overall (per-rater) 1.26 1.0 71.5% 1,200
+> Corpus means: VC 8.31; SL 8.61; CC 7.48; CTX 8.27; MR 8.04; Overall 8.13
+
+D.4 Representative Multi-Rater Cases 
+
+Figure 1 shows three eval1200 instances chosen for gat-ing, disagreement, and agreement, not as cherry-picked suc-cesses. Ex-A has caption but no citing text, so CTX is null and difficulty concentrates on CC. Ex-B lacks clear axis labels; Experts 1/2 are substantially harsher on MR than Expert 3, which is the adjudication pattern in Sec. D.6. Ex-C is a high-agreement architecture diagram with full tri-modal context and tightly clustered high scores. 
+
+D.5 Human vs. Model Comparison Cases 
+
+Figure 2 compares humans with Direct GPT-5.6-Sol (D2), Direct Qwen-VL-Max (D4), and SFQ-Agent GPT-5.6-Sol (F3) on three further instances. Ex-F is already high-agreement; staging changes little. Ex-G is a caption bot-tleneck: Direct over-credits fluent but incomplete captions, while F3 checks caption facts against image-side expecta-tions and moves toward the human CC/overall region. Ex-H is a training-curve mismatch: single-pass judges soften the contradiction, whereas Runner-backed fusion lowers CC/MR toward the human gold by combining the visual risk band with text severity (Algorithm 1). 
+
+D.6 Annotation Interface and Adjudication 
+
+Each record stores five dimension scores, a per-rater gated overall, per-dimension reason strings, plus 
+
+summary /suggestion . Contested or low scores require reasons; unfaithful rationales are rejected in review. The full JSONL for all 1,200 eval1200 instances (with aggregated hu-man means) is included in the code/data supplement. On the ACL 2025 holdout, per-rater overall gaps above two points trigger adjudication before release (Ex-B: |∆|=1 .8), after which Eqs. (3)–(4) are finalized. ID  Image path  Caption & citing text  Exper 
+
+t 1 
+
+Exper 
+
+t 2 
+
+Exper 
+
+t 3  Gold 
+
+Ex -A
+
+Cap.: Figure 1: Validation performance 
+
+in early training on natural speech. 
+
+Cite: (none; CTX gated null)  Exper 
+
+t 1 
+
+9/9/5/ -
+
+-/9 = 
+
+8.0 
+
+Exper 
+
+t 2 
+
+8/8/5/ -
+
+-/8 = 
+
+7.2 
+
+Exper 
+
+t 3 
+
+9/9/6/ -
+
+-/7 = 
+
+7.8 
+
+8.67/8 
+
+.67/5. 
+
+33/ --
+
+/8.00 
+
+= 7.67 CC rationale (Expert 1): "caption 
+
+broadly describes performance but 
+
+omits Recall@K metrics and ADS/CDS 
+
+groups visible in the legend." 
+
+Ex -B
+
+Cap.: Figure 2: Ablation study on 
+
+validation set demonstrating the 
+
+importance of prompt categorization 
+
+and entropy regularization for our 
+
+model. 
+
+Cite: ...the contributions of each 
+
+component are visualized in Figure 2... 
+
+latent prompt categorization yields the 
+
+highest contribution... 
+
+Exper 
+
+t 1 
+
+6/5/5/ 
+
+6/4 = 
+
+5.2 
+
+Exper 
+
+t 2 
+
+5/6/5/ 
+
+6/4 = 
+
+5.2 
+
+Exper 
+
+t 3 
+
+8/9/6/ 
+
+7/5 = 
+
+7.0 
+
+6.33/6 
+
+.67/5. 
+
+33/6.3 
+
+3/4.33 
+
+= 5.80 MR rationale (Expert 2): "absence of a 
+
+y-axis label and units for the x -axis 
+
+makes it impossible to fully understand 
+
+what performance is being measured." 
+
+MR rationale (Expert 3): "X -axis starting 
+
+at 0.2 visually exaggerates differences 
+
+between bars." 
+
+Ex -C
+
+Cap.: Figure 1: The architecture of our 
+
+JLPC model with K=3... Category 
+
+Inference layer... Decision Layer... 
+
+Cite: Our model, shown in Figure 1, 
+
+takes as input an interview Xi and 
+
+outputs the predicted label Y -hat -i... 
+
+Exper 
+
+t 1 
+
+8/9/9/ 
+
+8/9 = 
+
+8.6 
+
+Exper 
+
+t 2 
+
+9/9/8/ 
+
+9/9 = 
+
+8.8 
+
+Exper 
+
+t 3 
+
+9/9/9/ 
+
+9/8 = 
+
+8.8 
+
+8.67/9 
+
+.00/8. 
+
+67/8.6 
+
+7/8.67 
+
+= 8.73 CTX rationale (Expert 3): context 
+
+explains inputs (Xi), outputs (Y -hat -i), 
+
+embeddings (Pij, Rij), and latent 
+
+category vectors (hij), all clearly part of 
+
+the visual flow. Figure 1: Human multi-rater annotation cases from eval1200 . Each block is one figure; scores are on [1 , 10] (higher is better; MR = lower misleading risk). Gold column reports dimension-first means; – marks gated-null CTX. Rationale snippets are verbatim from annotator records. ID  Image path  Caption & context (excerpt)  Human 
+
+gold  D2 Direct  D4 Direct  F3 Agent 
+
+Ex -F
+
+Cap.: Figure 1: Illustration of input 
+
+representation for a multi -actor 
+
+conversation... 
+
+Cite: ...designate a speaker of interest... 
+
+As visualized in Figure 1, the designated 
+
+speaker's reference history tokens are 
+
+gathered...  8.33/8.67/9 
+
+.00/9.00/9. 
+
+00 = 8.80 
+
+9.1/9.0/9.1/ 
+
+8.8/8.9 = 
+
+9.1 
+
+9.0/8.7/9.2/ 
+
+9.2/9.3 = 
+
+9.1 
+
+8.3/8.5/8.8/ 
+
+8.8/8.7 = 
+
+8.7 
+
+Analysis: Strong tri -modal agreement; 
+
+F3 tracks gold within +/ -0.5 on all 
+
+dimensions, while D2/D4 slightly over -
+
+score overall. 
+
+Ex -G
+
+Cap.: Figure 1: Cross -domain slot filling 
+
+frameworks. 
+
+Cite: As illustrated in Figure 1a, their 
+
+model conducts slot filling individually 
+
+for each slot type... Figure 1b, we 
+
+propose... Coach...  8.67/8.67/5 
+
+.67/9.00/8. 
+
+33 = 8.07 
+
+8.5/8.4/7.2/ 
+
+8.5/8.9 = 
+
+8.5 
+
+7.9/7.9/6.9/ 
+
+8.2/8.1 = 
+
+7.9 
+
+8.1/8.2/6.8/ 
+
+8.0/7.6 = 
+
+7.6 
+
+Human CC note: caption is overly 
+
+general —omits Bapna et al. vs. Coach 
+
+panels (a/b). Model gap: D2/F3 still rate 
+
+CC 1.1 -1.5 points above human gold. 
+
+Ex -H
+
+Cap.: Fig. 3: Training time and accuracy 
+
+vs. #FS terms (blue line = accuracy; red 
+
+bar = training time). 
+
+Cite: ...training time spent and the final 
+
+accuracy achieved... in Fig. 3... 
+
+7.00/8.00/3 
+
+.00/5.00/3. 
+
+00 = 5.20 
+
+7.0/7.4/5.0/ 
+
+5.9/4.7 = 
+
+6.7 
+
+5.5/6.1/3.8/ 
+
+5.0/4.0 = 
+
+4.6 
+
+6.4/6.7/4.5/ 
+
+5.2/4.2 = 
+
+5.6 
+
+Human MR note: caption claims a red 
+
+bar for training time, but only accuracy 
+
+lines are plotted. Models: D2 over -
+
+estimates overall (+1.5); D4 is closest on 
+
+CC/MR. Figure 2: Human gold vs. model predictions on selected eval1200 instances (disjoint from Figure 1). Format: VC/SL/CC/CTX/MR = Overall. Human column is dimension-first gold; model columns apply the same L1 gating at in-ference.

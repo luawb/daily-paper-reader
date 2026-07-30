@@ -1,0 +1,251 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-30T20:10:52.253604+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 4,
+    "deep_cap": 6,
+    "deep_selected": 4,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2607.22752v1",
+      "source": "arxiv",
+      "title": "Beyond Error-vs-Discard Characteristic: Toward Stable and Reliable Evaluation for Face Image Quality Assessment",
+      "abstract": "Face Image Quality Assessment (FIQA) aims to estimate the utility of facial images for reliable recognition. The evaluation of FIQA methods is predominantly based on the Error-versus-Discard Characteristic (EDC), which evaluates performance by progressively discarding low-quality samples and measuring recognition error on the retained subset. In this work, we demonstrate that the widely used EDC protocol has fundamental limitations: Test-Set Divergence and Threshold Drift, which together limit the reliability and comparability of FIQA methods. To address this, we propose discard-based EDC variants and a rank-based Rank Consistency Evaluation (RCE) metric that operates on the entire test set without discarding samples, using a fixed decision threshold. Extensive experiments on five datasets, four face recognition models, and 15 state-of-the-art FIQA methods demonstrate both the limitations of EDC and the effectiveness of the proposed approaches in enabling a more reliable and comparable evaluation. Despite evaluated on face images only, the limitations arise from the EDC protocol rather than the biometric modality, suggesting a broader applicability to biometric quality assessment in general.",
+      "authors": [
+        "Bhavesh Wani",
+        "Žiga Babnik",
+        "Vitomir Štruc",
+        "Philipp Terhörst"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.LG"
+      ],
+      "published": "2026-07-23T14:38:59+00:00",
+      "link": "https://arxiv.org/pdf/2607.22752v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "proposes improved evaluation protocol and metric for face image quality assessment (FIQA)",
+      "llm_evidence_cn": "提出改进的人脸图像质量评估（FIQA）评估协议和指标",
+      "llm_evidence": "提出改进的人脸图像质量评估（FIQA）评估协议和指标",
+      "canonical_evidence": "提出改进的人脸图像质量评估（FIQA）评估协议和指标",
+      "llm_tldr_en": "Identifies limitations in the common EDC protocol for FIQA evaluation and proposes stable alternatives: discard-based EDC variants and a rank-based RCE metric.",
+      "llm_tldr_cn": "指出人脸图像质量评估（FIQA）常用的EDC协议存在测试集发散和阈值漂移问题，提出基于丢弃的EDC变体和基于秩的RCE度量。这些改进提升了FIQA方法评估的稳定性和可比性，为生物识别场景下的质量评估提供了更可靠的基准。",
+      "llm_tldr": "指出人脸图像质量评估（FIQA）常用的EDC协议存在测试集发散和阈值漂移问题，提出基于丢弃的EDC变体和基于秩的RCE度量。这些改进提升了FIQA方法评估的稳定性和可比性，为生物识别场景下的质量评估提供了更可靠的基准。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.26595v1",
+      "source": "arxiv",
+      "title": "SpatialQ: Understanding 3D Gaussian Splatting Scene Quality via Visual-based MLLM",
+      "abstract": "3D Gaussian Splatting (3DGS) has emerged as an effective representation for novel view synthesis and 3D scene reconstruction, creating an increasing demand for reliable quality assessment. Unlike conventional image quality assessment (IQA), the quality of a 3DGS scene depends not only on the perceptual fidelity of rendered views, but also on scene-level factors such as spatial structure and cross-view consistency. Existing IQA methods are limited by their reliance on 2D perceptual cues, whereas general multimodal large language models (MLLMs) are not designed for stable quality regression and may produce unreliable judgments. To address these limitations, a multimodal quality assessment framework is developed for 3DGS scene understanding. First, a 3D-aware quality representation learning framework is introduced by augmenting a VGGT-based encoder with a dedicated quality head. Multi-view images are encoded into view-specific features and aggregated to capture cross-view consistency, while geometric cues are incorporated through joint modeling of depth and point-cloud-related structural information, enabling the learning of structure-aware quality representations beyond appearance-driven features. Second, a grounded multimodal reasoning mechanism is constructed by jointly feeding original images, depth maps, point cloud renderings, and camera parameters into a Qwen-based MLLM.",
+      "authors": [
+        "Jingxuan Su",
+        "Shenglin Wang",
+        "Tiesong Zhao",
+        "Ge Li",
+        "Wei Gao"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-29T08:14:40+00:00",
+      "link": "https://arxiv.org/pdf/2607.26595v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Multimodal quality assessment for 3DGS scenes via visual-based MLLM",
+      "llm_evidence_cn": "通过基于视觉的多模态大语言模型进行3DGS场景质量评估",
+      "llm_evidence": "通过基于视觉的多模态大语言模型进行3DGS场景质量评估",
+      "canonical_evidence": "通过基于视觉的多模态大语言模型进行3DGS场景质量评估",
+      "llm_tldr_en": "SpatialQ develops a multimodal quality assessment framework for 3D Gaussian Splatting scenes, leveraging a visual-based MLLM to evaluate perceptual fidelity and scene-level consistency, overcoming the limitations of 2D-only IQA methods.",
+      "llm_tldr_cn": "SpatialQ针对3D高斯泼溅场景的质量评估，提出基于视觉多模态大语言模型的框架，结合渲染视图保真度与场景空间结构、跨视图一致性，弥补了传统2D图像质量评估只能关注单张图像感知质量的不足，实现了对三维场景整体质量的可靠量化与理解。",
+      "llm_tldr": "SpatialQ针对3D高斯泼溅场景的质量评估，提出基于视觉多模态大语言模型的框架，结合渲染视图保真度与场景空间结构、跨视图一致性，弥补了传统2D图像质量评估只能关注单张图像感知质量的不足，实现了对三维场景整体质量的可靠量化与理解。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "advanced image quality assessment using reasoning methods",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.27084v1",
+      "source": "arxiv",
+      "title": "SciFigQual-Bench: A Benchmark for Scientific Figure Quality Assessment with Full-Manuscript Context",
+      "abstract": "Scientific images are the core elements of presenting experimental conclusions, elaborating system architecture, and supporting comparative arguments in scientific papers. However, existing image quality assessment (IQA) methods are predominantly designed for natural photographs or AI-generated content, which cannot be directly applied to scientific papers. The few existing studies on scholarly charts remain confined to visual-surface comparisons, failing to verify caption alignment, citation relevance, or visual misleadingness. To address this, we propose SciFigQual-Bench, a full-text contextual benchmark that evaluates scientific images across five dimensions (clarity, layout, caption fit, context relevance, and misleading risk). The data covers top computer-science conferences from 2020 to 2025; 6,308 images were independently scored by multiple domain experts in five dimensions and aggregated into gold-standard annotations. Unlike previous scientific figure benchmarks, our dataset binds each image to its caption, citing sentence, and manuscript context. To enable automated evaluation on this benchmark, we designed a staged cross-modal evaluation framework SFQ-Agent to achieve auditable and refined scoring through the collection and fusion of modal evidence. Multiple mainstream large models were evaluated on the test subset eval1200, and SFQ-Agent (F3) equipped with GPT-5.6-Sol achieved the lowest overall average absolute error (0.418) and the highest consistency rate (93.4%), consistently outperforming both direct evaluation and auxiliary (Sidecar) visual language model evaluation schemes.",
+      "authors": [
+        "Zihan Deng",
+        "Chuanzhi Xu",
+        "Huiqi Liang",
+        "Haoyang Li",
+        "Xiaozhen Zhong",
+        "Lequan Yu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-07-29T16:07:44+00:00",
+      "link": "https://arxiv.org/pdf/2607.27084v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Benchmark for scientific figure quality assessment with multi-dimension evaluation",
+      "llm_evidence_cn": "提出科学图形质量评估基准，包含多维度评估",
+      "llm_evidence": "提出科学图形质量评估基准，包含多维度评估",
+      "canonical_evidence": "提出科学图形质量评估基准，包含多维度评估",
+      "llm_tldr_en": "SciFigQual-Bench is a benchmark for evaluating scientific image quality in full manuscript context across five dimensions: clarity, layout, caption fit, context relevance, and misleadingness. It fills the gap for IQA tailored to scientific figures.",
+      "llm_tldr_cn": "现有图像质量评价方法多针对自然照片或AI生成内容，难以直接应用于科学论文。本文提出SciFigQual-Bench，一个全文本上下文的基准，从清晰度、布局、标题匹配、上下文相关性和误导性五个维度评估科学图像。该基准填补了科学图形质量评价的空白，支持超越视觉表面的综合评估。",
+      "llm_tldr": "现有图像质量评价方法多针对自然照片或AI生成内容，难以直接应用于科学论文。本文提出SciFigQual-Bench，一个全文本上下文的基准，从清晰度、布局、标题匹配、上下文相关性和误导性五个维度评估科学图像。该基准填补了科学图形质量评价的空白，支持超越视觉表面的综合评估。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.26326v1",
+      "source": "arxiv",
+      "title": "Seeing or Knowing? Visual Context Sensitivity in Multimodal Large Language Models",
+      "abstract": "Multimodal Large Language Models (MLLMs) achieve strong performance by integrating visual inputs with the rich priors of pretrained language models. However, they often fail on vision-centric tasks, especially when visual evidence conflicts with pretrained knowledge. We explore these failures separately using two diagnostic paradigms: (1) probing whether visual information is available, via image reconstruction, and (2) measuring multimodal context sensitivity, the extent to which the model follows visual context versus the language prior. To support the second, we introduce the WhatIfVis, a benchmark spanning five coarse-grained dimensions (spatial-temporal, color, count, size, and weight) whose questions admit answers from either the image or the prior. Our analysis yields three findings: (i) Coarse-grained visual evidence is preserved, as these attributes can be reconstructed from the final-layer image tokens of frozen MLLMs. Failures on questions about these attributes therefore point to post-perceptual utilization, rather than to degraded visual encoding during perception. (ii) Even when explicitly instructed to use or ignore visual evidence, vanilla models (without supervised fine-tuning on the WhatIfVis) show unstable visual context sensitivity. Supervised fine-tuning (SFT) improves this controllability and generalizes across domains, and activation patching further localizes the vision-versus-prior trade-off at architecture-specific depths across all six models. (iii) The vision-versus-prior trade-off is controllable along a learned vector. Applying this steering vector, even without any intent instruction, improves controllability over the vanilla model. Together, these results relocate the bottleneck, indicating that for the coarse attributes we study, MLLMs encode the visual evidence but cannot reliably control their reliance on it.",
+      "authors": [
+        "Jiaang Li",
+        "Chengzu Li",
+        "Zhaochong An",
+        "Yifei Yuan",
+        "Xi Liu",
+        "Serge Belongie",
+        "Vésteinn Snæbjarnarson"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-28T22:52:34+00:00",
+      "link": "https://arxiv.org/pdf/2607.26326v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Studies Multimodal Large Language Models (MLLMs) integrating visual inputs with language priors.",
+      "llm_evidence_cn": "研究整合视觉输入与语言先验的多模态大语言模型。",
+      "llm_evidence": "研究整合视觉输入与语言先验的多模态大语言模型。",
+      "canonical_evidence": "研究整合视觉输入与语言先验的多模态大语言模型。",
+      "llm_tldr_en": "Introduces WhatIfVis benchmark to measure MLLMs' sensitivity to visual context across five coarse-grained dimensions, revealing failures when visual evidence conflicts with pretrained knowledge.",
+      "llm_tldr_cn": "针对多模态大语言模型在视觉任务上的失败，提出WhatIfVis基准，从时空、颜色、计数等五个维度测量模型对视觉上下文的敏感性，发现当视觉证据与预训练知识冲突时模型常失败，为理解MLLM的视觉理解能力提供了诊断工具。",
+      "llm_tldr": "针对多模态大语言模型在视觉任务上的失败，提出WhatIfVis基准，从时空、颜色、计数等五个维度测量模型对视觉上下文的敏感性，发现当视觉证据与预训练知识冲突时模型常失败，为理解MLLM的视觉理解能力提供了诊断工具。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.25962v1",
+      "source": "arxiv",
+      "title": "LaP-Forensics: Latent-Pixel Consistency Guided Multimodal Reasoning for Deepfake Detection",
+      "abstract": "Recent generative models can produce images with few obvious visual artifacts, weakening detectors and explanations that rely only on surface appearance. We present LaP-Forensics, a multimodal framework that augments RGB semantics with reconstruction-based forensic evidence. A frozen Stable Diffusion DDIM inversion-reconstruction model provides a fixed reconstruction reference, and its residual map measures local compatibility with that reference. Independent projectors encode the RGB image and residual map before a structured Where-What-Why model predicts a textual analysis and an artifact mask.Supervised fine-tuning is followed by Group Relative Policy Optimization (GRPO), whose reward combines mask overlap with output-structure and evidence-reference terms. These text-side terms encourage the model to refer to the consistency map but do not constitute a verifier of free-form textual truth. A separate image-level head fuses RGB and DDIM-residual class features. Experiments show cross-generator detection on UniversalFakeDetect and competitive artifact localization on the official SynthScars benchmark. Controlled cue-construction, inversion-horizon, component, reward-term, and counterfactual analyses support the utility of the residual stream under the evaluated settings, while free-form textual faithfulness and reliability under post-processing remain open limitations.",
+      "authors": [
+        "Can Wang",
+        "Yuhao Wang",
+        "Yushe Cao",
+        "Canran Xiao",
+        "Fei Shen"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-28T16:45:52+00:00",
+      "link": "https://arxiv.org/pdf/2607.25962v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Uses GRPO (reinforcement learning) to train a multimodal model that generates textual explanations for image forgery analysis, providing a method directly transferable to image quality assessment with descriptions.",
+      "llm_evidence_cn": "使用GRPO强化学习训练多模态模型生成图像伪造的文字解释，方法可直接迁移到带描述的图像质量评价。",
+      "llm_evidence": "使用GRPO强化学习训练多模态模型生成图像伪造的文字解释，方法可直接迁移到带描述的图像质量评价。",
+      "canonical_evidence": "使用GRPO强化学习训练多模态模型生成图像伪造的文字解释，方法可直接迁移到带描述的图像质量评价。",
+      "llm_tldr_en": "Proposes LaP-Forensics, a multimodal reasoning framework combining Stable Diffusion reconstruction residuals with GRPO RL to produce textual explanations and artifact masks for deepfake detection; a method adaptable to explainable image quality assessment.",
+      "llm_tldr_cn": "针对深度伪造检测缺乏可解释性的问题，提出LaP-Forensics框架。利用冻结稳定扩散模型反演重建残差图，联合RGB图像通过结构化“何处-何事-为何”模型生成文本分析和伪影掩码。采用GRPO强化学习优化输出，奖励兼顾掩码重叠与结构对齐。该多模态推理与解释生成机制可启发可解释图像质量评价。",
+      "llm_tldr": "针对深度伪造检测缺乏可解释性的问题，提出LaP-Forensics框架。利用冻结稳定扩散模型反演重建残差图，联合RGB图像通过结构化“何处-何事-为何”模型生成文本分析和伪影掩码。采用GRPO强化学习优化输出，奖励兼顾掩码重叠与结构对齐。该多模态推理与解释生成机制可启发可解释图像质量评价。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "reinforcement learning for image quality assessment and description",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2607.26596v1",
+      "source": "arxiv",
+      "title": "Decoupled Visual Processing: Efficient Multimodal Adaptation via Modality-Specific Transformer Substitution",
+      "abstract": "Multimodal large language models (MLLMs) have demonstrated remarkable capabilities by integrating visual and textual understanding within a unified transformer architecture. However, fine-tuning all parameters of these models for visual instruction tuning is computationally expensive and often unnecessary, as the representation requirements for visual and textual tokens diverge significantly in the deeper layers of the network. In this paper, we propose Decoupled Visual Processing (DVP), an efficient training framework that replaces the upper decoder layers of a pretrained LLM with a lightweight, independently trainable single transformer block dedicated exclusively to visual token processing. Specifically, after shared processing through the first half of the decoder layers, visual and textual tokens are split: visual tokens are routed through a newly initialized single transformer block while textual tokens continue through the original frozen decoder layers. The two streams are then concatenated before the language modeling head. During training, only the single transformer block is updated, dramatically reducing the number of trainable parameters. Experiments on the LLaVA-1.5 framework demonstrate that DVP achieves competitive performance on MME, POPE, and ChartQA benchmarks while training only a fraction of the total parameters, suggesting that visual representations in MLLMs can be effectively learned through a decoupled, parameter-efficient pathway.",
+      "authors": [
+        "Mingkuan Feng",
+        "Zhengqi Wen",
+        "Jianhua Tao"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-07-29T08:16:28+00:00",
+      "link": "https://arxiv.org/pdf/2607.26596v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Proposes Decoupled Visual Processing, an efficient framework for adapting multimodal large language models.",
+      "llm_evidence_cn": "提出解耦视觉处理方法，高效适应多模态大语言模型。",
+      "llm_evidence": "提出解耦视觉处理方法，高效适应多模态大语言模型。",
+      "canonical_evidence": "提出解耦视觉处理方法，高效适应多模态大语言模型。",
+      "llm_tldr_en": "Proposes DVP, which replaces upper decoder layers of a pretrained LLM with a lightweight transformer block dedicated to visual token processing, reducing fine-tuning cost while maintaining performance.",
+      "llm_tldr_cn": "针对多模态大语言模型微调成本高的问题，提出DVP方法，用轻量级单Transformer块替换预训练LLM的上层解码器专门处理视觉标记，降低训练开销并保持性能。",
+      "llm_tldr": "针对多模态大语言模型微调成本高的问题，提出DVP方法，用轻量级单Transformer块替换预训练LLM的上层解码器专门处理视觉标记，降低训练开销并保持性能。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
