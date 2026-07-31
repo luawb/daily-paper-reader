@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-07-31 <!--dpr-date:20260731-->
+    * 精读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/31/2607.27628v1-blindpsnr-a-no-reference-fidelity-predictor-for-low-light-image-enhancement" data-sidebar-item="{&quot;title&quot;: &quot;BlindPSNR: A No-Reference Fidelity Predictor for Low-Light Image Enhancement&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.27628v1-blindpsnr-a-no-reference-fidelity-predictor-for-low-light-image-enhancement&quot;, &quot;score&quot;: &quot;8.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;低光图像增强的无参考图像质量评价&quot;}">BlindPSNR: A No-Reference Fidelity Predictor for Low-Light Image Enhancement</a>
   * 2026-07-30 <!--dpr-date:20260730-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/30/2607.22752v1-beyond-error-vs-discard-characteristic-toward-stable-and-reliable-evaluation-for-face-image-quality-assessment" data-sidebar-item="{&quot;title&quot;: &quot;Beyond Error-vs-Discard Characteristic: Toward Stable and Reliable Evaluation for Face Image Quality Assessment&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.22752v1-beyond-error-vs-discard-characteristic-toward-stable-and-reliable-evaluation-for-face-image-quality-assessment&quot;, &quot;score&quot;: &quot;9.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;提出改进的人脸图像质量评估（FIQA）评估协议和指标&quot;}">Beyond Error-vs-Discard Characteristic: Toward Stable and Reliable Evaluation for Face Image Quality Assessment</a>

@@ -1,0 +1,24 @@
+{
+  "label": "2026-07-31",
+  "date": "2026-07-31",
+  "generated_at": "2026-07-31T21:42:37",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202607/31/2607.27628v1-blindpsnr-a-no-reference-fidelity-predictor-for-low-light-image-enhancement",
+      "section": "deep",
+      "title_en": "BlindPSNR: A No-Reference Fidelity Predictor for Low-Light Image Enhancement",
+      "authors": "Mingzhe Lyu, Jinqiang Cui, Hong Zhang",
+      "date": "2026-07-30",
+      "pdf": "https://arxiv.org/pdf/2607.27628v1",
+      "score": "8.0",
+      "evidence": "低光图像增强的无参考图像质量评价",
+      "tldr": "低光图像增强（LLIE）方法的可调参数通常固定，导致跨场景性能下降，而手动选择最优参数耗时且不总可行。虽然峰值信噪比（PSNR）是自然的保真度准则，但需要不可得的参考图像；现有无参考图像质量评估（NR-IQA）方法关注感知质量而非信号保真度，在基准测试上参数选择准确率均为0%。本文利用成对训练数据中PSNR可解析计算的特点，提出BlindPSNR——一个轻量级无参考网络，通过窗口交叉注意力融合增强图像与退化低光输入，并以异方差回归估计PSNR。标量回归基线仅达54.4%的Top-1准确率，BlindPSNR将其提升至89.5%，平均遗憾从1.62 dB降至0.026 dB，且能泛化到未见数据集（SRCC 0.61-0.67），为低光增强自动参数优化提供首个可靠的无参考保真度预测器。",
+      "tags": "query:xiqa",
+      "abstract_en": "Low-light image enhancement (LLIE) methods involve tunable parameters that are typically fixed, often leading to performance degradation when applied across scenes. Manually selecting the best configuration, however, can be time-consuming and not always practical. Peak signal-to-noise ratio (PSNR) is the natural fidelity criterion for automating parameter selection, yet it requires a ground-truth reference that is typically unavailable. To our knowledge, no learning-based method addresses no-reference PSNR prediction for low-light image enhancement; the natural surrogate, no-reference image quality assessment (NR-IQA), targets perceptual quality rather than signal fidelity, and all seven baselines we test achieve 0% top-1 selection accuracy on our benchmark. With paired training data, the ground-truth PSNR is analytically computable, providing exact supervision without a separate teacher network. Building on this, we propose BlindPSNR, a lightweight no-reference network that fuses the enhanced image with the degraded low-light input via windowed cross-attention and estimates PSNR through heteroscedastic regression. While a scalar-regression baseline achieves top-1 accuracy of 54.4%, BlindPSNR raises this to 89.5% with regret dropping from 1.62 dB to 0.026 dB, and generalizes to unseen datasets (SRCC = 0.61-0.67).",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
