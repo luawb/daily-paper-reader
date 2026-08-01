@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-08-01 <!--dpr-date:20260801-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/01/2607.25527v1-argus-unified-towards-a-compact-and-economical-unified-model-for-image-understanding-and-generation" data-sidebar-item="{&quot;title&quot;: &quot;Argus-Unified: Towards A Compact and Economical Unified Model for Image Understanding and Generation&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.25527v1-argus-unified-towards-a-compact-and-economical-unified-model-for-image-understanding-and-generation&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;提出紧凑的统一多模态模型，处理图像和文本&quot;}">Argus-Unified: Towards A Compact and Economical Unified Model for Image Understanding and Generation</a>
   * 2026-07-31 <!--dpr-date:20260731-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202607/31/2607.27628v1-blindpsnr-a-no-reference-fidelity-predictor-for-low-light-image-enhancement" data-sidebar-item="{&quot;title&quot;: &quot;BlindPSNR: A No-Reference Fidelity Predictor for Low-Light Image Enhancement&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2607.27628v1-blindpsnr-a-no-reference-fidelity-predictor-for-low-light-image-enhancement&quot;, &quot;score&quot;: &quot;8.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;低光图像增强的无参考图像质量评价&quot;}">BlindPSNR: A No-Reference Fidelity Predictor for Low-Light Image Enhancement</a>

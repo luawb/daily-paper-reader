@@ -1,0 +1,59 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-01T21:16:23.799656+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.25527v1",
+      "source": "arxiv",
+      "title": "Argus-Unified: Towards A Compact and Economical Unified Model for Image Understanding and Generation",
+      "abstract": "Unifying visual understanding and generation in one model holds immense promise, but remains challenging and expensive due to heavy compute and data demands and conflicts between the visual features needed for these two capabilities. To address these challenges, we present Argus-Unified, a compact, effective and unified multimodal model built with low demand on computation and data. Instead of aligning modalities from scratch, Argus-Unified effectively leverages pretrained vision-language models (VLMs) that provide strong multimodal priors. Specifically, we introduce hybrid visual tokens that preserve continuous tokens for understanding while learning discrete tokens for generation from a frozen unified vision encoder. Our training pipeline includes two stages: the first stage learns a quantizer and image decoder on top of the frozen vision encoder, the second stage trains the LLM initialized from a pretrained VLM for the unified multimodal modeling. Using by far the least amount of data (15.6M) and the lowest cost (~$2,000), we demonstrate that unified multimodal models can be trained economically while achieving strong performance in both understanding and generation. Notably, our model attains state-of-the-art multimodal understanding on GQA, POPE, and VQAv2, and competitive generation quality compared to models with dedicated vision encoders (e.g., Janus, Janus-Pro), all at ~10x lower cost and with ~5x less data. We envision Argus-Unified as a useful baseline that lowers the development barrier for unified models.",
+      "authors": [
+        "Weiming Zhuang",
+        "Jiabo Huang",
+        "Jingtao Li",
+        "Zhizhong Li",
+        "Chen Chen",
+        "Sina Sajadmanesh",
+        "Lingjuan Lyu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-07-28T10:12:06+00:00",
+      "link": "https://arxiv.org/pdf/2607.25527v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "presents a compact unified multimodal model for image understanding and generation, processing images and text",
+      "llm_evidence_cn": "提出紧凑的统一多模态模型，处理图像和文本",
+      "llm_evidence": "提出紧凑的统一多模态模型，处理图像和文本",
+      "canonical_evidence": "提出紧凑的统一多模态模型，处理图像和文本",
+      "llm_tldr_en": "Presents Argus-Unified, a compact and economical unified multimodal model that leverages pretrained VLMs and hybrid visual tokens to bridge understanding and generation.",
+      "llm_tldr_cn": "针对统一视觉理解与生成模型计算资源与数据需求大的问题，提出 Argus-Unified，通过利用预训练视觉语言模型先验和引入混合视觉令牌，实现紧凑经济的多模态统一。实验表明该模型在保持性能的同时降低了对计算和数据的需求，为多模态模型的高效构建提供了参考。",
+      "llm_tldr": "针对统一视觉理解与生成模型计算资源与数据需求大的问题，提出 Argus-Unified，通过利用预训练视觉语言模型先验和引入混合视觉令牌，实现紧凑经济的多模态统一。实验表明该模型在保持性能的同时降低了对计算和数据的需求，为多模态模型的高效构建提供了参考。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

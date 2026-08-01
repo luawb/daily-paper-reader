@@ -6,26 +6,26 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-07-31
-- 运行时间：2026-07-31 21:42:25 UTC
+- 最新运行日期：2026-08-01
+- 运行时间：2026-08-01 21:18:09 UTC
 - 运行状态：成功
 - 本次总论文数：1
-- 精读区：1
-- 速读区：0
+- 精读区：0
+- 速读区：1
 
 ### 今日简报（AI）
-精读了一篇8.0分论文，用盲参考方法为低光增强图像预测保真度评分。  
-最佳方向是无需原图即可精准评判增强后图像的细节保留与结构一致性。  
-想入门这个领域，可以从“去雾/去噪”任务中常见的无参考指标（如NIQE）入手，对比其局限性。
-- 详情：[/202607/31/README](/202607/31/README)
+今日速读一篇探讨紧凑经济型图像理解与生成统一模型的工作。  
+值得关注：单一模型同时胜任图像理解和生成任务，且着力降低计算与存储成本，探索了实用化部署的可能。  
+不妨留意多模态模型轻量化的进展，或许很快能在个人设备上体验边拍边生成的效果。
+- 详情：[/202608/01/README](/202608/01/README)
 
 ### 精读区论文标签
-1. [BlindPSNR: A No-Reference Fidelity Predictor for Low-Light Image Enhancement](/202607/31/2607.27628v1-blindpsnr-a-no-reference-fidelity-predictor-for-low-light-image-enhancement)  
-   标签：评分：8.0/10、query:xiqa
-   evidence：低光图像增强的无参考图像质量评价
+- 本次无精读推荐。
 
 ### 速读区论文标签
-- 本次无速读推荐。
+1. [Argus-Unified: Towards A Compact and Economical Unified Model for Image Understanding and Generation](/202608/01/2607.25527v1-argus-unified-towards-a-compact-and-economical-unified-model-for-image-understanding-and-generation)  
+   标签：评分：6.0/10、query:xiqa
+   evidence：提出紧凑的统一多模态模型，处理图像和文本
 
 
 <div class="dpr-home-promo-card">
