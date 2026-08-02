@@ -6,26 +6,22 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-01
-- 运行时间：2026-08-01 21:18:09 UTC
+- 最新运行日期：2026-08-02
+- 运行时间：2026-08-02 20:14:41 UTC
 - 运行状态：成功
-- 本次总论文数：1
+- 本次总论文数：0
 - 精读区：0
-- 速读区：1
+- 速读区：0
 
 ### 今日简报（AI）
-今日速读一篇探讨紧凑经济型图像理解与生成统一模型的工作。  
-值得关注：单一模型同时胜任图像理解和生成任务，且着力降低计算与存储成本，探索了实用化部署的可能。  
-不妨留意多模态模型轻量化的进展，或许很快能在个人设备上体验边拍边生成的效果。
-- 详情：[/202608/01/README](/202608/01/README)
+> 今日无新推荐，系统未产出可展示论文。
+- 详情：[/202608/02/README](/202608/02/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Argus-Unified: Towards A Compact and Economical Unified Model for Image Understanding and Generation](/202608/01/2607.25527v1-argus-unified-towards-a-compact-and-economical-unified-model-for-image-understanding-and-generation)  
-   标签：评分：6.0/10、query:xiqa
-   evidence：提出紧凑的统一多模态模型，处理图像和文本
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">
