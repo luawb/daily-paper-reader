@@ -1,0 +1,1376 @@
+Title: 2607.29253v1.pdf
+
+URL Source: https://arxiv.org/pdf/2607.29253v1
+
+Published Time: Mon, 03 Aug 2026 00:43:59 GMT
+
+Number of Pages: 23
+
+Markdown Content:
+CBCT -IQ: A Publicly Available Annotated Cone -Beam 
+
+# CT Dataset for Image Quality Assessment and 
+
+# Benchmarking 
+
+Sepideh Hatamikia 1,2,3 *, Anna Breger 3,4 , Clemens Karner 3,2 , Birgit Pohn 2, 5, Poorya 
+
+MohammadiNasab 2,3 , Martin Buschmann 6, Stephanie Nougaret 7, L aura Haddad 7, Ali Abbasian 
+
+Ardakani 2, Afshin Mohammadi 8, Paul Apfaltrer 9, Wolfgang Birkfellner 3, Alfred Pohl 2, 10 , Ander 
+
+Biguri 4, Gernot Kronreif 1, Carola -Bibiane Schönlieb 4, Tess R eynold s11
+
+> 1
+
+Austrian Center for Medical Innovation and Technology (ACMIT), Wiener Neustadt, Austria  
+
+> 2
+
+Department of Medicine, Faculty of Medicine and Dentistry, Danube Private University, Krems, 
+
+Austria  
+
+> 3
+
+Center for Medical Physics and Biomedical Engineering, Medical University of Vienna, Vienna, 
+
+Austria  
+
+> 4
+
+Department of Applied Mathematics and Theoretical Physics (DAMTP), University of Cambridge, 
+
+Cambridge, United Kingdom  
+
+> 5
+
+Faculty Computer Science and Applied Mathematics, University of Applied Sciences Technikum 
+
+Wien, Vienna, Austria  
+
+> 6
+
+Department of Radiation Oncology, University Hospital Vienna and Medical University of Vienna, 
+
+Vienna, Austria  
+
+> 7
+
+Department of Radiology, Montpellier Cancer Institute, PINKCC lab U1194, University of 
+
+Montpellier, Montpellier, France  
+
+> 8
+
+Department of Radiology, Faculty of Medicine, Urmia University of Medical Science, Urmia, Iran  
+
+> 9
+
+Clinical Institute for Diagnostic and Interventional Radiology and Nuclear Medicine, University 
+
+Hospital Wiener Neustadt, Wiener Neustadt, Austria  
+
+> 10
+
+Clinical Department of Ophthalmology and Optometry, University Hospital Wiener Neustadt , Wiener 
+
+Neustadt, Austria  
+
+> 11
+
+Image X Institute, Faculty of Medicine and Health, U niversity of Sydney, Australia 
+
+ Corresponding author: Sepideh  Hatamikia, E -mail:  Sepideh.hatamikia@DP -Uni.ac.at Abstract: 
+
+Medical image quality plays a critical role in diagnostic accuracy, especially in X -ray –based 
+
+imaging modalities such as cone -beam computed tomography (CBCT), where image quality 
+
+must be balanced against radiation dose. While expert visual evaluation remains the clinical 
+
+standard for image quality evaluation, it is time -consuming, subjective and affected by inter -
+
+observer variability, emphasizing the need for reliable quantitative image quality assessment 
+
+(IQA) methods. However, the development and validation of such IQA me thods have been 
+
+limited by the lack of publicly available CBCT datasets with expert image quality annotations. 
+
+In this study , we pr ovide the first open -access CBCT IQA dataset containing 1,764 annotated 
+
+image slices acquired using systematic variations in image acquisition and reconstruction 
+
+parameters. Three clinical experts graded the overall image quality and a predefined regions of 
+
+interest (ROI) using a four -level scoring scheme. In addition, we benchmark 26 full reference -
+
+and no reference -based IQA measures against expert annotations and introduce an exploratory 
+
+IQA measure –based ranking capable of distinguishing subtle image quality differences. This 
+
+dataset introduced a standardized benchmark for future CBCT IQA research and provides a 
+
+valuable resource for the development and validation of new IQA methods, enabling 
+
+reproducible research and advancing CBCT IQA .
+
+Background and Summary 
+
+The quality of medical images is a critical factor influencing diagnostic accuracy [1]. In X -ray –
+
+based modalities such as computed tomography (CT) and cone -beam CT (CBCT), where there 
+
+is always a trade -off between radiation dose and image quality, image quality assessment (IQA) 
+
+can be a key factor in radiation dose optimization [2, 3]. I mage quality assessment can be 
+
+performed manually by expert radiologists and clinicians, which provides clinically meaningful 
+
+evaluations. However, this approach has several drawbacks, including inter -observer 
+
+variability, especially in complex medical sce narios, as well as being time -consuming and 
+
+costly. Therefore, there is a need for standardized quantitative IQA measures that provide an 
+
+image quality score with a high correlation to human readers [4, 5]. 
+
+Unlike conventional CT, which utilizes a linear detector array and requires many rotations 
+
+around the patient to acquire volumetric data, CBCT employs a 2D detector and a cone -shaped 
+
+X-ray beam, allowing it to capture the entire volume in a single rotation . CBCT generally 
+
+exposes patients to a lower radiation dose than conventional CT while providing volumetric 
+
+imaging . In recent years, CBCT has gained considerable attention in various applications, 
+
+including dentistry [6 , 7 ], orthopedics [ 8], angiography [ 9], and image -guided surgery [ 10 , 11 ]. 
+
+Given its growing clinical relevance, rigorous evaluation of emerging CBCT technologies and 
+
+reconstruction algorithms using appropriate quantitative IQA measures is essential [12 ].
+
+Therefore, the development and identification of robust and reliable IQA measures capable of 
+
+accurately quantifying CBCT image quality are of critical importance in this context. 
+
+Furthermore, development of accurate quantitative IQA measures is indispensable in the 
+
+development stage of machine learning (ML) algorithms that operate on medical images [13, 
+
+14] . As opposed to non -ML methods in imaging, where explainability of the method can be of 
+
+use for evaluating their value and performance, the black -box nature of most ML methods 
+
+inherently require s that their evaluation must be done purely empirically, by testing their quality via IQA m easures . This is doubly true in reinforcement learning, where the loss (or policy) can 
+
+be any measure , including IQA. Due to this empirical need in the ML community IQA has 
+
+become, to a degree, the gold standard for evaluating the methods contribution, and thus critical 
+
+in the success of these methods into clinic [ 15 -18 ]. 
+
+However, the complexity of quantifying an image quality to be approximated by an IQA 
+
+measure and the variety of possible algorithm designs for IQA is a major difficulty. Thus, 
+
+understanding well what different existing IQA measure s, when they fail, what type or artifacts 
+
+they promote or ignore is fundamental not only for good scientific approaches, but also a critical 
+
+point in the age of ML methods, where IQA is often the only parameter to decide on which 
+
+method is most valid in an application. 
+
+IQA measures can be generally divided into no reference –based and full reference –based 
+
+methods. No reference –based measures are more applicable in real clinical cases, where the 
+
+gold -standard image is usually unavailable, while reference -based methods show a higher 
+
+correlation with human expert ratings , as they compare the image to a known high -quality 
+
+ground truth [13, 14] . In addition, full -reference measures are more useful in the development 
+
+process of new methods, where evaluating performance with respect to a known high -quality 
+
+image is applicable .
+
+CBCT imaging and IQA 
+
+Despite the existence of many classical and modern IQA measures [19, 20 ], many studies argue 
+
+that there is a gap of efficient IQA for medical images also including CBCT images [21 , 22 ]
+
+where this discrepancy will lead to incorrect evaluations of devices and algorithms. Therefore, 
+
+the evaluation and development of robust and efficient IQA measures for CBCT data remain 
+
+vital and are still insufficiently explored. The development of quantitative IQA measures 
+
+requires initial validation by clinical experts to ensure a strong correlation with their subjective 
+
+perception of medical image quality .
+
+The main challenge is that such annotations are not easy to obtain. Researchers working on the 
+
+development of quantitative IQ A measures regularly face the problem of limited access to 
+
+datasets in which image quality has been graded by expert clinicians. Recently, to tackle this 
+
+challenge, there have been first data sets published that provide medical image data and 
+
+corresponding expert quality ratings, for photoacoustic and full -reference data [ 23 ] and for CT 
+
+in the no -reference setting [ 24 ]. However, following these directions, there is a clear need for a 
+
+comprehensive and representative dataset of CBCT images with corresponding annotated 
+
+image quality levels, which would be essential to addressing this challenge. 
+
+In this work, the first open -access CBCT dataset specifically designed to provide images along 
+
+with clinical annotations of image quality levels is presented. The dataset is composed of 
+
+systematic variations in acquisition parameters, such as kV, pulse wid th as well as 
+
+reconstruction types available on the Siemens ARTIS pheno imaging system, thereby producing 
+
+a spectrum of image quality levels ranging from poor to high image quality. Three clinical 
+
+experts performed annotations on different 2D image slices of each 3D CBCT volume providing 
+
+scores classified in four image quality levels. In addition to the entire image quality label, the assessment of defined region of interest (ROI) is also performed for each 2D image. Two 
+
+anatomical phantoms from thorax and pelvis were used for all different acquisition setups. 
+
+Annotators were shown ground truth images next to corresponding degraded images and were 
+
+asked to grade the degraded image relative to this ground truth image as reference ( device -
+
+standard, high -quality image was considered as reference image ). All acquired 1764 2D image 
+
+slices together with their image quality annotations are made publicly available to the research 
+
+community. To the best of our knowledge, no publicly available CBCT dataset with expert 
+
+clinical annotations of image quality levels , specifically developed for image quality 
+
+assessment research, currently exists. Therefore, our dataset is the first publicly available CBCT 
+
+image quality dataset along with clinically annotated image quality labels, establishing a 
+
+valuable benchmark for the development, validation, and comparison of image quality 
+
+assessment methods. 
+
+In addition to providing the dataset and annotations, we evaluated the performance of 2 6 IQA 
+
+measure s, covering both full -reference and no -reference categories and compared them against 
+
+expert annotations to provide benchmark results for future IQA measures development. 
+
+Furthermore, we provide an IQA measure –based rating alongside manual observer assessments 
+
+that is capable of capturing subtle differences in image quality. This can be beneficial for the 
+
+development of new IQA measure s, enabling researchers to assess whether their methods agree 
+
+with established measures in detecting and quantifying fine -grained image quality variations. 
+
+The overall study design is illustrated in Figure 1.
+
+The prepared open -access CBCT dataset together with image quality annotations, the IQA 
+
+benchmark results as well as IQA measure –based rating, provides a highly valuable resource 
+
+for the development and validation of future IQA measures methods. Furthermore, it can serve 
+
+as a practical guideline for researchers in selecting and identifying suitable evaluation measures 
+
+to assess their methods in CBCT imaging and its diverse clinical applications. Figure 1. The overall proposed study design including data acquisition, reader study, image quality    
+
+> assessment (IQA) measures and IQA measure -based rating.
+
+Methods 
+
+Phantom s
+
+Two anatomical phantoms, a thorax and pelvis (Kyoto Kagaku), were used to generate a 
+
+collection of CBCT images. The thorax phantom contains bony anatomy, including the spine, 
+
+ribs, and sternum, soft tissue equivalent material, and simplified bronchial stru ctures. The pelvis 
+
+phantom contains boy anatomy, including the pelvis and hip, along with soft tissue equivalent 
+
+material. 
+
+Image Acquisition Protocols CBCT acquisitions of the used phantom s were performed using a Siemens ARTIS pheno C -arm 
+
+device (Siemens Healthcare GmbH, Erlangen, Germany), located at the University of Sydney 
+
+and housed within a research -dedicated hybrid theatre. 
+
+Different acquisition parameters of the 5sDCT Body protocol (397 projections, Siemens 
+
+Healthineers) were systematically varied to image the phantom s to acquire the CBCT dataset, 
+
+including the kV, pulse width, and the reconstruction type (RT) . Unless otherwise specified, the 
+
+acquisition parameters remained unchanged from the default values for the protocol. For the 
+
+generation of the dataset, the default parameters include kV of 90, pulse width of 8.0 ms and 
+
+RT Normal . Images acquired using these default settings represent the device -standard, high -
+
+quality images and served as the ‘reference ’ dataset in this study for calculating the full -
+
+reference image quality measures described in the ‘Image annotation and reader study’ Section .
+
+First, the kV was varied and set to the predefined values available on the system of 60, 90, 125 
+
+kV, with all other acquisition parameters remaining the same. Next, the pulse width was varied 
+
+and set to the predefined values available on the system of 3.2m s, 5.0ms, 6.4ms, 8.0ms, with 
+
+all other acquisition parameters remaining the same. Following acquisition, each volume was 
+
+rereconstructed using the in -built system reconstructor and systematically varying the 
+
+reconstruction types (RTs) including Normal, Smooth, and Very Smooth (VSmooth) . As such, 
+
+36 volumes consisting of 378 slices were generated. For the pelvis dataset, we selected every 
+
+third slice from slice 193 to 271, resulting in a total of 27 slices for each para -meter 
+
+configuration. Similarly, for the chest dataset, we selected e very third slice from slice 85 to 295, 
+
+resulting in a total of 71 slices for each parameter configuration. Every third slice was selected 
+
+because there were only minimal anatomical changes between consecutive slices, making this 
+
+sampling strategy sufficient to capture the relevant image variations. In total, 1764 slices were 
+
+used . Slice thickness and pixel spacing was set to 0.474 mm. For the Chest and Pelvis dataset, 
+
+we obtained ROI image patches by cropping the full image to the pixel ranges 160 -352x250 -
+
+410 and 60 -452x260 -420 , respectively, and 100x100 noise patches by cropping to 250 -
+
+349x100 -199. We selected the ROI region heuristically to best fit the anatomical area. The noise 
+
+patch region was chosen to only contain background noise across all images. The purpose of 
+
+studying the ROI region was to investigate, how the performance of the IQA measures change, 
+
+when only a small portion of the image is used and background noise and unimportant regions 
+
+are excluded. We also investigated the performance of IQA measures on the noise region to 
+
+study, if some algorithms mainly depend on the background noise structure or the ROI. 
+
+Examples of images acquired using different imaging settings are shown in Figure 2 and 3. In 
+
+addition, a summary of the imgage acquisition parameters used for the 36 volumes used in this 
+
+study is provided in Table 1. Figure 2. Visualization of some example used CBCT slices from thorax phantom when changing kV 
+
+(60, 90, 125) , pulse width (PW) (3.2, 5, 6.4, 8 ms) , and reconstruction type (Norml, Smooth and very 
+
+smooth (VSmooth) for overal image, Region of interest (ROI) and noise patch. Figure 3. Visualization of some example used CBCT slices from pelvis phantom when changing kV 
+
+(60, 90, 125), pulse width (PW) (3.2, 5, 6.4, 8 ms), and reconstruction type (Norml, Smooth and very 
+
+smooth (VSmooth) for overal image, Region of interest (ROI) and noise patch. Dataset  kV  Pulse width  Number of slices  Reconstruction type  Type of  image 
+
+Chest  60  8 71  Nomal  Degrded 
+
+Chest  60  8 71  Smooth  Degrded 
+
+Chest  60  8 71  Very Smooth  Degrded 
+
+Chest  90  8 71  Nomal  Reference 
+
+Chest  90  8 71  Smooth  Degrded 
+
+Chest  90  8 71  Very Smooth  Degrded 
+
+Chest  125  8 71  Nomal  Degrded 
+
+Chest  125  8 71  Smooth  Degrded 
+
+Chest  125  8 71  Very Smooth  Degrded 
+
+Chest  90  3,2  71  Nomal  Degrded 
+
+Chest  90  3,2  71  Smooth  Degrded 
+
+Chest  90  3,2  71  Very Smooth  Degrded 
+
+Chest  90  5 71  Nomal  Degrded 
+
+Chest  90  5 71  Smooth  Degrded 
+
+Chest  90  5 71  Very Smooth  Degrded 
+
+Chest  90  6,4  71  Nomal  Degrded 
+
+Chest  90  6,4  71  Smooth  Degrded 
+
+Chest  90  6,4  71  Very Smooth  Degrded 
+
+Pelvis  60  8 27  Nomal  Degrded 
+
+Pelvis  60  8 27  Smooth  Degrded 
+
+Pelvis  60  8 27  Very Smooth  Degrded 
+
+Pelvis  90  8 27  Nomal  Reference 
+
+Pelvis  90  8 27  Smooth  Degrded 
+
+Pelvis  90  8 27  Very Smooth  Degrded 
+
+Pelvis  125  8 27  Nomal  Degrded 
+
+Pelvis  125  8 27  Smooth  Degrded 
+
+Pelvis  125  8 27  Very Smooth  Degrded 
+
+Pelvis  90  3,2  27  Nomal  Degrded 
+
+Pelvis  90  3,2  27  Smooth  Degrded 
+
+Pelvis  90  3,2  27  Very Smooth  Degrded 
+
+Pelvis  90  5 27  Nomal  Degrded 
+
+Pelvis  90  5 27  Smooth  Degrded 
+
+Pelvis  90  5 27  Very Smooth  Degrded 
+
+Pelvis  90  6,4  27  Nomal  Degrded 
+
+Pelvis  90  6,4  27  Smooth  Degrded 
+
+Pelvis  90  6,4  27  Very Smooth  Degrded 
+
+Table 1. Summary of the acquisition scheme for the 36 volumes used. 
+
+Image pre -processing and normalization 
+
+The used slices were normalized, by first computing the minimal and maximal pixel values 
+
+over all reference slices of the volume. Then, for each selected slice not to be used as reference 
+
+data, we clipped pixel values larger than the maximal pixel value in the reference slices to the 
+
+reference slices maximal value. Then we subtracted from every slice the minimal pixel value 
+
+over all reference slices and divided by the maximum reference pixel value minus the minimal 
+
+reference pixel value. Let  𝑟 𝑚𝑖𝑛  and  𝑟 𝑚𝑎𝑥  be the minimal and maximal pixel values over all 
+
+reference slices of a volume. Then, to compute the normalized image  𝐼 , we apply to each slice 
+
+𝑆  the normalization  𝐼 𝑥 ,𝑦  = 𝑚𝑖𝑛 (𝑆 𝑥 ,𝑦 ,𝑟 𝑚𝑎𝑥 )−𝑟 𝑚𝑖𝑛 
+
+𝑟 𝑚𝑎𝑥 −𝑟 𝑚𝑖𝑛 
+
+.
+
+Image annotation and reader study Annotation software and configuration 
+
+For expert -based image quality assessment, the open -source software Speedy IQA [25 ] was 
+
+used. Th is software enables paired comparison of test - and reference -images and supports 
+
+structured quality annotation workflows. Prior to annotation, the labelling structure was 
+
+configured within the software. The main task category “Image -guided therapy” and the 
+
+subcategory “Region of Interest (ROI)” were defined. 
+
+The image dataset consisted of:  
+
+> •
+
+Test images (degraded images to be evaluated) and  
+
+> •
+
+Reference images ( reference images used for comparison) 
+
+During each annotation session, a test image and its corresponding reference image were 
+
+displayed simultaneously. The image presentation order was randomized. Images were rated 
+
+using a 4 -point Likert scale, from rank 1 = very poor to rank 4 = very good. 
+
+Two assessment dimensions were evaluated: 
+
+1.  Overall image quality (OIQ)  (entire image, see Figure 4)
+
+2.  Quality within a predefined region of interest (ROI) (defined region , see Figure 5)
+
+The software supports zooming and panning to allow detailed inspection of the ROI.  In 
+
+advance, detailed information (Figure 5, Left ) was sent to the annotators, and which area should 
+
+be assessed as ROI in detail (see Figure 5, Middle and Right ). 
+
+Annotation procedure and readers 
+
+Three independent expert raters performed the image assessments. For each case, raters were 
+
+shown the reference (ground truth) image simultaneously with the corresponding degraded 
+
+image and were asked to assess the quality of the degraded image relative to the reference . Each 
+
+rater performed the two assessment tasks (overall quality and ROI -based quality) by image. 
+
+The image assessment was conducted by three specialists with extensive expertise in oncologic 
+
+imaging and image quality evaluation:  
+
+> •
+
+Rater 1 is a board -certified radiologist with more than 15 years of experience in 
+
+oncologic imaging. Her expertise includes advanced imaging techniques, quantitative 
+
+image analysis, radiomics, and clinical as well as research -based image quality 
+
+evaluation  
+
+> •
+
+Rater 2 is a radiologist and Research Fellow at the European School of Radiology 
+
+(ESOR), with substantial clinical and research experience in oncological imaging and 
+
+dedicated expertise in image quality evaluation  
+
+> •
+
+Rater 3 is a medical physicist with more than 10 years of experience in radiation 
+
+oncology and image -guided radiotherapy in both clinical and research settings. His 
+
+expertise includes image quality assurance of X -ray –based imaging systems and cone -
+
+beam CT (CBCT) -guided therapies Figure 4. A s creenshot from open -source software Speedy IQA for overall image quality (OIQ)  
+
+> assessment.
+> Figure 5 .Visualization of image together with the defined region of interest (ROI) (Left). A screenshot
+> from open -source software Speedy IQA for ROI assessment (Middle, Right).
+
+Correlation between different annotators’ ratings 
+
+To assess the similarity between annotators’ ratings, we employed the Spearman Rank 
+
+Correlation Coefficient (SRCC), which measures the ordinal association (ranking agreement) 
+
+between different annotators’ scores for both whole -image and ROI image assessmen t cases. 
+
+To account for the different scoring between multiple graders, we apply the z -score to the raw 
+
+rating data of each grader and afterwards compute the mean score similar to [2 6].
+
+The correlation was computed between annotators for three cases: OIQ vs. OIQ , ROI vs. ROI, 
+
+and ROI vs. OIQ (Table 2). In the case of OIQ vs. OIQ , the correlation was consistently high 
+
+(above 0.80). While for annotation ratings of ROI vs. ROI and ROI vs. OIQ , annotator 3 showed 
+
+a lower correlation (Table 2). 
+
+OIQ -1 OIQ -2 OIQ -3
+
+OIQ -1 - 0.88  0.81 
+
+OIQ -2 - - 0.80 
+
+OIQ -3 - - -
+
+ROI -1 0.93  0.88  0.81 
+
+ROI -2 0.81  0.81  0.74 
+
+ROI -3 0.70  0.69  0.63 
+
+ROI -1 ROI -2 ROI -3
+
+ROI -1 - 0.82  0.71 ROI -2 - - 0.66 
+
+ROI -3 - - -       
+
+> Table 2.Spearman Rank Correlation Coefficient (SRCC) between different annotators’ scores for both
+> overall image quality (OIQ) and region of interest (ROI) image assessment cases .
+
+Evaluation of annotators’ rating sensitivity to image acquisition variations 
+
+For both OIQ and ROI, changes due to different kV and pulse width values were visually not 
+
+very apparent, whereas differences across RTs were visually clearly noticeable (Figure s 2, 3) .
+
+Consistent with this, observers’ ratings were very similar (mainly one rank score was assigned) 
+
+when annotating images with varying kV and pulse width and fixed kernel (Figure 6, rows B, 
+
+C, D ), suggesting that such changes in image quality were not easily detectable, confirmed by 
+
+visual inspection. The majority of the images for the RT Normal (row B), Smooth (row C) and 
+
+VSmooth (row D) with varied KV or PW are rated 4, 3 to 4, and 1, respectively, which implies 
+
+that the KV and PW variation in this setting is not discernible for the annotators for the rated 
+
+task. 
+
+In contrast, variations across RTs were evident visually ( Figures 2, 3 ) and easily captured by 
+
+observers in their rating i.e., observers rating were different (different rates were assigned i.e., 
+
+images with varied RT and fixed KV or PW are rated from 1 to 4, covering the whole range )
+
+(Figure 6, row A). Figure 6. Distribution of image quality ratings assigned by the three expert readers (ratings 1 –4) across  
+
+> different imaging scenarios. (A) Images acquired with varying reconstruction types (RT) while keeping
+> either the tube voltage (kV) or pulse width (PW) constant. (B –D) Images acquired with varying kV and
+> pulse width while maintaining a fixed reconstruction type: Normal (B), Smooth (C), and Very Smooth
+> (D). Ratings are shown separately for overall image quality (OIQ) and region -of -interest (ROI) image
+> quality asses sments.
+
+Image quality assessment (IQA) 
+
+Quantitative IQA analysis of different existing measures 
+
+In order to make a benchmark on the performance of different IQA measures for CBCT 
+
+imaging, we compared the performance of 2 6 commonly used as well as task -based IQA 
+
+me asures (2 7 IQA measure implementations) covering both full -reference and no -reference -
+
+based IQA measures categories, against expert annotations/manual ratings. For full -reference 
+
+IQ A measure calculation, the CBCT image acquired with default parameters ( kV of 90, pulse 
+
+width of 8.0 ms and RT Normal, Section ‘Image Acquisition Protocols’ ) was used as the 
+
+reference image , as it represents the highest image quality. The IQ A measures used include 
+
+structural similarity index measure (SSIM) [2 7], multi -scale SSIM (MS -SSIM) [2 8], 
+
+information content weighted SSIM (IW -SSIM) [2 9], Complex -Wavelet Structural Similarity 
+
+Index (CW -SSIM) [ 30 ], peak signal -to -noise ratio (PSNR) [ 31 ], root -mean -square error 
+
+(RMSE) [ 32 ], deep image structure and texture similarity (DISTS) [ 33 ], DCT subband 
+
+similarity (DSS) [ 34 ], feature similarity index (FSIM) [ 35 ], gradient magnitude similarity 
+
+deviation (GMSD) [3 6], Haar wavelet -based perceptual similarity index (HaarPSI) [3 7], 
+
+HaarPSImed [3 8], learned perceptual image patch similarity (LPIPS) [3 9], mean deviation 
+
+similarity (MDSI) [4 0], visual information fidelity (VIF) [ 41 ], visual saliency -induced index 
+
+(VSI) [ 42 ], Average Mean Brightness Error (AMBE) [ 43 ], natural image quality evaluator 
+
+(NIQE) [ 44 ], Signal -to -noise ratio (SNR) [4 5], from patches to pictures (PaQ -2-PIQ) [4 6], 
+
+Perception based Image Quality Evaluator (PIQE) [4 7], CHILL@UK [4 8], FeatureNet [4 8], 
+
+Gabybaldeon [ 48 ], RPIAXIS [ 48 ], Team Epoch [ 48 ]. 
+
+For this purpose , we computed the SRCC (using the same methods described in Section 
+
+‘Correlation Between Different Annotators’ Ratings’ ) between the IQA measures and the 
+
+ratings provided by the graders. The correlations, computed for both OIQ and ROI, computed 
+
+over all dataset (both phantom types, all kV and pulse width variations and RTs ), are presented 
+
+in Table 3. The empty entries in Tables 3–6 indicate that some image quality assessment 
+
+algorithms could not be computed because they require a minimum image size that was not met 
+
+by a subset of the images in our dataset. 
+
+According to our results, the full -reference -based IQA measures with highest correlations with 
+
+expert annotations for both whole -image and ROI evaluations (Table 3) were LPIPS -python, 
+
+DISTS -python/matlab, FSIM -matlab, VSI -matlab, VIF -python, DSS -matlab, and all Haar -
+
+based measure s. Among the non -reference -based methods, CHILLUK -python, TeamEpock -
+
+python, RPIAXIS -python, PIQE -matlab and FeatureNet -python showed highest correlation. Table 3. Spearman's rank correlation coefficient (SRCC) values, computed across all imaging datasets,    
+
+> phantoms, and image acquisition settings, between each of the 2 7calculated image quality assessment
+> (IQA) measures and the expert ratings for both overall image quality (OIQ) and region -of -interest (ROI)
+> image quality analyses.
+
+Performance of IQ A me asures in presence of background noise 
+
+We further analyzed the results to evaluate the performance of these measures in relation to 
+
+noise. A patch from the background noise was selected in all cases (see examples in Figure s 2
+
+and 3) , and the IQA measures were calculated on this noise patch (Table 4). Although a large 
+
+drop in performance was expected when applying the measures to pure noise patches, we 
+
+observed that some IQ A measures with high correlation performed similarly across the whole 
+
+image, ROI, and pure noise patches; this includes measures LPIPS -python, DISTS -
+
+python/matlab, TeamEpock -python, and RPIAXIS -python. This indicates that these measures 
+
+are primarily responding to background noise rather than capturing structural information. 
+
+We also observed that noise in the reconstruction type Normal was more pronounced visually 
+
+compared to the other two types (Smooth and Very Smooth) ( Figures 2 and 3 ). Therefore, as a 
+
+second experiments to assess the influence of the noise, we excluded the images with 
+
+reconstruction type Normal from the experiment and repeated the calculations (Table 4, rows 
+
+‘OIQ Normal Excluded’ and ‘ROI Normal Excluded’ ) to evaluate the performance of the IQ 
+
+measures when this strong noise was removed from the dataset. A considerable drop in 
+
+performance for both OIQ and ROI were observed for the IQA measures DISTS -python/matlab, 
+
+LPIPS -python, and RPIAXIS, further confirming higher sensitivity of these measures to 
+
+background noise. Based on these results, we conclude that the remaining IQA measures 
+
+including PIQE -matlab (non -reference) and CHILLUK -python as well as FSIM -matlab, VIF -
+
+python, Haar -based measure s, DSS -matlab, and VSI -matlab, were the best -performing 
+
+measure s, considering both their high correlation values to manual rating and their robustness 
+
+against noise.     
+
+> Table 4.Spearman's rank correlation coefficient (SRCC) values, computed across the combined
+> imaging datasets encompassing all phantoms and image acquisition settings, between each of the 2 7
+> calculated image quality assessment (IQA) measures and the expert ratings for overall image quality
+> (OIQ), region -of -interest (ROI) image quality, noise patch analysis, OIQ excluding images acquired with the Normal reconstruction type (OIQ Normal Excluded), and ROI excluding images acquired with
+> the Normal reconstruction type (ROI Normal Excluded).
+
+Detailed evaluation of the correlation between annotators and IQA measures with respect 
+
+to the image acquisition variations 
+
+We performed some experiments to evaluate the sensitivity of different IQA measures to 
+
+acquisition and RT variations. To assess the correlation values when changing kV and pulse 
+
+width, we restricted experiments to a single reconstruction type at a time (to not include 
+
+variation in reconstruction types) while allowing variation in kV and pulse width. The 
+
+correlation results between annotators and IQA measures for the OIQ, ROI and noise are shown 
+
+in Table 5. Our results showed that when experiments were limited to a single reconstruction 
+
+type, the correlation between annotators and IQA measures dropped dramatically. This 
+
+indicates that the high correlation between manual ratings and IQA measures reported in Table 
+
+4 is driven by reconstruction type changes rather than by kV or pulse width. To further verify 
+
+this, we analyzed a subset with fixed kV and pulse width (PW) (PW8 -KV90=pulse width 8 and 
+
+kV 90) for OQI, ROI, and noise to remove the effect of variation of kV and pulse width while 
+
+keeping purely the effect the variation of reconstruction type) (Table 6). For this subset, we 
+
+observed very high correlations, confirming that the strong correlations mainly stem from 
+
+reconstruction type variations.       
+
+> Table 5.Spearman's rank correlation coefficient (SRCC) values, computed across all imaging datasets
+> encompassing all phantoms and image acquisition settings, between each of the 2 7calculated image
+> quality assessment (IQA) measures and the expert ratings for overall image quality (OIQ), region -of -
+> interest (ROI) image quality, and noise patch analysis. In addition, SRCC values are reported for OIQ
+> and ROI analyses performed separately for each reconstruction type (Normal, Smooth, and Very
+> Smooth), with the dataset restricted to images acquired using the respective reconstruction type.
+
+Table 6. Spearman's rank correlation coefficient (SRCC) values, computed across the combined imaging 
+
+datasets encompassing all phantoms and image acquisition settings, between each of the 2 7 calculated 
+
+image quality assessment (IQA) measures and the expert ratings for overall image quality (OIQ), region -
+
+of -interest (ROI) image quality, and noise patch analysis. In addition, SRCC values are reported for 
+
+OIQ , ROI and noise analyses performed separately for a subset with fixed kV and pulse width (PW8 -
+
+KV90=pulse width 8 and kV 90) .
+
+IQA measure –based rating 
+
+Since our experiments as outlined in previous sections showed that observers could not detect 
+
+subtle image quality changes with varying kV and pulse width, also correlation between the 
+
+annotators and IQA measures values were so low in those cases , we conducted an experiment 
+
+to assess whether IQA measures could capture these subtle variations. For this purpose, we 
+
+calculated IQA measure values on the OIQ and examined whether different kV and pulse width 
+
+combinations were consistently ranked from highest to lowest quality among different IQA 
+
+measures (Table 7). The results showed all IQA measures agreed and identified PW6.4 -KV90 
+
+combination as the best quality, followed by PW5 -KV90 and PW3.2 -KV90 , confirming their 
+
+ability to capture subtle quality changes missed by manual ratings. This agreement suggests 
+
+that image quality measures could quantify some changes in image quality which are not 
+
+apparent to human eyes. Results on the ROI also confirmed this agreement across measures 
+
+(Table 8). To overcome the limitation of human rating we therefore introduce these rankings 
+
+as an IQA measure –based rating alongside manual observer ratings, as they may provide a 
+
+valuable benchmark for developing new IQA measures and can help developer to ensure the ir 
+
+new measures can capture such subtle image quality differences as established available 
+
+measures .
+
+We would like to mention that the IQA measure –based rating is exploratory. While the high 
+
+level of agreement among IQA measures demonstrates their sensitivity to subtle image quality 
+
+differences, it does not necessarily indicate a closer correspondence to diagnostic image quality 
+
+than expert reader assessments. Rather, these results suggest that IQA measures capture image 
+
+characteristics that are not readily pe rceived by human observers, enabling discrimination 
+
+between images that received identical human quality ratings.                                                                                                
+
+> PW8 -KV60
+> OIQ
+> PW8 -KV125
+> OIQ
+> PW5 -
+> KV90
+> OIQ
+> PW6.4 -
+> KV90
+> OIQ
+> PW3.2 -
+> KV90
+> OIQ
+> Score 11342
+> Full reference -IQA
+> SSIM -matlab 0,877 0,859 0,895 0,896 0,880
+> MS -SSIM -matlab 0,954 0,952 0,965 0,966 0,959
+> IW -SSIM -matlab 0,753 0,764 0,805 0,806 0,774 CW -SSIM -matlab 0,992 0,994 1,000 1,000 1,000
+> PSNR -matlab 32,212 31,728 37,163 37,304 36,248
+> RMSE -matlab 2,140 2,023 0,942 0,918 1,042
+> DISTS -matlab 0,056 0,048 0,031 0,030 0,034
+> DISTS -python 0,057 0,049 0,031 0,030 0,034
+> DSS -matlab 0,579 0,573 0,637 0,640 0,600
+> FSIM -matlab 0,960 0,960 0,972 0,973 0,967
+> GMSD -matlab 0,053 0,056 0,044 0,043 0,049
+> HaarPSI -matlab/python 0,810 0,809 0,854 0,858 0,834
+> HaarPSImed -python 0,676 0,668 0,721 0,726 0,692
+> LPIPS -python 0,040 0,034 0,022 0,021 0,024
+> MDSI -matlab 0,287 0,290 0,272 0,270 0,285
+> VIF -python 1,258 0,696 0,934 0,937 0,921
+> VSI -matlab 0,989 0,991 0,993 0,994 0,992
+> AMBE -matlab 636,805 1031,156 48,440 25,967 64,105
+
+Table 7. Image quality assessment (IQA) measure values and overall image quality (OIQ) scores 
+
+demonstrating strong agreement between the IQA measures in scoring different imaging settings, 
+
+capturing subtle image quality differences that were not detected by the expert manual ratings. 
+
+PW8 -KV60 
+
+ROI 
+
+PW8 -
+
+KV125 
+
+ROI 
+
+PW5 -KV90 
+
+ROI 
+
+PW6.4 -
+
+KV90 
+
+ROI 
+
+PW3.2 -
+
+KV90 
+
+ROI 
+
+Score  1 1 3 4 2
+
+FR -IQA 
+
+SSIM -matlab  0,812  0,806  0,826  0,827  0,813 
+
+MS -SSIM -matlab  0,920  0,927  0,939  0,939  0,934 
+
+IW -SSIM -matlab 
+
+CW -SSIM -matlab 
+
+PSNR -matlab  29,058  30,110  34,198  34,268  33,626 
+
+RMSE -matlab  6,543  6,846  4,828  4,731  5,085 
+
+DISTS -matlab  0,107  0,084  0,066  0,066  0,068 
+
+DISTS -python  0,108  0,085  0,068  0,068  0,070 
+
+DSS -matlab  0,660  0,663  0,696  0,698  0,682 
+
+FSIM -matlab  0,922  0,934  0,946  0,947  0,942 
+
+GMSD -matlab  0,068  0,059  0,057  0,057  0,062 
+
+HaarPSI -matlab/python  0,756  0,787  0,808  0,809  0,792 
+
+HaarPSImed -python  0,615  0,636  0,659  0,661  0,640 
+
+LPIPS -python  0,054  0,039  0,025  0,025  0,027 MDSI -matlab  0,335  0,337  0,331  0,331  0,337                      
+
+> VIF -python 1,475 0,630 0,915 0,918 0,905
+> VSI -matlab 0,979 0,983 0,986 0,986 0,984
+> AMBE -matlab 833,829 1233,545 63,832 35,379 75,366
+> Table 8.Image quality assessment (IQA) measure values and Region of interest (ROI) scores
+> demonstrating strong agreement between the IQA measures in scoring different imaging settings,
+> capturing subtle image quality differences that were not detected by the expert manual ratings.
+
+Data Records 
+
+The dataset consists of 1764 slides related to CBCT images for different kV, pulse width and 
+
+reconstruction types. The full data is available on Zenodo [4 9]. The python library nibabel was 
+
+used to convert the DICOM files to NIfTI format to guarantee ease of use of our phantom scans 
+
+with different software tools. This repository consists of the files named “degraded.zip” and 
+
+“reference.zip” which contain the degraded and reference images saved in the NIfTI format. 
+
+These files are n amed in the following format: 
+
+”./DATASETNAME/SLICE/KERNEL/KV/PULSEWIDTH/RECONSTRUCTIONMETHOD. 
+
+nii.gz”. 
+
+For every degraded image in the dataset DATASETNAME and in slice SLICE, the 
+
+corresponding reference image is stored under the path 
+
+”./DATASETNAME/SLICE/EE/090/8.0/NORMAL.nii.gz” in the “reference.zip” file. This 
+
+means that for each slice, the image with kernel EE, kV 90, pulse width 8.0 and reconstruction 
+
+type NORMAL is selected as reference image. 
+
+Furthermore, the file “annotations.csv” contains the annotations by three human experts for the 
+
+tasks OIQ (ROI) in the columns OIQ -1, OIQ -2, OIQ -3 (ROI -1, ROI -2, ROI -3) and the mean of 
+
+the zscored annotations in the column OIQ_MOS_ZSCORE (ROI_MOS_ZSCORE). 
+
+Furthermore, the IQA measure -based rating for OIQ and ROI is stored in the columns 
+
+“OIQ_IQA -rating“ and “ROI_IQA -rating“. The file „software_versions.txt“ contains the 
+
+versions of the employed IQA measures. 
+
+Technical Validation 
+
+The CBCT scanner within the research -dedicated Hybrid Theatre at the University of Sydney 
+
+is not used clinically. However, it undergoes regular maintenance and calibration performed by 
+
+the vendor in line with clinical sites. The CBCT acquisitions protocols were conducted by an 
+
+experienced medical imaging researcher who routinely works with the scanner. 
+
+Usage Notes 
+
+The imaging dataset will be publicly available through the Zenodo repository [ 40 ], together 
+
+with detailed documentation describing the dataset structure, file organization, and 
+
+recommended usage. All CBCT images are provided in NIfTI format, allowing straightforward 
+
+visualization and analysis using widely available open -source medical imaging software, including 3D Slicer, Analyze 7.5, and ITK -SNAP. The expert annotations are provided in CSV 
+
+format and can be readily accessed using diverse tools. 
+
+The dataset was specifically designed to support IQA research and benchmarking by providing 
+
+systematically acquired CBCT images with controlled variations in imaging parameters, 
+
+including kV, PW and RT . For every image, corresponding expert image quality ratings are 
+
+available for OIQ, ROI image quality. 
+
+To facilitate immediate use and ensure reproducible benchmarking, we additionally provide the 
+
+computed values of 2 6 established IQA measures , including both full -reference and no -
+
+reference (NR) methods, together with references to the original implementations used for their 
+
+computation. Furthermore, we introduce an IQA measure –based consensus ra ting that 
+
+summarizes the relative image quality across acquisition settings based on the most reliable 
+
+objective measures identified in this study. These resources enable researchers to benchmark 
+
+newly developed IQA methods against established measure s, evaluate the robustness and 
+
+consistency of IQA algorithms under varying acquisition conditions, investigate agreement 
+
+between objective measures and expert visual assessment, and compare the performance of 
+
+different IQA approaches using a common reference dataset. 
+
+Potential applications of the dataset include the development and validation of novel IQA 
+
+algorithms, benchmarking of full -reference and no -reference IQA methods, optimization of 
+
+CBCT acquisition protocols, objective evaluation of reconstruction algorithms , AI -based image 
+
+quality prediction, quality -aware image enhancement, automated quality control systems for 
+
+CBCT imaging, and studies investigating the relationship between objective image quality 
+
+measures and human perception. 
+
+Data Availability 
+
+The data are published on Zenodo [49].
+
+Code Availability 
+
+The software versions of the used IQA measure implementations are listed on Zenodo [4 9] in 
+
+the file “software_versions.txt”. 
+
+Acknowledgment 
+
+This study was supported by NÖ FTI Grundlagenforschung project (Project number: GLF21 -
+
+1-001). In addition, t his study was funded by ACMIT COMET Module FFG project (FFG 
+
+number: 879733, application number: 39955962) . We also acknowledge funding from the 
+
+Austrian Science Fund (FWF) through project T1307 . Furthermore, this study was also 
+
+supported by a University of Sydney Robinson Fellowship and an NHMRC Investigator Grant 
+
+(APP ID: 1041194) .
+
+Author Contribution 
+
+SH, ABr, CK, ABi, TR conceptualized the study, the same authors and PM, AAA, PA, WB, 
+
+AP, GK, CBS have been involved in methodological development and evaluation, TR 
+
+performed all the measurements, SH, ABr, CK did the analysis of the whole data, CK conducte dthe experimental computation, SH, ABr supervised the study design, SH provided the first paper 
+
+draft and all authors contribute in writing and revising the paper. 
+
+Competing Interests 
+
+The authors declare no competing interests. 
+
+References 
+
+1. Chow, L. S., & Paramesran, R. (2016). Review of medical image quality 
+
+assessment.  Biomedical signal processing and control , 27 , 145 -154. 
+
+2. Catalano, C., Francone, M., Ascarelli, A., Mangia, M., Iacucci, I., & Passariello, R. (2007). 
+
+Optimizing radiation dose and image quality. European Radiology Supplements , 17 (Suppl 6), 
+
+26 -32. 
+
+3. Hatamikia S, Steiner E, Muniya EJ, Elmirad S, Borji A, Kronreif G, Birkfellner W, 
+
+Buschmann M. RadRepro CBCT: An Open -Access CBCT Phantom Dataset for Improved 
+
+Standardization and Reproducibility of Radiomics Research. Sci Data. 2026 Feb 14;13(1):454. 
+
+4. Herath, H. M. S. S., Herath, H. M. K. K. M. B., Madusanka, N., & Lee, B. I. (2025). A 
+
+Systematic Review of Medical Image Quality Assessment. Journal of Imaging , 11 (4), 100. 
+
+5. Solomon, J., & Samei , E. (2016). Correlation between human detection accuracy and 
+
+observer model -based image quality measures in computed tomography. Journal of Medical 
+
+Imaging , 3(3), 035506 -035506. 
+
+6. Islam SMRS, Biguri A, Landi C, Di Domenico G, Schneider B, et al. Source -detector 
+
+trajectory optimization for FOV extension in dental CBCT imaging. Comput Struct Biotechnol 
+
+J. 2024 Nov 8;24:679 -689. 
+
+7. Islam SMRS, Biguri A, Landi C, Di Domenico G, Grün P, et al. Trajectory generation for 
+
+ROI expansion in dental CBCT imaging: An out -of -FOV ROI annotation guided arc scan -based 
+
+approach. Comput Struct Biotechnol J. 2025 Jun 9;28:211 -216. 
+
+8. Bailey, J., Solan, M., & Moore, E. (2022). Cone -beam computed tomography in 
+
+orthopaedics. Orthopaedics and Trauma , 36 (4), 194 -201. 
+
+9. Raz, E., Nossek, E., Sahlein, D. H., Sharashidze, V., Narayan, V., Ali, A., ... & Shapiro, M. 
+
+(2023). Principles, techniques and applications of high resolution cone beam CT angiography 
+
+in the neuroangio suite. Journal of neurointerventional surgery , 15 (6), 600 -607. 
+
+10 . Liu, W. P., Otake, Y., Azizian, M., Wagner, O. J., Sorger, J. M., Armand, M., & Taylor, R. 
+
+H. (2015). 2D –3D radiograph to cone -beam computed tomography (CBCT) registration for C -
+
+arm image -guided robotic surgery. International journal of computer assisted radiology and 
+
+surgery , 10 (8), 1239 -1252. 
+
+11. Hatamikia S, Biguri A, Kronreif G, Figl M, Russ T, Kettenbach J, Buschmann M, 
+
+Birkfellner W. Toward on -the -fly trajectory optimization for C -arm CBCT under strong 
+
+kinematic constraints. PLoS One. 2021 Feb 9;16(2):e0245508. 
+
+12. Hatamikia S, Biguri A, Kronreif G, Kettenbach J, Russ T, Furtado H, Shiyam Sundar LK, 
+
+Buschmann M, Unger E, Figl M, Georg D, Birkfellner W. Optimization for customized 
+
+trajectories in cone beam computed tomography. Med Phys. 2020 Oct;47(10):4786 -4799. 13. Kastryulin , S., Zakirov, J., Pezzotti, N., Dylov, D.V.: Image quality assessment for magnetic 
+
+resonance imaging. IEEE Access 11, 14154 –14168 (2023). 
+
+14. Breger, A., Karner, C., Selby, I., Gröhl, J., Dittmer, S., Lilley, E., Babar, J., Beckford, J., 
+
+Sadler, T.J., Shahipasand, S., Thavakumar, A., Roberts, M., Schönlieb, C. -B..  A study on the 
+
+adequacy of common IQA measures for medical images. Proceedings of 2024 International 
+
+Conference on Medical Imaging and Computer -Aided Diagnosis (MICAD), Springer Lecture 
+
+Notes in Electrical Engineering. 
+
+15. Abadi E, Segars WP, Felice N, Sotoudeh -Paima S, Hoffman EA, Wang X, Wang W, Clark 
+
+D, Ye S, Jadick G, Fryling M, Frush DP, Samei E. AAPM Truth -based CT (TrueCT) 
+
+reconstruction grand challenge. Med Phys. 2025 Apr;52(4):1978 -1990. 
+
+16. Leuschner J, Schmidt M, Baguer DO, Maass P. LoDoPaB -CT, a benchmark dataset for low -
+
+dose computed tomography reconstruction. Sci Data. 2021 Apr 16;8(1):109. 
+
+17. A. Biguri et al., "Advancing the Frontiers of Deep Learning for Low -Dose 3D Cone -Beam 
+
+CT Reconstruction," in IEEE Open Journal of Signal Processing, vol. 6, pp. 942 -949, 2025. 
+
+18. https://www.aimsciences.org/article/doi/10.3934/ammc.2023010. 
+
+19. Rusanov, B., Hassan, G. M., Reynolds, M., Sabet, M., Kendrick, J., Rowshanfarzad , P., & 
+
+Ebert, M. (2022). Deep learning methods for enhancing cone‐beam CT image quality toward 
+
+adaptive radiation therapy: a systematic review. Medical Physics, 49(9), 6019 -6054. 
+
+20 . Liang, X., Jacobs, R., Hassan, B., Li, L., Pauwels, R., Corpas, L., ... & Lambrichts, I. (2010). 
+
+A comparative evaluation of cone beam computed tomography (CBCT) and multi -slice CT 
+
+(MSCT): Part I. On subjective image quality. European journal of radiolog y, 75(2), 265 -269. 
+
+21 . Breger, A., Biguri , A., Landman, M. S., Selby, I., Amberg, N., Brunner, E., ... & Schönlieb, 
+
+C. B. (2025). A study of why we need to reassess full reference image quality assessment with 
+
+medical images. Journal of Imaging Informatics in Medicine, 38(6), 3444 -3469. 
+
+22 . Johnston, A., Mahesh, M., Uneri, A., Rypinski, T. A., Boone, J. M., & Siewerdsen, J. H. 
+
+(2024). Objective image quality assurance in cone‐beam CT: test methods, analysis, and 
+
+workflow in longitudinal studies. Medical physics, 51(4), 2424 -2443. 
+
+23. Breger, A., Gröhl, J., Karner, C., Else, T.R., Selby, I., Rix, T., Witt, L. -S., Duchêne, M., 
+
+Weir -McCall, J., Schönlieb, C. -B.: PhotIQA: A photoacoustic image data set with image quality 
+
+ratings , accepted to appear in Scientific Data (Nature), 2026 .
+
+24. Lee, W., Wagner, F., “ Low -dose computed tomography perceptual image quality as -
+
+sessment grand challenge dataset (miccai 2023) ,” https://doi.org/10.5281/zenodo.7833096. 
+
+25 . https://github.com/selbs/speedy_iqa 
+
+26.  H. R. Sheikh, M. F. Sabir and A. C. Bovik, "A Statistical Evaluation of Recent Full 
+
+Reference Image Quality Assessment Algorithms," in IEEE Transactions on Image 
+
+Processing, vol. 15, no. 11, pp. 3440 -3451, Nov. 2006. 
+
+27. Wang, Z., Bovik, A. C., Sheikh, H. R., & Simoncelli, E. P. (2004). Image quality 
+
+assessment: from error visibility to structural similarity. IEEE transactions on image 
+
+processing, 13(4), 600 -612. 28. Wang, Z., Simoncelli, E. P., & Bovik , A. C. (2003). Multiscale structural similarity for 
+
+image quality assessment. In The thrity -seventh asilomar conference on signals, systems & 
+
+computers, 2003 (Vol. 2, pp. 1398 -1402). Ieee. 
+
+29. Wang, Z., & Li, Q. (2010). Information content weighting for perceptual image quality 
+
+assessment. IEEE Transactions on image processing, 20(5), 1185 -1198. 
+
+30. Sampat, M. P., Wang, Z., Gupta, S., Bovik , A. C., & Markey, M. K. (2009). Complex 
+
+wavelet structural similarity: A new image similarity index. IEEE transactions on image 
+
+processing, 18(11), 2385 -2401. 
+
+31. Girod, B. (1991). Psychovisual aspects of image processing: What's wrong with mean 
+
+squared error?. In Proceedings of the Seventh Workshop on Multidimensional Signal 
+
+Processing (p. 3). 
+
+32. Willmott, C. J. (1982). Some comments on the evaluation of model performance. Bulletin 
+
+of the American meteorological society, 63(11), 1309 -1313. 
+
+33. Ding, K., Ma, K., Wang, S., & Simoncelli, E. P. (2020). Image quality assessment: 
+
+Unifying structure and texture similarity. IEEE transactions on pattern analysis and machine 
+
+intelligence, 44(5), 2567 -2581. 
+
+34. Balanov, A., Schwartz, A., Moshe, Y., & Peleg, N. (2015). Image quality assessment 
+
+based on DCT subband similarity. In 2015 IEEE international conference on image 
+
+processing (ICIP) (pp. 2105 -2109). IEEE. 
+
+35.  Zhang, L., Zhang, L., Mou, X., & Zhang, D. (2011).  FSIM: A feature similarity index for 
+
+image quality assessment. IEEE transactions on Image Processing, 20(8), 2378 -2386. 
+
+36. Xue, W., Zhang, L., Mou, X., & Bovik, A. C. (2013). Gradient magnitude similarity 
+
+deviation: A highly efficient perceptual image quality index. IEEE transactions on image 
+
+processing, 23(2), 684 -695. 
+
+37. Reisenhofer, R., Bosse, S., Kutyniok , G., & Wiegand, T. (2018). A Haar wavelet -based 
+
+perceptual similarity index for image quality assessment. Signal Processing: Image 
+
+Communication, 61, 33 -43. 
+
+38. Karner, C., Gröhl, J., Selby, I., Babar, J., Beckford, J., Else, T. R., ... & Breger, A. (2025, 
+
+April). Parameter choices in HaarPSI for IQA with medical images. In 2025 IEEE 22nd 
+
+International Symposium on Biomedical Imaging (ISBI) (pp. 1 -5).  IEEE. 
+
+39.  Zhang, R., Isola, P., Efros, A. A., Shechtman, E., & Wang, O. (2018).  The unreasonable 
+
+effectiveness of deep features as a perceptual metric. In Proceedings of the IEEE conference 
+
+on computer vision and pattern recognition (pp. 586 -595). 
+
+40. Nafchi, H. Z., Shahkolaei, A., Hedjam, R., & Cheriet, M. (2016). Mean deviation 
+
+similarity index: Efficient and reliable full -reference image quality evaluator. Ieee Access, 4, 
+
+5579 -5590. 41. Sheikh, H. R., & Bovik , A. C. (2005, January). A visual information fidelity approach to 
+
+video quality assessment. In The first international workshop on video processing and quality 
+
+measures for consumer electronics (Vol. 7, No. 2, pp. 2117 -2128). sn. 
+
+42.  Zhang, L., Shen, Y., & Li, H. (2014).  VSI: A visual saliency -induced index for perceptual 
+
+image quality assessment. IEEE Transactions on Image processing, 23(10), 4270 -4281. 
+
+43. Chen, S. D., & Ramli, A. R. (2003). Minimum mean brightness error bi -histogram 
+
+equalization in contrast enhancement. IEEE transactions on Consumer Electronics, 49(4), 
+
+1310 -1319. 
+
+44. Mittal, A., Soundararajan, R., & Bovik, A. C. (2012). Making a “completely blind” image 
+
+quality analyzer. IEEE Signal processing letters, 20(3), 209 -212. 
+
+45. Bosworth, B. T., Bernecky, W. R., Nickila , J. D., Adal, B., & Carter, G. C. (2008). 
+
+Estimating signal -to -noise ratio (SNR). IEEE Journal of Oceanic Engineering, 33(4), 414 -
+
+418. 
+
+46. Ying, Z., Niu, H., Gupta, P., Mahajan, D., Ghadiyaram, D., & Bovik, A. (2020). From 
+
+patches to pictures (PaQ -2-PiQ): Mapping the perceptual space of picture quality. In 
+
+Proceedings of the IEEE/CVF conference on computer vision and pattern recognition (pp. 
+
+3575 -3585). 
+
+47. Venkatanath , N., Praneeth, D., Sumohana, S. C., & Swarup, S. M. (2015, February). Blind 
+
+image quality evaluation using perception based features. In 2015 twenty first national 
+
+conference on communications (NCC) (pp. 1 -6). IEEE. 
+
+48. Lee, W., Wagner, F., Galdran, A., Shi, Y., Xia, W., Wang, G., ... & Choi, J. H. (2025). 
+
+Low -dose computed tomography perceptual image quality assessment. Medical Image 
+
+Analysis, 99, 103343. 
+
+49. Hatamikia, S., Breger, A., Karner, C., Pohn, B., MohammadiNasab, P., Buschmann, M., 
+
+Nougaret , S., Haddad, L., Abbasian Ardakani, A., Mohammadi, A., Apfaltrer, P., Birkfellner, 
+
+W., Pohl, A., Biguri, A., Kronreif, G., Schönlieb, C. -B.& Reynolds, T. (2026). CBCT -IQ: A 
+
+Publicly Available Annotated Cone -Beam CT Dataset for Image Quality Assessment and 
+
+Benchmarking. Zenodo. https://doi.org/10.5281/zenodo.20124495

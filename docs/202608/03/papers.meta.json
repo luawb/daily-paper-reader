@@ -1,0 +1,39 @@
+{
+  "label": "2026-08-03",
+  "date": "2026-08-03",
+  "generated_at": "2026-08-03T21:48:31",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202608/03/2607.27113v1-veritas-value-aware-on-policy-distillation-for-perception-enhanced-aigi-detection",
+      "section": "deep",
+      "title_en": "Veritas++: Value-aware On-Policy Distillation for Perception-Enhanced AIGI Detection",
+      "authors": "Hao Tan, Jun Lan, Zichang Tan, Ajian Liu, Zijian Yu, Chuanbiao Song, Huijia Zhu, Weiqiang Wang, Jun Wan, Zhen Lei",
+      "date": "2026-07-29",
+      "pdf": "https://arxiv.org/pdf/2607.27113v1",
+      "score": "8.0",
+      "evidence": "利用多模态大模型推理评估图像真实性并给出解释",
+      "tldr": "合成图像检测面临多模态大模型感知瓶颈，现有方法偏重视觉组织而忽视底层感知优化。Veritas++提出感知增强推理框架，以细粒度细节、语义异常和像素级差异三种基础感知为锚点，通过感知导向学习与价值感知在策略蒸馏强化感知推理。实验表明该方法在多个基准上显著提升泛化能力，感知学习有效弥合感知差距，蒸馏机制实现高效能力进化。",
+      "tags": "query:xiqa",
+      "abstract_en": "The growing capability of image generation models has made synthetic images a routine presence in open media, making robust and generalizable AI-Generated Image (AIGI) detection increasingly essential. While multi-modal large language models (MLLMs) offer a transparent alternative to black-box binary scoring, we observe that current MLLM-based detectors still exhibit notable perception bottlenecks in capturing fine-grained anomalies. They primarily focus on how visual evidence is organized and synthesized, leaving the intrinsic perception less optimized. To mitigate this gap, we present Veritas++, a perception-enhanced reasoning framework that establishes reliable perception as the foundation of authenticity reasoning. Rather than directly optimizing the model's explanatory ability, we ground AIGI detection on three basic perception abilities, i.e., capturing fine-grained visual details, semantic anomalies and pixel-level differences. Building on this insight, we introduce Perception-oriented Learning (PoRL), which replaces open-ended description supervision with verifiable rewards to explicitly strengthen these capacities. To further integrate enhanced perception with reasoning, we introduce Value-aware On-Policy Distillation (VaOPD), an adaptive distillation mechanism that prioritizes high-value distillation signals over uniform supervision, internalizing perception-aware reasoning through a privileged self-teacher. Extensive experiments across standard, in-the-wild and emerging benchmarks demonstrate that Veritas++ achieves promising generalization. The perception learning effectively bridges the perception gap and yields seamless gains on detection, while VaOPD further enables efficient capability evolvement without sacrificing existing performance. Code and checkpoints are available at https://github.com/EricTan7/VeritasPP.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/03/2607.29253v1-cbct-iq-a-publicly-available-annotated-cone-beam-ct-dataset-for-image-quality-assessment-and-benchmarking",
+      "section": "deep",
+      "title_en": "CBCT-IQ: A Publicly Available Annotated Cone-Beam CT Dataset for Image Quality Assessment and Benchmarking",
+      "authors": "Sepideh Hatamikia, Anna Breger, Clemens Karner, Birgit Pohn, Poorya MohammadiNasab, Martin Buschmann, Stephanie Nougaret, Laura Haddad, Ali Abbasian Ardakani, Afshin Mohammadi, Paul Apfaltrer, Wolfgang Birkfellner, Alfred Pohl, Ander Biguri, Gernot Kronreif, Carola-Bibiane Schönlieb, Tess Reynolds",
+      "date": "2026-07-31",
+      "pdf": "https://arxiv.org/pdf/2607.29253v1",
+      "score": "8.0",
+      "evidence": "提供带注释的锥束CT图像质量评估数据集",
+      "tldr": "锥束CT(CBCT)作为X射线成像模态，图像质量直接影响诊断准确性，但主观评估耗时、主观性强，且缺乏公开标注数据，阻碍了定量图像质量评估(IQA)方法的研究。为此，本文构建并发布首个公开的CBCT图像质量评估数据集CBCT-IQ，包含1764张经系统变化采集与重建参数获得的切片，由三位专家对整体和ROI进行四级评分。通过基准测试26种全参考与无参考IQA指标，并引入探索性排序方法，揭示了现有指标与专家评估的相关性，且能有效区分细微质量差异。该数据集为CBCT IQA领域提供了标准化基准，促进可重复的研究和新评估方法的开发与验证。",
+      "tags": "query:xiqa",
+      "abstract_en": "Medical image quality plays a critical role in diagnostic accuracy, especially in X-ray-based imaging modalities such as cone-beam computed tomography (CBCT), where image quality must be balanced against radiation dose. While expert visual evaluation remains the clinical standard for image quality evaluation, it is time-consuming, subjective and affected by inter-observer variability, emphasizing the need for reliable quantitative image quality assessment (IQA) methods. However, the development and validation of such IQA methods have been limited by the lack of publicly available CBCT datasets with expert image quality annotations. In this study, we provide the first open-access CBCT IQA dataset containing 1,764 annotated image slices acquired using systematic variations in image acquisition and reconstruction parameters. Three clinical experts graded the overall image quality and a predefined regions of interest (ROI) using a four-level scoring scheme. In addition, we benchmark 26 full reference- and no reference-based IQA measures against expert annotations and introduce an exploratory IQA measure-based ranking capable of distinguishing subtle image quality differences. This dataset introduced a standardized benchmark for future CBCT IQA research and provides a valuable resource for the development and validation of new IQA methods, enabling reproducible research and advancing CBCT IQA.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

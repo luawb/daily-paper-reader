@@ -1,0 +1,110 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-03T21:44:56.143575+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 0,
+    "quick_skim_target": 11,
+    "quick_selected": 0
+  },
+  "deep_dive": [
+    {
+      "id": "2607.27113v1",
+      "source": "arxiv",
+      "title": "Veritas++: Value-aware On-Policy Distillation for Perception-Enhanced AIGI Detection",
+      "abstract": "The growing capability of image generation models has made synthetic images a routine presence in open media, making robust and generalizable AI-Generated Image (AIGI) detection increasingly essential. While multi-modal large language models (MLLMs) offer a transparent alternative to black-box binary scoring, we observe that current MLLM-based detectors still exhibit notable perception bottlenecks in capturing fine-grained anomalies. They primarily focus on how visual evidence is organized and synthesized, leaving the intrinsic perception less optimized. To mitigate this gap, we present Veritas++, a perception-enhanced reasoning framework that establishes reliable perception as the foundation of authenticity reasoning. Rather than directly optimizing the model's explanatory ability, we ground AIGI detection on three basic perception abilities, i.e., capturing fine-grained visual details, semantic anomalies and pixel-level differences. Building on this insight, we introduce Perception-oriented Learning (PoRL), which replaces open-ended description supervision with verifiable rewards to explicitly strengthen these capacities. To further integrate enhanced perception with reasoning, we introduce Value-aware On-Policy Distillation (VaOPD), an adaptive distillation mechanism that prioritizes high-value distillation signals over uniform supervision, internalizing perception-aware reasoning through a privileged self-teacher. Extensive experiments across standard, in-the-wild and emerging benchmarks demonstrate that Veritas++ achieves promising generalization. The perception learning effectively bridges the perception gap and yields seamless gains on detection, while VaOPD further enables efficient capability evolvement without sacrificing existing performance. Code and checkpoints are available at https://github.com/EricTan7/VeritasPP.",
+      "authors": [
+        "Hao Tan",
+        "Jun Lan",
+        "Zichang Tan",
+        "Ajian Liu",
+        "Zijian Yu",
+        "Chuanbiao Song",
+        "Huijia Zhu",
+        "Weiqiang Wang",
+        "Jun Wan",
+        "Zhen Lei"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-29T16:43:59+00:00",
+      "link": "https://arxiv.org/pdf/2607.27113v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "uses multimodal LLM reasoning to evaluate image authenticity with explanations",
+      "llm_evidence_cn": "利用多模态大模型推理评估图像真实性并给出解释",
+      "llm_evidence": "利用多模态大模型推理评估图像真实性并给出解释",
+      "canonical_evidence": "利用多模态大模型推理评估图像真实性并给出解释",
+      "llm_tldr_en": "Proposes Veritas++, a perception-enhanced reasoning framework for AI-generated image detection. It uses value-aware on-policy distillation to strengthen visual perception in MLLMs, establishing reliable perception as the basis for authenticity reasoning, thus providing more transparent and generalizable detection decisions.",
+      "llm_tldr_cn": "针对现有多模态大模型在AI生成图像检测中感知瓶颈导致细粒度异常捕获不足的问题，提出Veritas++感知增强推理框架。该方法通过值感知在线蒸馏技术优化视觉编码器的感知能力，将可靠的感知特征作为真实性推理的基础，而非直接使用合成视角的组织化信息。实验表明，Veritas++在多个检测基准上提升了泛化性能，并生成可解释的推理链，为图像真实性质评估提供了更透明、更鲁棒的解决方案。",
+      "llm_tldr": "针对现有多模态大模型在AI生成图像检测中感知瓶颈导致细粒度异常捕获不足的问题，提出Veritas++感知增强推理框架。该方法通过值感知在线蒸馏技术优化视觉编码器的感知能力，将可靠的感知特征作为真实性推理的基础，而非直接使用合成视角的组织化信息。实验表明，Veritas++在多个检测基准上提升了泛化性能，并生成可解释的推理链，为图像真实性质评估提供了更透明、更鲁棒的解决方案。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "reasoning based perceptual image quality evaluation with explanations",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.29253v1",
+      "source": "arxiv",
+      "title": "CBCT-IQ: A Publicly Available Annotated Cone-Beam CT Dataset for Image Quality Assessment and Benchmarking",
+      "abstract": "Medical image quality plays a critical role in diagnostic accuracy, especially in X-ray-based imaging modalities such as cone-beam computed tomography (CBCT), where image quality must be balanced against radiation dose. While expert visual evaluation remains the clinical standard for image quality evaluation, it is time-consuming, subjective and affected by inter-observer variability, emphasizing the need for reliable quantitative image quality assessment (IQA) methods. However, the development and validation of such IQA methods have been limited by the lack of publicly available CBCT datasets with expert image quality annotations. In this study, we provide the first open-access CBCT IQA dataset containing 1,764 annotated image slices acquired using systematic variations in image acquisition and reconstruction parameters. Three clinical experts graded the overall image quality and a predefined regions of interest (ROI) using a four-level scoring scheme. In addition, we benchmark 26 full reference- and no reference-based IQA measures against expert annotations and introduce an exploratory IQA measure-based ranking capable of distinguishing subtle image quality differences. This dataset introduced a standardized benchmark for future CBCT IQA research and provides a valuable resource for the development and validation of new IQA methods, enabling reproducible research and advancing CBCT IQA.",
+      "authors": [
+        "Sepideh Hatamikia",
+        "Anna Breger",
+        "Clemens Karner",
+        "Birgit Pohn",
+        "Poorya MohammadiNasab",
+        "Martin Buschmann",
+        "Stephanie Nougaret",
+        "Laura Haddad",
+        "Ali Abbasian Ardakani",
+        "Afshin Mohammadi",
+        "Paul Apfaltrer",
+        "Wolfgang Birkfellner",
+        "Alfred Pohl",
+        "Ander Biguri",
+        "Gernot Kronreif",
+        "Carola-Bibiane Schönlieb",
+        "Tess Reynolds"
+      ],
+      "primary_category": "physics.med-ph",
+      "categories": [
+        "physics.med-ph",
+        "cs.CV"
+      ],
+      "published": "2026-07-31T10:24:20+00:00",
+      "link": "https://arxiv.org/pdf/2607.29253v1",
+      "tags": [
+        "keyword:XIQA"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Provides annotated CBCT dataset for image quality assessment",
+      "llm_evidence_cn": "提供带注释的锥束CT图像质量评估数据集",
+      "llm_evidence": "提供带注释的锥束CT图像质量评估数据集",
+      "canonical_evidence": "提供带注释的锥束CT图像质量评估数据集",
+      "llm_tldr_en": "Introduces CBCT-IQ, the first open-access dataset with 1,764 expert-annotated CBCT images for image quality assessment, enabling development and benchmarking of quantitative IQA methods.",
+      "llm_tldr_cn": "锥束CT图像质量直接影响诊断准确性，但客观评估方法因缺乏公开标注数据而受限。本文发布首个开放访问的CBCT-IQA数据集，包含1764张由多位专家进行质量评分的图像，并建立基准测试协议。该数据集为开发基于学习的定量IQA方法提供了关键资源，有助于减少主观评估差异，提升临床诊断的可靠性和一致性。",
+      "llm_tldr": "锥束CT图像质量直接影响诊断准确性，但客观评估方法因缺乏公开标注数据而受限。本文发布首个开放访问的CBCT-IQA数据集，包含1764张由多位专家进行质量评分的图像，并建立基准测试协议。该数据集为开发基于学习的定量IQA方法提供了关键资源，有助于减少主观评估差异，提升临床诊断的可靠性和一致性。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": []
+}
