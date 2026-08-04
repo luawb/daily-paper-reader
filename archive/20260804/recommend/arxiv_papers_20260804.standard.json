@@ -1,0 +1,129 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-04T21:56:03.728437+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2608.01730v1",
+      "source": "arxiv",
+      "title": "Learning Where to Look and How to Judge: Resolution-agnostic Image Quality Assessment with Quality-aware Saliency",
+      "abstract": "No-reference image quality assessment (NR IQA) has recently benefited from deep and multimodal models, yet many SOTA systems still violate at least one basic requirement: they either discard critical quality cues via aggressive resizing, fail to generalize across resolutions, cannot be jointly trained on heterogeneous IQA datasets with mismatched MOS scales, or require prohibitive computation. We present \\textbf{ReLIQS}, a model for \\textbf{Re}solution-agnostic \\textbf{L}earning for \\textbf{I}mage \\textbf{Q}uality with \\textbf{S}aliency, which is resolution-agnostic, preserves original-resolution quality cues, learns from multiple subjective studies, and remains computationally efficient and budget-adaptive. ReLIQS is a CLIP-based multiscale patch-driven architecture that learns both \\emph{where to look} and \\emph{how to judge} quality. Fixed-size patches are sampled across multiple resolutions, including the original resolution, and encoded with a CLIP vision backbone. A lightweight Perceptual Importance Estimator then predicts IQA-specific importance maps to select a small set of informative patches, and a Latent Quality Axis Module aggregates their embeddings into a single image-level score. Across authentic, synthetic, and AIGC benchmarks spanning diverse resolutions and distortions, ReLIQS generalizes better than strong CNN-, CLIP-, and MLLM-based baselines with matching or reduced computational cost.",
+      "authors": [
+        "Hakan Emre Gedik",
+        "Shashank Gupta",
+        "Alan Bovik"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-08-03T05:54:06+00:00",
+      "link": "https://arxiv.org/pdf/2608.01730v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "proposes a no-reference image quality assessment model that is resolution-agnostic and uses quality-aware saliency",
+      "llm_evidence_cn": "提出了一种分辨率无关的无参考图像质量评估模型，利用质量感知显著性",
+      "llm_evidence": "提出了一种分辨率无关的无参考图像质量评估模型，利用质量感知显著性",
+      "canonical_evidence": "提出了一种分辨率无关的无参考图像质量评估模型，利用质量感知显著性",
+      "llm_tldr_en": "ReLIQS is a resolution-agnostic no-reference image quality assessment model that preserves original resolution quality cues, learns from multiple subjective studies, and uses quality-aware saliency for efficient and accurate IQA.",
+      "llm_tldr_cn": "现有无参考图像质量评估方法常因缩放丢失关键质量线索，且难以跨分辨率泛化。本文提出ReLIQS，一种分辨率无关的模型，通过质量感知显著性保留原始分辨率信息，并能联合训练于不同主观质量评分数据集。实验表明该模型在计算效率和评估准确性上均有优势，推动了真实场景下的图像质量评价。",
+      "llm_tldr": "现有无参考图像质量评估方法常因缩放丢失关键质量线索，且难以跨分辨率泛化。本文提出ReLIQS，一种分辨率无关的模型，通过质量感知显著性保留原始分辨率信息，并能联合训练于不同主观质量评分数据集。实验表明该模型在计算效率和评估准确性上均有优势，推动了真实场景下的图像质量评价。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.01977v1",
+      "source": "arxiv",
+      "title": "SVGEval: A Vision-Grounded Framework for Perceptual-Quality Benchmarking and Evaluation in Text-to-SVG Generation",
+      "abstract": "Multimodal large models are increasingly used to generate scalable vector graphics (SVG), but reliable evaluation remains underexplored. Existing protocols are often code-centric or borrow raster-image metrics after rendering SVGs, which fail to reflect human perception and overlook SVG-specific qualities such as geometry and spatial composition. We introduce SVGEval, a vision-grounded multimodal benchmark for human-aligned SVG quality assessment. SVGEval explicitly incorporates visual renderings to evaluate whether models can judge the rendered outcome rather than only inspect SVG code, and provides high-quality annotations obtained via multi-round human labeling with expert refinement. Systematic evaluations across representative multimodal models reveal a clear gap: models perform relatively well on semantic alignment and aesthetics, yet struggle on geometry- and layout-related judgments. Building on SVGEval, we train an explainable SVG quality scorer that outputs multi-aspect scores with textual rationales. Ablations show that explicit visual grounding and reasoning supervision are crucial, especially for spatial and geometric assessment. SVGEval offers a reliable testbed and practical scorer for evaluating and improving SVG generation in the era of multimodal models.",
+      "authors": [
+        "Yiming Wang",
+        "Ye Chen",
+        "Hanqi Chen",
+        "Bingbing Ni"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-08-03T09:41:18+00:00",
+      "link": "https://arxiv.org/pdf/2608.01977v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "perceptual-quality benchmarking and evaluation for SVG images",
+      "llm_evidence_cn": "SVG图像感知质量基准与评价",
+      "llm_evidence": "SVG图像感知质量基准与评价",
+      "canonical_evidence": "SVG图像感知质量基准与评价",
+      "llm_tldr_en": "SVGEval is a vision-grounded multimodal benchmark for human-aligned perceptual quality assessment of text-to-SVG generation, providing high-quality annotations via expert refinement.",
+      "llm_tldr_cn": "SVGEval是一个基于视觉的多模态基准，通过渲染质量评估和专家标注，对文本到SVG生成进行人类感知对齐的质量评价。",
+      "llm_tldr": "SVGEval是一个基于视觉的多模态基准，通过渲染质量评估和专家标注，对文本到SVG生成进行人类感知对齐的质量评价。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.02549v1",
+      "source": "arxiv",
+      "title": "Estimating SSIM from MSE for DCT-Based Compressed Images",
+      "abstract": "Efficient and perceptually meaningful quality assessment is a fundamental requirement for image and video processing, compression, and streaming systems. This article shows that, in the context of Discrete Cosine Transform ( DCT)-based compressed images, Structural Similarity Index ( SSIM ) can be approximated from global Peak Signal to Noise Ratio (PSNR) or Mean Square Error ( MSE) using local statistics derived only from the reference image. While prior work assumes access to local MSE, we propose two approaches to approximate local MSE by redistributing the global MSE using variance or standard-deviation-based weighting. Experiments on the Kodak and Xiph Subset1 datasets across a range of JPEG quality levels demonstrate that both approaches provide accurate and robust SSIM approximations, substantially outperforming the global MSE baseline. The proposed framework is designed to extend naturally to video, where reference-derived statistics can be amortized across multiple encodes of the same content.",
+      "authors": [
+        "Luc Trudeau",
+        "Maria G. Martini"
+      ],
+      "primary_category": "cs.MM",
+      "categories": [
+        "cs.MM",
+        "cs.CV"
+      ],
+      "published": "2026-08-03T17:33:36+00:00",
+      "link": "https://arxiv.org/pdf/2608.02549v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Estimates SSIM, a perceptual image quality metric, from MSE for compressed images",
+      "llm_evidence_cn": "通过均方误差估计压缩图像的感知质量指标SSIM",
+      "llm_evidence": "通过均方误差估计压缩图像的感知质量指标SSIM",
+      "canonical_evidence": "通过均方误差估计压缩图像的感知质量指标SSIM",
+      "llm_tldr_en": "This paper shows that SSIM can be approximated from global MSE using local variance-based weighting for DCT-based compressed images, providing efficient quality assessment.",
+      "llm_tldr_cn": "在图像压缩与流媒体系统中，高效且感知有意义的图像质量评估至关重要。本文表明，对于基于DCT的压缩图像，可以利用参考图像的局部方差/标准差加权，从全局均方误差近似计算出结构相似性（SSIM）指数。实验在Kodak和Xiph数据集上验证，两种方法在不同JPEG质量级别下均能提供准确且高效的近似，为实时质量监控提供便利。",
+      "llm_tldr": "在图像压缩与流媒体系统中，高效且感知有意义的图像质量评估至关重要。本文表明，对于基于DCT的压缩图像，可以利用参考图像的局部方差/标准差加权，从全局均方误差近似计算出结构相似性（SSIM）指数。实验在Kodak和Xiph数据集上验证，两种方法在不同JPEG质量级别下均能提供准确且高效的近似，为实时质量监控提供便利。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

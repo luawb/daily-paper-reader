@@ -1,0 +1,54 @@
+{
+  "label": "2026-08-04",
+  "date": "2026-08-04",
+  "generated_at": "2026-08-04T21:59:21",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202608/04/2608.01730v1-learning-where-to-look-and-how-to-judge-resolution-agnostic-image-quality-assessment-with-quality-aware-saliency",
+      "section": "deep",
+      "title_en": "Learning Where to Look and How to Judge: Resolution-agnostic Image Quality Assessment with Quality-aware Saliency",
+      "authors": "Hakan Emre Gedik, Shashank Gupta, Alan Bovik",
+      "date": "2026-08-03",
+      "pdf": "https://arxiv.org/pdf/2608.01730v1",
+      "score": "9.0",
+      "evidence": "提出了一种分辨率无关的无参考图像质量评估模型，利用质量感知显著性",
+      "tldr": "现有无参考图像质量评估深度模型常通过缩放丢弃原始分辨率质量线索，难以跨分辨率泛化，且无法有效联合训练异构数据集，计算开销大。ReLIQS 模型基于 CLIP 多尺度分块架构，通过固定尺寸块采样多分辨率信息，由感知重要性估计器选择关键区域，并利用潜在质量轴模块聚合成像级评分，端到端学习“看哪里”与“如何评判”。在真实、合成及 AIGC 基准上，ReLIQS 泛化性超越 CNN、CLIP、MLLM 基线，计算成本匹配或更低。该模型保留原始分辨率细节，联合学习多主观研究，实现高效且预算自适应的质量评估。",
+      "tags": "query:xiqa",
+      "abstract_en": "No-reference image quality assessment (NR IQA) has recently benefited from deep and multimodal models, yet many SOTA systems still violate at least one basic requirement: they either discard critical quality cues via aggressive resizing, fail to generalize across resolutions, cannot be jointly trained on heterogeneous IQA datasets with mismatched MOS scales, or require prohibitive computation. We present \\textbf{ReLIQS}, a model for \\textbf{Re}solution-agnostic \\textbf{L}earning for \\textbf{I}mage \\textbf{Q}uality with \\textbf{S}aliency, which is resolution-agnostic, preserves original-resolution quality cues, learns from multiple subjective studies, and remains computationally efficient and budget-adaptive. ReLIQS is a CLIP-based multiscale patch-driven architecture that learns both \\emph{where to look} and \\emph{how to judge} quality. Fixed-size patches are sampled across multiple resolutions, including the original resolution, and encoded with a CLIP vision backbone. A lightweight Perceptual Importance Estimator then predicts IQA-specific importance maps to select a small set of informative patches, and a Latent Quality Axis Module aggregates their embeddings into a single image-level score. Across authentic, synthetic, and AIGC benchmarks spanning diverse resolutions and distortions, ReLIQS generalizes better than strong CNN-, CLIP-, and MLLM-based baselines with matching or reduced computational cost.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/04/2608.01977v1-svgeval-a-vision-grounded-framework-for-perceptual-quality-benchmarking-and-evaluation-in-text-to-svg-generation",
+      "section": "quick",
+      "title_en": "SVGEval: A Vision-Grounded Framework for Perceptual-Quality Benchmarking and Evaluation in Text-to-SVG Generation",
+      "authors": "Yiming Wang, Ye Chen, Hanqi Chen, Bingbing Ni",
+      "date": "2026-08-03",
+      "pdf": "https://arxiv.org/pdf/2608.01977v1",
+      "score": "7.0",
+      "evidence": "SVG图像感知质量基准与评价",
+      "tldr": "文本到SVG生成评估长期依赖代码或光栅化指标，缺乏人类感知对齐和SVG特有质量考量。SVGEval提出视觉驱动的多模态基准，通过渲染图像判断和高质人类标注，系统评测多模态模型。结果显示模型在语义与美学上表现尚可，但几何与空间布局判断能力薄弱。该工作为SVG生成质量评估提供了可靠测试平台和可解释评分工具，推动领域发展。",
+      "tags": "query:xiqa",
+      "abstract_en": "Multimodal large models are increasingly used to generate scalable vector graphics (SVG), but reliable evaluation remains underexplored. Existing protocols are often code-centric or borrow raster-image metrics after rendering SVGs, which fail to reflect human perception and overlook SVG-specific qualities such as geometry and spatial composition. We introduce SVGEval, a vision-grounded multimodal benchmark for human-aligned SVG quality assessment. SVGEval explicitly incorporates visual renderings to evaluate whether models can judge the rendered outcome rather than only inspect SVG code, and provides high-quality annotations obtained via multi-round human labeling with expert refinement. Systematic evaluations across representative multimodal models reveal a clear gap: models perform relatively well on semantic alignment and aesthetics, yet struggle on geometry- and layout-related judgments. Building on SVGEval, we train an explainable SVG quality scorer that outputs multi-aspect scores with textual rationales. Ablations show that explicit visual grounding and reasoning supervision are crucial, especially for spatial and geometric assessment. SVGEval offers a reliable testbed and practical scorer for evaluating and improving SVG generation in the era of multimodal models.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/04/2608.02549v1-estimating-ssim-from-mse-for-dct-based-compressed-images",
+      "section": "quick",
+      "title_en": "Estimating SSIM from MSE for DCT-Based Compressed Images",
+      "authors": "Luc Trudeau, Maria G. Martini",
+      "date": "2026-08-03",
+      "pdf": "https://arxiv.org/pdf/2608.02549v1",
+      "score": "6.0",
+      "evidence": "通过均方误差估计压缩图像的感知质量指标SSIM",
+      "tldr": "DCT压缩图像质量评估中，结构相似性(SSIM)等感知指标计算复杂，而峰值信噪比(PSNR)或均方误差(MSE)简单但感知性差。本文提出仅利用参考图像的局部统计和全局MSE，通过方差或标准差加权重分配估计局部MSE，进而近似SSIM。在Kodak和Xiph数据集上的JPEG压缩实验表明，两种方法均提供准确稳健的近似，明显超越全局MSE基线。该框架可自然扩展到视频，参考图像统计可在相同内容多次编码中复用，意义高效实用。",
+      "tags": "query:xiqa",
+      "abstract_en": "Efficient and perceptually meaningful quality assessment is a fundamental requirement for image and video processing, compression, and streaming systems. This article shows that, in the context of Discrete Cosine Transform ( DCT)-based compressed images, Structural Similarity Index ( SSIM ) can be approximated from global Peak Signal to Noise Ratio (PSNR) or Mean Square Error ( MSE) using local statistics derived only from the reference image. While prior work assumes access to local MSE, we propose two approaches to approximate local MSE by redistributing the global MSE using variance or standard-deviation-based weighting. Experiments on the Kodak and Xiph Subset1 datasets across a range of JPEG quality levels demonstrate that both approaches provide accurate and robust SSIM approximations, substantially outperforming the global MSE baseline. The proposed framework is designed to extend naturally to video, where reference-derived statistics can be amortized across multiple encodes of the same content.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
