@@ -1,0 +1,134 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-05T21:55:22.103906+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2608.00111v1",
+      "source": "arxiv",
+      "title": "FDIR: Harmonizing Fidelity and Human-Machine Preference in Lossy Compression Image Restoration",
+      "abstract": "Image restoration quality can be evaluated along three complementary facets: pixel-level fidelity, human perception, and downstream machine preference. However, existing lossy compression restoration methods optimize for at most one of these criteria: fidelity-oriented models often regress toward conditional means and produce over-smoothed outputs, while generative approaches hallucinate plausible but factually incorrect textures that degrade both ground-truth fidelity and downstream task accuracy. To navigate this three-way tradeoff, we propose FDIR, a two-stage architecture that decouples the conflicting demands through complementary inductive biases: Quality-Guided One-Step Flow Matching (QO-Flow) recovers global semantic structure in latent space via a single forward pass, while Flow-Conditioned Detail Refinement (FCDR) deterministically restores high-frequency textures and suppresses generative hallucinations in pixel space. Extensive experiments demonstrate that FDIR achieves superior fidelity, with a favorable perceptual-fidelity balance and competitive machine preference.",
+      "authors": [
+        "Kuan-Yen Chen",
+        "Fang-Yi Su",
+        "Philip Chikontwe",
+        "Jung-Hsien Chiang"
+      ],
+      "primary_category": "eess.IV",
+      "categories": [
+        "eess.IV",
+        "cs.CV",
+        "cs.LG"
+      ],
+      "published": "2026-07-31T08:33:40+00:00",
+      "link": "https://arxiv.org/pdf/2608.00111v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "evaluates image restoration quality along pixel fidelity, human perception, and machine preference",
+      "llm_evidence_cn": "从像素保真度、人类感知和机器偏好三方面评估图像恢复质量",
+      "llm_evidence": "从像素保真度、人类感知和机器偏好三方面评估图像恢复质量",
+      "canonical_evidence": "从像素保真度、人类感知和机器偏好三方面评估图像恢复质量",
+      "llm_tldr_en": "Proposes FDIR, a two-stage architecture that balances fidelity, human perception, and machine preference in lossy compression image restoration via quality-guided flow matching and refinement.",
+      "llm_tldr_cn": "针对有损压缩图像恢复中像素保真度、人类感知和下游机器偏好三者难以兼顾的问题，提出两阶段架构FDIR。第一阶段利用质量引导的一步流匹配恢复全局语义结构，第二阶段通过细化模块优化细节。实验表明该方法在三个维度上均取得优越性能，为图像质量多目标评估提供了新范本。",
+      "llm_tldr": "针对有损压缩图像恢复中像素保真度、人类感知和下游机器偏好三者难以兼顾的问题，提出两阶段架构FDIR。第一阶段利用质量引导的一步流匹配恢复全局语义结构，第二阶段通过细化模块优化细节。实验表明该方法在三个维度上均取得优越性能，为图像质量多目标评估提供了新范本。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.03279v1",
+      "source": "arxiv",
+      "title": "3DGSI-Assessor: A Large-Scale Dataset and An LMM-based Method for 3D Gaussian Splatting Image Quality Assessment",
+      "abstract": "3D Gaussian Splatting (3DGS) has become a dominant representation for real-time novel view synthesis (NVS), yet its storage footprint makes compression indispensable for practical deployment. 3DGS training and compression introduce representation-specific distortions such as floating artifacts and surface scattering, which conventional image quality assessment (IQA) metrics fail to capture. Moreover, the independent compression of geometric and color attributes may lead to decoupled dimension-specific distortions that must be diagnosed separately, yet existing metrics report only a single overall score. To address these gaps, we present 3DGS-IEval-15K+, a large-scale, multi-dimensional IQA dataset for compressed 3DGS, comprising 15,200 images from 10 diverse scenes, produced by 6 representative 3DGS algorithms at systematically designed compression levels and rendered from 20 strategically selected viewpoints spanning both training views and challenging novel views, annotated with 45,600 mean opinion scores (MOSs) across overall, geometry, and color quality. Based on 3DGS-IEval-15K+, we propose 3DGSI-Assessor, an all-in-one 3DGS IQA framework that integrates global semantic and dimension-specific local features within a large multimodal model (LMM), predicting all three dimensions in a single forward pass. 3DGSI-Assessor achieves state-of-the-art performance on 3DGS-IEval-15K+, and exhibits competitive generalization on other NVS benchmarks. Dataset and code will be released at https://github.com/YukeXing/3DGSI-Assessor.",
+      "authors": [
+        "Yuke Xing",
+        "Jiarui Wang",
+        "William Gordon",
+        "Zhu Li",
+        "Guangtao Zhai",
+        "Yiling Xu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-08-04T07:53:14+00:00",
+      "link": "https://arxiv.org/pdf/2608.03279v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Multi-dimensional IQA with LMM-based diagnostic explanations",
+      "llm_evidence_cn": "基于大语言模型的多维图像质量诊断评估",
+      "llm_evidence": "基于大语言模型的多维图像质量诊断评估",
+      "canonical_evidence": "基于大语言模型的多维图像质量诊断评估",
+      "llm_tldr_en": "For compressed 3D Gaussian Splatting, current IQA metrics lack distortion-specific capture and single-score limits. We create 3DGS-IEval-15K+, a multi-dimensional dataset, and an LMM-based method diagnosing geometric and color distortions separately, yielding finer, explainable quality assessment.",
+      "llm_tldr_cn": "针对3D高斯泼溅压缩图像质量评估中，传统指标无法捕捉浮动伪影、表面散射等特定失真，且仅输出单一整体分数的问题。本文构建了大规模多维图像质量评估数据集3DGS-IEval-15K+，并提出基于大型多模态模型（LMM）的评估方法，能够独立诊断几何和颜色等不同维度的失真。实验结果显示，该方法提供了更细粒度的质量评分，揭示了压缩过程中维度特异性的失真模式，为可解释的图像质量评估提供了新思路。",
+      "llm_tldr": "针对3D高斯泼溅压缩图像质量评估中，传统指标无法捕捉浮动伪影、表面散射等特定失真，且仅输出单一整体分数的问题。本文构建了大规模多维图像质量评估数据集3DGS-IEval-15K+，并提出基于大型多模态模型（LMM）的评估方法，能够独立诊断几何和颜色等不同维度的失真。实验结果显示，该方法提供了更细粒度的质量评分，揭示了压缩过程中维度特异性的失真模式，为可解释的图像质量评估提供了新思路。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "image quality assessment with explanations",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.28386v1",
+      "source": "arxiv",
+      "title": "Explaining Image Similarity with Automatically Extracted Concept Activation Vectors",
+      "abstract": "Image similarity underlies many computer vision applications, yet it is often unclear why two images receive a high or low similarity score. Existing explainability methods often rely on gradient-based attribution maps to provide local justifications for similarity. These approaches struggle to provide global insights into what specifically drives similarity in regions of an embedding space, such as texture, shape, or color. We introduce a model- and metric-agnostic framework that explains image similarity using Concept Activation Vectors (CAVs) extracted automatically via Sparse Autoencoders (SAEs). Given a pair of images, we perturb their embeddings along discovered concept directions and measure the resulting change in a chosen similarity function, yielding concept importances. For image pairs, we provide localization with concept attribution maps. We extend this procedure to group-level settings, explaining what drives similarity across a cluster of images rather than a single pair, and further, we introduce Exemplar Retrieval, aiming to recover samples with similar reasons contributing to similarity. Our experiments show that our latent perturbations are more faithful to the underlying data distribution than pixel-space baselines, and that concept importances linearly recover the true similarity score. Qualitative results further confirm the usefulness of our methods in understanding a model's individual and group similarity judgments.",
+      "authors": [
+        "Isaac Roberts",
+        "Petra Bevandic",
+        "Alexander Schulz",
+        "Barbara Hammer"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-30T15:43:33+00:00",
+      "link": "https://arxiv.org/pdf/2607.28386v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Provides a model-agnostic framework for explaining image similarity using concept activation vectors, applicable to quality assessment explanations",
+      "llm_evidence_cn": "提供模型无关的框架，利用概念激活向量解释图像相似性，可应用于质量评估解释",
+      "llm_evidence": "提供模型无关的框架，利用概念激活向量解释图像相似性，可应用于质量评估解释",
+      "canonical_evidence": "提供模型无关的框架，利用概念激活向量解释图像相似性，可应用于质量评估解释",
+      "llm_tldr_en": "Introduces a framework that explains why two images are similar by extracting concept vectors via sparse autoencoders and measuring their impact on similarity scores, enabling interpretable quality metrics.",
+      "llm_tldr_cn": "现有图像相似性解释方法多依赖梯度归因图，难以提供全局概念级洞察。本文提出一种模型和度量无关的框架，利用稀疏自编码器自动提取概念激活向量，通过扰动嵌入测量相似度变化，揭示纹理、形状、颜色等概念对相似性评分的贡献，为构建可解释的图像质量评估系统奠定了方法论基础。",
+      "llm_tldr": "现有图像相似性解释方法多依赖梯度归因图，难以提供全局概念级洞察。本文提出一种模型和度量无关的框架，利用稀疏自编码器自动提取概念激活向量，通过扰动嵌入测量相似度变化，揭示纹理、形状、颜色等概念对相似性评分的贡献，为构建可解释的图像质量评估系统奠定了方法论基础。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "image quality assessment with explanations",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

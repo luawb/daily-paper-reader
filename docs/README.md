@@ -6,31 +6,31 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-04
-- 运行时间：2026-08-04 21:59:06 UTC
+- 最新运行日期：2026-08-05
+- 运行时间：2026-08-05 22:00:19 UTC
 - 运行状态：成功
 - 本次总论文数：3
-- 精读区：1
-- 速读区：2
+- 精读区：2
+- 速读区：1
 
 ### 今日简报（AI）
-今日聚焦图像质量评估新趋势，精读了一篇高分论文与两篇相关速览。  
-最值得关注的是“分辨率无关的图像质量评估”：让AI学会“该看哪儿”与“如何评判”，结合质量感知的显著性图，不再受分辨率限制。  
-如果常接触压缩或AI生图，建议先从估计压缩图像SSIM这些实用技巧入手，逐步理解评判视觉质量的多种视角。
-- 详情：[/202608/04/README](/202608/04/README)
+今日精析两篇顶会高分论文，聚焦图像质量评估前沿，并速览一篇概念解释方法。  
+最值得关注：有损压缩修复如何平衡保真与偏好，以及大模型首次为3D高斯泼溅图像质量打分，均达9分水准。  
+建议读者上手试试Gaussian Splatting相关工具，直观感受三维图像评估如何落地。
+- 详情：[/202608/05/README](/202608/05/README)
 
 ### 精读区论文标签
-1. [Learning Where to Look and How to Judge: Resolution-agnostic Image Quality Assessment with Quality-aware Saliency](/202608/04/2608.01730v1-learning-where-to-look-and-how-to-judge-resolution-agnostic-image-quality-assessment-with-quality-aware-saliency)  
+1. [FDIR: Harmonizing Fidelity and Human-Machine Preference in Lossy Compression Image Restoration](/202608/05/2608.00111v1-fdir-harmonizing-fidelity-and-human-machine-preference-in-lossy-compression-image-restoration)  
    标签：评分：9.0/10、query:xiqa
-   evidence：提出了一种分辨率无关的无参考图像质量评估模型，利用质量感知显著性
+   evidence：从像素保真度、人类感知和机器偏好三方面评估图像恢复质量
+2. [3DGSI-Assessor: A Large-Scale Dataset and An LMM-based Method for 3D Gaussian Splatting Image Quality Assessment](/202608/05/2608.03279v1-3dgsi-assessor-a-large-scale-dataset-and-an-lmm-based-method-for-3d-gaussian-splatting-image-quality-assessment)  
+   标签：评分：9.0/10、query:xiqa
+   evidence：基于大语言模型的多维图像质量诊断评估
 
 ### 速读区论文标签
-1. [SVGEval: A Vision-Grounded Framework for Perceptual-Quality Benchmarking and Evaluation in Text-to-SVG Generation](/202608/04/2608.01977v1-svgeval-a-vision-grounded-framework-for-perceptual-quality-benchmarking-and-evaluation-in-text-to-svg-generation)  
-   标签：评分：7.0/10、query:xiqa
-   evidence：SVG图像感知质量基准与评价
-2. [Estimating SSIM from MSE for DCT-Based Compressed Images](/202608/04/2608.02549v1-estimating-ssim-from-mse-for-dct-based-compressed-images)  
+1. [Explaining Image Similarity with Automatically Extracted Concept Activation Vectors](/202608/05/2607.28386v1-explaining-image-similarity-with-automatically-extracted-concept-activation-vectors)  
    标签：评分：6.0/10、query:xiqa
-   evidence：通过均方误差估计压缩图像的感知质量指标SSIM
+   evidence：提供模型无关的框架，利用概念激活向量解释图像相似性，可应用于质量评估解释
 
 
 <div class="dpr-home-promo-card">

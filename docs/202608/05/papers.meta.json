@@ -1,0 +1,54 @@
+{
+  "label": "2026-08-05",
+  "date": "2026-08-05",
+  "generated_at": "2026-08-05T22:00:31",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202608/05/2608.00111v1-fdir-harmonizing-fidelity-and-human-machine-preference-in-lossy-compression-image-restoration",
+      "section": "deep",
+      "title_en": "FDIR: Harmonizing Fidelity and Human-Machine Preference in Lossy Compression Image Restoration",
+      "authors": "Kuan-Yen Chen, Fang-Yi Su, Philip Chikontwe, Jung-Hsien Chiang",
+      "date": "2026-07-31",
+      "pdf": "https://arxiv.org/pdf/2608.00111v1",
+      "score": "9.0",
+      "evidence": "从像素保真度、人类感知和机器偏好三方面评估图像恢复质量",
+      "tldr": "有损压缩图像恢复需同时兼顾像素保真、人类感知和机器偏好，但现有方法往往顾此失彼。本文提出两阶段架构FDIR，先通过质量引导一步流匹配恢复全局语义，再利用流条件细节细化恢复高频纹理并抑制幻觉，有效调和三者矛盾。实验表明FDIR在保真度上表现优越，并实现感知-保真平衡与竞争性的机器偏好，为压缩恢复提供了新权衡方案。",
+      "tags": "query:xiqa",
+      "abstract_en": "Image restoration quality can be evaluated along three complementary facets: pixel-level fidelity, human perception, and downstream machine preference. However, existing lossy compression restoration methods optimize for at most one of these criteria: fidelity-oriented models often regress toward conditional means and produce over-smoothed outputs, while generative approaches hallucinate plausible but factually incorrect textures that degrade both ground-truth fidelity and downstream task accuracy. To navigate this three-way tradeoff, we propose FDIR, a two-stage architecture that decouples the conflicting demands through complementary inductive biases: Quality-Guided One-Step Flow Matching (QO-Flow) recovers global semantic structure in latent space via a single forward pass, while Flow-Conditioned Detail Refinement (FCDR) deterministically restores high-frequency textures and suppresses generative hallucinations in pixel space. Extensive experiments demonstrate that FDIR achieves superior fidelity, with a favorable perceptual-fidelity balance and competitive machine preference.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/05/2608.03279v1-3dgsi-assessor-a-large-scale-dataset-and-an-lmm-based-method-for-3d-gaussian-splatting-image-quality-assessment",
+      "section": "deep",
+      "title_en": "3DGSI-Assessor: A Large-Scale Dataset and An LMM-based Method for 3D Gaussian Splatting Image Quality Assessment",
+      "authors": "Yuke Xing, Jiarui Wang, William Gordon, Zhu Li, Guangtao Zhai, Yiling Xu",
+      "date": "2026-08-04",
+      "pdf": "https://arxiv.org/pdf/2608.03279v1",
+      "score": "9.0",
+      "evidence": "基于大语言模型的多维图像质量诊断评估",
+      "tldr": "三维高斯泼溅（3DGS）压缩带来漂浮伪影等特有失真，传统图像质量评估（IQA）难以捕捉，且需独立诊断几何与颜色退化。本文提出大规模多维度数据集3DGS-IEval-15K+，涵盖10个场景、6种算法、系统压缩等级及20个视点，共计15,200张图像和45,600个多维主观评分。基于此，设计3DGSI-Assessor框架，将全局语义与维度特定局部特征融入大语言多模态模型（LMM），单次推理同时预测整体、几何和颜色质量。该方法在数据集上取得最优性能，并泛化至其他新视图合成基准，为3DGS压缩质量评估树立新范式。",
+      "tags": "query:xiqa",
+      "abstract_en": "3D Gaussian Splatting (3DGS) has become a dominant representation for real-time novel view synthesis (NVS), yet its storage footprint makes compression indispensable for practical deployment. 3DGS training and compression introduce representation-specific distortions such as floating artifacts and surface scattering, which conventional image quality assessment (IQA) metrics fail to capture. Moreover, the independent compression of geometric and color attributes may lead to decoupled dimension-specific distortions that must be diagnosed separately, yet existing metrics report only a single overall score. To address these gaps, we present 3DGS-IEval-15K+, a large-scale, multi-dimensional IQA dataset for compressed 3DGS, comprising 15,200 images from 10 diverse scenes, produced by 6 representative 3DGS algorithms at systematically designed compression levels and rendered from 20 strategically selected viewpoints spanning both training views and challenging novel views, annotated with 45,600 mean opinion scores (MOSs) across overall, geometry, and color quality. Based on 3DGS-IEval-15K+, we propose 3DGSI-Assessor, an all-in-one 3DGS IQA framework that integrates global semantic and dimension-specific local features within a large multimodal model (LMM), predicting all three dimensions in a single forward pass. 3DGSI-Assessor achieves state-of-the-art performance on 3DGS-IEval-15K+, and exhibits competitive generalization on other NVS benchmarks. Dataset and code will be released at https://github.com/YukeXing/3DGSI-Assessor.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/05/2607.28386v1-explaining-image-similarity-with-automatically-extracted-concept-activation-vectors",
+      "section": "quick",
+      "title_en": "Explaining Image Similarity with Automatically Extracted Concept Activation Vectors",
+      "authors": "Isaac Roberts, Petra Bevandic, Alexander Schulz, Barbara Hammer",
+      "date": "2026-07-30",
+      "pdf": "https://arxiv.org/pdf/2607.28386v1",
+      "score": "6.0",
+      "evidence": "提供模型无关的框架，利用概念激活向量解释图像相似性，可应用于质量评估解释",
+      "tldr": "图像相似度作为计算机视觉基础任务，其得分原因常缺乏全局解释。本文提出模型与度量无关的框架，借助稀疏自编码器自动提取概念激活向量，通过扰动嵌入并测量相似度变化量化概念贡献，实现图像对及组级别的解释，并提供概念归因图与样例检索，支持细粒度定位与相似理由样本恢复。实验表明潜在扰动更忠实数据分布，概念重要性可线性恢复相似度分数，为理解模型相似度判断提供全局性洞察。",
+      "tags": "query:xiqa",
+      "abstract_en": "Image similarity underlies many computer vision applications, yet it is often unclear why two images receive a high or low similarity score. Existing explainability methods often rely on gradient-based attribution maps to provide local justifications for similarity. These approaches struggle to provide global insights into what specifically drives similarity in regions of an embedding space, such as texture, shape, or color. We introduce a model- and metric-agnostic framework that explains image similarity using Concept Activation Vectors (CAVs) extracted automatically via Sparse Autoencoders (SAEs). Given a pair of images, we perturb their embeddings along discovered concept directions and measure the resulting change in a chosen similarity function, yielding concept importances. For image pairs, we provide localization with concept attribution maps. We extend this procedure to group-level settings, explaining what drives similarity across a cluster of images rather than a single pair, and further, we introduce Exemplar Retrieval, aiming to recover samples with similar reasons contributing to similarity. Our experiments show that our latent perturbations are more faithful to the underlying data distribution than pixel-space baselines, and that concept importances linearly recover the true similarity score. Qualitative results further confirm the usefulness of our methods in understanding a model's individual and group similarity judgments.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
