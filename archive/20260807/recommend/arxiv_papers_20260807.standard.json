@@ -1,102 +1,54 @@
 {
   "mode": "standard",
-  "generated_at": "2026-08-07T01:38:05.658810+00:00",
+  "generated_at": "2026-08-07T20:24:16.870045+00:00",
   "stats": {
     "mode": "standard",
     "tag_count": 1,
-    "deep_divecandidates": 0,
+    "deep_divecandidates": 1,
     "deep_cap": 6,
-    "deep_selected": 0,
-    "quick_candidates": 2,
+    "deep_selected": 1,
+    "quick_candidates": 0,
     "quick_skim_target": 11,
-    "quick_selected": 2
+    "quick_selected": 0
   },
-  "deep_dive": [],
-  "quick_skim": [
+  "deep_dive": [
     {
-      "id": "2607.29025v2",
+      "id": "2608.05691v1",
       "source": "arxiv",
-      "title": "Evaluation-Verification Reward for Consistent Multi-Reference Image Editing",
-      "abstract": "While recent image editing models have made rapid progress, multi-reference editing remains challenging, particularly in maintaining visual consistency across references and ensuring overall visual harmony. Reinforcement learning has proven highly effective for text-to-image generation and single-image editing, but its extension to multi-reference editing is hindered by the absence of suitable reward models that capture multi-image relational constraints. Moreover, naively using multimodal large language models(MLLMs) as zero-shot evaluators faces a key tension between hallucination-prone long-form reasoning and the limited deductive power of short-form judgments. We address these issues with a Multi-dimensional Evaluation-Verification Reward(EVR). EVR decomposes evaluation into distinct visual criteria; for each criterion, an MLLM Evaluator generates multiple candidate hypotheses, and a Verifier grounds each claim in concrete visual evidence to accept or reject it, producing reliable and fine-grained reward signals. Together with a scalable data pipeline, our method enables RL fine-tuning of off-the-shelf editors without architectural changes. Extensive experiments show substantial gains over the base Qwen-Image-Edit, improving consistency and harmony to match or surpass NanoBanana.",
+      "title": "SciQNet: Two-Stage Multimodal Adaptation for Scientific Image Quality Assessment",
+      "abstract": "Scientific images are essential for communicating experimental observations, quantitative evidence and conceptual knowledge. Unlike natural images, their quality depends on both visual clarity and scientific informativeness, making assessment challenging. In this work, we present SciQNet, a two-stage multimodal adaptation framework for scientific image quality assessment. The first stage performs domain-adaptive pretraining on scientific document images and the second stage conducts task-specific fine-tuning with joint scoring and understanding supervision. For scoring-oriented supervision, we combine instruction tuning with a Huber loss derived from rating-word logits, while understanding-oriented supervision is formulated as multiple-choice visual question answering. Experiments show that using a 40% stratified subset of the domain-adaptive data gives the best performance among the evaluated pretraining fractions, suggesting that pretraining-data relevance may be as important as pretraining-data scale. The final model achieves an SIQA-S score of 92.21, an SIQA-U score of 47.38 and a combined score of 69.80. This work presents our solution to the ICME 2026 Scientific Image Quality Assessment Challenge, which ranked 2nd in the scoring track.",
       "authors": [
-        "Yingmao Miao",
-        "Pengfei Zhang",
-        "Xiaochen Lv",
-        "Meng Yu",
-        "Lei Sun",
-        "Xiangxiang Chu",
-        "Chao Shen",
-        "Chenhao Lin"
+        "Yin-Loon Khor",
+        "Yi-Jie Wong",
+        "Jing Jie Tan",
+        "Ming Jie Lee"
       ],
       "primary_category": "cs.CV",
       "categories": [
         "cs.CV"
       ],
-      "published": "2026-07-31T04:54:20+00:00",
-      "link": "https://arxiv.org/pdf/2607.29025v2",
+      "published": "2026-08-06T07:33:23+00:00",
+      "link": "https://arxiv.org/pdf/2608.05691v1",
       "tags": [
         "keyword:XIQA",
         "query:XIQA"
       ],
-      "llm_score": 7.0,
-      "llm_evidence_en": "uses MLLM-based reward for RL in multi-reference image editing, evaluating visual consistency and harmony",
-      "llm_evidence_cn": "基于多模态大模型的奖励用于图像编辑的强化学习，评估视觉一致性与和谐度",
-      "llm_evidence": "基于多模态大模型的奖励用于图像编辑的强化学习，评估视觉一致性与和谐度",
-      "canonical_evidence": "基于多模态大模型的奖励用于图像编辑的强化学习，评估视觉一致性与和谐度",
-      "llm_tldr_en": "Proposes EVR, a multi-dimensional reward using MLLMs for RL-based multi-reference image editing, addressing evaluation challenges and improving consistency.",
-      "llm_tldr_cn": "多参考图像编辑面临保持视觉一致性的挑战，现有强化学习方法缺乏合适的奖励模型。本文提出多维评估-验证奖励EVR，利用多模态大语言模型进行分维度评估与验证，缓解长文本推理与短判断的矛盾，并通过强化学习提升编辑的一致性与和谐度。实验表明该方法在复杂多参考编辑任务上取得显著提升。",
-      "llm_tldr": "多参考图像编辑面临保持视觉一致性的挑战，现有强化学习方法缺乏合适的奖励模型。本文提出多维评估-验证奖励EVR，利用多模态大语言模型进行分维度评估与验证，缓解长文本推理与短判断的矛盾，并通过强化学习提升编辑的一致性与和谐度。实验表明该方法在复杂多参考编辑任务上取得显著提升。",
+      "llm_score": 9.0,
+      "llm_evidence_en": "scientific image quality assessment with joint scoring and understanding",
+      "llm_evidence_cn": "联合评分与理解监督的科学图像质量评估",
+      "llm_evidence": "联合评分与理解监督的科学图像质量评估",
+      "canonical_evidence": "联合评分与理解监督的科学图像质量评估",
+      "llm_tldr_en": "SciQNet is a two-stage multimodal adaptation framework for scientific image quality assessment that combines scoring and understanding supervision, evaluating both visual clarity and scientific informativeness.",
+      "llm_tldr_cn": "本文提出SciQNet，一个两阶段多模态适配框架，用于科学图像质量评估。针对科学图像同时依赖视觉清晰度和科学信息性的特点，该方法先进行科学文档图像的领域自适应预训练，再通过联合评分和理解监督进行任务微调。评分监督利用评分词的对数几率与Huber损失，理解监督则设计为多项选择题形式。实验表明，该方法能有效评估科学图像的质量，优于仅关注视觉质量的传统方法。该框架为科学图像的质量评估提供了多模态解决方案，兼具准确性与可解释性。",
+      "llm_tldr": "本文提出SciQNet，一个两阶段多模态适配框架，用于科学图像质量评估。针对科学图像同时依赖视觉清晰度和科学信息性的特点，该方法先进行科学文档图像的领域自适应预训练，再通过联合评分和理解监督进行任务微调。评分监督利用评分词的对数几率与Huber损失，理解监督则设计为多项选择题形式。实验表明，该方法能有效评估科学图像的质量，优于仅关注视觉质量的传统方法。该框架为科学图像的质量评估提供了多模态解决方案，兼具准确性与可解释性。",
       "llm_tags": [
         "query:xiqa"
       ],
       "matched_query_tag": "query:xiqa",
-      "matched_query_text": "reinforcement learning for image quality assessment and description",
-      "matched_requirement_id": "req-9",
-      "selection_source": "fresh_fetch",
-      "quick_tier": "7"
-    },
-    {
-      "id": "2608.05149v1",
-      "source": "arxiv",
-      "title": "CoCo-IR: Contextual Composed Image Retrieval",
-      "abstract": "Current instruction-based image retrieval systems are powerful but limited to single-turn interactions, failing to capture the iterative nature of complex, real-world visual searches. To overcome this limitation, we introduce Contextual Composed Image Retrieval (CoCo-IR), a novel task that enables users to progressively refine search results through interactions. We address this new task by proposing a new model based on a Large Multimodal Model (LMM) that functions as a context-aware reasoner for CoCo-IR. Our model interprets the entire interaction history to generate Transformable Image Embeddings (TIE) that evolve across turns. To fuel the model training without expensive human annotations, we develop a fully autonomous, scalable data engine that leverages LMMs to generate high-quality contextual retrieval data, and uses model-guided verification to mine challenging hard negatives. Extensive experiments demonstrate that our approach establishes new state-of-the-art performance: We achieve 39.4 mAP@5 on the challenging single-turn benchmark CIRCO; furthermore, on our new CoCo-IR benchmark, our model maintains robust performance with 44.1 R@1 on 4-turn dialogues, dramatically outperforming existing methods (28.2 4-turn R@1) that fail to handle multi-turn context. Project page: https://CoCo-IR.github.io.",
-      "authors": [
-        "Shengcao Cao",
-        "Tanmaya Shekhar Dabral",
-        "Zhongli Ding",
-        "Madhuri Shanbhogue",
-        "Kaifeng Chen",
-        "Zhe Li",
-        "Mojtaba Seyedhosseini",
-        "Yu-Xiong Wang",
-        "Liang-Yan Gui"
-      ],
-      "primary_category": "cs.CV",
-      "categories": [
-        "cs.CV"
-      ],
-      "published": "2026-08-05T17:59:57+00:00",
-      "link": "https://arxiv.org/pdf/2608.05149v1",
-      "tags": [
-        "keyword:XIQA",
-        "query:XIQA"
-      ],
-      "llm_score": 7.0,
-      "llm_evidence_en": "Proposes a Large Multimodal Model as context-aware reasoner for image retrieval, processing images and text.",
-      "llm_evidence_cn": "提出了一种作为上下文感知推理器的大型多模态模型，用于处理图像和文本的组合图像检索。",
-      "llm_evidence": "提出了一种作为上下文感知推理器的大型多模态模型，用于处理图像和文本的组合图像检索。",
-      "canonical_evidence": "提出了一种作为上下文感知推理器的大型多模态模型，用于处理图像和文本的组合图像检索。",
-      "llm_tldr_en": "Introduces CoCo-IR, a task for iterative image retrieval, and a Large Multimodal Model that interprets interaction history to generate evolving image embeddings, enabling progressive refinement without manual annotations.",
-      "llm_tldr_cn": "针对当前基于指令的图像检索系统仅限于单轮交互，无法模拟现实世界中迭代式的复杂视觉搜索的问题，提出CoCo-IR任务及基于大型多模态模型的上下文感知推理方法。该模型将整个对话历史解释为可转换的图像嵌入，实现多轮逐步细化，并利用全自动数据引擎生成训练数据，无需昂贵的人工标注。实验结果表明，该方法能有效提升检索精度并实现交互式搜索。此工作为交互式视觉搜索开辟了新方向，并展示了大型多模态模型在上下文感知推理中的潜力。",
-      "llm_tldr": "针对当前基于指令的图像检索系统仅限于单轮交互，无法模拟现实世界中迭代式的复杂视觉搜索的问题，提出CoCo-IR任务及基于大型多模态模型的上下文感知推理方法。该模型将整个对话历史解释为可转换的图像嵌入，实现多轮逐步细化，并利用全自动数据引擎生成训练数据，无需昂贵的人工标注。实验结果表明，该方法能有效提升检索精度并实现交互式搜索。此工作为交互式视觉搜索开辟了新方向，并展示了大型多模态模型在上下文感知推理中的潜力。",
-      "llm_tags": [
-        "query:xiqa"
-      ],
-      "matched_query_tag": "query:xiqa",
-      "matched_query_text": "large language model that processes images and text",
-      "matched_requirement_id": "req-3",
-      "selection_source": "fresh_fetch",
-      "quick_tier": "7"
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
     }
-  ]
+  ],
+  "quick_skim": []
 }

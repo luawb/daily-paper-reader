@@ -7,28 +7,25 @@
 
 ## 每次日报
 - 最新运行日期：2026-08-07
-- 运行时间：2026-08-07 01:40:33 UTC
+- 运行时间：2026-08-07 20:25:54 UTC
 - 运行状态：成功
-- 本次总论文数：2
-- 精读区：0
-- 速读区：2
+- 本次总论文数：1
+- 精读区：1
+- 速读区：0
 
 ### 今日简报（AI）
-今日速读两篇图像处理论文，聚焦图像编辑一致性与组合式检索。  
-值得关注的方向：用评估验证奖励优化多参考图像编辑，以及上下文组合式图像检索的新方法。  
-下一步可尝试将一致性奖励机制应用到你的图像编辑流程，或探索上下文感知的搜索体验。
+今日聚焦高赞论文《SciQNet》，用两阶段多模态自适应搞定科学图像质量打分。  
+核心结论是：视觉大模型+专业适配，能精准量化科研配图是否“有效传播”，评分逼近人工。  
+对普通读者而言，下次作图可优先对齐这套评价标准——清晰度、标注合理性和信息密度是关键。
 - 详情：[/202608/07/README](/202608/07/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [SciQNet: Two-Stage Multimodal Adaptation for Scientific Image Quality Assessment](/202608/07/2608.05691v1-sciqnet-two-stage-multimodal-adaptation-for-scientific-image-quality-assessment)  
+   标签：评分：9.0/10、query:xiqa
+   evidence：联合评分与理解监督的科学图像质量评估
 
 ### 速读区论文标签
-1. [Evaluation-Verification Reward for Consistent Multi-Reference Image Editing](/202608/07/2607.29025v2-evaluation-verification-reward-for-consistent-multi-reference-image-editing)  
-   标签：评分：7.0/10、query:xiqa
-   evidence：基于多模态大模型的奖励用于图像编辑的强化学习，评估视觉一致性与和谐度
-2. [CoCo-IR: Contextual Composed Image Retrieval](/202608/07/2608.05149v1-coco-ir-contextual-composed-image-retrieval)  
-   标签：评分：7.0/10、query:xiqa
-   evidence：提出了一种作为上下文感知推理器的大型多模态模型，用于处理图像和文本的组合图像检索。
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">

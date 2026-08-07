@@ -1,0 +1,202 @@
+Title: SciQNet: Two-Stage Multimodal Adaptation for Scientific Image Quality Assessment
+
+URL Source: https://arxiv.org/pdf/2608.05691v1
+
+Published Time: Fri, 07 Aug 2026 00:37:10 GMT
+
+Number of Pages: 6
+
+Markdown Content:
+# SciQNet: Two-Stage Multimodal Adaptation for Scientific Image Quality Assessment 
+
+Yin-Loon Khor 1, Yi-Jie Wong 2,∗, Jing Jie Tan 3, Ming Jie Lee 21Universiti Malaya, 2Universiti Tunku Abdul Rahman, 3National University of Singapore 
+
+{yinloonkhor, yjwong1999 }@gmail.com, tanjingjie@nus.edu.sg, leemj@utar.edu.my 
+
+Abstract —Scientific images are essential for communicating experimental observations, quantitative evidence and conceptual knowledge. Unlike natural images, their quality depends on both visual clarity and scientific informativeness, making assessment challenging. In this work, we present SciQNet, a two-stage multimodal adaptation framework for scientific image quality assessment. The first stage performs domain-adaptive pretraining on scientific document images and the second stage conducts task-specific fine-tuning with joint scoring and understanding supervision. For scoring-oriented supervision, we combine in-struction tuning with a Huber loss derived from rating-word logits, while understanding-oriented supervision is formulated as multiple-choice visual question answering. Experiments show that using a 40% stratified subset of the domain-adaptive data gives the best performance among the evaluated pretraining fractions, suggesting that pretraining-data relevance may be as important as pretraining-data scale. The final model achieves an SIQA-S score of 92.21, an SIQA-U score of 47.38 and a combined score of 69.80. This work presents our solution to the ICME 2026 Scientific Image Quality Assessment Challenge, which ranked 2nd in the scoring track. 
+
+Keywords: Scientific image quality assessment, vision-language model, perceptual quality scoring, reasoning-based understanding, domain-adaptive pretraining I. I NTRODUCTION 
+
+Scientific images are a fundamental medium for commu-nicating experimental observations, quantitative evidence and conceptual knowledge. Unlike natural images, scientific fig-ures typically contain structured visual elements such as axes, legends, scale bars, annotations, symbols and schematic rela-tionships [1]. A figure may appear visually clean while being scientifically incomplete or ambiguous. This makes scientific image quality assessment (SIQA) fundamentally distinct from conventional image quality assessment (IQA), which mainly models perceptual degradation or human visual preference. Yet existing IQA research has largely focused on this narrower perceptual domain. Representative datasets such as LIVE Challenge [2], TID2013 [3], KADID-10k [4] and KonIQ-10k [5] benchmark synthetic and authentic distortions, while classical no-reference IQA methods including BRISQUE [6] and NIQE [7] rely on natural scene statistics to estimate perceptual quality without reference images. More recent deep learning approaches such as MEON [8], DBCNN [9] and DACNN [10] further advance performance through data-driven and distortion-aware representations, yet they remain 
+
+> ∗indicates corresponding author.
+
+purely perceptual and lack the reasoning capability needed to assess whether an image conveys scientifically meaningful and complete information. Recent advances in vision-language models (VLMs) have significantly improved visual understanding and reasoning capabilities. For instance, Qwen-VL [11] demonstrates strong performance in image captioning, visual grounding, document understanding and multimodal reasoning, while InternVL [12] provides scalable frameworks for complex multimodal per-ception and reasoning. EffiMiniVLM [13] explores efficient multimodal learning for scoring-oriented tasks and mPLUG-PaperOwl [14] focuses on scientific diagram understanding by constructing multimodal datasets aligned with scientific doc-uments. Despite these advances, evaluating scientific figures remains challenging because it requires both visual perception and domain-specific reasoning. Existing VLMs can recognize visible components, parse document layouts and generate plausible descriptions, yet they may fail to verify whether a figure contains sufficient labels, units and domain-relevant structure for correct interpretation. Recent work [1] further highlights this issue by showing that high agreement with ex-pert quality scores does not necessarily imply reliable scientific understanding, suggesting that scoring-based evaluation alone is insufficient and that SIQA should jointly consider perceptual quality and reasoning-based understanding. Motivated by this gap, we propose a two-stage adapta-tion framework for SIQA. The model is first adapted using scientific document images to learn domain-specific visual-language patterns and is subsequently fine-tuned with both quality-scoring and understanding-oriented supervision. In this setting, SIQA Scoring (SIQA-S) evaluates alignment with ex-pert quality judgments, while SIQA Understanding (SIQA-U) measures scientific image comprehension through structured reasoning questions. This work presents our solution to the ICME 2026 Scientific Image Quality Assessment Challenge, which ranked 2nd in the scoring track. 1
+
+II. D ATA PREPARATION 
+
+Our training procedure consists of two stages, namely domain-adaptive pretraining followed by task-specific fine-tuning. For each stage, we apply a tailored data preparation strategy, as described below. We initialize the model from       
+
+> 1The code is publicly available at: https://github.com/yinloonkhor/ SciQNet-SIQA. arXiv:2608.05691v1 [cs.CV] 6 Aug 2026
+
+TABLE I: Dataset statistics used in the two training stages.                                  
+
+> Dataset Setting Sampling Strategy Samples
+> M-Paper 10% pretraining Task-type stratified 17,539 M-Paper 40% pretraining Task-type stratified 70,127 M-Paper 100% pretraining Full filtered split 175,295 M-Paper Validation Full filtered split 1,347 SIQA-S Train Full split 16,800 SIQA-S Validation Full split 2,100 SIQA-U 10% train Question-type stratified 10,404 SIQA-U 50% train Question-type stratified 52,011 SIQA-U 100% train Full split 104,021 SIQA-U Validation Full split 1,120
+
+pretrained Qwen3-VL weights and adopt its image-processing pipeline for both stages, which dynamically resizes images under a bounded pixel budget. 
+
+Domain-adaptive Pretraining : To improve the model’s ability to process scientific document images, we use the M-Paper dataset introduced by mPLUG-PaperOwl [14]. M-Paper provides document-oriented multimodal supervision across tasks such as figure captioning, figure analysis and outline recommendation, covering both visual content and surround-ing textual context. We remove invalid or unsuitable samples, including records with missing images, excessive image size or extreme aspect ratios. This filtering step reduces noisy inputs and improves the consistency of the training data. The retained samples are grouped by task type and converted into the Qwen-style multimodal chat format. 
+
+Task-specific Fine-tuning : In the second stage, we use the SIQA dataset [1]. SIQA contains two complementary task types: SIQA-S for scientific image quality scoring and SIQA-U for scientific image understanding. SIQA-S evaluates two quality dimensions, namely perception-driven quality and knowledge-driven quality. Each SIQA-S image is converted into two instruction samples, one for each quality dimension, so that the model receives separate supervision for percep-tual quality and scientific content relevance. Each continuous quality score is mapped to a discrete rating word, such as Bad, Poor, Fair, Good or Excellent, while the original numeric score is retained for score-level Huber supervision. SIQA-U is formulated as multiple-choice visual question answering and contains Yes/No, What and How question categories. Each SIQA-U sample is converted into an instruction instance where the model predicts one uppercase option letter from A, B, C or D. Both SIQA-S and SIQA-U samples are converted into formatted Qwen-style multimodal instruction templates. The dataset splits and sampling settings used in our experi-ments are summarized in Table I. For M-Paper, the percentage settings denote domain-adaptive pretraining fractions sampled from the filtered training split using task-type stratification. For SIQA-U, the percentage settings denote understanding-data sampling ratios. When partial subsets are used, they are sampled with question-type stratification to preserve the original category distribution. SIQA-S uses the full scoring training split in all task-specific fine-tuning experiments. III. M ODEL ARCHITECTURE AND TRAINING STRATEGY 
+
+A. Model Architecture 
+
+The overall workflow of our proposed SciQNet is illustrated in Figure 1. Our model is built upon Qwen3-VL-2B [15], fine-tuned via LoRA. The model encodes visual inputs into visual tokens, aligns them with the language representation space and jointly reasons over the combined visual and textual context using the language model backbone. This structure allows the model to handle scientific image understanding and quality assessment within a unified multimodal generation framework. 
+
+B. Training Details 
+
+LoRA adapters are inserted into selected language and vi-sion modules with rank r = 16 , scaling factor α = 32 , dropout 
+
+0.05 and no trainable bias terms. Specifically, LoRA is applied to the query, key, value and output projection layers in the language transformer blocks and to the fused QKV and output attention projection layers in the vision transformer blocks. The MLP layers, vision-language merger, token embeddings, language-model head and normalization layers are kept frozen. We use AdamW with a learning rate of 1 × 10 −4, weight decay 0.01 , gradient clipping 1.0 and a linear learning-rate schedule. Training is conducted for three epochs with bf16 precision when available, gradient checkpointing enabled and a maximum sequence length of 2048 tokens. Unless otherwise stated, batch size refers to the per-device batch size. 
+
+Domain-adaptive Pretraining : Task-type stratification is used to preserve task balance under different data-fraction settings. Since M-Paper contains multi-image and multi-turn samples, the collator dynamically adjusts the visual-token budget so that each encoded sequence fits within the 2048-token limit. This stage is optimized using causal language-modelling loss over the assistant response, with prompt tokens masked from the loss. 
+
+SIQA Fine-tuning : Training resumes from the best domain-adapted LoRA checkpoint. SIQA-S and SIQA-U are combined using a task-aware sampler to balance scoring and understand-ing supervision. This stage is optimized with causal language-modelling loss for all samples, together with an additional Hu-ber loss for SIQA-S samples to supervise continuous quality scores. To compute the Huber loss, the continuous score prediction 
+
+ˆs is derived from the model’s next-token logits over the five rating words: Bad, Poor, Fair, Good and Excellent. These rating words are mapped to ordinal score values 1, 2, 3, 4
+
+and 5, respectively. For each SIQA-S sample, we locate the token position of the target rating word in the labeled assistant response and extract the model logits at the preceding position, which represent the next-token distribution used to predict that rating word. The logits corresponding to the five rating words are normalized using a softmax distribution and ˆs is computed as the expected value over the ordinal score values. This enables continuous score supervision through the Huber objective while preserving the model’s natural-language rating output format. Fig. 1: Overview of the proposed SciQNet framework. 
+
+L = LLM + λISIQA-S LHuber (ˆ s, s ) (1) 
+
+ˆs =
+
+> 5
+
+X
+
+> k=1
+
+pkvk, pk = exp( zk)
+
+P5 
+
+> j=1
+
+exp( zj ) (2) where LLM is the causal language-modelling loss over the supervised assistant response, LHuber is the Huber loss between the predicted quality score ˆs and the ground-truth score s and ISIQA-S indicates whether the sample belongs to SIQA-S. Here, vk ∈ { 1, 2, 3, 4, 5} denotes the ordinal score value of the k-th rating word and zk denotes its corresponding model logit. The regression weight is fixed to λ = 1 in all experiments. Since each SIQA sample contains a single image and a short fixed-format response, no iterative visual-token budget search is required. For domain-adaptive pretraining, checkpoints are selected using validation language-modelling loss on M-Paper, while SIQA fine-tuning checkpoints are selected using the combined SIQA evaluation score. IV. P LATFORM & K EY CASES 
+
+A. Experimental Platform 
+
+All experiments were conducted on a workstation equipped with two NVIDIA A100 GPUs and implemented in PyTorch. 
+
+B. Evaluation Metrics 
+
+We evaluate model performance using the official SIQA scoring protocol. SIQA-S measures scientific image quality scoring performance along two dimensions, perception-driven quality and knowledge-driven quality. For each dimension, performance is measured using Spearman rank correlation coefficient (SRCC) and Pearson linear correlation coefficient (PLCC). The score for each dimension is computed as: 
+
+Score( d) = max 
+
+ SRCC( d) + PLCC( d)2 , 0
+
+
+
+× 100 (3) where d denotes either the perception or knowledge dimension. The final SIQA-S score is the average of the perception and knowledge scores: 
+
+SIQA -S = Score Perception + Score Knowledge 
+
+2 (4) SIQA-U evaluates scientific image understanding using multiple-choice visual question answering. It reports accuracy over three question categories: Yes/No, What and How. The final SIQA-U score is computed as a weighted average: 
+
+SIQA -U = 0 .2×ACC Yes /No +0 .3×ACC What +0 .5×ACC How 
+
+(5) The combined score reported in the leaderboard is computed as the average of the final SIQA-S and SIQA-U scores: 
+
+Combined = SIQA -S + SIQA -U2 (6) These metrics jointly evaluate whether the model can align with expert quality judgments and perform structured scientific image understanding. 
+
+C. Ablation Studies 
+
+We conduct a series of ablation studies to investigate the impact of different training configurations on model perfor-mance. Specifically, we analyse the effects of (1) learning rate and Huber loss delta, (2) domain-adaptive pretraining fraction TABLE II: Effect of learning rate and Huber loss delta on SIQA-S performance. All runs use no domain-adaptive pretraining, 100% SIQA-S data, no SIQA-U data and a per-device batch size of 32.               
+
+> Learning Rate Huber Delta SIQA-S Score
+> 1.00 ×10 −51.082 .3004 1.00 ×10 −41.091 .5155 1.00 ×10 −40.591 .6753
+
+for SIQA-S, (3) SIQA-U sampling ratio and batch size and (4) domain-adaptive pretraining fraction under joint SIQA-S and SIQA-U training. For clarity, each table reports only the varied factors and evaluation scores, while fixed training settings are specified in the corresponding caption. 
+
+Learning Rate and Huber Loss Delta. We first evaluate the effect of the learning rate and Huber loss delta on SIQA-S performance. As shown in Table II, increasing the learning rate from 1 × 10 −5 to 1 × 10 −4 significantly improves the SIQA-S score from 82 .3004 to 91 .5155 , indicating that the smaller learning rate may lead to slow convergence or insufficient model optimization. Furthermore, reducing the Huber loss delta from 1.0 to 0.5 yields a slight improvement, increasing the SIQA-S score from 91 .5155 to 91 .6753 . Although the improvement is marginal, it suggests that a smaller Huber loss delta may be slightly better suited to this scoring setting. Based on these results, we adopt 1 × 10 −4 as the learning rate and 
+
+0.5 as the Huber loss delta for subsequent experiments. 
+
+Domain-Adaptive Pretraining : We further investigate the effect of domain-adaptive pretraining on SIQA-S performance by varying the proportion of pretraining data while keeping the model trained only on SIQA-S. As shown in Table III, using 40% of the domain-adaptive pretraining data achieves the best SIQA-S score of 92.1194, outperforming both the model without pretraining and the model using the full pretraining set. In contrast, using 10% pretraining slightly decreases the score from 91.6753 to 91.5288, while using 100% pretraining improves the score to 91.8024 but remains lower than the 40% setting. We hypothesize that the 40% subset provides a more favourable balance between data diversity and data quality, where the selected samples are sufficiently representative of the target domain while containing less noisy or less relevant data than the full pretraining set. As a result, moderate domain-adaptive pretraining may help the model learn useful domain-specific representations without overfitting to noisy patterns or distributional biases in the pretraining data. 
+
+SIQA-U Sampling Ratio and Batch Size : We next study the effect of incorporating SIQA-U data during training. In this experiment, the SIQA-S sampling ratio is fixed at 100%, while the SIQA-U sampling ratio and batch size are varied. As shown in Table IV, reducing the batch size from 32 to 16 under the 10% SIQA-U setting improves the SIQA-S score from 90.9411 to 91.8833 and the SIQA-U score from 43.7930 to 44.7783, resulting in a higher combined score of 68.3308. This suggests that a smaller batch size may provide better generalization, possibly due to noisier gradient updates that TABLE III: Effect of domain-adaptive pretraining fraction on SIQA-S performance. All runs use a learning rate of 1×10 −4,Huber loss delta of 0.5, 100% SIQA-S data, no SIQA-U data and a per-device batch size of 32.      
+
+> Pretraining Fraction SIQA-S Score
+> 0% 91 .6753 10% 91 .5288 40% 92 .1194 100% 91 .8024
+
+TABLE IV: Effect of SIQA-U sampling ratio and batch size on overall SIQA performance. All runs use a learning rate of 1 ×
+
+10 −4, Huber loss delta of 0.5, no domain-adaptive pretraining and 100% SIQA-S data.                     
+
+> SIQA-U Ratio Batch Size SIQA-S SIQA-U Combined
+> 10% 32 90 .9411 43 .7930 67 .3671 10% 16 91 .8833 44 .7783 68 .3308 50% 16 91 .7891 47 .6264 69 .7077 100% 16 92 .5608 46 .8616 69 .7112
+
+help avoid sharp minima. Increasing the SIQA-U sampling ratio from 10% to 50% further improves the SIQA-U score from 44.7783 to 47.6264, with only a minor decrease in SIQA-S performance. This leads to a substantial improvement in the combined score from 68.3308 to 69.7077, indicating that additional SIQA-U samples are beneficial for enhancing the understanding capability of the model. When using the full SIQA-U training data, the model achieves the highest SIQA-S score of 92.5608 and the best combined score of 69.7112. Although the SIQA-U score is slightly lower than that obtained with 50% SIQA-U data, the improvement in SIQA-S compensates for this drop. Therefore, we adopt 100% SIQA-S and 100% SIQA-U with a batch size of 16 as the training configuration for subsequent experiments. 
+
+Domain-Adaptive Pretraining for Overall SIQA Perfor-mance : Using the best joint-training configuration identified in the previous experiment, we evaluate different domain-adaptive pretraining fractions on overall SIQA performance. As shown in Table V, 40% pretraining achieves the highest combined score of 70.9462, along with the highest SIQA-S score of 92.7094 and SIQA-U score of 49.1830 among the internal experiments. Compared with the model trained without domain-adaptive pretraining, the 40% setting improves the combined score from 69.7112 to 70.9462, corresponding to a gain of 1.2350 points. It also outperforms the 100% pretraining setting by 0.7966 points. These results demonstrate the effectiveness of moderate domain-adaptive pretraining for improving both scoring and understanding performance. However, full pretraining does not yield the best result, possibly because the full set contains less relevant or noisier samples that reduce transfer effectiveness to SIQA. This effect may be compounded by model capacity, as smaller models are more susceptible to noise in training data. Overall, the 40% setting is selected as the final configuration. TABLE V: Effect of domain-adaptive pretraining fraction on overall SIQA performance. All runs use a learning rate of 
+
+1 × 10 −4, Huber loss delta of 0.5, 100% SIQA-S data, 100% SIQA-U data and a per-device batch size of 16.                
+
+> Pretraining Fraction SIQA-S SIQA-U Combined
+> 0% 92 .5608 46 .8616 69 .7112 10% 91 .7924 46 .5933 69 .1928 40% 92 .7094 49 .1830 70 .9462 100% 92 .6884 47 .6107 70 .1496
+
+D. Official Leaderboard Results 
+
+Finally, we evaluate the models with different domain-adaptive pretraining fractions on the official SIQA leaderboard. As shown in Table VI, the model pretrained with 40% of the domain-adaptive data achieves the best overall performance, with a combined score of 69.80. This setting also obtains the highest SIQA-S final score of 92.21 and the highest SIQA-U final score of 47.38, which is consistent with the trend observed in our internal ablation experiments. Compared with the model without domain-adaptive pre-training, the 40% pretraining setting improves the combined score from 69.44 to 69.80, corresponding to a gain of 0.36 points. It also outperforms the model using 100% pretraining data by 0.50 points in combined score. These leaderboard results further support the observation that moderate domain-adaptive pretraining performs best among the tested settings, although additional analysis would be needed to determine why larger pretraining fractions do not lead to further gains. 
+
+E. Qualitative Analysis of Key Cases 
+
+We analyse performance on the required key test cases, which cover a range of challenging scientific images, in-cluding visually degraded samples, under-annotated figures and information-dense diagrams. Since ground-truth labels are unavailable for these test samples, we report the predicted perception and knowledge scores in Table VII and provide representative visual examples in Figure 2. Overall, the model assigns low scores to cases with weak sharpness, poor lighting or missing scientific annotations, such as cases 407 and 415, while giving high scores to clearly rendered and well-labelled diagrams, such as cases 625, 677, 686 and 855. Among these cases, cases 485 and 1033 are useful for illustrating differences between perception-oriented and knowledge-oriented predictions. Case 485 receives a lower perception score due to blur and rough rendering, but ahigher knowledge score because it includes dimensions and units. Case 1033 shows the opposite pattern, where the dense visual presentation slightly lowers the perception score, while the presence of extensive legends, scale bars and references leads to a higher knowledge score. These examples suggest that the model can assign different scores to perceptual and knowledge-related dimensions in some cases, rather than re-lying only on a single global quality estimate. V. C ONCLUSION 
+
+In this work, we explore the effectiveness of a two-stage multimodal adaptation framework for scientific image quality assessment. The proposed method combines domain-adaptive pretraining on scientific document images with task-specific fine-tuning using both scoring-oriented and understanding-oriented supervision. Experimental results demonstrate that the model can jointly assess perceptual quality and scientific in-formativeness, validating the benefit of incorporating scientific image understanding into quality assessment. Furthermore, our ablation studies show that moderate domain-adaptive pretrain-ing achieves better performance than both no pretraining and full pretraining, highlighting the importance of data relevance and quality in domain adaptation. On the official leaderboard, our best model achieves a combined score of 69.80 and is ranked 2nd in the SIQA-S scoring track with a score of 92.21. We believe these findings provide useful insights for designing multimodal systems for reliable scientific image evaluation. REFERENCES [1] W. Li, L. Chen, J. Wang, Y. Guo, Y. Shen, F. Wen, C. Li, Z. Zhang, and G. Zhai, “Siqa: Toward reliable scientific image quality assessment,”                                      
+
+> arXiv preprint arXiv:2603.06700 , 2026. [2] D. Ghadiyaram and A. C. Bovik, “Massive online crowdsourced study of subjective and objective picture quality,” IEEE transactions on image processing , vol. 25, no. 1, pp. 372–387, 2015. [3] N. Ponomarenko, L. Jin, O. Ieremeiev, V. Lukin, K. Egiazarian, J. Astola, B. Vozel, K. Chehdi, M. Carli, F. Battisti et al. , “Image database tid2013: Peculiarities, results and perspectives,” Signal processing: Image com-munication , vol. 30, pp. 57–77, 2015. [4] H. Lin, V. Hosu, and D. Saupe, “Kadid-10k: A large-scale artificially distorted iqa database,” in 2019 Eleventh International Conference on Quality of Multimedia Experience (QoMEX) .IEEE, 2019, pp. 1–3. [5] V. Hosu, H. Lin, T. Sziranyi, and D. Saupe, “Koniq-10k: An ecologically valid database for deep learning of blind image quality assessment,”
+> IEEE Transactions on Image Processing , vol. 29, pp. 4041–4056, 2020. [6] A. Mittal, A. K. Moorthy, and A. C. Bovik, “No-reference image quality assessment in the spatial domain,” IEEE Transactions on image processing , vol. 21, no. 12, pp. 4695–4708, 2012. [7] A. Mittal, R. Soundararajan, and A. C. Bovik, “Making a “completely blind” image quality analyzer,” IEEE Signal processing letters , vol. 20, no. 3, pp. 209–212, 2012. [8] K. Ma, W. Liu, K. Zhang, Z. Duanmu, Z. Wang, and W. Zuo, “End-to-end blind image quality assessment using deep neural networks,” IEEE Transactions on Image Processing , vol. 27, no. 3, pp. 1202–1213, 2017. [9] W. Zhang, K. Ma, J. Yan, D. Deng, and Z. Wang, “Blind image quality assessment using a deep bilinear convolutional neural network,” IEEE Transactions on Circuits and Systems for Video Technology , vol. 30, no. 1, pp. 36–47, 2018. [10] Z. Pan, H. Zhang, J. Lei, Y. Fang, X. Shao, N. Ling, and S. Kwong, “Dacnn: Blind image quality assessment via a distortion-aware convolu-tional neural network,” IEEE Transactions on Circuits and Systems for Video Technology , vol. 32, no. 11, pp. 7518–7531, 2022. [11] J. Bai, S. Bai, Y. Chu, Z. Cui, K. Dang, X. Deng, Y. Fan, W. Ge, Y. Han, F. Huang et al. ,“Qwen technical report,” arXiv preprint arXiv:2309.16609 , 2023. [12] Z. Chen, J. Wu, W. Wang, W. Su, G. Chen, S. Xing, M. Zhong, Q. Zhang, X. Zhu, L. Lu et al. , “Internvl: Scaling up vision foundation models and aligning for generic visual-linguistic tasks,” in Proceedings of the IEEE/CVF conference on computer vision and pattern recognition , 2024, pp. 24 185–24 198. [13] Y.-L. Khor, Y.-J. Wong, and Y. C. Hum, “Effiminivlm: A compact dual-encoder regression framework,” arXiv preprint arXiv:2604.03172 , 2026. [14] A. Hu, Y. Shi, H. Xu, J. Ye, Q. Ye, M. Yan, C. Li, Q. Qian, J. Zhang, and F. Huang, “mplug-paperowl: Scientific diagram analysis with the multimodal large language model,” in Proceedings of the 32nd ACM International Conference on Multimedia , 2024, pp. 6929–6938.
+
+TABLE VI: Official SIQA leaderboard results under different domain-adaptive pretraining fractions. 
+
+Pretraining SIQA-S (Scoring) SIQA-U (Understanding) Combined Perception Knowledge Final Score Yes/No ACC What ACC How ACC Final Score (SRCC/PLCC) (SRCC/PLCC) 
+
+0% 0.8973 /0.9217 0.9084 /0.9428 91 .76 54 .74 76 .57 26 .41 47 .12 69 .44 40% 0.9069 /0.9271 0.9130 /0.9414 92 .21 55 .79 75 .43 27 .18 47 .38 69 .80 100% 0.9020 /0.9230 0.9085 /0.9258 91 .48 56 .58 76 .57 25 .64 47 .11 69 .30 
+
+TABLE VII: Qualitative analysis of selected key test cases. 
+
+Case ID Perception Knowledge Reasoning and Analysis 
+
+407 2.2745 1.0978 Weak sharpness, uneven lighting and missing labels reduce both perception and scientific-content confidence. 415 2.2654 1.1228 Treated the object as recognizable but scientifically under-specified, with no technical detail or supporting annotations. 473 3.7786 2.1899 Rated the layout and visual detail positively, but lowered the knowledge score due to unclear labels. 485 2.5585 3.7887 Blur and rough rendering lower perception, while dimensions and units support knowledge scoring. 625 4.1815 4.0294 Shows strong overall quality due to clean rendering, readable labels and relevant anatomical structure. 677 3.9463 4.0571 Scores highly due to clear labels, coherent structure and readable visual organization. 686 4.5199 4.3657 Showed high confidence in the map due to its clean layout, readable geographic labels and sufficient coordinate annotations. 855 4.2918 4.1912 Receives high scores due to clear rendering, explanatory labels and measurements that support scientific interpretation. 1033 3.9171 4.5613 Dense layout lowers perception, while annotations, legends, scale bars and references support a high knowledge score. 1050 3.4734 4.2527 Judged visually simple but scientifically informative due to clear molecular labels, atom-colour encoding and a legend. 
+
+Case 407 Case 485 Case 625 Case 1033 
+
+Fig. 2: Qualitative examples of scientific image quality assessment predictions. 
+
+[15] S. Bai, Y. Cai, R. Chen, K. Chen, X. Chen, Z. Cheng, L. Deng, W. Ding, C. Gao, C. Ge et al. , “Qwen3-vl technical report,” arXiv preprint arXiv:2511.21631 , 2025. 
+
+APPENDIX APROMPT TEMPLATES 
+
+A. SIQA-S Prompt 
+
+We use separate prompts for the two SIQA-S quality dimensions: perception-driven quality and knowledge-driven quality. Both prompts constrain the model output to one of five rating words: Bad, Poor, Fair, Good and Excellent. 
+
+1) Perception-driven task prompt: a) Instruction component:                                            
+
+> You are an expert in scientific image analysis. Evaluate the given image on Subjective Quality only: - Consider technical quality (sharpness, lighting, legibility) and aesthetic quality (visual appeal, layout balance, information density). -Ignore scientific correctness. Use exactly one of these five terms: [Bad, Poor, Fair, Good, Excellent]. Respond ONLY as: Subjective: [Quality Word]
+
+b) User question component:         
+
+> How would you rate the subjective quality of this image?
+
+2) Knowledge-driven task prompt: a) Instruction component:                                             
+
+> You are an expert in scientific image analysis. Evaluate the given image on Objective Quality only: -Assess scientific rigor: completeness, such as scale bars, axis labels, units, correctness of data, and avoidance of redundancy. -Ignore aesthetics or technical rendering. Use exactly one of these five terms: [Bad, Poor, Fair, Good, Excellent]. Respond ONLY as: Objective: [Quality Word]
+
+b) User question component:         
+
+> How would you rate the objective quality of this image?
+
+B. SIQA-U Prompt 
+
+For SIQA-U, each sample is reformulated as a multiple-choice visual question-answering task, where the model out-puts one uppercase option letter: A, B, C, or D. 
+
+1) Multiple-choice understanding task prompt: a) Instruction component:                                 
+
+> You are an expert in scientific image analysis. Your task is to answer visual question answering questions based on the given image. Respond with ONLY asingle uppercase letter: A, B, C, or D. Do not include any explanations, punctuation, spaces, or additional characters.
+
+b) User question component:

@@ -1,21 +1,20 @@
 # 日报 · 2026-08-07
 
-- 生成时间：2026-08-07 01:40:33 UTC
-- 当次推荐总数：2
-- 精读区：0
-- 速读区：2
+- 生成时间：2026-08-07 20:25:54 UTC
+- 当次推荐总数：1
+- 精读区：1
+- 速读区：0
 
 ## 今日简报（AI）
-今日速读两篇图像处理论文，分别聚焦多参考图像编辑的一致性奖励优化与上下文敏感的复合图像检索。  
-其中，多参考编辑的评估验证奖励方法有助于生成更忠实的多对象修改，而上下文组合检索则让模型理解场景关系再搜索。  
-建议图像编辑爱好者关注这类奖励引导的生成范式，普通人也可体验“描述场景就能搜图”的新检索方式。
+今日精读高分论文，揭示了两阶段多模态方法如何让机器像专家一样判定科学图像的质量。  
+最值得关注的方向：融合视觉与文本特征，先对齐再评估，显著提升了对显微镜等科学图像质量判断的准确性。  
+普通读者可着手尝试，用类似的多模态适应思路，优化您手中图表、医学影像等专业图像的自动筛选与分析。
 
 ## 精读区
-- 本次无精读推荐。
+1. [SciQNet: Two-Stage Multimodal Adaptation for Scientific Image Quality Assessment](/202608/07/2608.05691v1-sciqnet-two-stage-multimodal-adaptation-for-scientific-image-quality-assessment) （9.0/10）
 
 ## 速读区
-1. [Evaluation-Verification Reward for Consistent Multi-Reference Image Editing](/202608/07/2607.29025v2-evaluation-verification-reward-for-consistent-multi-reference-image-editing) （7.0/10）
-2. [CoCo-IR: Contextual Composed Image Retrieval](/202608/07/2608.05149v1-coco-ir-contextual-composed-image-retrieval) （7.0/10）
+- 本次无速读推荐。
 
 ---
 使用键盘方向键可在日报/论文之间快速切换。
