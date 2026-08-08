@@ -1,0 +1,144 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-08T20:22:11.563765+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2608.01055v1",
+      "source": "arxiv",
+      "title": "Credit the Right Box: Marginal Contribution Assignment for Structured Visual Perception",
+      "abstract": "Multimodal Large Language Models (MLLMs) are increasingly expected to solve structured perception tasks that require visual recognition, language-to-object binding, object cardinality preservation, and precisely localized grounding and segmentation outputs. However, existing group-relative reinforcement learning methods provide only response-level supervision, creating a granularity mismatch for structured multi-object prediction: a single advantage is broadcast to all tokens in a response, without distinguishing individual box contributions. To address this mismatch, we propose MCR-GRPO, a marginal contribution assignment framework that derives box-level credit directly from each sampled response. Specifically, Marginal Contribution Reward (MCR) estimates each predicted box's contribution through a leave-one-out comparison, measuring how the matched set value changes when the box is removed from the response. After within-response normalization, records that improve the set value receive positive credit, while redundant or harmful ones are suppressed. To make marginal attribution stable and informative, we further introduce a Continuous Matched Set Value Evaluator that integrates permutation-invariant matching, count-aware normalization, and graded localization. MCR-GRPO maps normalized box-level marginal advantages to the token spans that generated each box, preserving GRPO's response-level comparison while enabling box-aware optimization of structured multi-object grounding. Experiments across REC, DOD, segmentation, and counting benchmarks show state-of-the-art performance over prior GRPO-based baselines.",
+      "authors": [
+        "Xinheng Han",
+        "Jianfei Wang",
+        "Yu Chen",
+        "Xiang Wang",
+        "Shuai Li",
+        "Weixing Li",
+        "Feng Pan"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-08-02T07:43:09+00:00",
+      "link": "https://arxiv.org/pdf/2608.01055v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Develops a reinforcement learning-based method for multimodal large language models to improve structured visual perception.",
+      "llm_evidence_cn": "提出基于强化学习的方法，增强多模态大语言模型的结构化视觉感知能力",
+      "llm_evidence": "提出基于强化学习的方法，增强多模态大语言模型的结构化视觉感知能力",
+      "canonical_evidence": "提出基于强化学习的方法，增强多模态大语言模型的结构化视觉感知能力",
+      "llm_tldr_en": "MCR-GRPO addresses the granularity mismatch in RL for MLLMs by assigning box-level credit, improving structured perception tasks such as detection and segmentation.",
+      "llm_tldr_cn": "针对多模态大语言模型在结构化感知任务中强化学习训练的粒度不匹配问题，MCR-GRPO框架为每个检测框分配边际贡献，实现细粒度的信用分配。该方法在目标检测与分割等任务上提升了定位精度和语义一致性，为利用强化学习优化MLLM的视觉推理提供了新思路。",
+      "llm_tldr": "针对多模态大语言模型在结构化感知任务中强化学习训练的粒度不匹配问题，MCR-GRPO框架为每个检测框分配边际贡献，实现细粒度的信用分配。该方法在目标检测与分割等任务上提升了定位精度和语义一致性，为利用强化学习优化MLLM的视觉推理提供了新思路。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.01354v1",
+      "source": "arxiv",
+      "title": "PixVL: Self-Supervised Training of Pixel-Level MLLMs via a Unified Mask--Text Consistency Cycle",
+      "abstract": "Recent studies develop pixel-level multimodal large language models (MLLMs) that support both Region Segmentation and Region Understanding, extending multimodal interaction from whole images to specific objects and regions. However, these methods face two fundamental challenges. First, the scarcity of high-quality mask--text pairs leaves abundant mask annotations without corresponding language supervision. Second, discrepancies in supervision formats and learning-signal densities induce optimization interference between Region Segmentation and Region Understanding. To address these challenges, we propose PixVL, a self-supervised post-training framework that introduces a unified Mask--Text Consistency Cycle, enabling pixel-level MLLMs to generate and self-verify regional descriptions and learn from unlabeled data. We found that direct cycle based solely on geometric reconstruction is unreliable because re-segmentation IoU does not faithfully reflect the semantic quality and referring sufficiency. PixVL therefore introduces confuser-aware semantic verification, which uses the model's confidence when it correctly chooses the target among highly similar candidate regions, and assigns zero reward to an incorrect choice. Meanwhile, PixVL performs cross-view verification using temporally separated video frames or geometrically transformed image views, preventing cyclic learning from collapsing to positional and shape shortcuts. Finally, a quality-coupled bidirectional learning strategy uses the highest-reward description to guide Text-to-Mask learning. This strategy transforms Region Understanding and Region Segmentation from competing tasks into mutual generators and verifiers. Experiments demonstrate that PixVL improves both region understanding task and segmentation task.",
+      "authors": [
+        "Yicheng Xiao",
+        "Haoxuan Ma",
+        "Caorui Li",
+        "Yucheng Wu",
+        "Weijie Wang",
+        "Haoxiao Wang",
+        "Shuang Chen",
+        "Fan Yang",
+        "Haiyun Guo",
+        "Jinqiao Wang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-08-02T16:13:52+00:00",
+      "link": "https://arxiv.org/pdf/2608.01354v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Proposes a self-supervised training framework for pixel-level multimodal large language models that process images and text.",
+      "llm_evidence_cn": "提出一种自监督训练框架，用于可处理图像和文本的像素级多模态大语言模型",
+      "llm_evidence": "提出一种自监督训练框架，用于可处理图像和文本的像素级多模态大语言模型",
+      "canonical_evidence": "提出一种自监督训练框架，用于可处理图像和文本的像素级多模态大语言模型",
+      "llm_tldr_en": "PixVL addresses the scarcity of mask-text pairs and optimization interference in pixel-level MLLMs by introducing a mask-text consistency cycle for self-supervised region understanding and segmentation.",
+      "llm_tldr_cn": "针对像素级多模态大语言模型面临的高质量掩模-文本对稀缺和区域分割与理解任务间的优化冲突问题，PixVL提出统一掩模-文本一致性循环的自监督后训练框架，同时利用图像掩模和语言描述进行互监督学习，在多个基准上提升了区域级视觉理解和分割性能，推动了细粒度多模态交互的发展。",
+      "llm_tldr": "针对像素级多模态大语言模型面临的高质量掩模-文本对稀缺和区域分割与理解任务间的优化冲突问题，PixVL提出统一掩模-文本一致性循环的自监督后训练框架，同时利用图像掩模和语言描述进行互监督学习，在多个基准上提升了区域级视觉理解和分割性能，推动了细粒度多模态交互的发展。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2607.29025v1",
+      "source": "arxiv",
+      "title": "Evaluation-Verification Reward for Consistent Multi-Reference Image Editing",
+      "abstract": "While recent image editing models have made rapid progress, multi-reference editing remains challenging, particularly in maintaining visual consistency across references and ensuring overall visual harmony. Reinforcement learning has proven highly effective for text-to-image generation and single-image editing, but its extension to multi-reference editing is hindered by the absence of suitable reward models that capture multi-image relational constraints. Moreover, naively using multimodal large language models(MLLMs) as zero-shot evaluators faces a key tension between hallucination-prone long-form reasoning and the limited deductive power of short-form judgments. We address these issues with a Multi-dimensional Evaluation-Verification Reward(EVR). EVR decomposes evaluation into distinct visual criteria; for each criterion, an MLLM Evaluator generates multiple candidate hypotheses, and a Verifier grounds each claim in concrete visual evidence to accept or reject it, producing reliable and fine-grained reward signals. Together with a scalable data pipeline, our method enables RL fine-tuning of off-the-shelf editors without architectural changes. Extensive experiments show substantial gains over the base Qwen-Image-Edit, improving consistency and harmony to match or surpass NanoBanana.",
+      "authors": [
+        "Yingmao Miao",
+        "Pengfei Zhang",
+        "Xiaochen Lv",
+        "Meng Yu",
+        "Lei Sun",
+        "Xiangxiang Chu",
+        "Chao Shen",
+        "Chenhao Lin"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-07-31T04:54:20+00:00",
+      "link": "https://arxiv.org/pdf/2607.29025v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Uses multimodal LLMs with verification to evaluate and reason about multi-image editing quality",
+      "llm_evidence_cn": "使用多模态大语言模型通过验证来评估和推理多图像编辑质量",
+      "llm_evidence": "使用多模态大语言模型通过验证来评估和推理多图像编辑质量",
+      "canonical_evidence": "使用多模态大语言模型通过验证来评估和推理多图像编辑质量",
+      "llm_tldr_en": "Proposes a multi-dimensional evaluation-verification reward (EVR) that leverages MLLMs to assess consistency and harmony in multi-reference image editing, with verification steps to mitigate hallucination, enabling reinforcement learning for better editing.",
+      "llm_tldr_cn": "针对多参考图像编辑中视觉一致性与和谐性的评估难题，提出多维度评估-验证奖励（EVR）。该方法利用多模态大语言模型进行质量评估，并通过验证机制抑制长文本推理中的幻觉，从而为强化学习提供可靠奖励信号。实验表明EVR能有效提升多图编辑的视觉一致性，为复杂编辑场景下的质量评估提供了新思路。",
+      "llm_tldr": "针对多参考图像编辑中视觉一致性与和谐性的评估难题，提出多维度评估-验证奖励（EVR）。该方法利用多模态大语言模型进行质量评估，并通过验证机制抑制长文本推理中的幻觉，从而为强化学习提供可靠奖励信号。实验表明EVR能有效提升多图编辑的视觉一致性，为复杂编辑场景下的质量评估提供了新思路。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "multimodal large language models for image quality reasoning and explanation generation",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
