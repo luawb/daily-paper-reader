@@ -1,0 +1,39 @@
+{
+  "label": "2026-08-09",
+  "date": "2026-08-09",
+  "generated_at": "2026-08-09T20:18:07",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202608/09/2608.02980v1-qwen-3d-a-generalist-3d-vision-language-model-for-spatial-understanding",
+      "section": "quick",
+      "title_en": "Qwen-3D: A Generalist 3D Vision-Language Model for Spatial Understanding",
+      "authors": "Lucy Lin, Ayush Jain, Yifan Liu, Katerina Fragkiadaki",
+      "date": "2026-08-04",
+      "pdf": "https://arxiv.org/pdf/2608.02980v1",
+      "score": "7.0",
+      "evidence": "提出了一个处理3D图像和文本的通用视觉语言模型",
+      "tldr": "大型多模态模型在长视频理解中受限于逐帧标记化与有限上下文，难以扩展。Qwen-3D通过多视图几何线索压缩视觉信息，引入3D旋转位置嵌入和基于查询的分割解码器，将语言直接对齐于3D场景空间。模型在多项基准上超越现有3D视觉语言模型，甚至优于部分大型商用2D模型，同时保持2D任务性能。该工作统一了3D场景中的指称接地、实例分割与问答，为通用空间理解提供了新范式。",
+      "tags": "query:xiqa",
+      "abstract_en": "Large Multimodal Models (LMMs) have achieved remarkable success on images and short videos, yet scaling them to long videos remains challenging due to frame-centric tokenization and limited context windows. 3D geometry provides a natural compression mechanism for visual streams: depth and camera pose enable observations from multiple views and time steps to be fused into a persistent, world-aligned representation. While recent 3D LMMs leverage geometry-aware representations to improve spatial reasoning, they continue to lag behind specialist 3D perception systems on grounding and segmentation tasks. We argue that a key limitation is geometry-aware decoding: existing methods communicate 3D predictions through language tokens, proposal selection, or lightweight grounding queries, creating a bottleneck between language reasoning and dense geometric prediction. Building on these insights, we introduce Qwen-3D, a geometry-aware LMM that compresses visual information within the Qwen backbone using multi-view geometric cues, enabling efficient long-horizon visual reasoning over static scenes. Qwen-3D augments visual tokens with 3D Rotary Positional Embeddings, allowing attention to operate directly in 3D scene space rather than across independent image frames and thereby facilitating scalable cross-view and temporal reasoning. To bridge language and geometry, Qwen-3D incorporates a query-based segmentation decoder that grounds language directly in the underlying 3D scene representation, unifying referential grounding, instance segmentation, and visual question answering across both images and videos. Across a diverse set of benchmarks, Qwen-3D surpasses existing 3D LMMs and outperforms several large proprietary 2D models. Notably, Qwen-3D achieves these improvements while maintaining strong performance on standard 2D vision-language benchmarks by jointly training on 2D and 3D data.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/09/2608.01614v1-linear-multi-timescale-retention-as-a-memory-efficient-vision-language-bridge",
+      "section": "quick",
+      "title_en": "Linear Multi-Timescale Retention as a Memory-Efficient Vision-Language Bridge",
+      "authors": "Ashfak Yeafi, Mehedi Hasan, Md Khairul Islam",
+      "date": "2026-08-03",
+      "pdf": "https://arxiv.org/pdf/2608.01614v1",
+      "score": "6.0",
+      "evidence": "提出用于视觉语言模型的内存高效跨模态桥接，可处理高分辨率图像和文本",
+      "tldr": "视觉语言模型高分辨率处理面临注意力机制平方复杂度瓶颈，独立MLP替代虽线性却丢失空间路由能力。我们提出线性多时间尺度保留（LIA-MTR），结合ELU正映射与门控衰减，实现O(N)记忆高效的跨模态桥梁。实验证明，在16K令牌上消除“中间丢失”，硬件处理262K视觉补丁仅需11.2GB显存，MME得分达71%且对象永存性提升10%。该工作为无限上下文视觉语言集成奠定了数学严谨、计算平坦的基础。",
+      "tags": "query:xiqa",
+      "abstract_en": "Vision-Language Models (VLMs) face a critical computational bottleneck when processing high-resolution imagery due to the $O(N^2)$ memory complexity of Softmax Multi-Head Attention (MHA). While substituting MHA with independent Multi-Layer Perceptrons (MLPs) achieves $O(N)$ scaling, it strips the architecture of spatial sequence routing, severely degrading global scene understanding and object permanence. In this paper, we propose the Linear Multi-Timescale Retention (LIA-MTR) module, a memory-efficient cross-modal bridge. By integrating an ELU-based positive feature mapping with adaptive write-gating and log-linearly distributed recurrent decays, LIA-MTR mathematically compresses continuous visual sequences into bounded memory states. Theoretical analysis proves the architecture operates with strict $O(N)$ sequence-interaction complexity. Empirically, synthetic retrieval evaluations demonstrate that LIA-MTR flawlessly routes context across 16,000 tokens, eliminating the \"Lost in the Middle\" degradation typical of naive linear attention. Hardware benchmarking reveals infinite-context scaling capabilities, natively processing 262,144 visual patches within an 11.2 GB VRAM footprint, whereas standard MHA suffers out-of-memory failure at 16,384 patches. Furthermore, following instruction tuning on 665K conversational samples, LIA-MTR significantly outperforms an industry-standard MLP baseline on the MME benchmark (71.00% vs. 68.11%), driven by a 10% absolute improvement in object permanence and superior global semantic extraction. This work establishes a mathematically rigorous, computationally flat foundation for infinite-context Vision-Language integration.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

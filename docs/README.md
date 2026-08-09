@@ -6,31 +6,29 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-08
-- 运行时间：2026-08-08 20:26:37 UTC
+- 最新运行日期：2026-08-09
+- 运行时间：2026-08-09 20:17:57 UTC
 - 运行状态：成功
-- 本次总论文数：3
-- 精读区：2
-- 速读区：1
+- 本次总论文数：2
+- 精读区：0
+- 速读区：2
 
 ### 今日简报（AI）
-今日精读两篇顶会论文，速读一篇，聚焦视觉感知中的公平归因、像素级多模态自监督与图像编辑一致性奖励。  
-值得关注：如何公平分配结构化视觉任务中各模块的贡献（Credit the Right Box），以及通过统一掩码–文本一致性循环实现像素级多模态模型的自监督训练（PixVL）。  
-建议读者优先阅读这两篇精读论文，尤其关注“边际贡献分配”与“像素–文本循环一致性”如何在多模态任务中提升可解释性与数据效率。
-- 详情：[/202608/08/README](/202608/08/README)
+速读两篇视觉-语言前沿论文，聚焦三维空间理解与高效记忆桥接。  
+《Qwen-3D》尝试构建通用3D视觉语言模型，展现统一空间推理潜力；线性多时间尺度Retention则以低成本记忆机制连接图文。  
+可深入对比3D基座模型的泛化能力，或跟踪大模型记忆压缩对实时应用的影响。
+- 详情：[/202608/09/README](/202608/09/README)
 
 ### 精读区论文标签
-1. [Credit the Right Box: Marginal Contribution Assignment for Structured Visual Perception](/202608/08/2608.01055v1-credit-the-right-box-marginal-contribution-assignment-for-structured-visual-perception)  
-   标签：评分：8.0/10、query:xiqa
-   evidence：提出基于强化学习的方法，增强多模态大语言模型的结构化视觉感知能力
-2. [PixVL: Self-Supervised Training of Pixel-Level MLLMs via a Unified Mask--Text Consistency Cycle](/202608/08/2608.01354v1-pixvl-self-supervised-training-of-pixel-level-mllms-via-a-unified-mask--text-consistency-cycle)  
-   标签：评分：8.0/10、query:xiqa
-   evidence：提出一种自监督训练框架，用于可处理图像和文本的像素级多模态大语言模型
+- 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Evaluation-Verification Reward for Consistent Multi-Reference Image Editing](/202608/08/2607.29025v1-evaluation-verification-reward-for-consistent-multi-reference-image-editing)  
+1. [Qwen-3D: A Generalist 3D Vision-Language Model for Spatial Understanding](/202608/09/2608.02980v1-qwen-3d-a-generalist-3d-vision-language-model-for-spatial-understanding)  
    标签：评分：7.0/10、query:xiqa
-   evidence：使用多模态大语言模型通过验证来评估和推理多图像编辑质量
+   evidence：提出了一个处理3D图像和文本的通用视觉语言模型
+2. [Linear Multi-Timescale Retention as a Memory-Efficient Vision-Language Bridge](/202608/09/2608.01614v1-linear-multi-timescale-retention-as-a-memory-efficient-vision-language-bridge)  
+   标签：评分：6.0/10、query:xiqa
+   evidence：提出用于视觉语言模型的内存高效跨模态桥接，可处理高分辨率图像和文本
 
 
 <div class="dpr-home-promo-card">
