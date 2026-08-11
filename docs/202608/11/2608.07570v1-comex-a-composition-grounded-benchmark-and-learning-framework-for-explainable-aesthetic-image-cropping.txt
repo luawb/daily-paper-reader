@@ -1,0 +1,408 @@
+Title: COMEX: A Composition-Grounded Benchmark and Learning Framework for Explainable Aesthetic Image Cropping
+
+URL Source: https://arxiv.org/pdf/2608.07570v1
+
+Published Time: Tue, 11 Aug 2026 00:03:50 GMT
+
+Number of Pages: 10
+
+Markdown Content:
+# COMEX: A Composition-Grounded Benchmark and Learning Framework for Explainable Aesthetic Image Cropping 
+
+## Rui Yang 
+
+State Key Laboratory of Mobile Network and Mobile Multimedia Technology, ZTE Corporation Shenzhen, China yang.rui15@zte.com.cn 
+
+## Wei Zhou ∗
+
+State Key Laboratory of Mobile Network and Mobile Multimedia Technology, ZTE Corporation Shenzhen, China zhou.wei37@zte.com.cn 
+
+## Dingyong Gou †
+
+State Key Laboratory of Mobile Network and Mobile Multimedia Technology, ZTE Corporation Shenzhen, China gou.dingyong@zte.com.cn 
+
+## Xiaohui Cui 
+
+State Key Laboratory of Mobile Network and Mobile Multimedia Technology, ZTE Corporation Shenzhen, China cui.xiaohui1@zte.com.cn 
+
+## Cong Li 
+
+State Key Laboratory of Mobile Network and Mobile Multimedia Technology, ZTE Corporation Shenzhen, China li.cong4@zte.com.cn 
+
+## Yinyin Gong 
+
+State Key Laboratory of Mobile Network and Mobile Multimedia Technology, ZTE Corporation Shenzhen, China gong.yinyin1@zte.com.cn 
+
+## Yipo Huang 
+
+School of Data Science and Institute of Artificial Intelligence, Chang’an University Xi’an, China yphuang@chd.edu.cn 
+
+## Jiliang Zhao 
+
+State Key Laboratory of Mobile Network and Mobile Multimedia Technology, ZTE Corporation Shenzhen, China zhao.jiliang@zte.com.cn 
+
+Abstract 
+
+Explainable aesthetic image cropping requires not only localizing a visually pleasing crop but also explaining why it is preferred. Existing crop-and-explain methods largely treat explanation as post-hoc text generation and overlook composition, a key aesthetic factor that links crop decisions with interpretable reasoning. In this paper, we reformulate explainable aesthetic image cropping as a structured crop-composition-explanation problem. To support this setting, we introduce COMEX, a new benchmark built through im-age expansion and an IO-reversal pipeline. COMEX contains 33,161 quadruples, each consisting of an expanded image, a crop box, a composition category, and a composition-grounded explanation, en-abling joint learning of crop localization, composition understand-ing, and explanation generation. We further propose a two-stage SFT+GRPO framework, where supervised fine-tuning establishes the structured output protocol and basic cropping ability, and GRPO further improves crop quality, composition prediction, and explana-tion faithfulness. We benchmark 15 large vision-language models 
+
+> ∗Equal Contribution
+> †Corresponding Author Permission to make digital or hard copies of all or part of this work for personal or classroom use is granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for components of this work owned by others than the author(s) must be honored. Abstracting with credit is permitted. To copy otherwise, or republish, to post on servers or to redistribute to lists, requires prior specific permission and/or a fee. Request permissions from permissions@acm.org.
+> MM ’26, Rio de Janeiro, Brazil.
+> © 2026 Copyright held by the owner/author(s). Publication rights licensed to ACM. ACM ISBN 978-x-xxxx-xxxx-x/YYYY/MM https://doi.org/10.1145/nnnnnnn.nnnnnnn
+
+and existing cropping methods on COMEX, establishing a compre-hensive testbed for composition-grounded explainable aesthetic cropping. Experiments on both COMEX and prior benchmarks demonstrate the effectiveness and transferability of our framework, with strong performance across evaluation metrics. 
+
+CCS Concepts 
+
+• Computing methodologies → Computer vision ; • Informa-tion systems → Multimedia information systems .
+
+Keywords 
+
+Aesthetic image cropping, Reinforcement learning, Image composi-tion, Large visual-language model 
+
+ACM Reference Format: 
+
+Rui Yang, Wei Zhou, Dingyong Gou, Xiaohui Cui, Cong Li, Yinyin Gong, Yipo Huang, and Jiliang Zhao. 2026. COMEX: A Composition-Grounded Benchmark and Learning Framework for Explainable Aesthetic Image Crop-ping. In Proceedings of the 34th ACM International Conference on Multimedia (MM ’26), November 10–14, 2026, Rio de Janeiro, Brazil. ACM, New York, NY, USA, 10 pages. https://doi.org/10.1145/nnnnnnn.nnnnnnn 
+
+1 Introduction 
+
+Aesthetic image cropping aims to predict a visually pleasing crop box from an input image, with broad applications in mobile pho-tography, photo post-processing, and intelligent content editing [14–16, 41]. Unlike object detection [40] or saliency prediction [46], it requires not only preserving the main subject and semantic in-tegrity, but also accounting for compositional principles, spatial layout, and aesthetic expressiveness [34]. The task therefore lies at the intersection of geometric localization and high-level aesthetic arXiv:2608.07570v1 [cs.CV] 4 Aug 2026 MM ’26, November 10–14, 2026, Rio de Janeiro, Brazil. Trovato et al. ×  
+
+> This cropping centers on t h e t w o e l e p h a n t s , r e m o v i n g r e d u n d a n t background. It tightens the frame …
+
+Task Paradigm Shift: From Crop-and-Explain to Crop-Composition-Explanation 
+
+(3) Our paradigm: Crop-Composition-Explanation 
+
+Task Paradigm Comparison (1) Aesthetic cropping (2) Crop-and-Explain 
+
+Crop box 
+
+ Composition-grounded explanation  No explicit compositional grounding 
+
+Crop box + Explanation   
+
+> This cropping uses Horizontal Arranged Shapes composition, focusing on the two elephants arranged side by side …
+> Horizontal Arranged Shapes
+
+Crop box + Composition category + Explanation 
+
+Prior Explanation Style vs. COMEX              
+
+> This cropping centers on the stone bridge's arch and its water reflection ,forming a balanced circular visual focus.
+> It trims redundant foliage, emphasizing the bridge as the core subject and highlighting the serene, symmetrical water scene. T h i s c r o p u s e s t h e O - C u r v e composition , centering the bridge arch and its water reflection to form aperfect circular curve, which draws the viewer's eye directly to the tranquil, framed waterscape.
+> This cropping centers the heron , the core subject, trimming redundant sky and grass. It tightens the frame to highlight the bird against its natural habitat, boosting visual focus and narrative clarity. This vertical third-line crop places the heron along the left third line,
+> highlighting it as the clear subject while keeping complementary grass and sky to balance the frame.
+> Explanation too vague
+> Explanation with composition input (Ours) Explanation without composition input Samples
+> Incorrect composition info
+> Explanation justifies crop
+> Reliable composition info
+
+Box denotes crop coordinates; Expl. denotes natural-language explanations; Comp. denotes crop-box-level composition categories. 
+
+Comparison with Existing Datasets 
+
+Image Image Image 
+
+Figure 1: COMEX vs. Prior Explanation Methods. 
+
+reasoning. Early methods mainly relied on candidate-window rank-ing [44, 51, 57, 58] or direct crop-box regression [37]. However, most of these approaches focus on predicting where to crop , while offering limited insight into why a particular crop is aesthetically preferable. With the rise of multimodal large language models [4, 12, 18, 29], recent explainable cropping methods [12, 41] introduce a unified 
+
+crop-and-explain setting, moving aesthetic image cropping beyond pure box prediction toward explainable generation. Despite this progress, existing crop-and-explain methods [41] do not explicitly model composition. As a fundamental principle in photography, composition governs subject emphasis, spatial arrangement, and visual balance [15]. In practice, photographers make cropping decisions largely based on compositional rules such as the rule of thirds and perspective [34]. These principles not only determine where a crop should be placed, but also provide a concise and interpretable rationale for why that placement is aesthetically desirable. Without this intermediate reasoning layer, models can only infer explanations retrospectively from the predicted crop box, often resulting in descriptions that are vague, generic, or mis-aligned with the underlying aesthetic intent. We therefore propose to formulate the task as a structured crop–composition–explanation 
+
+problem, where composition naturally bridges crop boxes and their explanations. As illustrated in Figure 1 (lower left), introducing composition as an explicit intermediate yields explanations that are more specific, aesthetically grounded, and faithful to the underlying cropping rationale. Realizing this formulation requires advances in both benchmark construction and training methodology. On the data side, current datasets [12, 41] are typically built by augmenting existing crop-ping datasets with large-model-generated explanations followed by manual refinement. As a result, they are limited in scale and, more critically, lack composition annotations explicitly aligned with crop boxes, often yielding generic explanations only weakly grounded in cropping rationale. To address this, we introduce the COM position-grounded aesthetic cropping-and-EX planation dataset ( COMEX ), built in two main stages on the large-scale com-position classification dataset PICD [60]: first, image expansion and an input–output reversal (IO-reversal) procedure transform image–composition pairs into triples of expanded images, crop boxes, and composition categories; second, under composition-category constraints, multimodal large models generate compo-sitionally grounded explanations for each crop. In total, COMEX contains 33,161 quadruples of expanded images, crop boxes, compo-sition categories, and composition-grounded explanations, making it the first large-scale benchmark for explainable aesthetic cropping to jointly provide all three types of annotation. A comparison with existing datasets is shown in Figure 1 (lower right). On the methodology side, existing approaches rely solely on supervised fine-tuning (SFT), learning to generate explanations by imitating reference texts without explicit composition guid-ance. While SFT can produce reasonable outputs, it optimizes only token-level likelihood and provides no direct feedback on cropping quality or explanation faithfulness, limiting further improvement in composition-grounded reasoning. To overcome this limitation, we propose a two-stage SFT + GRPO framework. The first stage uses structured SFT to teach the model to produce crop boxes, composition categories, and explanations in a unified format. Em-pirically, extending SFT beyond convergence yields only marginal gains across all metrics (Table 4), confirming the inherent limitation of imitation learning. The second stage therefore introduces Group Relative Policy Optimization (GRPO) [13], replacing token-level imitation with task-aligned rewards targeting cropping quality, composition consistency, and explanation quality. By directly op-timizing these decision-level objectives, GRPO brings consistent improvements beyond continued SFT—notably in crop precision, composition prediction, and explanation specificity—without re-quiring an additional value model. COMEX: A Composition-Grounded Benchmark and Learning Framework for Explainable Aesthetic Image Cropping MM ’26, November 10–14, 2026, Rio de Janeiro, Brazil. 
+
+Experiments confirm that composition supervision is crucial for explainable aesthetic cropping, improving both IoU and explana-tion quality, and that GRPO-based reinforcement learning further strengthens the Stage I SFT baseline in both aspects. We benchmark COMEX against existing methods and 15 large vision-language models, establishing a comprehensive evaluation baseline. Strong transfer results on prior benchmarks further demonstrate the gener-alizability of both COMEX and our framework, which consistently outperforms compared models across multiple evaluation dimen-sions. Our contributions are three-fold: 
+
+• We reformulate explainable aesthetic image cropping as a 
+
+crop–composition–explanation task, explicitly modeling com-position as the intermediate layer between crop decision and explanation generation. 
+
+• We build COMEX , the first large-scale benchmark for this task, containing 33,161 samples with aligned annotations of crop boxes, composition categories, and composition-grounded explanations. 
+
+• We propose a two-stage SFT+GRPO framework that jointly improves crop localization, composition prediction, and ex-planation generation. Extensive experiments, including abla-tions and transfer evaluations, demonstrate its effectiveness and generalizability over existing vision-language baselines. 
+
+2 Related Work 2.1 Aesthetic Image Cropping 
+
+Aesthetic image cropping aims to predict a visually pleasing crop that preserves the main subject while improving composition and overall visual quality. Existing methods can be broadly grouped into two categories: candidate-scoring [10, 52, 58] and direct regres-sion [14, 15, 24]. Candidate-scoring methods first generate mul-tiple crop proposals and then rank them by aesthetic quality. Early studies formulate cropping as a view-ranking problem learned from professional photographs [10] or dense comparative crop pairs [52]. Subsequent works improve efficiency and reliability by combin-ing attention prediction with aesthetic ranking [49], reducing the search space with grid anchors and stronger benchmarks [58], or introducing composition- and saliency-aware score maps for more interpretable selection [44]. Direct regression methods in-stead predict crop coordinates directly, avoiding explicit candidate enumeration. Representative examples include cascaded regres-sion based on deep aesthetic features [14], reinforcement-learning-based sequential cropping [24], and later methods that incorporate stronger composition cues, such as salient-cluster-guided crop-ping [37] and key-composition-map-guided regression [15]. More recent extensions further explore richer supervision and control-lability, including subject-aware cropping from pseudo pairs [16] and intent-aware cropping with vision-language conditioning [61]. Most methods predict where to crop but not why . Although In-structCrop [41] jointly generates crops and explanations, its expla-nations remain weakly grounded in composition principles. We explicitly model composition and formulate cropping as a struc-tured crop–composition–explanation problem. 
+
+2.2 Reinforcement Learning and GRPO for Vision-Language Models 
+
+Reinforcement learning has become an important post-training strategy for improving large-model reasoning and generation [11, 13, 38, 43, 50, 53]. Among these methods, GRPO, introduced in DeepSeek-R1 [13], optimizes relative rewards within grouped sam-ples without requiring a separate value model, offering a practical way to improve decision quality beyond reference-text imitation. This paradigm has been extended to multimodal settings: Visual-RFT [31] applies GRPO-style training to visual perception tasks such as detection and grounding, MedVLM-R1 [36] shows that re-inforcement learning can elicit explicit reasoning in medical vision-language models without reasoning annotations, and Q-Insight [28] demonstrates gains in visual quality understanding and compara-tive reasoning. Unlike standard GRPO tasks with directly verifiable rewards, explainable cropping jointly optimizes crop quality, com-position consistency, and explanation faithfulness. Our SFT+GRPO 
+
+framework first learns structured crops, composition categories, and explanations, and then refines them through reward optimiza-tion, aligning with our formulation and COMEX supervision. 
+
+3 The COMEX Benchmark 
+
+Existing aesthetic image cropping datasets [8, 10, 41, 54, 58, 59] ei-ther lack language explanations altogether or provide only post-hoc textual descriptions without explicit composition annotations tied to crop boxes (Figure 1). To address this gap, we construct COMEX 
+
+(COM position-guided aesthetic cropping-and-EX planation), a large-scale benchmark that provides structured quadruples of (expanded image, crop box, composition category, explanation) , jointly support-ing crop localization, composition recognition, and composition-grounded explanation generation under a unified evaluation proto-col. 
+
+3.1 Data Source and IO-Reversal 
+
+We build upon PICD [60], a large-scale composition classification dataset containing 49,123 expert-annotated images spanning 24 composition categories. The images are sourced from professional photography websites [1–3] and curated aesthetic datasets [21, 33, 55].The diverse sourcing ensures high aesthetic quality and broad compositional coverage, and each image carries a profes-sional composition label, making PICD a reliable foundation for composition-aware cropping. Rather than manually collecting crop boxes or relying on model-predicted crops, we adopt an IO-reversal strategy: each original PICD image is treated as the ideal crop target, and a larger context image is constructed through outpainting. The crop box thus natu-rally inherits the composition label from the original annotation, providing crop-level composition supervision without additional relabeling. A key property of this design is that the original photo-graph is preserved pixel-for-pixel inside the expanded canvas: the crop target seen during training is always a real image, and only the surrounding context is synthetically generated. Any synthetic-to-real domain gap is therefore confined to the contextual background rather than the aesthetic content the model needs to learn from. MM ’26, November 10–14, 2026, Rio de Janeiro, Brazil. Trovato et al. Explanation Generation Image Outpainting Source Filtering Quality Control 
+
+33,161 Images Retained 
+
+> Cleaning/Erasing
+
+## …
+
+  
+
+## …
+
+> Box: [0.1799, 0.1060, 0.9072, 0.7989] Composition class: Horizontal Arranged Shapes
+> You will receive an input image (the red box marks the optimal crop of the image), together with the coordinates of the optimal crop area and its composition type. Based on the input, please provide an explanation for this cropping by combining the image semantics and composition category.
+
+MLLM 
+
+> Explanation: This cropping uses , focusing on the two elephants arranged side by side, eliminating redundant background to highlight the balanced, horizontal visual focus of the subjects.
+> Uniform sampling determines the expansion area, aspect ratio, and image placement, while the canvas preserves the original content and outpaints only the surrounding background.
+> Large Generative Vision Model: FLUX
+
+Final Dataset Output: (Structured Quadruple) 
+
+<box> [0.1799, 0.1060, 0.9072, 0.7989] </box> <composition> Horizontal Arranged Shapes </composition> <explanation> This cropping uses Horizontal Arranged Shapes composition, focusing on the two elephants arranged side by side, eliminating redundant background to highlight the balanced, horizontal visual focus of the subjects. </explanation> 
+
+Figure 2: The pipeline for constructing the proposed COMEX 
+
+3.2 Construction Pipeline 
+
+The dataset construction proceeds through four sequential stages, as illustrated in Figure 2. 
+
+(1) Source Filtering. We begin by cleaning the raw PICD images, removing samples with excessive overlaid text, watermarks, large black borders, or other quality defects, as such artifacts would degrade the crop target and compromise composition annotations. After filtering, 44,201 images are retained. 
+
+(2) Image Outpainting. Each filtered image is expanded using FLUX.1 [dev] [22], a state-of-the-art text-guided generative model. The expansions cover area ratios from 1 × to 10 × the original image size, with aspect ratios ranging from standard mobile portrait for-mats to ultra-wide panoramic layouts. Since the outpainted region serves solely as surrounding context from which the model must recover the original crop, the expansion should appear natural and avoid introducing extraneous subjects. To this end, we employ a carefully designed prompt that promotes realism and suppresses common generation artifacts: “natural and realistic, seamless integra-tion, no background blur, no borders, no stitching artifacts, expansive scenes, no obstructions, no additional subjects.” 
+
+(3) Quality Control. Despite the use of guided prompts, generative outpainting can still introduce visual defects in the surrounding context. We therefore conduct a manual inspection stage, discard-ing samples whose expanded regions exhibit unnatural generation artifacts, physically implausible structures, or non-photographic layouts (e.g., poster- or webpage-style images), removing approx-imately 25% of the outpainted samples. This ensures that the re-tained images appear natural and free of noticeable generation or outpainting traces, making them suitable for downstream cropping. 
+
+(4) Explanation Generation. For each sample that passes visual inspection, we generate a composition-grounded cropping expla-nation using Seed-1.8 [7], a multimodal large language model. The model receives the expanded image with the crop region high-lighted by a prominent red bounding box, along with the crop box coordinates and the associated composition category. It is in-structed to interpret the crop in terms of both subject semantics and compositional principles, ensuring that the generated explana-tions are grounded in crop-level composition annotations rather than serving as generic post-hoc descriptions. We then perform a second round of manual review to discard explanations that are factually inconsistent with the image content or fail to reference the annotated composition category. After both rounds of quality control, 33,161 valid samples are retained for the final benchmark. 
+
+3.3 Comparison with Existing Datasets 
+
+As shown in Figure 1, COMEX is the largest benchmark for ex-plainable aesthetic image cropping, containing 33,161 annotated samples—more than three times the size of the previous largest dataset, CPC [51] (10,797). Existing datasets mainly provide crop box annotations; ICIT [41] is the only prior benchmark that addi-tionally includes natural-language explanations, yet none of them offers crop-box-level composition annotations. COMEX fills this gap by jointly annotating crop boxes, composition categories, and composition-grounded explanations. The qualitative comparison in Figure 1 (lower right) further illus-trates the value of composition supervision. Without composition information, generated explanations tend to be vague or inconsis-tent with the actual crop rationale, whereas COMEX enables more precise and faithful explanations by explicitly grounding them in composition categories. Notably, these composition labels are in-herited from expert annotations in PICD rather than predicted by models, ensuring high annotation reliability. This unified annota-tion design allows models to learn not only where to crop, but also 
+
+under which compositional principle and why .
+
+4 Method 4.1 Problem Formulation 
+
+We formulate explainable aesthetic image cropping as a conditional structured generation problem. Given an input image 𝐼 and a textual instruction 𝑞 that specifies the cropping task, the model generates COMEX: A Composition-Grounded Benchmark and Learning Framework for Explainable Aesthetic Image Cropping MM ’26, November 10–14, 2026, Rio de Janeiro, Brazil. Task-level reward R Group-relative advantage 𝐀 (𝐀) 
+
+b ec
+
+Two-Stage SFT+GRPO Framework for Composition-Grounded Explainable Cropping 
+
+> sampling branch: G candidates: {y1, y2, ... , yG}
+
+Stage II: GRPO Refinement Stage I: Structured SFT 
+
+> COMEX Samples
+
+Cross-Entropy Loss 
+
+> composition & explanation
+
+output: geometry format 
+
+> Input Image:
+
+Input Image + Instruction q 
+
+> Initialize Policy
+
+Input Image + Instruction q    
+
+> Structured Target b: <box> [0.1799, 0.1060, 0.9072, 0.7989] </box>
+> c: <comp> Horizontal Arranged Shapes </comp>
+> e: <exp> This cropping uses Horizontal Arranged Shapes composition, focusing on ... </exp>
+> Structured Target :
+> 𝐀 𝐀𝐀𝐀 𝐀 𝐀𝐀𝐀
+
+VLM + LoRA 
+
+𝐀 𝐀 
+
+VLM + LoRA 
+
+𝐀 𝐀 
+
+> 𝐀 𝐀𝐀𝐀
+
+Figure 3: Overview of two-stage SFT+GRPO framework for explainable aesthetic image cropping. 
+
+a structured triplet 
+
+𝑦 = (𝑏, 𝑐, 𝑒 ), (1) where 𝑏 = (𝑥 1, 𝑦 1, 𝑥 2, 𝑦 2) denotes the crop box coordinates, 𝑐 is the composition category, and 𝑒 is a natural-language explanation grounding the crop decision. The three components are generated sequentially in a unified textual format compatible with vision-language models (VLMs). Let the training set be 
+
+D = {( 𝐼 𝑖 , 𝑏 𝑖 , 𝑐 𝑖 , 𝑒 𝑖 )} 𝑁 𝑖 =1. (2) Our goal is to learn a policy 𝜋 𝜃 (𝑦 | 𝐼, 𝑞 ) that jointly produces geometrically accurate crop boxes, composition-consistent category labels, and decision-grounded natural-language explanations. 
+
+4.2 Two-Stage SFT+GRPO Framework 
+
+We adopt a two-stage training framework: the first stage estab-lishes reliable structured generation via supervised fine-tuning, while the second stage refines task-level decision quality through reinforcement learning. An overview is illustrated in Figure 3. 
+
+Stage I: Structured Supervised Fine-Tuning. We train the model with standard autoregressive cross-entropy loss over the structured target sequence (𝑏, 𝑐, 𝑒 ):
+
+LSFT = −
+
+> 𝑇
+
+∑︁ 
+
+> 𝑡 =1
+
+log 𝜋 𝜃 (𝑦 𝑡 | 𝑦 <𝑡 , 𝐼, 𝑞 ), (3) where 𝑦 𝑡 denotes the 𝑡 -th target token. This stage yields an initial policy 𝜋 𝜃 0 that reliably generates well-formed crop boxes, compo-sition categories, and explanations in the required output format, providing a solid initialization for Stage II and preventing the reward hacking that can arise when applying RL to structured generation from scratch. 
+
+Stage II: GRPO-based Reinforcement Learning. Starting from 𝜋 𝜃 0 ,we further optimize the model with Group Relative Policy Optimiza-tion (GRPO) [13]. For each input (𝐼, 𝑞 ), the current policy samples a group of 𝐺 candidate outputs: 
+
+{𝑦 (𝑔 ) }𝐺 𝑔 =1, 𝑦 (𝑔 ) ∼ 𝜋 𝜃 (· | 𝐼, 𝑞 ). (4) Each candidate is assigned a task-level reward 𝑅 (𝑔 ) , and the policy is updated via the group-relative advantage: 
+
+𝐴 (𝑔 ) = 𝑅 (𝑔 ) − 𝜇 𝑅 
+
+𝜎 𝑅 + 𝜀 , (5) where 𝜇 𝑅 and 𝜎 𝑅 are the within-group mean and standard devi-ation of rewards, and 𝜀 > 0 is a small stabilizer. By estimating advantages through relative ranking within the sampled group, GRPO eliminates the need for a separate value network [13], sub-stantially reducing training overhead while enabling Stage II to improve crop quality and explanation faithfulness beyond what supervised imitation alone can achieve. We implement our framework on an open-source vision-language backbone and adopt LoRA [17] for parameter-efficient tuning in both Stage I SFT and Stage II GRPO. All stages share the same prompt template and structured output format. Full prompt details are provided in the supplementary material. 
+
+4.3 Reward Design 
+
+The Stage-II reward consists of three complementary terms that jointly supervise the output: a geometric reward 𝑅 box for crop spa-tial accuracy, a semantic explanation reward 𝑅 sem for explanation faithfulness and compositional consistency, and a format term 𝑅 fmt 
+
+for output structure and language quality. 
+
+Geometric reward. 𝑅 box combines region overlap with boundary precision: 
+
+𝑅 box = (1 − 𝑤 bde ) 𝑅 iou + 𝑤 bde 𝑅 bde , (6) where 𝑅 iou rewards high Intersection-over-Union between the pre-dicted crop box and the ground truth, and 𝑅 bde penalizes boundary displacement error to encourage precise edge alignment. We set 
+
+𝑤 bde = 0.25. 
+
+Semantic explanation reward. 𝑅 sem enforces two forms of consis-tency: 
+
+𝑅 sem = 𝜆 𝑠 𝑅 exp + ( 1 − 𝜆 𝑠 ) 𝑅 comp , (7) where 𝑅 exp is an explanation reward that measures the similarity between the generated explanation and the ground-truth reference, MM ’26, November 10–14, 2026, Rio de Janeiro, Brazil. Trovato et al. 
+
+Table 1: Main results on COMEX. We compare classic aes-thetic cropping methods, MLLM-based cropping methods, and zero-shot general-purpose MLLMs against our two-stage framework. “Comp-ACC”: composition accuracy; “*”: our reproduction; “–”: unavailable. Best in bold.                                                                                                                        
+
+> Model mIoU ↑mBDE ↓Comp-ACC ↑METEOR ↑
+> Classic Aesthetic Cropping
+> CACNet [15] CVPR’21 0.7603 0.0456 ––AR2L [24] CVPR’18 0.6304 0.0858 ––MARS [26] CVPR’20 0.4370 0.2386 ––
+> MLLM-based Aesthetic Cropping
+> Venus (ZS) [12] CVPR’26 0.5891 0.1012 ––Venus [12] CVPR’26 0.7102 0.0611 ––InstructCrop (ZS) [41] MM’25 0.5970 0.0759 ––InstructCrop* [41] MM’25 0.6318 0.0616 ––
+> General-purpose MLLMs (zero-shot)
+> Qwen3.5 9B [39] 0.4895 0.1281 –0.2708 Qwen3.5 4B [39] 0.4817 0.1326 –0.2443 Qwen3.5 2B [39] 0.4774 0.1383 –0.1870 InternVL3.5-1B-Flash [47] 0.2000 0.1826 –0.2163 InternVL3.5-8B [47] 0.3564 0.1731 –0.1389 MiniMax-M2.5 [32] 0.5064 0.1249 –0.2252 Qwen3-VL-32B [4] 0.5344 0.1137 –0.2562 Qwen3-VL-8B [4] 0.4854 0.1295 –0.2384 Qwen3-VL-2B [4] 0.5394 0.1267 –0.1337 GLM-4.6V-Flash [56] 0.5081 0.1296 –0.0695 Seed2.0 Pro [7] 0.5071 0.1247 –0.2245 Seed1.8 [7] 0.5097 0.1242 –0.2233 Seed1.6 [7] 0.5087 0.1245 –0.2242 Step3-VL-10B [42] 0.4917 0.1279 –0.1113 MiniCPM-V-4.5 [35] 0.4670 0.1362 –0.2114
+> Ours
+> Qwen3.5-2B (SFT) 0.7105 0.0611 0.7120 0.4994 Qwen3.5-0.8B (SFT) 0.6927 0.0661 0.6903 0.4848 Qwen3.5-0.8B (SFT+GRPO) 0.7015 0.0640 0.6914 0.4875 Qwen3-VL-2B (SFT) 0.7532 0.0509 0.7404 0.5129
+> Qwen3-VL-2B (SFT+GRPO) 0.7765 0.0447 0.7448 0.5194
+
+ensuring linguistic fidelity, and 𝑅 comp is a composition reward that evaluates whether the explanation is semantically aligned with the ground-truth composition category, encouraging compositional grounding. We set 𝜆 𝑠 = 0.7. 
+
+Format term. Following prior work on reinforcement learning with structured outputs [28], we also introduce a format reward 
+
+𝑅 fmt that constrains valid output syntax and promotes well-formed explanations via length adequacy and semantic coverage. 
+
+Overall reward. The total reward aggregates all three terms as: 
+
+𝑅 all = 𝛼 𝑔 𝑅 box + 𝛼 𝑠 𝑅 sem + 𝛼 𝑓 𝑅 fmt , (8) where 𝛼 𝑔 , 𝛼 𝑠 , and 𝛼 𝑓 weight the geometric, semantic, and format rewards, respectively. We set them to 0 .5, 0 .175, and 0 .325 based on validation performance. This design enables GRPO to jointly optimize spatial, semantic, and structural quality. Detailed defini-tions of all sub-reward terms are provided in the supplementary material. 
+
+5 Experiments 5.1 Experimental Setup 
+
+Datasets and Benchmarks. We use COMEX as the primary bench-mark for explainable aesthetic image cropping, with 26,528 images for training and 6,633 for testing. To evaluate cross-dataset general-ization, we also report results on FCDB [9] (1,743 images; 1,395 for training, 348 for testing, following prior work). 
+
+Evaluation Metrics. We evaluate three aspects of performance. Crop quality is measured by IoU (overlap between predicted and ground-truth crops) and BDE (boundary displacement error), fol-lowing InstructCrop [41]. Composition prediction is measured by 
+
+Comp-ACC , the accuracy of the predicted composition category against the ground-truth label. Explanation quality is measured by 
+
+METEOR [6], which captures the similarity between generated and reference explanations. Together, these metrics cover geometric accuracy, composition correctness, and explanation faithfulness. 
+
+5.2 Main Results 
+
+5.2.1 Results on COMEX. Table 1 summarizes the main results on COMEX. Our method consistently outperforms general-purpose MLLMs, prior MLLM-based cropping approaches, and classic aes-thetic cropping baselines across all evaluated metrics. Under zero-shot prompting, all 15 general-purpose MLLMs strug-gle with crop localization. The best zero-shot model, Qwen3-VL-2B, reaches only 0.5394 mIoU, while larger variants such as Qwen3-VL-32B achieve 0.5344, indicating that scaling alone does not resolve the task. Among prior MLLM-based cropping methods, the strongest, Venus, achieves 0.7102 mIoU and 0.0611 mBDE. Our Qwen3-VL-2B with Stage I SFT already surpasses it with 0.7532 mIoU and 0.0509 mBDE, and Stage II widens the gap to 0.7765 and 0.0447. Our final model also outperforms the strongest classic baseline, CACNet, in both mIoU (0.7765 vs. 0.7603) and mBDE (0.0447 vs. 0.0456). Unlike all prior cropping methods, ours additionally provides composition classification and natural-language explanations. Our framework also generalizes across backbones. With the smaller Qwen3.5-0.8B, Stage I SFT already achieves 0.6927 mIoU, and Stage II further improves it to 0.7015. With Qwen3.5-2B, Stage I reaches 0.7105 mIoU, matching Venus while also producing com-position and explanation outputs. These results confirm that the proposed two-stage framework is effective regardless of backbone choice. Stage II consistently improves all metrics over Stage I: on Qwen3-VL-2B, mIoU rises from 0.7532 to 0.7765, mBDE drops from 0.0509 to 0.0447, composition accuracy improves from 0.7404 to 0.7448, and METEOR from 0.5129 to 0.5194. This confirms that the rein-forcement learning stage benefits crop localization, composition understanding, and explanation quality alike. A detailed analysis is provided in the ablation studies. 
+
+5.2.2 Generalization to Real-World Photos (FCDB). Since COMEX relies on synthetically outpainted context images, a natural question COMEX: A Composition-Grounded Benchmark and Learning Framework for Explainable Aesthetic Image Cropping MM ’26, November 10–14, 2026, Rio de Janeiro, Brazil. 
+
+Table 2: Comparison on FCDB (IoU / BDE). “COMEX, zero-shot transfer” denotes models trained on COMEX and evalu-ated on FCDB without fine-tuning. Best in bold.                                                                     
+
+> Method Publication IoU ↑BDE ↓
+> Classic / prior cropping methods
+> VFN [10] ACM MM 2017 0.6850 0.0840 DIC [48] ICCV 2017 0.6300 0.0900 DIC* [49] TPAMI 2018 0.6500 0.0800 A2-RL [24] CVPR 2018 0.6640 0.0890 Fast A3-RL [25] TIP 2019 0.6960 0.0770 CGS [27] CVPR 2020 ––CACNet [15] CVPR 2021 0.7020 0.0740 GAIC [58] TPAMI 2022 0.6740 0.0810 Jia et al. [20] CVPR 2022 ––UNIC [30] ICCV 2023 ––Wang et al. [45] CVPR 2023 0.6950 0.0750 Cropper [23] CVPR 2025 0.6670 0.0870
+> MLLM-based cropping methods
+> InstructCrop [41] ACM MM 2025 0.7100 0.0720 InstructCrop (exp) [41] ACM MM 2025 0.7160 0.0700
+> General-purpose MLLMs
+> GPT-4o [19] –0.2170 0.3150 Qwen2.5-VL-max [5] –0.1290 0.3850 Qwen3-VL-2B [4] –0.3959 0.4048
+> Ours (COMEX, zero-shot transfer)
+> Qwen3-VL-2B Stage I –0.5946 0.1035 Qwen3-VL-2B Stage I+II –0.6251 0.0938
+> Ours (trained on FCDB)
+> Qwen3-VL-2B Stage I –0.7007 0.0743
+> Qwen3-VL-2B Stage I+II –0.7225 0.0676
+
+Table 3: Effect of composition information in Stage I SFT (6,633-image test set). Explanation quality is measured by pairwise win rate (%) from three MLLM judges—Seed2.0Pro (S2P), Seed1.8 (S1.8), Seed1.6 (S1.6)—and two human groups.                   
+
+> Setting IoU S2P S1.8 S1.6 User Expert
+> No comp. 0.7484 34% 34% 31% 30% 24% With comp. 0.7529 66% 66% 69% 70% 76%
+
+is whether the cropping ability learned from it transfers to real-world photographs. Table 2 evaluates this on FCDB, a widely used benchmark of real photos with human-annotated crops. General-purpose MLLMs again perform poorly, confirming that aesthetic cropping remains challenging for off-the-shelf vision-language models. In contrast, our model trained exclusively on COMEX demonstrates promising zero-shot transferability despite the synthetic-to-real domain gap. Without any FCDB-specific su-pervision, Stage I achieves an IoU of 0.5946, and Stage I+II further improves to 0.6251 IoU and 0.0938 BDE, approaching early super-vised baselines such as DIC (0.6300 IoU) that are directly trained on FCDB. This indicates that the compositional knowledge captured by COMEX generalizes beyond synthetic images. Notably, GRPO training (Stage I+II) yields a +0.0305 IoU gain over Stage I alone, suggesting that reinforcement learning on COMEX strengthens not only in-domain accuracy but also out-of-domain generalization. We further verify the effectiveness of our two-stage training pipeline on real-world data by training directly on FCDB from the base Qwen3-VL-2B, without COMEX pre-training. Stage I alone already reaches 0.7007 IoU and 0.0743 BDE, competitive with CAC-Net (0.7020) and InstructCrop (0.7100). With the addition of GRPO in Stage I+II, performance further improves to 0.7225 IoU and 
+
+0.0676 BDE, establishing a new state of the art and outperforming InstructCrop (exp) by +0.0065 in IoU. These results confirm that the benefit of our approach is not limited to the COMEX setting: the SFT-then-GRPO framework is broadly effective for aesthetic cropping, and the GRPO stage consistently brings meaningful gains regardless of the training data source. 
+
+5.3 Ablation Studies 
+
+5.3.1 Is Composition Information Useful? To assess the value of explicit composition supervision, we compare a conventional crop-and-explanation setting, which lacks composition classification and explicit composition cues in the explanations, with our proposed 
+
+crop-composition-explanation setting. Crop localization is evaluated using IoU, and explanation quality is assessed by pairwise prefer-ence judgments from three MLLM evaluators (Seed2.0Pro, Seed1.8, and Seed1.6). We also conduct a human study on 100 randomly sampled test images with 71 general users and 10 experts. Each score represents the percentage of cases in which evaluators judge one setting to produce a better explanation than the other. As shown in Table 3, introducing explicit composition supervi-sion leads to consistent improvements in both crop localization and explanation quality. IoU improves from 0.7484 to 0.7529, indicating that composition information provides a useful structural cue for identifying aesthetically favorable crop regions. More notably, gains in explanation quality are substantial: the composition-supervised model is preferred by all three MLLM evaluators with win rates exceeding 66%, and the advantage is even more pronounced in human evaluation, where 70% of general users and 76% of experts favor the composition-grounded explanations. This confirms that composition is not only beneficial for predicting better crops, but also essential for generating explanations that are more faithful, interpretable, and grounded in aesthetic principles. 
+
+5.3.2 Is Stage II Reinforcement Learning Necessary? To evaluate whether Stage II is necessary beyond a strong Stage I initialization, we start from the same Stage I checkpoint trained for 10 epochs and compare two strategies: continuing SFT for 5 additional epochs or switching to Stage II reinforcement learning for 5 epochs. As reported in Table 4, simply extending Stage I yields only mar-ginal improvements. Continued SFT increases IoU from 0.7532 to MM ’26, November 10–14, 2026, Rio de Janeiro, Brazil. Trovato et al. 
+
+Table 4: Comparison between continued Stage I SFT and Stage II RL from the same Stage I checkpoint trained for 10 epochs. Comp-ACC denotes strict composition accuracy. Exp-Cons measures the consistency between the generated explanation and the predicted composition type. 
+
+Method IoU ↑ BDE ↓ Comp-ACC ↑ Exp-Cons ↑ METEOR ↑ IoU > 0.5 IoU > 0.7 IoU > 0.9Stage I (10 epochs) 0.7532 0.0509 0.7404 0.3873 0.5129 6133 4664 1268 Stage I + 5 more epochs SFT 0.7548 0.0506 0.7411 0.3875 0.5126 6155 4688 1290 Stage II RL (5 epochs) 0.7765 0.0447 0.7448 0.3885 0.5194 6263 5017 1507 
+
+Table 5: Ablation on reward design in Stage II. 
+
+Reward Setting IoU ↑ Comp-ACC ↑ METEOR ↑
+
+With 𝑅 sem 0.7765 0.7448 0.5194 
+
+Without 𝑅 sem 0.7778 0.7223 0.5060 
+
+0.7548, reduces BDE from 0.0509 to 0.0506, and improves Comp-ACC slightly from 0.7404 to 0.7411, while explanation metrics re-main nearly unchanged. This indicates that Stage I quickly saturates once stable structured generation has been learned. In contrast, Stage II reinforcement learning brings consistent gains across all metrics. It improves IoU to 0.7765 and reduces BDE to 0.0447, while also raising Comp-ACC to 0.7448 and METEOR to 0.5194. The same trend is reflected in the distribution of high-quality crops: compared with continued SFT, Stage II produces substantially more samples with IoU > 0.5, > 0.7, and > 0.9. These results show that the advantage of Stage II does not come from longer training alone, but from task-aligned optimization under explicit reward signals. 
+
+5.3.3 Is 𝑅 sem Necessary? Table 5 isolates the contribution of the semantic explanation reward 𝑅 sem . Removing it and retaining only the box regression reward 𝑅 box yields a marginal IoU gain of 0.13%, but composition accuracy drops by 2.25 percentage points and METEOR falls by 1.34 points. The trade-off is clearly asymmetric: the spatial signal alone pushes the model toward geometrically accurate crops yet provides no incentive to preserve compositional reasoning, causing both composition recognition and explanation generation to degrade. Adding 𝑅 sem recovers these two dimensions at virtually no spatial cost, confirming that explicit semantic su-pervision is necessary for the model to produce explanations that are not only fluent but also faithfully grounded in composition knowledge. 
+
+5.4 Qualitative Visualization 
+
+Figure 4 visualizes representative cropping results. On in-domain COMEX examples (Figure 4a), the model accurately identifies the crop region and provides composition-grounded explanations across diverse scenes, showing that the two-stage training pipeline effec-tively equips the MLLM with composition-aware cropping ability. More importantly, when the model trained on COMEX is directly applied to real-world FCDB photographs without any fine-tuning (Figure 4b), it still produces visually plausible crops that preserve the salient compositional structure of each scene, such as retaining the central bridge and buildings in the night-view example and Cropping Box     
+
+> " E x p l a n a t i o n " : " T h i s c r o p p i n g u s e s
+> perspective composition : it centers the colonnade's converging lines, guiding the eye d e e p i n t o t h e s p a c e , w h i l e t r i m m i n g distracting edge space to emphasize the corridor's depth and rhythmic architectural structure." "Composition": " Perspective ""Explanation": "This horizontal thirds crop
+> centers the dramatic sunset sky and lone tree, placing the horizon on the lower third to emphasize the striking sky as the main subject while trimming empty upper space for a balanced, focused frame." "Composition": " Horizontal Third Part "
+> Input Composition & Explanation
+> "Explanation": "This horizontal middle
+> crop centers on the lit bridge, buildings and river, the core scenic subject, trimming redundant foreground and background to focus viewers' attention on the charming riverside night view, creating a balanced, immersive frame." "Composition": " Horizontal Middle Part ""Explanation": "This cropping uses the
+> Centered Single Shape composition, placing the pink water lily at the core. It eliminates redundant lower reflection space, fully focusing viewers' attention on the flower as the sole subject, creating a balanced, eye-catching frame." "Composition": " Centered Single Shape "
+
+(a) Qualitative results on COMEX (in-domain) (b) Zero-shot transfer to real-world photos from FCDB (out-of-domain) 
+
+Figure 4: Qualitative cropping results. 
+
+tightly centering the lotus. It also generates convincing explana-tions consistent with the corresponding compositional intent. This suggests that COMEX provides transferable compositional knowl-edge and helps narrow the gap between synthetic data and real photographs. 
+
+6 Conclusion 
+
+We present a composition-centered formulation of explainable aes-thetic image cropping that unifies crop localization, composition prediction, and explanation generation. To support this task, we build COMEX, a large-scale benchmark for composition-grounded cropping and explanation, and propose a two-stage SFT-then-GRPO framework that progressively improves all three outputs. Exper-iments show strong performance across evaluation metrics, and COMEX: A Composition-Grounded Benchmark and Learning Framework for Explainable Aesthetic Image Cropping MM ’26, November 10–14, 2026, Rio de Janeiro, Brazil. 
+
+transfer results on FCDB further demonstrate generalization to real-world photographs. 
+
+Limitations. COMEX relies on synthetic outpainting and propri-etary MLLM-generated annotations, which may introduce domain bias and annotation noise. Future work will incorporate human-annotated real images for more rigorous evaluation. 
+
+References 
+
+[1] [n. d.]. Flickr: Image and Video Hosting Service. https://www.flickr.com. Ac-cessed: 2025. [2] [n. d.]. Pexels: Free Stock Photos & Videos. https://www.pexels.com. Accessed: 2025. [3] [n. d.]. Unsplash: Free High-Resolution Photos. https://unsplash.com. Accessed: 2025. [4] Shuai Bai, Yuxuan Cai, Ruizhe Chen, Keqin Chen, Xionghui Chen, Zesen Cheng, Lianghao Deng, Wei Ding, Chang Gao, Chunjiang Ge, et al. 2025. Qwen3-vl technical report. arXiv preprint arXiv:2511.21631 (2025). [5] Shuai Bai, Keqin Chen, Xuejing Liu, Jialin Wang, Wenbin Ge, Sibo Song, Kai Dang, Peng Wang, Shijie Wang, Jun Tang, Humen Zhong, Yuanzhi Zhu, Mingkun Yang, Zhaohai Li, Jianqiang Wan, Pengfei Wang, Wei Ding, Zheren Fu, Yiheng Xu, Jiabo Ye, Xi Zhang, Tianbao Xie, Zesen Cheng, Hang Zhang, Zhibo Yang, Haiyang Xu, and Junyang Lin. 2025. Qwen2.5-VL Technical Report. arXiv:2502.13923 [cs.CV] https://arxiv.org/abs/2502.13923 [6] Satanjeev Banerjee and Alon Lavie. 2005. METEOR: An automatic metric for MT evaluation with improved correlation with human judgments. In Proceedings of the acl workshop on intrinsic and extrinsic evaluation measures for machine translation and/or summarization . 65–72. [7] ByteDance Seed. 2026. Seed2.0. https://seed.bytedance.com/en/seed2. Official model page, accessed March 24, 2026. [8] Luigi Celona, Gianluigi Ciocca, Paolo Napoletano, and Raimondo Schettini. 2019. Autocropping: A closer look at benchmark datasets. In International conference on image analysis and processing . Springer, 315–325. [9] Yi-Ling Chen, Tzu-Wei Huang, Kai-Han Chang, Yu-Chen Tsai, Hwann-Tzong Chen, and Bing-Yu Chen. 2017. Quantitative analysis of automatic image cropping algorithms: A dataset and comparative study. In 2017 IEEE winter conference on applications of computer vision (WACV) . IEEE, 226–234. [10] Yi-Ling Chen, Jan Klopp, Min Sun, Shao-Yi Chien, and Kwan-Liu Ma. 2017. Learn-ing to compose with professional photographs on the web. In Proceedings of the 25th ACM international conference on Multimedia . 37–45. [11] Gheorghe Comanici, Eric Bieber, Mike Schaekermann, Ice Pasupat, Noveen Sachdeva, Inderjit Dhillon, Marcel Blistein, Ori Ram, Dan Zhang, Evan Rosen, et al. 2025. Gemini 2.5: Pushing the frontier with advanced reasoning, multi-modality, long context, and next generation agentic capabilities. arXiv preprint arXiv:2507.06261 (2025). [12] Tianxiang Du, Hulingxiao He, and Yuxin Peng. 2026. Venus: Benchmarking and Empowering Multimodal Large Language Models for Aesthetic Guidance and Cropping. arXiv preprint arXiv:2602.23980 (2026). [13] Daya Guo, Dejian Yang, Haowei Zhang, Junxiao Song, Peiyi Wang, Qihao Zhu, Runxin Xu, Ruoyu Zhang, Shirong Ma, Xiao Bi, et al. 2025. DeepSeek-R1 in-centivizes reasoning in LLMs through reinforcement learning. Nature 645, 8081 (2025), 633–638. [14] Guanjun Guo, Hanzi Wang, Chunhua Shen, Yan Yan, and Hong-Yuan Mark Liao. 2018. Automatic image cropping for visual aesthetic enhancement using deep neural networks and cascaded regression. IEEE Transactions on Multimedia 20, 8 (2018), 2073–2085. [15] Chaoyi Hong, Shuaiyuan Du, Ke Xian, Hao Lu, Zhiguo Cao, and Weicai Zhong. 2021. Composing photos like a photographer. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition . 7057–7066. [16] James Hong, Lu Yuan, Micha"el Gharbi, Matthew Fisher, and Kayvon Fatahalian. 2024. Learning subject-aware cropping by outpainting professional photos. In 
+
+Proceedings of the AAAI Conference on Artificial Intelligence , Vol. 38. 2175–2183. [17] Edward J Hu, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean Wang, Lu Wang, Weizhu Chen, et al. [n. d.]. LoRA: Low-Rank Adaptation of Large Language Models. In International Conference on Learning Representations .[18] Yipo Huang, Xiangfei Sheng, Zhichao Yang, Quan Yuan, Zhichao Duan, Pengfei Chen, Leida Li, Weisi Lin, and Guangming Shi. 2024. Aesexpert: Towards multi-modality foundation model for image aesthetics perception. In Proceedings of the 32nd ACM International Conference on Multimedia . 5911–5920. [19] Aaron Hurst, Adam Lerer, Adam P Goucher, Adam Perelman, Aditya Ramesh, Aidan Clark, AJ Ostrow, Akila Welihinda, Alan Hayes, Alec Radford, et al. 2024. Gpt-4o system card. arXiv preprint arXiv:2410.21276 (2024). [20] Gengyun Jia, Huaibo Huang, Chaoyou Fu, and Ran He. 2022. Rethinking image cropping: Exploring diverse compositions from global views. In 2022 IEEE. In 
+
+CVF Conference on Computer Vision and Pattern Recognition (CVPR) . 2436–2445. [21] Alina Kuznetsova, Hassan Rom, Neil Alldrin, Jasper Uijlings, Ivan Krasin, Jordi Pont-Tuset, Shahab Kamali, Stefan Popov, Matteo Malloci, Alexander Kolesnikov, et al. 2020. The open images dataset v4: Unified image classification, object detection, and visual relationship detection at scale. International journal of computer vision 128, 7 (2020), 1956–1981. [22] Black Forest Labs, Stephen Batifol, Andreas Blattmann, Frederic Boesel, Saksham Consul, Cyril Diagne, Tim Dockhorn, Jack English, Zion English, Patrick Esser, Sumith Kulal, Kyle Lacey, Yam Levi, Cheng Li, Dominik Lorenz, Jonas Müller, Dustin Podell, Robin Rombach, Harry Saini, Axel Sauer, and Luke Smith. 2025. FLUX.1 Kontext: Flow Matching for In-Context Image Generation and Editing in Latent Space. arXiv:2506.15742 [cs.GR] https://arxiv.org/abs/2506.15742 [23] Seung Hyun Lee, Jijun Jiang, Yiran Xu, Zhuofang Li, Junjie Ke, Yinxiao Li, Junfeng He, Steven Hickson, Katie Datsenko, Sangpil Kim, et al. 2025. Cropper: Vision-language model for image cropping through in-context learning. In Proceedings of the Computer Vision and Pattern Recognition Conference . 30010–30019. [24] Debang Li, Huikai Wu, Junge Zhang, and Kaiqi Huang. 2018. A2-RL: Aesthetics aware reinforcement learning for image cropping. In Proceedings of the IEEE conference on computer vision and pattern recognition . 8193–8201. [25] Debang Li, Huikai Wu, Junge Zhang, and Kaiqi Huang. 2019. Fast a3rl: Aesthetics-aware adversarial reinforcement learning for image cropping. IEEE Transactions on Image Processing 28, 10 (2019), 5105–5120. [26] Debang Li, Junge Zhang, and Kaiqi Huang. 2020. Learning to learn cropping models for different aspect ratio requirements. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition . 12685–12694. [27] Debang Li, Junge Zhang, Kaiqi Huang, and Ming-Hsuan Yang. 2020. Compos-ing good shots by exploiting mutual relations. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition . 4213–4222. [28] Weiqi Li, Xuanyu Zhang, Shijie Zhao, Yabin Zhang, Junlin Li, Li Zhang, and Jian Zhang. 2025. Q-insight: Understanding image quality via visual reinforcement learning. arXiv preprint arXiv:2503.22679 (2025). [29] Haotian Liu, Chunyuan Li, Qingyang Wu, and Yong Jae Lee. 2023. Visual in-struction tuning. Advances in neural information processing systems 36 (2023), 34892–34916. [30] Xiaoyu Liu, Ming Liu, Junyi Li, Shuai Liu, Xiaotao Wang, Lei Lei, and Wangmeng Zuo. 2023. Beyond image borders: Learning feature extrapolation for unbounded image composition. In Proceedings of the IEEE/CVF International Conference on Computer Vision . 13023–13032. [31] Ziyu Liu, Zeyi Sun, Yuhang Zang, Xiaoyi Dong, Yuhang Cao, Haodong Duan, Dahua Lin, and Jiaqi Wang. 2025. Visual-rft: Visual reinforcement fine-tuning. In 
+
+Proceedings of the IEEE/CVF International Conference on Computer Vision . 2034– 2044. [32] MiniMaxAI. 2026. MiniMax-M2.5 · Hugging Face. https://huggingface.co/ MiniMaxAI/MiniMax-M2.5 Model card, accessed March 24, 2026. [33] Naila Murray, Luca Marchesotti, and Florent Perronnin. 2012. AVA: A large-scale database for aesthetic visual analysis. In 2012 IEEE conference on computer vision and pattern recognition . IEEE, 2408–2415. [34] Bingbing Ni, Mengdi Xu, Bin Cheng, Meng Wang, Shuicheng Yan, and Qi Tian. 2013. Learning to photograph: A compositional perspective. IEEE Transactions on Multimedia 15, 5 (2013), 1138–1151. [35] OpenBMB. 2026. MiniCPM-V-4 · Hugging Face. https://huggingface.co/openbmb/ MiniCPM-V-4 Model card, accessed March 24, 2026. [36] Jiazhen Pan, Che Liu, Junde Wu, Fenglin Liu, Jiayuan Zhu, Hongwei Bran Li, Chen Chen, Cheng Ouyang, and Daniel Rueckert. 2025. Medvlm-r1: Incentivizing medical reasoning capability of vision-language models (vlms) via reinforcement learning. In International Conference on Medical Image Computing and Computer-Assisted Intervention . Springer, 337–347. [37] Zhiyu Pan, Ke Xian, Hao Lu, and Zhiguo Cao. 2021. Robust image cropping by filtering composition irrelevant factors. In International Conference on Image and Graphics . Springer, 277–289. [38] Aske Plaat. 2022. Deep reinforcement learning . Vol. 10. Springer. [39] Qwen Team. 2026. Qwen3.5 - a Qwen Collection. https://huggingface.co/ collections/Qwen/qwen35. Hugging Face collection page, accessed March 26, 2026. [40] Joseph Redmon, Santosh Divvala, Ross Girshick, and Ali Farhadi. 2016. You only look once: Unified, real-time object detection. In Proceedings of the IEEE conference on computer vision and pattern recognition . 779–788. [41] Xiangfei Sheng, Pangu Xie, Weidong Zou, Pengfei Chen, Tong Zhu, and Leida Li. 2025. InstructCrop: Teaching Multimodal Large Language Models to Crop Aesthetic Images. In Proceedings of the 33rd ACM International Conference on Multimedia . 6830–6839. [42] StepFun AI. 2026. Step3-VL-10B. https://huggingface.co/spaces/stepfun-ai/Step3-VL-10B Hugging Face Space, accessed March 24, 2026. [43] Kimi Team, Angang Du, Bohong Yin, Bowei Xing, Bowen Qu, Bowen Wang, Cheng Chen, Chenlin Zhang, Chenzhuang Du, Chu Wei, et al. 2025. Kimi-vl technical report. arXiv preprint arXiv:2504.07491 (2025). [44] Yi Tu, Li Niu, Weijie Zhao, Dawei Cheng, and Liqing Zhang. 2020. Image cropping with composition and saliency aware aesthetic score map. In Proceedings of the AAAI conference on artificial intelligence , Vol. 34. 12104–12111. MM ’26, November 10–14, 2026, Rio de Janeiro, Brazil. Trovato et al. 
+
+[45] Chao Wang, Li Niu, Bo Zhang, and Liqing Zhang. 2023. Image cropping with spatial-aware feature and rank consistency. In Proceedings of the IEEE/CVF Con-ference on Computer Vision and Pattern Recognition . 10052–10061. [46] Tiantian Wang, Lihe Zhang, Shuo Wang, Huchuan Lu, Gang Yang, Xiang Ruan, and Ali Borji. 2018. Detect globally, refine locally: A novel approach to saliency detection. In Proceedings of the IEEE conference on computer vision and pattern recognition . 3127–3135. [47] Weiyun Wang, Zhangwei Gao, Lixin Gu, Hengjun Pu, Long Cui, Xingguang Wei, Zhaoyang Liu, Linglin Jing, Shenglong Ye, Jie Shao, et al. 2025. Internvl3. 5: Ad-vancing open-source multimodal models in versatility, reasoning, and efficiency. 
+
+arXiv preprint arXiv:2508.18265 (2025). [48] Wenguan Wang and Jianbing Shen. 2017. Deep cropping via attention box prediction and aesthetics assessment. In Proceedings of the IEEE international conference on computer vision . 2186–2194. [49] Wenguan Wang, Jianbing Shen, and Haibin Ling. 2018. A deep network solution for attention and aesthetics aware photo cropping. IEEE transactions on pattern analysis and machine intelligence 41, 7 (2018), 1531–1544. [50] Xu Wang, Sen Wang, Xingxing Liang, Dawei Zhao, Jincai Huang, Xin Xu, Bin Dai, and Qiguang Miao. 2022. Deep reinforcement learning: A survey. IEEE Transactions on Neural Networks and Learning Systems 35, 4 (2022), 5064–5078. [51] Zijun Wei, Jianming Zhang, Xiaohui Shen, Zhe Lin, Radomir Mech, Minh Hoai, and Dimitris Samaras. 2018. Good view hunting: Learning photo composition from dense view pairs. In Proceedings of the IEEE conference on computer vision and pattern recognition . 5437–5446. [52] Zijun Wei, Jianming Zhang, Xiaohui Shen, Zhe Lin, Radom’ir Mech, Minh Hoai, and Dimitris Samaras. 2018. Good View Hunting: Learning Photo Composition From Dense View Pairs. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) .[53] An Yang, Anfeng Li, Baosong Yang, Beichen Zhang, Binyuan Hui, Bo Zheng, Bowen Yu, Chang Gao, Chengen Huang, Chenxu Lv, et al. 2025. Qwen3 technical report. arXiv preprint arXiv:2505.09388 (2025). [54] Guo-Ye Yang, Wen-Yang Zhou, Yun Cai, Song-Hai Zhang, and Fang-Lue Zhang. 2023. Focusing on your subject: Deep subject-aware image composition recom-mendation networks. Computational Visual Media 9, 1 (2023), 87–107. [55] Yuzhe Yang, Liwu Xu, Leida Li, Nan Qie, Yaqian Li, Peng Zhang, and Yandong Guo. 2022. Personalized image aesthetics assessment with rich attributes. In 
+
+Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition .19861–19869. [56] Z.ai. 2026. GLM-4.6 · Hugging Face. https://huggingface.co/zai-org/GLM-4.6 Model card, accessed March 24, 2026. [57] Hui Zeng, Lida Li, Zisheng Cao, and Lei Zhang. 2019. Reliable and efficient image cropping: A grid anchor based approach. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition . 5949–5957. [58] Hui Zeng, Lida Li, Zisheng Cao, and Lei Zhang. 2020. Grid anchor based image cropping: A new benchmark and an efficient model. IEEE Transactions on Pattern Analysis and Machine Intelligence 44, 3 (2020), 1304–1319. [59] Bo Zhang, Li Niu, Xing Zhao, and Liqing Zhang. 2022. Human-centric image cropping with partition-aware and content-preserving features. In European Conference on Computer Vision . Springer, 181–197. [60] Zhaoran Zhao, Peng Lu, Anran Zhang, Peipei Li, Xia Li, Xuannan Liu, Yang Hu, Shiyi Chen, Liwei Wang, and Wenhao Guo. 2025. Can machines understand composition? Dataset and benchmark for photographic image composition em-bedding and understanding. In Proceedings of the Computer Vision and Pattern Recognition Conference . 14411–14421. [61] Zhihang Zhong, Mingxi Cheng, Zhirong Wu, Yuhui Yuan, Yinqiang Zheng, Ji Li, Han Hu, Stephen Lin, Yoichi Sato, and Imari Sato. 2023. ClipCrop: condi-tioned cropping driven by vision-language model. In Proceedings of the IEEE/CVF International Conference on Computer Vision . 294–304.

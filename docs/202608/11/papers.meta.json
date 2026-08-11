@@ -1,0 +1,54 @@
+{
+  "label": "2026-08-11",
+  "date": "2026-08-11",
+  "generated_at": "2026-08-11T20:51:29",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202608/11/2608.08508v1-towards-adaptive-super-resolution-and-quality-assessment-via-test-time-adaptation",
+      "section": "deep",
+      "title_en": "Towards Adaptive Super-Resolution and Quality Assessment via Test-Time Adaptation",
+      "authors": "Ajeet Kumar Verma",
+      "date": "2026-08-09",
+      "pdf": "https://arxiv.org/pdf/2608.08508v1",
+      "score": "9.0",
+      "evidence": "提出基于测试时自适应的无参考视频质量评估框架",
+      "tldr": "视频超分辨率在实际应用中常因设备异构、压缩噪声等未知退化而失效，泛化能力受限。为此，本博士研究提出测试时自适应框架，通过无参考质量评估生成感知指导，并结合区域感知策略对屏幕内容进行选择性增强，保护文本清晰度与结构保真度，全程无需高分辨率真值。实验表明，该方法在多项基准上显著提升感知质量和文本可读性。目前正进一步构建跨域完全自适应视频增强系统，以应对更广泛未知场景。",
+      "tags": "query:xiqa",
+      "abstract_en": "This paper presents doctoral research on adaptive video super-resolution and perceptual quality modeling under real-world conditions. Existing video super-resolution (VSR) methods struggle to generalize under unknown degradations arising from heterogeneous devices, codecs, and network environments. We address this challenge through test-time adaptation (TTA), a unified paradigm that improves robustness and perceptual quality without retraining or high-quality supervision. Specifically, we: 1) propose a TTA-based framework for no-reference video quality assessment (VQA), where adapted quality predictions provide perceptual guidance for VSR under unseen distortions; 2) develop a transformer-based architecture for screen-content super-resolution that preserves text clarity and structural fidelity; and 3) introduce a region-aware TTA strategy that selectively refines text and non-text regions without requiring high-resolution ground truth. Experimental results across diverse benchmarks demonstrate consistent improvements in perceptual quality and readability. We also outline ongoing work toward fully adaptive video enhancement systems capable of generalizing across unseen domains.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/11/2608.09122v1-visual-distortion-detection-in-ugc-images-using-large-multimodal-models",
+      "section": "deep",
+      "title_en": "Visual Distortion Detection in UGC Images Using Large Multimodal Models",
+      "authors": "Ziheng Jia, Yingji Liang, Jiaying Qian, Xiongkuo Min",
+      "date": "2026-08-10",
+      "pdf": "https://arxiv.org/pdf/2608.09122v1",
+      "score": "9.0",
+      "evidence": "利用大型多模态模型进行图像质量评估中的精确失真检测",
+      "tldr": "局部感知质量描述是图像质量评估中长期未充分探索的挑战，现有基于大型多模态模型的方法依赖文本驱动监督微调，存在检测精度不足和合成到真实泛化鸿沟。本文提出VIGIL，通过构建含140K张合成失真图像的VIGIL-140K数据集，并利用大语言模型解码器多层作为多检测器同步检测，同时保留非失真类预测的失真线索以缓解前景-背景分离模糊，最终在领域内合成失真检测及合成到真实任务上均显著超越强基线，为UGC图像视觉失真检测提供了高精度、跨域鲁棒的新方案。",
+      "tags": "query:xiqa",
+      "abstract_en": "The localized depiction of perceptual quality has long been a crucial, yet underexplored, challenge in image quality assessment (IQA). Existing approaches based on large multimodal models (LMMs) predominantly rely on text-driven supervised fine-tuning (SFT).   However, this training paradigm exhibits notable limitations in detection accuracy. Moreover, synthetically distorted images, which are often used as the primary training data source,   show a significant generalization gap when deployed in real-world scenarios; thus, the \\textbf{synthetic-to-authentic (\\textit{S2A})} problem represents a critical challenge. Motivated by these issues, we propose \\textbf{\\textit{VIGIL}}, which leverages the LMM architecture for precise visual distortion detection. From a candidate pool of over 1000K samples, we construct the \\textbf{\\textit{VIGIL-140K}} training set, which consists of over 140K distorted images. These images are obtained through rigorous quality filtering and carefully crafted distortion injection, covering 8 major synthetic distortion categories.   Our model leverages different layers of the large language model (LLM) decoder, treating them as \\textit{multiple detectors} that perform synchronous distortion detection using multi-level features. Additionally, we retain distortion cues from predictions assigned to the non-distortion class, which helps mitigate the ambiguous foreground-background (\\textit{FG-BG}) separation commonly encountered in the \\textit{S2A} problem.   After post-processing, our model consistently outperforms strong baselines on both in-domain synthetic distortion detection and \\textit{S2A} tasks.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/11/2608.07570v1-comex-a-composition-grounded-benchmark-and-learning-framework-for-explainable-aesthetic-image-cropping",
+      "section": "deep",
+      "title_en": "COMEX: A Composition-Grounded Benchmark and Learning Framework for Explainable Aesthetic Image Cropping",
+      "authors": "Rui Yang, Wei Zhou, Dingyong Gou, Xiaohui Cui, Cong Li, Yinyin Gong, Yipo Huang, Jiliang Zhao",
+      "date": "2026-08-04",
+      "pdf": "https://arxiv.org/pdf/2608.07570v1",
+      "score": "8.0",
+      "evidence": "基于构图的可解释美学图像裁剪，提供以构图为依据的解释",
+      "tldr": "现有可解释美学图像裁剪方法多将解释作为事后补充，忽略构图这一核心美学因素，导致解释与裁剪决策脱节。本文将其重构为结构化裁剪-构图-解释问题，引入通过图像扩展与IO反转构建的COMEX基准（含33,161个样本），并提出SFT+GRPO两阶段联合学习框架。在多个基准上的实验显示，该方法大幅提升裁剪质量与解释忠实度，并展现出良好的迁移能力，为构图感知的可解释裁剪奠定基础。",
+      "tags": "query:xiqa",
+      "abstract_en": "Explainable aesthetic image cropping requires not only localizing a visually pleasing crop but also explaining why it is preferred. Existing crop-and-explain methods largely treat explanation as post-hoc text generation and overlook composition, a key aesthetic factor that links crop decisions with interpretable reasoning. In this paper, we reformulate explainable aesthetic image cropping as a structured crop-composition-explanation problem. To support this setting, we introduce COMEX, a new benchmark built through image expansion and an IO-reversal pipeline. COMEX contains 33,161 quadruples, each consisting of an expanded image, a crop box, a composition category, and a composition-grounded explanation, enabling joint learning of crop localization, composition understanding, and explanation generation. We further propose a two-stage SFT+GRPO framework, where supervised fine-tuning establishes the structured output protocol and basic cropping ability, and GRPO further improves crop quality, composition prediction, and explanation faithfulness. We benchmark 15 large vision-language models and existing cropping methods on COMEX, establishing a comprehensive testbed for composition-grounded explainable aesthetic cropping. Experiments on both COMEX and prior benchmarks demonstrate the effectiveness and transferability of our framework, with strong performance across evaluation metrics.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
