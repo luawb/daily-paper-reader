@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-08-12 <!--dpr-date:20260812-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/12/2608.08021v1-evidence-rl-towards-evidence-intensive-visual-reasoning" data-sidebar-item="{&quot;title&quot;: &quot;Evidence-RL: Towards Evidence-intensive Visual Reasoning&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.08021v1-evidence-rl-towards-evidence-intensive-visual-reasoning&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;基于强化学习的视觉证据定位方法，可迁移至图像质量评估与解释生成&quot;}">Evidence-RL: Towards Evidence-intensive Visual Reasoning</a>
   * 2026-08-11 <!--dpr-date:20260811-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/11/2608.08508v1-towards-adaptive-super-resolution-and-quality-assessment-via-test-time-adaptation" data-sidebar-item="{&quot;title&quot;: &quot;Towards Adaptive Super-Resolution and Quality Assessment via Test-Time Adaptation&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.08508v1-towards-adaptive-super-resolution-and-quality-assessment-via-test-time-adaptation&quot;, &quot;score&quot;: &quot;9.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;提出基于测试时自适应的无参考视频质量评估框架&quot;}">Towards Adaptive Super-Resolution and Quality Assessment via Test-Time Adaptation</a>

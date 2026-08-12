@@ -1,0 +1,61 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-12T19:59:06.359595+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.08021v1",
+      "source": "arxiv",
+      "title": "Evidence-RL: Towards Evidence-intensive Visual Reasoning",
+      "abstract": "Vision-Language Models (VLMs) should answer from concrete image evidence rather than language priors, dataset shortcuts, or irrelevant visual context. Existing perception-aware post-training methods encourage image use through global perturbations or attention proxies, but they do not test whether a sampled answer causally depends on the local evidence that supports it. We propose Counterfactual Evidence Disentanglement (CED), a training-time evidence audit for VLM grounding. For each response, CED neutralizes an object-centric Evidence Region and compares the resulting support drop against matched non-evidence Regions. We combine this signal with answer correctness inside GRPO, rewarding correct answers that rely on the evidence path rather than shortcut or nuisance paths. CED uses weak object-level proposals, requires no question-specific evidence annotations, and adds no inference-time overhead. Across nine public benchmarks and four backbones, CED outperforms prior RL-based post-training methods, with targeted analyses verifying its object-centric signal.",
+      "authors": [
+        "Haojie Huang",
+        "Xinlei Yu",
+        "Chengming Xu",
+        "Zhangquan Chen",
+        "Cheng Yang",
+        "Qingdong He",
+        "Yu Yang",
+        "Jiangning Zhang",
+        "Xiaobin Hu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-08-08T09:02:10+00:00",
+      "link": "https://arxiv.org/pdf/2608.08021v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "RL-based evidence grounding for visual reasoning, transferable to image quality assessment and explanation",
+      "llm_evidence_cn": "基于强化学习的视觉证据定位方法，可迁移至图像质量评估与解释生成",
+      "llm_evidence": "基于强化学习的视觉证据定位方法，可迁移至图像质量评估与解释生成",
+      "canonical_evidence": "基于强化学习的视觉证据定位方法，可迁移至图像质量评估与解释生成",
+      "llm_tldr_en": "This paper proposes Counterfactual Evidence Disentanglement and GRPO to reward evidence-grounded visual reasoning, which can be adapted for reasoning-based image quality assessment and natural language explanation.",
+      "llm_tldr_cn": "现有视觉语言模型在回答问题时往往依赖语言先验或数据集捷径，而不是真正利用图像中的局部证据。本文提出反事实证据解耦训练时审计方法，通过中和对象证据区域并对比其与匹配非证据区域的支持度下降，再结合答案正确性在GRPO中奖励基于证据路径的推理。实验结果表明，该方法能够有效提升视觉语言模型的证据密集推理能力。这一训练范式可直接迁移到图像质量推理和自然语言解释生成等需要可解释证据的任务中。",
+      "llm_tldr": "现有视觉语言模型在回答问题时往往依赖语言先验或数据集捷径，而不是真正利用图像中的局部证据。本文提出反事实证据解耦训练时审计方法，通过中和对象证据区域并对比其与匹配非证据区域的支持度下降，再结合答案正确性在GRPO中奖励基于证据路径的推理。实验结果表明，该方法能够有效提升视觉语言模型的证据密集推理能力。这一训练范式可直接迁移到图像质量推理和自然语言解释生成等需要可解释证据的任务中。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "reinforcement learning for image quality assessment and description",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

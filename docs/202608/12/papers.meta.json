@@ -1,0 +1,24 @@
+{
+  "label": "2026-08-12",
+  "date": "2026-08-12",
+  "generated_at": "2026-08-12T20:01:35",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202608/12/2608.08021v1-evidence-rl-towards-evidence-intensive-visual-reasoning",
+      "section": "quick",
+      "title_en": "Evidence-RL: Towards Evidence-intensive Visual Reasoning",
+      "authors": "Haojie Huang, Xinlei Yu, Chengming Xu, Zhangquan Chen, Cheng Yang, Qingdong He, Yu Yang, Jiangning Zhang, Xiaobin Hu",
+      "date": "2026-08-08",
+      "pdf": "https://arxiv.org/pdf/2608.08021v1",
+      "score": "7.0",
+      "evidence": "基于强化学习的视觉证据定位方法，可迁移至图像质量评估与解释生成",
+      "tldr": "视觉问答中，视觉语言模型常依赖语言先验或无关视觉上下文，而非具体图像证据。现有感知感知后训练方法通过全局扰动或注意力代理鼓励图像使用，但未验证答案与局部证据的因果依赖。本文提出反事实证据解耦（CED），中和对象级证据区域并比较支持度下降，将该信号与答案正确性结合于GRPO奖励。跨九个基准和四个骨干模型，CED优于先前强化学习后训练方法，验证了对象级证据信号的有效性。",
+      "tags": "query:xiqa",
+      "abstract_en": "Vision-Language Models (VLMs) should answer from concrete image evidence rather than language priors, dataset shortcuts, or irrelevant visual context. Existing perception-aware post-training methods encourage image use through global perturbations or attention proxies, but they do not test whether a sampled answer causally depends on the local evidence that supports it. We propose Counterfactual Evidence Disentanglement (CED), a training-time evidence audit for VLM grounding. For each response, CED neutralizes an object-centric Evidence Region and compares the resulting support drop against matched non-evidence Regions. We combine this signal with answer correctness inside GRPO, rewarding correct answers that rely on the evidence path rather than shortcut or nuisance paths. CED uses weak object-level proposals, requires no question-specific evidence annotations, and adds no inference-time overhead. Across nine public benchmarks and four backbones, CED outperforms prior RL-based post-training methods, with targeted analyses verifying its object-centric signal.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
