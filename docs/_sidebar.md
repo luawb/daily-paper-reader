@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-08-13 <!--dpr-date:20260813-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/13/2608.09594v1-illusion-or-integrity-geometrical-consistency-metric-for-aigc-video-quality-evaluation" data-sidebar-item="{&quot;title&quot;: &quot;Illusion or Integrity? Geometrical Consistency Metric for AIGC Video Quality Evaluation&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.09594v1-illusion-or-integrity-geometrical-consistency-metric-for-aigc-video-quality-evaluation&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;AIGC视频质量评估的几何一致性度量&quot;}">Illusion or Integrity? Geometrical Consistency Metric for AIGC Video Quality Evaluation</a>
   * 2026-08-12 <!--dpr-date:20260812-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/12/2608.08021v1-evidence-rl-towards-evidence-intensive-visual-reasoning" data-sidebar-item="{&quot;title&quot;: &quot;Evidence-RL: Towards Evidence-intensive Visual Reasoning&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.08021v1-evidence-rl-towards-evidence-intensive-visual-reasoning&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;基于强化学习的视觉证据定位方法，可迁移至图像质量评估与解释生成&quot;}">Evidence-RL: Towards Evidence-intensive Visual Reasoning</a>

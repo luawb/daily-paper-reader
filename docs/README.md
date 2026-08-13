@@ -6,8 +6,8 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-12
-- 运行时间：2026-08-12 20:01:05 UTC
+- 最新运行日期：2026-08-13
+- 运行时间：2026-08-13 20:11:17 UTC
 - 运行状态：成功
 - 本次总论文数：1
 - 精读区：0
@@ -15,17 +15,17 @@
 
 ### 今日简报（AI）
 - 今日共生成 1 篇推荐（精读 0 篇，速读 1 篇）
-- 速读：《Evidence-RL: Towards Evidence-intensive Visual Reasoning》（7.0/10）
+- 速读：《Illusion or Integrity? Geometrical Consistency Metric for AIGC Video Quality Evaluation》（7.0/10）
 - 这些结果覆盖了当下较热的方向，建议先看精读区论文的关键问题与方法。
-- 详情：[/202608/12/README](/202608/12/README)
+- 详情：[/202608/13/README](/202608/13/README)
 
 ### 精读区论文标签
 - 本次无精读推荐。
 
 ### 速读区论文标签
-1. [Evidence-RL: Towards Evidence-intensive Visual Reasoning](/202608/12/2608.08021v1-evidence-rl-towards-evidence-intensive-visual-reasoning)  
+1. [Illusion or Integrity? Geometrical Consistency Metric for AIGC Video Quality Evaluation](/202608/13/2608.09594v1-illusion-or-integrity-geometrical-consistency-metric-for-aigc-video-quality-evaluation)  
    标签：评分：7.0/10、query:xiqa
-   evidence：基于强化学习的视觉证据定位方法，可迁移至图像质量评估与解释生成
+   evidence：AIGC视频质量评估的几何一致性度量
 
 
 <div class="dpr-home-promo-card">

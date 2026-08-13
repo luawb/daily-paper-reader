@@ -1,0 +1,24 @@
+{
+  "label": "2026-08-13",
+  "date": "2026-08-13",
+  "generated_at": "2026-08-13T20:11:43",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202608/13/2608.09594v1-illusion-or-integrity-geometrical-consistency-metric-for-aigc-video-quality-evaluation",
+      "section": "quick",
+      "title_en": "Illusion or Integrity? Geometrical Consistency Metric for AIGC Video Quality Evaluation",
+      "authors": "Yifei Xue, Yuanchen Fei, Hao Zhang, Chenzhi Nie, Tie ji, Yizhen Lao",
+      "date": "2026-08-10",
+      "pdf": "https://arxiv.org/pdf/2608.09594v1",
+      "score": "7.0",
+      "evidence": "AIGC视频质量评估的几何一致性度量",
+      "tldr": "现有生成式视频质量评估侧重视觉和谐与语义一致性，缺乏对物理定律保真度的量化标准。本文提出GeoCon-Bench基准，通过测量帧间全局运动、内点比例等几何误差来代理物理规则符合程度。同时发布了一个含20个场景、六类运动的数据集，并在最新生成模型上验证了该指标的可靠性。该工作填补了物理一致性评估空白，为AIGC视频质量评价提供了更全面的新维度。",
+      "tags": "query:xiqa",
+      "abstract_en": "Recently, AI-driven video generation has attracted considerable attention. This surge increases the demand for reliable video quality assessment (VQA) metrics to evaluate AI-generated content (AIGC) videos and guide model optimization. Existing studies assess video quality through visual harmony, video-text consistency, and domain-specific alignment, yet lack quantitative metrics for measuring fidelity to physical laws. To address this limitation, we present a novel benchmark that evaluates the quality of AIGC videos based on their compliance with physical principles by quantitatively measuring geometric consistency across frames extracted from generated sequences. This serves as a proxy for estimating the extent to which generated videos conform to real-world physical rules. Specifically, GeoCon-Bench captures global motion through translation estimation, fits homography or fundamental matrix models using background correspondences, and reports complementary metrics, including inlier ratio and geometric error. We also release a dataset containing 20 scenes across six motion categories. Experiments on state-of-the-art AIGC models demonstrate the reliability of GeoCon-Bench as a video quality assessment metric.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
