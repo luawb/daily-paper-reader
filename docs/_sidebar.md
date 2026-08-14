@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-08-14 <!--dpr-date:20260814-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/14/2608.12088v1-ra-clipscore-making-generative-model-evaluation-more-interpretable" data-sidebar-item="{&quot;title&quot;: &quot;RA-ClipScore: Making Generative Model Evaluation More Interpretable&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.12088v1-ra-clipscore-making-generative-model-evaluation-more-interpretable&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;提出RA-CLIPScore，一种可解释的生成模型评估指标&quot;}">RA-ClipScore: Making Generative Model Evaluation More Interpretable</a>
   * 2026-08-13 <!--dpr-date:20260813-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/13/2608.09594v1-illusion-or-integrity-geometrical-consistency-metric-for-aigc-video-quality-evaluation" data-sidebar-item="{&quot;title&quot;: &quot;Illusion or Integrity? Geometrical Consistency Metric for AIGC Video Quality Evaluation&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.09594v1-illusion-or-integrity-geometrical-consistency-metric-for-aigc-video-quality-evaluation&quot;, &quot;score&quot;: &quot;7.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;AIGC视频质量评估的几何一致性度量&quot;}">Illusion or Integrity? Geometrical Consistency Metric for AIGC Video Quality Evaluation</a>
