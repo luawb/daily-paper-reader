@@ -1,0 +1,39 @@
+{
+  "label": "2026-08-16",
+  "date": "2026-08-16",
+  "generated_at": "2026-08-16T20:18:54",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202608/16/2608.11452v1-tangpoetrybench-a-multi-dimensional-benchmark-and-rubric-conditioned-evaluator-for-poetry-to-image-generation",
+      "section": "deep",
+      "title_en": "TangPoetryBench: A Multi-Dimensional Benchmark and Rubric-Conditioned Evaluator for Poetry-to-Image Generation",
+      "authors": "Haoqi Hu, Tongji Luo, Li Zhang, Boning Zhou",
+      "date": "2026-08-11",
+      "pdf": "https://arxiv.org/pdf/2608.11452v1",
+      "score": "9.0",
+      "evidence": "诗歌图像生成的多维基准和基于评分标准的评估器，评估视觉质量、忠实度、情感并提供解释",
+      "tldr": "现有T2I评估指标仅衡量字面图文对应，难以评估诗歌插图的多元要求，尤其是深层意象与隐式情感。本文构建TangPoetryBench，含1280张图（320首唐诗×4个模型）和十维人工标注，揭示模型优缺点。开发PoemAutoEvaluator，与Claude对齐并泛化到宋词和新生成器，免去重复标注。该基准与自动评估器为诗歌图像生成提供可扩展的评估方案。",
+      "tags": "query:xiqa",
+      "abstract_en": "Text-to-image (T2I) models are increasingly asked to illustrate literary and cultural content, yet we cannot measure how well an image renders the meaning of a poem. The task is many-sided: a good illustration must be visually sound, faithful to the poem's imagery and scene, culturally and stylistically apt, free of spurious text, and true to its emotion, and its deepest requirements, imagery and especially implicit emotion, are never stated in the words. Existing metrics (CLIPScore, BLIPScore, VQAScore) reward literal text-image correspondence and so cannot tell whether an illustration succeeds, let alone why, or even separate the best model from the worst. We introduce TangPoetryBench, a multi-dimensional benchmark of 1,280 images (320 classical Chinese Tang poems x 4 state-of-the-art T2I models) with quality-controlled human annotations across ten dimensions. Analyzing this data, we reveal the shared and model-specific strengths and weaknesses of current T2I models, including their ability to evoke a poem's implicit emotion. We further introduce PoemAutoEvaluator (PAE), an open, rubric-conditioned evaluator that reaches parity with a strong proprietary judge (Claude), generalizes to an unseen generator and a second poetic tradition (Song Ci), and lets the benchmark scale to new images without fresh human annotation. We release the benchmark, annotations, and evaluator.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/16/2608.08736v1-fitaqa-a-benchmark-of-fitness-action-quality-assessment-for-multimodal-large-language-models",
+      "section": "quick",
+      "title_en": "FitAQA: A Benchmark of Fitness Action Quality Assessment for Multimodal Large Language Models",
+      "authors": "Kaili Zheng, Kaiwen Wang, Xun Zhu, Qingyuan Yang, Chenyi Guo, Ji Wu",
+      "date": "2026-08-09",
+      "pdf": "https://arxiv.org/pdf/2608.08736v1",
+      "score": "7.0",
+      "evidence": "用MLLM评估健身动作质量的基准，包含统一错误分类和多质量维度，提供超越最终分数的洞察",
+      "tldr": "当前多模态大模型在健身动作质量评估上的能力未被充分探索，现有基准依赖动作特定标注、仅关注最终输出。FitAQA构建了含2,219视频与5,512问答的基准，并联合专家制定统一错误分类法，涵盖6个质量维度和38种形式错误。实验表明现有模型在综合评估与错误时间定位上表现不足，视觉感知是关键瓶颈。该工作为健身AQA提供系统评估框架，促进多模态模型改进。",
+      "tags": "query:xiqa",
+      "abstract_en": "Fitness Action Quality Assessment (AQA) is important for intelligent sports training, yet the capabilities of Multimodal Large Language Models (MLLMs) in this setting remain underexplored. Existing benchmarks rely on action-specific annotation schemes and focus primarily on final assessment outputs, offering limited insight into how models assess exercise quality. We introduce FitAQA, a systematic benchmark for evaluating MLLMs in fitness AQA, containing 2,219 videos and 5,512 QA instances across 30 bodyweight exercises. In collaboration with experts in sports science, we develop a unified form error taxonomy that defines 38 recurring form errors within six complementary quality dimensions: alignment, symmetry, stability, coordination, tempo, and completeness. This taxonomy provides a shared assessment framework across different exercises. FitAQA further formulates three evaluation tasks: perception for recognizing relevant visual evidence, judgement for combining that evidence with domain knowledge to assess execution correctness, and temporal grounding for localizing form errors over time. Extensive evaluation shows that current MLLMs still struggle to assess exercise quality comprehensively and localize form errors precisely. Controlled experiments further indicate that visual perception is a key bottleneck, as judgement performance improves substantially when ground-truth perceptual evidence is provided. The dataset and evaluation code will be made publicly available.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

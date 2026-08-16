@@ -1,0 +1,95 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-16T20:15:00.756587+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [
+    {
+      "id": "2608.11452v1",
+      "source": "arxiv",
+      "title": "TangPoetryBench: A Multi-Dimensional Benchmark and Rubric-Conditioned Evaluator for Poetry-to-Image Generation",
+      "abstract": "Text-to-image (T2I) models are increasingly asked to illustrate literary and cultural content, yet we cannot measure how well an image renders the meaning of a poem. The task is many-sided: a good illustration must be visually sound, faithful to the poem's imagery and scene, culturally and stylistically apt, free of spurious text, and true to its emotion, and its deepest requirements, imagery and especially implicit emotion, are never stated in the words. Existing metrics (CLIPScore, BLIPScore, VQAScore) reward literal text-image correspondence and so cannot tell whether an illustration succeeds, let alone why, or even separate the best model from the worst. We introduce TangPoetryBench, a multi-dimensional benchmark of 1,280 images (320 classical Chinese Tang poems x 4 state-of-the-art T2I models) with quality-controlled human annotations across ten dimensions. Analyzing this data, we reveal the shared and model-specific strengths and weaknesses of current T2I models, including their ability to evoke a poem's implicit emotion. We further introduce PoemAutoEvaluator (PAE), an open, rubric-conditioned evaluator that reaches parity with a strong proprietary judge (Claude), generalizes to an unseen generator and a second poetic tradition (Song Ci), and lets the benchmark scale to new images without fresh human annotation. We release the benchmark, annotations, and evaluator.",
+      "authors": [
+        "Haoqi Hu",
+        "Tongji Luo",
+        "Li Zhang",
+        "Boning Zhou"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-08-11T21:30:53+00:00",
+      "link": "https://arxiv.org/pdf/2608.11452v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "multi-dimensional benchmark and rubric-conditioned evaluator for poetry-to-image generation that assesses visual quality, faithfulness, emotion, and provides explanations",
+      "llm_evidence_cn": "诗歌图像生成的多维基准和基于评分标准的评估器，评估视觉质量、忠实度、情感并提供解释",
+      "llm_evidence": "诗歌图像生成的多维基准和基于评分标准的评估器，评估视觉质量、忠实度、情感并提供解释",
+      "canonical_evidence": "诗歌图像生成的多维基准和基于评分标准的评估器，评估视觉质量、忠实度、情感并提供解释",
+      "llm_tldr_en": "TangPoetryBench introduces a multi-dimensional benchmark and rubric-conditioned evaluator to assess how well text-to-image models illustrate poems, covering visual quality, faithfulness, cultural style, and emotion, enabling detailed quality evaluation with explanations beyond literal correspondence metrics.",
+      "llm_tldr_cn": "TangPoetryBench提出一个多维基准和基于评分标准的评估器，用于衡量文本到图像模型对诗歌的插图质量，涵盖视觉质量、忠实度、文化风格适配和情感表达等维度。现有指标仅奖励字面图文对应，无法解释插图成败原因。该基准通过多维度评估和条件化评估器，能够区分模型优劣并提供质量解释。这项工作为文学内容图像生成的质量评估提供了新工具。",
+      "llm_tldr": "TangPoetryBench提出一个多维基准和基于评分标准的评估器，用于衡量文本到图像模型对诗歌的插图质量，涵盖视觉质量、忠实度、文化风格适配和情感表达等维度。现有指标仅奖励字面图文对应，无法解释插图成败原因。该基准通过多维度评估和条件化评估器，能够区分模型优劣并提供质量解释。这项工作为文学内容图像生成的质量评估提供了新工具。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "reasoning based perceptual image quality evaluation with explanations",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.08736v1",
+      "source": "arxiv",
+      "title": "FitAQA: A Benchmark of Fitness Action Quality Assessment for Multimodal Large Language Models",
+      "abstract": "Fitness Action Quality Assessment (AQA) is important for intelligent sports training, yet the capabilities of Multimodal Large Language Models (MLLMs) in this setting remain underexplored. Existing benchmarks rely on action-specific annotation schemes and focus primarily on final assessment outputs, offering limited insight into how models assess exercise quality. We introduce FitAQA, a systematic benchmark for evaluating MLLMs in fitness AQA, containing 2,219 videos and 5,512 QA instances across 30 bodyweight exercises. In collaboration with experts in sports science, we develop a unified form error taxonomy that defines 38 recurring form errors within six complementary quality dimensions: alignment, symmetry, stability, coordination, tempo, and completeness. This taxonomy provides a shared assessment framework across different exercises. FitAQA further formulates three evaluation tasks: perception for recognizing relevant visual evidence, judgement for combining that evidence with domain knowledge to assess execution correctness, and temporal grounding for localizing form errors over time. Extensive evaluation shows that current MLLMs still struggle to assess exercise quality comprehensively and localize form errors precisely. Controlled experiments further indicate that visual perception is a key bottleneck, as judgement performance improves substantially when ground-truth perceptual evidence is provided. The dataset and evaluation code will be made publicly available.",
+      "authors": [
+        "Kaili Zheng",
+        "Kaiwen Wang",
+        "Xun Zhu",
+        "Qingyuan Yang",
+        "Chenyi Guo",
+        "Ji Wu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-09T14:28:17+00:00",
+      "link": "https://arxiv.org/pdf/2608.08736v1",
+      "tags": [
+        "keyword:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "benchmark for MLLMs to assess fitness action quality with unified error taxonomy and multiple quality dimensions, providing insight beyond final scores",
+      "llm_evidence_cn": "用MLLM评估健身动作质量的基准，包含统一错误分类和多质量维度，提供超越最终分数的洞察",
+      "llm_evidence": "用MLLM评估健身动作质量的基准，包含统一错误分类和多质量维度，提供超越最终分数的洞察",
+      "canonical_evidence": "用MLLM评估健身动作质量的基准，包含统一错误分类和多质量维度，提供超越最终分数的洞察",
+      "llm_tldr_en": "FitAQA introduces a benchmark of 2,219 videos and 5,512 QA pairs across 30 exercises to evaluate MLLMs for fitness action quality assessment, using a unified 38-error taxonomy across six quality dimensions to reveal how models assess exercise quality.",
+      "llm_tldr_cn": "FitAQA提出一个面向多模态大模型的健身动作质量评估基准，包含30种自重训练、2219个视频和5512个问答实例，并联合运动科学专家定义了六个质量维度下的38种常见错误。该基准旨在揭示MLLM在评估动作质量时的推理过程，而不仅仅是最终评估结果。实验表明该基准能系统评估MLLM的评估能力，为智能运动训练提供支持。",
+      "llm_tldr": "FitAQA提出一个面向多模态大模型的健身动作质量评估基准，包含30种自重训练、2219个视频和5512个问答实例，并联合运动科学专家定义了六个质量维度下的38种常见错误。该基准旨在揭示MLLM在评估动作质量时的推理过程，而不仅仅是最终评估结果。实验表明该基准能系统评估MLLM的评估能力，为智能运动训练提供支持。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "image quality reasoning and explanation generation via multimodal large models",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

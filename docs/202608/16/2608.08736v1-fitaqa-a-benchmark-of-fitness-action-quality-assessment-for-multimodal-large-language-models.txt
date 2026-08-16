@@ -1,0 +1,894 @@
+Title: FitAQA: A Benchmark of Fitness Action Quality Assessment for Multimodal Large Language Models
+
+URL Source: https://arxiv.org/pdf/2608.08736v1
+
+Published Time: Tue, 11 Aug 2026 01:23:44 GMT
+
+Number of Pages: 23
+
+Markdown Content:
+# FitAQA: A Benchmark of Fitness Action Quality Assessment for Multimodal Large Language Models 
+
+## Kaili Zheng 1∗, Kaiwen Wang 1∗, Xun Zhu 1, Qingyuan Yang 2, Chenyi Guo 1†, Ji Wu 1, 3, 4 †
+
+> 1
+
+Department of Electronic Engineering, Tsinghua University 
+
+> 2
+
+Xinjiang Region Sports Science Research Center 
+
+> 3
+
+College of AI, Tsinghua University 
+
+> 4
+
+Beijing National Research Center for Information Science and Technology {guochy, wuji_ee}@mail.tsinghua.edu.cn 
+
+Abstract 
+
+Fitness Action Quality Assessment (AQA) is important for intelligent sports training, yet the capabilities of Multimodal Large Language Models (MLLMs) in this setting remain un-derexplored. Existing benchmarks rely on action-specific an-notation schemes and focus primarily on final assessment out-puts, offering limited insight into how models assess exercise quality. We introduce FitAQA , a systematic benchmark for evaluating MLLMs in fitness AQA, containing 2,219 videos and 5,512 QA instances across 30 bodyweight exercises. In collaboration with experts in sports science, we develop a unified form error taxonomy that defines 38 recurring form errors within six complementary quality dimensions: align-ment, symmetry, stability, coordination, tempo, and complete-ness. This taxonomy provides a shared assessment framework across different exercises. FitAQA further formulates three evaluation tasks: perception for recognizing relevant visual evidence, judgement for combining that evidence with do-main knowledge to assess execution correctness, and tempo-ral grounding for localizing form errors over time. Extensive evaluation shows that current MLLMs still struggle to as-sess exercise quality comprehensively and localize form errors precisely. Controlled experiments further indicate that visual perception is a key bottleneck, as judgement performance im-proves substantially when ground-truth perceptual evidence is provided. The dataset and evaluation code will be made publicly available. 
+
+## Introduction 
+
+Action Quality Assessment (AQA) aims to evaluate the qual-ity of human actions. Unlike conventional action recogni-tion, which focuses on identifying what action is being per-formed (Carreira and Zisserman 2017; Salehi et al. 2024), AQA emphasizes how well the action is executed (Parmar and Tran Morris 2017; Parmar and Morris 2019b). This ca-pability is particularly important in fitness scenarios, where subtle differences in posture, motion trajectory, and execution rhythm can directly affect training effectiveness and move-ment safety (Wilk, Zajac, and Tufano 2021; Bonilla et al. 2022). With the growing popularity of online and home-based fitness training, automatic fitness AQA has become 
+
+> ∗
+
+These authors contributed equally. 
+
+> †
+
+Corresponding author. 
+
+increasingly important for corrective feedback and person-alized guidance. Consequently, fitness AQA has attracted increasing attention in recent years. Meanwhile, Multimodal Large Language Models (MLLMs) (Liu et al. 2023; Hurst et al. 2024; Maaz et al. 2024; Contributors 2026) have shown growing capabilities in general visual understanding. Unlike traditional methods that predict scores (Tang et al. 2020; Yu et al. 2021) or labels for predefined action types (Hülsmann et al. 2018; Jaiswal et al. 2025), MLLMs enable action-agnostic assessment with free-form responses, making them a promising foundation for flexible fitness coaching systems. Despite this potential, their effectiveness for fitness AQA remains underexplored. Unlike general video understanding tasks, fitness AQA requires models to recognize the details of body posture and motion dynamics that determine execution quality, and to reason with exercise-specific knowledge of proper form standards, common form errors, and basic biomechanical principles. Existing video understanding benchmarks for MLLMs (Li et al. 2024a; Fu et al. 2025; Cai et al. 2025) primarily evaluate semantic understanding of video content and offer limited evidence of models’ sensitivity to such quality-relevant posture and motion cues. Meanwhile, tradi-tional fitness AQA datasets are insufficient for systematically evaluating MLLMs. They rely on scalar quality scores (Par-mar and Morris 2019a), action-specific error labels (Youssef, Zaki, and Gomaa 2022), or unstructured descriptions (Li et al. 2024b). Consequently, results are difficult to compare across datasets and exercises. Moreover, evaluation of final outputs alone offers limited insight into why models fail. To bridge this gap, we introduce FitAQA , a benchmark for systematically evaluating MLLMs in fitness AQA, as illus-trated in Figure 1. FitAQA contains 2,219 videos and 5,512 QA instances covering 30 bodyweight exercises, including both short clips and longer videos. In collaboration with ex-perts in sports science, we develop a unified form error tax-onomy . Rather than defining a separate label space for each exercise, the taxonomy defines 38 recurring posture and mo-tion errors spanning six quality dimensions: alignment, sym-metry, stability, coordination, tempo, and completeness. Dur-ing annotation, annotators select all applicable form-error labels and describe how each selected error manifests in the video. The resulting annotations combine an action-agnostic arXiv:2608.08736v1 [cs.AI] 9 Aug 2026 FitAQA Benchmark Existing Datasets 
+
+1) Unified Form Error Taxonomy 2) Hierarchical Evaluation Tasks 
+
+Alignment Symmetry Stability Coordination Tempo Completeness Perception      
+
+> At the top of the movement
+> ,which best describes the position of the shoulders
+> ,hips
+> ,and knees
+> ?
+> A
+> .The hips reach the line between the shoulders and knees B
+> .The hips stay below the line between the shoulders and knees
+
+Judgement    
+
+> In the video
+> ,is the glute bridge performed correctly in terms of hip height
+> ?
+> A
+> .Yes B
+> .No
+
+Temporal Grounding 
+
+> When does the hip lift range of motion fail to meet the required standard during the glute bridge
+> ?
+> Forward Head Posture Lumbar Flexion …ROM Asymmetry Load Asymmetry Trunk Instability Support Instability Movement Incoordination Low Cadence Momentum-Driven …Insufficient ROM Missing Phase …
+
+30 fitness exercises       
+
+> •Full-Body: Jumping Jack…
+> •Upper-Body: Push-up…
+> •Lower-Body: Squat…
+> •Core-Strength: Reverse Crunch…
+> •Flexibility: Arm Circles…
+> 243 1976
+> long short
+
+long videos (~30s) 
+
+> QEVD-FIT-COACH QEVD-FIT-COACH-Benchmark QEVD-FIT-COACH-Competition
+
+short clips (<10s)  
+
+> QEVD-FIT-300k EgoExo-Fitness Kinetics-700 UCF101
+> Cannot systematically evaluate MLLMs
+
+Quality Score 
+
+Correctness Label 
+
+Action-specific Error Label 
+
+Unstructured Description       
+
+> Push-up
+> •insufficient depth
+> •hip sagging
+> •elbow flare
+> Squat
+> •shallow depth
+> •knee valgus
+> •forward lean
+> The back is not straight enough.
+> ROM=5.
+
+Figure 1: Overview of FitAQA. (a) Unified form error taxonomy enables cross-exercise evaluation through an action-agnostic label space. (b) Hierarchical evaluation tasks decompose fitness AQA into perception, judgement, and temporal grounding. label space with video-specific descriptions of observable evidence. FitAQA further defines three hierarchical evalu-ation tasks : perception, judgement, and temporal grounding. Paired perception and judgement questions target the same quality aspect. Perception evaluates whether models recog-nize the relevant visual evidence, whereas judgement further requires them to combine the observed evidence with do-main knowledge to assess execution correctness. Temporal grounding extends the evaluation to longer videos by requir-ing models to locate when a described form error occurs. Together, these tasks provide a hierarchical view of the capa-bilities involved in fitness AQA, spanning visual perception, quality judgement, and temporal localization. We conduct an extensive evaluation of current MLLMs on FitAQA. The results show that most models perform on par with or only marginally better than simple baselines, and none achieves consistently strong performance across all six quality dimensions. Perception accuracy remains low across models, while providing ground-truth perceptual ev-idence substantially improves judgement, identifying visual perception as a key bottleneck. Temporal grounding also re-mains challenging, with performance degrading markedly under strict overlap thresholds, indicating limited ability to precisely localize form errors. Taken together, these find-ings suggest that capabilities demonstrated on general video understanding benchmarks do not readily transfer to recog-nizing and localizing the quality-relevant posture and motion evidence required for fitness AQA. Our contributions are summarized as follows: 
+
+• We introduce FitAQA, a systematic benchmark for eval-uating MLLMs in fitness AQA, comprising 2,219 videos and 5,512 QA instances across 30 bodyweight exercises. 
+
+• We develop a unified form error taxonomy that defines 38 recurring errors across six quality dimensions, pro-viding a shared label space for cross-exercise evaluation. We further formulate hierarchical evaluation tasks that decompose fitness AQA into perception, judgement, and temporal grounding. 
+
+• We conduct an extensive evaluation of current MLLMs, revealing limited recognition and temporal localization of quality-relevant posture and motion evidence. Controlled experiments further identify visual perception as a key bottleneck for judgement. 
+
+## Related Work 
+
+Traditional Action Quality Assessment Traditional AQA methods often formulate action assessment as score regres-sion or classification problems. Score regression is primarily adopted in competitive sports such as diving (Parmar and Tran Morris 2017; Parmar and Morris 2019b), figure skat-ing (Xu et al. 2019), gymnastics (Shao et al. 2020; Dong et al. 2024), artistic swimming (Zhang et al. 2023), and ski-ing (Zhang et al. 2025c), where professional judging sys-tems make quality scores naturally available as supervision. In contrast, classification-based AQA is more common in fitness and rehabilitation scenarios, where scalar score su-pervision is not readily available. Some works (Liao, Vakan-ski, and Xian 2020) perform correctness classification to determine whether an exercise is executed properly, while others (Parmar, Gharat, and Rhodin 2022; Marusic, Tapus et al. 2025) define action-specific error labels and perform multi-label classification. However, both regression and clas-sification provide limited feedback for users. To improve in-terpretability, several traditional methods further generate explanatory feedback. For example, AIFit produces rule-based natural language feedback (Fieraru et al. 2021). Be-sides, Zhao et al. (Zhao et al. 2022) and Zheng et al. (Zheng et al. 2023) provide skeleton-based feedback through weak supervision. More recently, LLM-FMS (Xing et al. 2025) and Zhang et al. (Zhang et al. 2026) use LLMs to interpret structured pose-derived cues for explainable exercise assess-ment. Overall, traditional AQA methods still largely rely on task-specific models, predefined output spaces, or rule-based cues, limiting their application in open-ended assessment. 
+
+MLLM-based Action Quality Assessment Recent stud-ies have begun to adapt AQA to MLLMs by redesigning task formulations and supervision signals for multimodal reasoning and feedback generation. FLEX (Yin et al. 2025) constructs multimodal and multiview fitness data with struc-tured annotations of action steps, error types, and corrective feedback, enabling quality-related video question answer-ing. Qi et al. (Qi et al. 2025) introduce chain-of-thought annotations for explainable action form assessment. Pan-chal et al. (Panchal et al. 2024) study live fitness coach-ing, where models need to decide both what feedback to provide and when to provide it, while BioCoach (Ji et al. 2026) further grounds coaching feedback in 3D pose and biomechanical cues. Dibenedetto et al. (Dibenedetto et al. 2025) fine-tune a large multimodal model for fitness error detection and temporal localization. Despite these advances, existing MLLM-based AQA evaluations remain limited in their ability to diagnose model capabilities. Some works still evaluate MLLMs with traditional AQA metrics. Dibenedetto et al. (Dibenedetto et al. 2025) and Freitas et al. (e Freitas et al. 2026) assess models through score regression, cor-rectness classification, or exercise-specific error recognition under existing dataset definitions. Other works focus on gen-erated feedback or explanations. FLEX (Yin et al. 2025), Qi et al. (Qi et al. 2025), Panchal et al. (Panchal et al. 2024), and BioCoach (Ji et al. 2026) mainly evaluate generated an-swers, explanations, or coaching feedback using generic text-generation metrics or LLM-as-Judge scores. These evalua-tions measure whether the final output matches annotations, but provide limited insight into why models fail. 
+
+## FitAQA Benchmark 
+
+This section describes the construction pipeline of FitAQA, summarized in Figure 2, and presents the resulting dataset statistics. Further details are provided in the Appendix. 
+
+Unified Form Error Taxonomy 
+
+Although bodyweight exercises differ in target muscles and movement patterns, experts evaluate their execution along a shared set of quality dimensions. This motivates the unified form error taxonomy in FitAQA, which captures recurring form errors across exercises. The taxonomy was developed in collaboration with experts in sports science. Before an-notation, two experts formulated an initial taxonomy based on theoretical knowledge and practical experience in body-weight fitness training, focusing on posture and motion errors that commonly recur across bodyweight exercises. During annotation, the taxonomy was further refined in an itera-tive manner: annotators reported ambiguous or uncovered cases, and the experts updated the taxonomy when a recur-ring error could not be cleanly assigned to an existing type. The final taxonomy defines 38 form errors across six quality dimensions. Alignment covers deviations in joint and body-segment configuration, Symmetry captures left-right discrep-ancies, and Stability concerns failures to maintain controlled support and trunk position. Coordination captures temporal relationships among body parts, Tempo concerns movement rhythm and cadence, and Completeness assesses whether the required movement phases and range of motion are fully executed. The full taxonomy is provided in the Appendix. 
+
+Video Selection 
+
+FitAQA covers 30 common bodyweight exercises across full-body cardio, upper-body strength, lower-body strength, core strength, and flexibility. To support the three evaluation tasks, we construct two video subsets: short clips for perception and judgement, and longer videos for temporal grounding. The short-clip subset is drawn from QEVD-FIT-300k (Pan-chal et al. 2024), EgoExo-Fitness (Li et al. 2024b), Kinetics-700 (Carreira et al. 2019), and UCF101 (Soomro, Zamir, and Shah 2012), combining fitness-specific sources with generic action-recognition videos to improve diversity in recording conditions. We map source action labels to the 30 target exercises and filter generic videos to retain single-subject clips that match the target exercises. The long-video subset comes from the longer-video subsets of QEVD (Panchal et al. 2024), including QEVD-FIT-COACH, QEVD-FIT-COACH-Benchmark, and QEVD-FIT-COACH-Competition. We seg-ment workout videos into single-action clips using source-provided timestamps and retain only those with temporal variation in execution quality. This design requires models to localize when a form error occurs rather than merely rec-ognize the action. 
+
+Video Annotation 
+
+Video annotation in FitAQA is conducted based on the uni-fied form error taxonomy. Three annotators, all students ma-joring in sports, participated in the annotation process. Each video was first annotated by one annotator and then reviewed by one expert. For the short-clip subset, annotators selected all visible form errors in each video. For every selected form error, annotators further wrote a detailed description for this specific video. These descriptions preserve video-specific vi-sual evidence while keeping the label space unified. For the long-video subset, annotators additionally marked the tempo-ral intervals where each error occurred. Since the same form-error type may have multiple descriptions within a video when it manifests differently over time, annotators marked all corresponding intervals for each unique description. 
+
+Question and Answer Generation 
+
+Using the resulting video annotations, we construct QA in-stances for the three hierarchical evaluation tasks in FitAQA: Video Selection Video Annotation QA Generation           
+
+> QEVD-FIT-300k EgoExo-Fitness Kinetics-700 UCF101 Filter by coarse-grained action name
+> Filter by fine-grained action name
+> QEVD-FIT-COACH QEVD-FIT-COACH-Benchmark QEVD-FIT-COACH-Competition Segment multi-action videos into single-action
+> Keep videos with temporally varying execution quality
+> Long Videos (~ 30 seconds)
+> 0s 10s 20s 30s
+> Short Clips (< 10 seconds)
+> Target-Exercise & Single-Subject Filtering
+> Each video is: · first annotated by a student majored in sports · then reviewed by an expert in sports science
+> (error type 1, description 1) (error type 1, description 2)
+> 30 target exercises
+> …
+> Annotate all intervals for each unique description.
+> (error type 2, description 3) unselected error types
+> Error Type 1 (e.g. Insufficient Range-of-Motion)
+> Error Type 2
+> Error Type 3
+> Description 1 (e.g. The arms are raised only to shoulder height instead of overhead.)
+> Description 2
+> Error Type 4 Error Type 5 …
+> Select all error types present in the video and describe their manifestations.
+> action name, error type, & grouped descriptions GPT-5.4
+> multiple-choice questions
+> How are the … positioned? A. Correct manifestation B. Error manifestation 1 C. Error manifestation 2
+> Perception
+> Is the movement correct in terms of … ? A. Yes B. No
+> Judgement
+> GPT-5.4-mini
+> full video annotation perception question perception & judgement answers
+> questions revised by experts
+
+12 
+
+> Find the time interval(s) where the described form error happens in the exercise video. Exercise: {action name} Error description: {description}
+> Temporal Grounding
+> action name & error description
+> question template
+> answers revised by experts
+
+Figure 2: Construction pipeline of FitAQA. perception, judgement, and temporal grounding. For the perception and judgement tasks, we group short clips by action type and form-error type and collect the video-specific descriptions within each group. We provide the deduplicated descriptions to GPT-5.4 (Singh et al. 2025) and prompt it to generate an initial perception and judge-ment question pair for each action-error group. The percep-tion question asks which observable manifestation of the target aspect is present. All options are phrased as neutral descriptions of visual manifestations and do not explicitly label the execution as correct or erroneous. Option A cor-responds to the visual manifestation associated with correct execution, while the remaining options correspond to differ-ent error manifestations. The paired judgement question asks whether the same aspect is executed correctly, with binary Yes / No options. By holding the assessed aspect fixed, the pair separates recognition of visual evidence from judgement that combines this evidence with domain knowledge. Con-ditioning question generation on the annotated descriptions grounds the options primarily in visual variations observed in the dataset and avoids wording tied to any single video. Experts then review and revise the question pairs to ensure that each perception option maps unambiguously to its cor-responding judgement answer and to merge pairs assessing the same quality aspect. For each revised perception question, we use GPT-5.4-mini to infer an answer for every video of the corresponding action type based on its form-error labels and descriptions. The model is allowed to abstain when the annotation does not provide sufficient evidence to select a unique option. We then automatically derive the judgement answer from the per-ception answer: option A maps to Yes , non-A options map to No , and abstained perception answers remain abstained. Experts then inspect the corresponding videos to verify the inferred answers, correcting the selected option or marking an instance as unanswerable when necessary. After expert verification, we downsample the QA instances using mixed-integer linear programming (MILP) to reduce answer-option imbalance while preserving coverage of videos, unique ques-tions, and option buckets, as detailed in the Appendix. For the temporal grounding task, we construct questions directly from the long-video annotations using the template: 
+
+Find the time interval(s) where the described form error happens in the exercise video. Exercise: {action name} Error description: {description} 
+
+We construct one question for each unique combination of video, form error, and description, requiring models to lo-calize all intervals in which the described error occurs. 
+
+Dataset Statistics 
+
+Figure 3 summarizes the dataset statistics. FitAQA contains 2,219 videos, including 1,976 short clips for perception and judgement and 243 long videos for temporal grounding. The benchmark contains 288 unique perception and judgement question pairs. Instantiating these questions with compatible short clips yields 2,562 perception and 2,562 judgement QA instances. The temporal grounding subset contains 388 QA instances, resulting in 5,512 QA instances overall. The form error distribution is naturally long-tailed, reflecting the fact that some errors, such as trunk instability and insufficient range of motion, occur across many exercises, while oth-ers are specific to particular movement patterns. The average number of options per perception question ranges from 3.0 to 3.8 across the six quality dimensions. Most temporal ground-ing instances contain a single target interval, while 95 require localizing multiple intervals. The interval-duration distribu-Action Type 
+
+> Distribution
+> Error Type
+> Distribution
+> Distribution of Error Interval
+> Durations in Long Videos
+> Perception Question Word Cloud
+> Average Number of Options
+> per Perception Question
+> Distribution of Error Interval
+> Counts in Long Videos
+
+Figure 3: Dataset statistics. In (a) and (b), outer and inner rings denote the short-clip and long-video subsets. tion exhibits substantial diversity, covering both transient and sustained form errors. 
+
+Dataset Quality Validation 
+
+To examine annotation consistency, we draw a stratified random sample of the final QA instances. Each expert re-annotates sampled perception and temporal grounding in-stances previously reviewed by the other expert. Together, the two subsets cover 10.0% of the full dataset, including 257 perception instances and their 257 matched judgement in-stances, along with 39 temporal grounding instances. Exact-answer agreement for perception reaches 98.4%, with the mapped judgement answers inheriting the same agreement. For temporal grounding, the independently annotated tem-poral intervals achieve an mIoU of 97.3%. These cross-check results provide evidence of high annotation consistency. 
+
+## Experiments 
+
+Evaluated Models 
+
+We evaluate a broad range of MLLMs, covering both open-source model families and closed-source systems. For open-source models, we include VideoLLaMA3 (Zhang et al. 2025a), Qwen3-VL (Bai et al. 2025), Qwen3.5 (Team 2026b), InternVL3.5 (Wang et al. 2025), and Gemma-4 (Farabet and Lacombe 2026). For the Qwen3.5 series, we evalu-ate both non-thinking and thinking modes, while for the other open-source families, we use their instruct models. For closed-source systems, we evaluate Gemini and GPT-series models, including Gemini-3.1-pro-preview (Team 2026a), GPT-5.4, and GPT-5.5. For temporal grounding, we further evaluate specialized temporal grounding models, including Grounded-VideoLLM (Wang et al. 2024), VideoMind (Liu et al. 2025) and TimeLens (Zhang et al. 2025b). Open-source models are evaluated on two NVIDIA A800 GPUs. We use each model’s official video preprocessing pipeline and default decoding settings, running inference with vLLM (Kwon et al. 2023) when compatible and with the corresponding official Transformers implementation (Wolf et al. 2020) otherwise. Closed-source models are evaluated through their official APIs, with the requested frame rate set to 2 fps. UCF101 samples are instead evaluated at their native frame rate of 1 fps for all models. 
+
+Evaluation Protocol 
+
+For perception, we report accuracy and question-macro ac-curacy (Q-MAcc), which first computes accuracy for each unique perception question and then averages across ques-tions, giving every question equal weight. For judgement, we report recall, precision, and F1, treating the answer indicating a form error as the positive class. For perception and judge-ment, we include uniform-random and always-correct base-lines. The former samples uniformly from the available op-tions. The latter always selects the correct-execution answer and is included because prior work has observed that MLLMs tend to overpredict correct execution (e Freitas et al. 2026). For temporal grounding, we report recall at IoU thresholds of 0.3, 0.5, and 0.7, together with mean IoU (mIoU), adapt-ing standard temporal grounding metrics (Wang et al. 2024; Zhang et al. 2025b) to the multi-interval setting as detailed in the Appendix. The whole-video baseline predicts the entire video as the target interval. All main results are averaged across three runs. 
+
+Main Results 
+
+Table 1 reports results across three tasks. Overall, the per-formance of current MLLMs on FitAQA remains limited. Closed-source models generally outperform the evaluated open-source models, which achieve only modest gains over Model Think Perception Judgement Temporal Grounding Accuracy Q-MAcc Recall Precision F1 R@0.3 R@0.5 R@0.7 mIoU 
+
+Simple Baselines 
+
+Uniform Random – 33.6 35.7 50.0 58.9 54.1 – – – –Always Correct – 41.1 43.2 0.0 0.0 0.0 – – – –Whole Video – – – – – – 25.5 4.9 0.0 23.2 
+
+Temporal Grounding Models 
+
+Grounded-VideoLLM-Phi3.5 – – – – – – 11.9 4.4 0.5 13.1 VideoMind – – – – – – 33.0 14.9 4.9 22.8 TimeLens – – – – – – 28.6 16.2 7.5 22.0 
+
+Open-source Models 
+
+VideoLLaMA3-7B ✗ 38.4 40.8 18.9 59.6 28.7 27.3 12.1 4.9 18.4 InternVL3.5-8B ✗ 40.1 43.7 19.5 64.2 29.9 19.8 3.6 0.5 17.3 InternVL3.5-30B-A3B ✗ 41.7 44.6 10.3 65.1 17.7 15.2 5.2 1.3 12.1 Gemma-4-31B ✗ 43.4 46.3 17.6 65.8 27.8 35.6 16.5 5.4 24.9 Qwen3-VL-8B ✗ 41.3 44.2 16.9 64.9 26.8 12.4 3.4 0.3 10.1 Qwen3-VL-30B-A3B ✗ 41.4 44.3 12.1 64.8 20.3 32.7 15.7 7.5 24.3 Qwen3.5-9B ✗ 41.3 44.6 35.8 63.0 45.7 36.1 19.1 7.0 25.7 Qwen3.5-9B ✓ 41.1 43.9 28.9 64.5 39.9 42.3 22.7 10.3 30.4 Qwen3.5-27B ✗ 42.5 45.2 37.4 63.4 47.1 51.3 35.1 19.3 37.6 
+
+Qwen3.5-27B ✓ 42.6 45.7 31.3 66.7 42.6 52.3 30.2 17.0 36.6 Qwen3.5-35B-A3B ✗ 42.4 45.6 22.5 64.5 33.4 43.3 26.8 13.7 30.5 Qwen3.5-35B-A3B ✓ 42.5 45.9 27.7 65.7 39.0 45.9 25.8 12.9 31.7 
+
+Closed-source Models 
+
+Gemini-3.1-pro-preview ✓ 50.7 54.3 80.6 65.2 72.1 62.4 43.8 25.8 44.0 GPT-5.4 ✓ 47.6 51.3 38.8 72.3 50.5 51.3 28.5 18.6 36.9 GPT-5.5 ✓ 51.2 54.1 48.3 71.9 57.8 67.3 42.4 27.0 47.5 
+
+Table 1: Overall results on the three tasks of FitAQA. R@ x denotes Recall@ x. All values are reported as percentages. Alignment Symmetry Stability Coordination Tempo Completeness 
+
+> 30% 40% 50% 60% 70%
+> (a) Perception (Q-MAcc)
+> Alignment Symmetry Stability Coordination Tempo Completeness
+> 20% 40% 60% 80%
+> (b) Judgement (F1)
+> Alignment Symmetry Stability Coordination Tempo Completeness
+> 20% 40% 60%
+> (c) Temporal Grounding (mIoU)
+> InternVL3.5-30B-A3B Gemma-4-31B Qwen3.5-27B Gemini-3.1-pro-preview GPT-5.5
+
+Figure 4: Model performance across six quality dimensions on the three tasks of FitAQA. simple baselines and fall below them on some metrics. Per-ception is particularly challenging. Gemini-3.1-pro-preview achieves the highest Q-MAcc of 54.3%, while the best open-source result is 46.3% from Gemma-4-31B, only 3.1 points above the always-correct baseline. These results indicate dif-ficulty in identifying the quality-relevant posture and mo-tion evidence in the videos. For judgement, Gemini-3.1-pro-preview achieves the highest F1 of 72.1%. Among all other MLLMs, recall is at most 48.3% and lower than precision. This pattern aligns with prior observations that MLLMs tend to overpredict correct execution and miss form errors (e Fre-itas et al. 2026). All evaluated open-source models fall be-low the uniform-random baseline in F1, and thinking mode provides no consistent improvement across tasks. Temporal grounding performance declines sharply as the IoU thresh-old becomes stricter. GPT-5.5 performs best with 27.0% Recall@0.7 and 47.5% mIoU, while Qwen3.5-27B is the strongest open-source model with 19.3% Recall@0.7 and 37.6% mIoU. None of the specialized temporal grounding models surpasses the whole-video baseline in mIoU. These results suggest that current MLLMs struggle to recognize quality-relevant evidence, detect form errors, and localize them precisely. Figure 4 shows how each model performs across the six quality dimensions. In perception, GPT-5.5 and Gemini-3.1-pro-preview achieve similar Q-MAcc but exhibit different dimension profiles, most notably in the stronger tempo per-formance of GPT-5.5. The judgement advantage of Gemini-Setting Gemma-4-31B Qwen3.5-27B GPT-5.5 
+
+Baseline 17.6 / 65.8 / 27.8 37.4 / 63.4 / 47.1 48.3 / 71.9 / 57.8 Question-only 17.9 / 67.8 / 28.4 21.7 / 64.9 / 32.5 48.0 / 72.1 / 57.6 Model-perception 11.8 / 72.4 / 20.3 16.2 / 71.8 / 26.4 45.7 / 73.0 / 56.2 GT-perception 63.2 / 96.3 / 76.3 65.6 / 97.0 / 78.2 90.3 / 99.0 / 94.4 GT-perception, no video 68.9 / 99.1 / 81.3 66.8 / 98.9 / 79.8 92.6 / 99.2 / 95.8 
+
+Table 2: Judgement performance under different perception oracle settings. Each cell reports error recall / precision / F1 as percentages. 0 25 50 75 100  
+
+> Perception Oracle Acc.
+> 20 30 40 50 60 70 80 90 100
+> Judgement Acc.
+> Gemma-4-31B Qwen3.5-27B GPT-5.5
+
+Figure 5: Judgement accuracy as a function of perception oracle accuracy. Action name : Butt Kicks Error description : Insufficient back kick amplitude, no back kicks to the calf above the knee height and close to the hip.  
+
+> Action name : High Knees Error description : Thighs not raised high enough to be parallel to the ground.
+> GT
+> GPT 5.5
+> GT
+> GPT 5.5
+
+Figure 6: Temporal grounding failure cases. Green bars denote ground truths and red denote predictions of GPT-5.5. 3.1-pro-preview extends across all six dimensions. In tem-poral grounding, Qwen3.5-27B achieves the highest mIoU on symmetry despite trailing the two closed-source mod-els overall. Although individual models excel on particular dimensions, none consistently performs well across all six dimensions in all three tasks, suggesting that comprehensive fitness AQA remains a challenge for current models. 
+
+Controlled Perception-Oracle Evaluation 
+
+We use paired perception and judgement questions to iso-late how perception evidence affects judgement. The base-line asks the judgement question directly from the video. Question-only adds the paired perception question without its answer, while model-perception also supplies the model’s answer. Comparing these settings separates any prompting effect of the perception question from the contribution of its answer. GT-perception instead provides the ground-truth answer, while GT-perception, no-video further removes the video. The judgement question remains unchanged across settings. Importantly, although judgement answers are de-rived from perception answers during dataset construction, the perception questions and options describe only neutral posture and motion evidence. Therefore, supplying the per-ception question and its answer only provides perception ev-idence, leaving the model to reason with domain knowledge. As shown in Table 2, question-only and model-perception bring little improvement over the baseline, whereas GT-perception substantially improves error detection. Notably, GPT-5.5 reaches 94.4% F1 with GT-perception, much higher than Gemma-4-31B and Qwen3.5-27B. These results indi-cate that perception is a key bottleneck, especially for models with strong knowledge and reasoning capabilities. Figure 5 further varies the correctness of the perception oracle from 0% to 100%, using incorrect answers at 0%, ground-truth answers at 100%, and mixtures in between. Judgement accu-racy increases monotonically for all three models, showing a positive dependence of judgement performance on percep-tion quality under controlled perception corruption. 
+
+Temporal Grounding Failure Cases 
+
+Figure 6 presents two representative temporal grounding fail-ure cases. In the high-knees example, GPT-5.5 predicts al-most the whole exercise segment, while the ground-truth interval only covers the early repetitions where the thighs are not raised high enough. This indicates that the model finds the action, but fails to pinpoint which repetitions con-tain the form error. In the butt-kicks example, the insufficient back-kick amplitude makes the erroneous repetitions deviate from the standard appearance of the exercise, so the model appears to treat them as not performing the target action and instead localizes later, cleaner repetitions. These cases sug-gest that the model relies heavily on coarse action semantics and struggles to identify quality-related deviations within the same exercise sequence. 
+
+## Conclusion 
+
+We present FitAQA, a systematic benchmark for evaluat-ing MLLMs in fitness action quality assessment. FitAQA contains 2,219 videos and 5,512 QA instances spanning 30 bodyweight exercises. It defines a unified taxonomy cover-ing 38 form errors across six quality dimensions and in-cludes three hierarchical evaluation tasks: perception, judge-ment, and temporal grounding. Experiments show that cur-rent MLLMs still struggle to assess exercise quality com-prehensively, particularly in visual perception and temporal localization. Performance on judgement improves substan-tially when provided with perception evidence, identifying visual perception as a key bottleneck. These findings suggest that current MLLMs have yet to translate their strong se-mantic video understanding capabilities into reliable quality-sensitive action assessment. We believe that FitAQA provides a testbed for developing more reliable fitness AQA models. 
+
+## Acknowledgement 
+
+This research was backed by Huawei’s AI Hundred Schools Program, and the experimental and computational work in this research leveraged AI compute resources alongside the Huawei Cloud AI Compute Service. This work was also supported by Capital’s Funds for Health Improvement and Research (CFH) (2026-2-2191) and Beijing Natural Science Foundation (L242049). 
+
+## References 
+
+Bai, S.; Cai, Y.; Chen, R.; Chen, K.; Chen, X.; Cheng, Z.; Deng, L.; Ding, W.; Gao, C.; Ge, C.; et al. 2025. Qwen3-VL Technical Report. arXiv preprint arXiv:2511.21631 .Bonilla, D. A.; Cardozo, L. A.; Vélez-Gutiérrez, J. M.; Arévalo-Rodríguez, A.; Vargas-Molina, S.; Stout, J. R.; Krei-der, R. B.; and Petro, J. L. 2022. Exercise selection and common injuries in fitness centers: a systematic integrative review and practical recommendations. International jour-nal of environmental research and public health , 19(19): 12710. Cai, Y.; Zhang, J.; Gan, Z.; He, Q.; Hu, X.; Zhu, J.; Wang, Y.; Wang, C.; Xue, Z.; Fu, C.; et al. 2025. HumanVideo-MME: Benchmarking MLLMs for Human-Centric Video Understanding. arXiv preprint arXiv:2507.04909 .Carreira, J.; Noland, E.; Hillier, C.; and Zisserman, A. 2019. A short note on the kinetics-700 human action dataset. arXiv preprint arXiv:1907.06987 .Carreira, J.; and Zisserman, A. 2017. Quo vadis, action recognition? a new model and the kinetics dataset. In pro-ceedings of the IEEE Conference on Computer Vision and Pattern Recognition , 6299–6308. Contributors, L.-O. 2026. LLaVA-OneVision-2. In arXiv .Dibenedetto, G.; Musacchio, E.; Polignano, M.; and Lops, P. 2025. Fine-Tuning Large Multimodal Models for Fitness Action Quality Assessment. In Adjunct Proceedings of the 33rd ACM Conference on User Modeling, Adaptation and Personalization , 39–44. Dong, L.; Wang, W.; Qiao, Y.; and Sun, X. 2024. Luci-dAction: A Hierarchical and Multi-Model Dataset for Com-prehensive Action Quality Assessment. Advances in neural information processing systems , 37: 96468–96482. Dutta, A.; and Zisserman, A. 2019. The VIA Annotation Software for Images, Audio and Video. In Proceedings of the 27th ACM International Conference on Multimedia , MM ’19. New York, NY, USA: ACM. e Freitas, M. M.; Henriques, R.; Rei, R.; and Martins, P. H. 2026. Can Vision Language Models Judge Action Quality? An Empirical Evaluation. arXiv:2604.08294. Farabet, C.; and Lacombe, O. 2026. Gemma 4: Byte for Byte, the Most Capable Open Models. Google DeepMind, Technical Report .Fieraru, M.; Zanfir, M.; Pirlea, S. C.; Olaru, V.; and Sminchis-escu, C. 2021. AIFit: Automatic 3D Human-Interpretable Feedback Models for Fitness Training. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition , 9919–9928. Fu, C.; Dai, Y.; Luo, Y.; Li, L.; Ren, S.; Zhang, R.; Wang, Z.; Zhou, C.; Shen, Y.; Zhang, M.; et al. 2025. Video-MME: The First-Ever Comprehensive Evaluation Benchmark of Multi-modal LLMs in Video Analysis. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition , 24108–24118. Hülsmann, F.; Göpfert, J. P.; Hammer, B.; Kopp, S.; and Botsch, M. 2018. Classification of motor errors to provide real-time feedback for sports coaching in virtual reality—A case study in squats and Tai Chi pushes. Computers & Graph-ics , 76: 47–59. Hurst, A.; Lerer, A.; Goucher, A. P.; Perelman, A.; Ramesh, A.; Clark, A.; Ostrow, A.; Welihinda, A.; Hayes, A.; Rad-ford, A.; et al. 2024. GPT-4o System Card. arXiv preprint arXiv:2410.21276 .Jaiswal, A.; Luthra, A. S.; Jangir, P.; Garg, B.; and Sri-vastava, N. 2025. Real-Time Feedback and Benchmark Dataset for Isometric Pose Evaluation. arXiv preprint arXiv:2506.11774 .Ji, Y.; Shen, Y.; Zhu, S.; Kong, Y.; and Liu, F. 2026. From 3D Pose to Prose: Biomechanics-Grounded Vision–Language Coaching. arXiv preprint arXiv:2603.26938 .Kwon, W.; Li, Z.; Zhuang, S.; Sheng, Y.; Zheng, L.; Yu, C. H.; Gonzalez, J. E.; Zhang, H.; and Stoica, I. 2023. Efficient Memory Management for Large Language Model Serving with PagedAttention. In Proceedings of the ACM SIGOPS 29th Symposium on Operating Systems Principles .Li, K.; Wang, Y.; He, Y.; Li, Y.; Wang, Y.; Liu, Y.; Wang, Z.; Xu, J.; Chen, G.; Luo, P.; et al. 2024a. MVBench: A Com-prehensive Multi-modal Video Understanding Benchmark. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition , 22195–22206. Li, Y.-M.; Huang, W.-J.; Wang, A.-L.; Zeng, L.-A.; Meng, J.-K.; and Zheng, W.-S. 2024b. EgoExo-Fitness: Towards Egocentric and Exocentric Full-Body Action Understand-ing. In European conference on computer vision , 363–382. Springer. Liao, Y.; Vakanski, A.; and Xian, M. 2020. A deep learn-ing framework for assessing physical rehabilitation exercises. 
+
+IEEE Transactions on Neural Systems and Rehabilitation En-gineering , 28(2): 468–477. Liu, H.; Li, C.; Wu, Q.; and Lee, Y. J. 2023. Visual instruction tuning. Advances in neural information processing systems ,36: 34892–34916. Liu, Y.; Qinghong Lin, K.; Chen, C. W.; and Shou, M. Z. 2025. VideoMind: A Chain-of-LoRA Agent for Long Video Reasoning. arXiv e-prints , arXiv–2503. Maaz, M.; Rasheed, H.; Khan, S.; and Khan, F. 2024. Video-ChatGPT: Towards Detailed Video Understanding via Large Vision and Language Models. In Proceedings of the 62nd Annual Meeting of the Association for Computational Lin-guistics (Volume 1: Long Papers) , 12585–12602. Marusic, A.; Tapus, A.; et al. 2025. Skeleton-based trans-former for classification of errors and better feedback in low back pain physical rehabilitation exercises. In 2025 Inter-national Conference On Rehabilitation Robotics (ICORR) ,1274–1280. IEEE. Panchal, S.; Bhattacharyya, A.; Berger, G.; Mercier, A.; Böhm, C.; Dietrichkeit, F.; Pourreza, R.; Li, X.; Madan, P.; Lee, M.; et al. 2024. What to say and when to say it: Live fitness coaching as a testbed for situated interac-tion. Advances in Neural Information Processing Systems ,37: 75853–75882. Parmar, P.; Gharat, A.; and Rhodin, H. 2022. Do-main knowledge-informed self-supervised representations for workout form assessment. In European conference on computer vision , 105–123. Springer. Parmar, P.; and Morris, B. 2019a. Action quality assessment across multiple actions. In 2019 IEEE winter conference on applications of computer vision (WACV) , 1468–1476. IEEE. Parmar, P.; and Morris, B. T. 2019b. What and how well you performed? a multitask learning approach to action quality assessment. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition , 304–313. Parmar, P.; and Tran Morris, B. 2017. Learning to score olympic events. In Proceedings of the IEEE conference on computer vision and pattern recognition workshops , 20–28. Qi, M.; Wu, Y.; Zhang, X.; and Ma, H. 2025. Explainable Action Form Assessment by Exploiting Multimodal Chain-of-Thoughts Reasoning. arXiv preprint arXiv:2512.15153 .Salehi, M.; Park, J. S.; Yadav, T.; Kusupati, A.; Krishna, R.; Choi, Y.; Hajishirzi, H.; and Farhadi, A. 2024. ActionAt-las: A VideoQA Benchmark for Domain-Specialized Action Recognition. Advances in Neural Information Processing Systems , 37: 137372–137402. Shao, D.; Zhao, Y.; Dai, B.; and Lin, D. 2020. FineGYM: A Hierarchical Video Dataset for Fine-Grained Action Un-derstanding. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition , 2616–2625. Singh, A.; Fry, A.; Perelman, A.; Tart, A.; Ganesh, A.; El-Kishky, A.; McLaughlin, A.; Low, A.; Ostrow, A.; Anan-thram, A.; et al. 2025. OpenAI GPT-5 System Card. arXiv preprint arXiv:2601.03267 .Soomro, K.; Zamir, A. R.; and Shah, M. 2012. UCF101: A Dataset of 101 Human Actions Classes from Videos in the Wild. arXiv preprint arXiv:1212.0402 .Tang, Y.; Ni, Z.; Zhou, J.; Zhang, D.; Lu, J.; Wu, Y.; and Zhou, J. 2020. Uncertainty-aware score distribution learn-ing for action quality assessment. In Proceedings of the IEEE/CVF conference on computer vision and pattern recog-nition , 9839–9848. Team, G. 2026a. Gemini 3.1 Pro: A Smarter Model for Your Most Complex Tasks. Google, Technical Report .Team, Q. 2026b. Qwen3.5: Towards Native Multimodal Agents. Alibaba Cloud, Technical Report .Wang, H.; Xu, Z.; Cheng, Y.; Diao, S.; Zhou, Y.; Cao, Y.; Wang, Q.; Ge, W.; and Huang, L. 2024. Grounded-VideoLLM: Sharpening Fine-Grained Temporal Ground-ing in Video Large Language Models. arXiv preprint arXiv:2410.03290 .Wang, W.; Gao, Z.; Gu, L.; Pu, H.; Cui, L.; Wei, X.; Liu, Z.; Jing, L.; Ye, S.; Shao, J.; et al. 2025. InternVL3.5: Advancing Open-Source Multimodal Models in Versatility, Reasoning, and Efficiency. arXiv preprint arXiv:2508.18265 .Wilk, M.; Zajac, A.; and Tufano, J. J. 2021. The influence of movement tempo during resistance training on muscu-lar strength and hypertrophy responses: a review. Sports medicine , 51(8): 1629–1650. Wolf, T.; Debut, L.; Sanh, V.; Chaumond, J.; Delangue, C.; Moi, A.; Cistac, P.; Rault, T.; Louf, R.; Funtowicz, M.; et al. 2020. Transformers: State-of-the-art natural language pro-cessing. In Proceedings of the 2020 conference on empirical methods in natural language processing: system demonstra-tions , 38–45. Xing, Q.; Xing, X.; Guo, P.; Tang, Z.; and Shen, Y. 2025. LLM-FMS: A fine-grained dataset for functional movement screen action quality assessment. PloS one , 20(3): e0313707. Xu, C.; Fu, Y.; Zhang, B.; Chen, Z.; Jiang, Y.-G.; and Xue, X. 2019. Learning to score figure skating sport videos. IEEE transactions on circuits and systems for video technology ,30(12): 4578–4590. Yin, H.; Gu, L.; Parmar, P.; Xu, L.; Guo, T.; Liu, X.; Fu, W.; Zhang, Y.; and Zheng, T. 2025. FLEX: A Large-scale Multimodal, Multiview Dataset for Learning Structured Rep-resentations for Fitness Action Quality Assessment. arXiv preprint arXiv:2506.03198 .Youssef, F.; Zaki, A. B.; and Gomaa, W. 2022. Analysis of the Squat Exercise from Visual Data. In ICINCO , 79–88. Yu, X.; Rao, Y.; Zhao, W.; Lu, J.; and Zhou, J. 2021. Group-aware contrastive regression for action quality assessment. In Proceedings of the IEEE/CVF international conference on computer vision , 7919–7928. Zhang, B.; Li, K.; Cheng, Z.; Hu, Z.; Yuan, Y.; Chen, G.; Leng, S.; Jiang, Y.; Zhang, H.; Li, X.; et al. 2025a. VideoL-LaMA 3: Frontier Multimodal Foundation Models for Image and Video Understanding. arXiv preprint arXiv:2501.13106 .Zhang, J.; Wang, T.; Ge, Y.; Ge, Y.; Li, X.; Shan, Y.; and Wang, L. 2025b. TimeLens: Rethinking Video Tem-poral Grounding with Multimodal LLMs. arXiv preprint arXiv:2512.14698 .Zhang, S.; Dai, W.; Wang, S.; Shen, X.; Lu, J.; Zhou, J.; and Tang, Y. 2023. LOGO: A Long-Form Video Dataset for Group Action Quality Assessment. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition , 2405–2414. Zhang, Y.; Li, S.; Gao, Y.; and Jiang, Y. 2025c. FineSki-ing: A Fine-Grained Benchmark for Skiing Action Quality Assessment. arXiv preprint arXiv:2511.10250 .Zhang, Y.; Xu, B.; Lin, Z.; Li, J.; and Ming, A. 2026. Exercise quality assessment in monocular video streaming. Engineer-ing Applications of Artificial Intelligence , 177: 114905. Zhao, Z.; Kiciroglu, S.; Vinzant, H.; Cheng, Y.; Katircioglu, I.; Salzmann, M.; and Fua, P. 2022. 3D Pose Based Feed-back for Physical Exercises. In Proceedings of the Asian Conference on Computer Vision , 1316–1332. Zheng, K.; Wu, J.; Zhang, J.; and Guo, C. 2023. A skeleton-based rehabilitation exercise assessment system with rotation invariance. IEEE Transactions on Neural Systems and Reha-bilitation Engineering , 31: 2612–2621. Appendix 
+
+## Dataset Construction Details 
+
+Action List 
+
+Table 3 lists the 30 target bodyweight exercises covered by FitAQA. These actions are selected to cover common home-based fitness scenarios and span five broad attributes: full-body cardio, upper-body strength, lower-body strength, core strength, and flexibility. Since some compound exercises in-volve multiple body regions or training goals, an action may be assigned to more than one attribute.                                 
+
+> No. Attributes Action Type
+> 1Jumping Jack 2Quick Feet 3High Knees 4Butt Kicks 5Tuck Jump 6Jumping Lunge 7Mountain Climbers 8Burpee 9Standing YTW 10 Knee Push-up 11 Push-up 12 Up-Down Plank 13 Side-Lying Leg Raise 14 Squat 15 Forward Lunge 16 Side Lunge 17 Vertical Jump 18 Glute Bridge 19 Single-Leg Glute Bridge 20 Dead Bug 21 Bird Dog 22 Reverse Crunch 23 Alternating Leg V-Up 24 Plank 25 Side Plank 26 Cat-Cow Stretch 27 Downward-Facing Dog 28 Arm Circles 29 Posterior Deltoid Stretch 30 Overhead Triceps Stretch
+
+Table 3: Action list. Colored squares denote attributes: Full-Body Cardio; Upper-Body Strength; Lower-Body Strength; Core Strength; Flexibility. 
+
+Short-Clip Selection 
+
+For fitness AQA datasets, we select videos from QEVD-FIT-300k and EgoExo-Fitness whose exercise names can be mapped to one of the 30 target actions. For generic action-recognition datasets, we first select fitness-related ac-tion classes to form a candidate video pool. From Kinetics-700, we select videos annotated as jumping jacks , squat ,
+
+doing aerobics , exercising arm , exercising with an exercise ball , high kick , lunge , and yoga . From UCF101, we select videos from bodyweight squats , jumping jack , lunges , and 
+
+Prompt 1: Video Selection Prompt 
+
+> You are given a video and a target fitness action list. Please determine whether the video should be kept. Keep the video only if all of the following conditions are satisfied: 1. The video contains one visible person. 2. The person is performing one action from the target action list. Return your answer in the following JSON format: {"keep": true or false, "matched_action": "one action from the target action list, or null" }<VIDEO> Target action list: <TARGET_ACTION_LIST>
+
+push ups . Since the class labels in Kinetics-700 and UCF101 are coarse-grained and may include videos with multiple people or irrelevant exercise variants, we further prompt Qwen3-VL-8B-Instruct to retain only candidate videos that contain one of the target exercises performed by a single visible subject, as shown in Prompt 1. We retain generic-dataset videos only when the model returns keep=true 
+
+and the matched action belongs to the target action list. We then combine these retained generic-dataset clips with the selected clips from QEVD-FIT-300k and EgoExo-Fitness. This yields 2,168 short clips for human annotation. 
+
+Long-Video Selection 
+
+For the long-video subset, we construct candidate videos from the longer-video subsets of QEVD. Since the original workout videos contain multiple exercises, we first use the start and end timestamps provided by the source dataset to segment them into single-exercise videos, resulting in 1,519 segments. We then map the exercise names of these segments to our 30 target actions and retain segments whose action type falls within the target action list, yielding 856 long-video segments for human annotation. 
+
+Unified Form Error Taxonomy 
+
+Table 4 provides the full unified form error taxonomy used for annotation. The taxonomy contains 38 form errors organized into six quality dimensions: alignment, symmetry, stability, coordination, tempo, and completeness. Each form error is accompanied by an example manifestation to illustrate how the same abstract error type can appear in concrete exercises. The table also includes two auxiliary video-quality tags, in-complete subject visibility and poor lighting condition , which are used for further video filtering. Dimension No. Form Error Example Manifestation 
+
+I. Alignment *
+
+1 Excessive Ankle Eversion Medial arch collapse during vertical jump landing. 2 Insufficient Ankle Dorsiflexion Heels lifted off the floor in squat or downward-facing dog. 3 Insufficient Knee Flexion Knees stay too straight in quick feet. 4 Excessive Knee Flexion Working leg bent in side-lying leg raise. 5 Excessive Hip Internal Rotation Knees collapse inward during weight-bearing lower-body movements. 6 Excessive Hip External Rotation Knees turned too far outward in squat or glute bridge. 7 Excessive Hip Abduction Knee flares too far outward during leg drive in mountain climbers. 8 Excessive Hip Adduction Knee crosses too far inward during leg drive in mountain climbers. 9 Insufficient Hip Flexion Torso too upright from limited hip hinge in quick feet. 10 Excessive Hip Flexion Torso leans too far forward in forward lunge, side lunge, or jumping lunge. 11 Insufficient Shoulder External Rotation Elbows rotate inward during arm circles or standing YTW. 12 Insufficient Shoulder Internal Rotation Elbow points forward instead of outward in overhead triceps stretch. 13 Insufficient Shoulder Flexion Shoulder angle remains too closed in downward-facing dog support. 14 Excessive Shoulder Abduction Elbows flared too wide from the torso in push-up. 15 Excessive Scapular Elevation Shoulders shrugged toward the ears in plank or downward-facing dog. 16 Insufficient Scapular Protraction Shoulder blades not spread enough in plank or push-up. 17 Excessive Elbow Flexion Elbows too bent in posterior deltoid stretch or downward dog support. 18 Excessive Lumbar Flexion Low back rounds in squat or push-up. 19 Excessive Lumbar Extension Low back sags in push-up, bird dog extension, or reverse crunch lowering. 20 Excessive Thoracic Flexion Rounded upper back in plank, push-up, or downward-facing dog. 21 Excessive Cervical Flexion Head lifted with chin tucked in dead bug or reverse crunch. 22 Excessive Cervical Extension Gaze lifted toward the ceiling instead of forward in squat. 23 Forward Head Posture Head reaches forward toward the floor in push-up. 24 Incorrect Movement Trajectory Arms drift forward out of the side plane during standing YTW transitions. 25 Incorrect Support Placement Improper hand spacing in push-up or stance width in squat. II. Symmetry 26 Load Distribution Asymmetry Uneven shoulder height during downward-facing dog support. 27 Range-of-Motion Asymmetry Uneven leg height in high knees, or asymmetric limb lowering in dead bug. III. Stability 28 Trunk Instability Trunk sways side to side with alternating legs in mountain climbers. 29 Support Instability Unstable landing support in jumping lunge, or shaky leg in glute bridge. IV. Coordination 30 Movement Incoordination Unsynchronized arm-leg motion in jumping jack, or same-side limbs used in dead bug. V. Tempo 31 Loss of Eccentric Tempo Control Letting the leg and torso drop during alternating leg V-up descent. 32 Momentum-Driven Execution Swinging the legs to complete reverse crunch. 33 Low Movement Cadence Slow leg lift or long pause between steps in high knees. VI. Completeness 34 Insufficient Range of Motion Limited arm raise, arm return, or leg spread in jumping jack. 35 Missing Movement Phase Missing push-up or jump phase in burpee. 36 Insufficient Movement Duration No hold after entering downward-facing dog. 37 Extraneous Movement Extra heel lift during glute bridge ascent, or head lift during descent. 38 Exercise Mismatch Performing substantially different from the requested exercise. Auxiliary Tags † - Incomplete Subject Visibility Key body parts out of frame or occluded by scene objects. - Poor Lighting Condition Body posture hard to assess due to dim or uneven lighting. 
+
+> *
+
+Alignment errors capture postural deviations outside the primary movement range; insufficient amplitude of the main action is labeled as Insufficient Range of Motion rather than as a joint-specific alignment error (e.g., limited arm raise in jumping jack is not labeled as insufficient shoulder flexion). 
+
+> †
+
+These auxiliary video-quality tags are used to identify videos whose visual conditions make reliable form assessment difficult. 
+
+Table 4: Unified form error taxonomy and auxiliary video-quality tags with example exercise-specific manifestations. The unified form error taxonomy was drafted by two ex-perts based on their theoretical knowledge and practical expe-rience in bodyweight fitness training, focusing on posture and motion errors that commonly recur across bodyweight exer-cises. During annotation, the taxonomy was further refined in an iterative manner: annotators reported ambiguous or un-covered cases, and the experts updated the taxonomy when a recurring error could not be cleanly assigned to an existing type. For instance, missing movement phase was added after annotators observed executions of compound actions such as burpees where a required phase was skipped entirely. After annotation, we removed error types that may be plausible for other bodyweight exercises but have no corresponding sam-ples in our dataset, such as knee hyperextension, to ensure that the final taxonomy remains grounded in FitAQA. 
+
+Annotation Protocol 
+
+Annotators The annotation involved two groups of anno-tators with distinct roles. The expert annotators were sports-science experts who collaborated with us on the benchmark construction. They drafted and updated the unified form error taxonomy, conducted pre-annotation training, reviewed the completed annotations, and revised the generated perception and judgement question pairs. The three student annotators were recruited from sports colleges based on their domain background and familiarity with common bodyweight exer-cises. They performed the initial video annotation, including selecting visible form-error labels, writing textual descrip-tions, marking auxiliary video-quality tags, and annotating temporal intervals for long videos. 
+
+Training Before annotation, two experts introduced the correct execution standards and common form errors for the 30 target exercises. Annotators were trained with the unified form error taxonomy and example videos before annotating the benchmark data. 
+
+Annotation Instructions Annotators were instructed to identify all visible form errors according to the unified tax-onomy. They annotated only errors that could be confidently determined from the video. If camera viewpoint, frame rate, occlusion, or other visual limitations made an error uncertain, the error was not annotated. When the subject was partially outside the frame or the video was too dark to assess the full movement, annotators marked the corresponding video-quality tag and still annotated any other form errors that were visible. Annotators followed additional disambiguation rules for labels that could otherwise be confused. They la-beled exercise mismatch only when the performed action fun-damentally differed from the requested exercise in its core movement pattern, moving/static property, involved move-ment phase, movement direction, or action type, rather than for local posture errors or insufficient range of motion. When insufficient range of motion and local posture errors co-occurred, annotators labeled only insufficient range of motion 
+
+if the posture issue was a direct manifestation of the limited movement range. Otherwise, they labeled both errors. For short clips, annotators selected all visible form-error labels and wrote a video-specific description for each selected label. The descriptions focused on concrete and observable visual                       
+
+> Source #Videos Avg Duration
+> Short-clip subset
+> QEVD-FIT-300k 1,551 5.7 EgoExo-Fitness 183 9.3 Kinetics-700 186 7.5 UCF101 56 –
+> Short-clip subtotal 1,976 6.2
+> Long-video subset
+> QEVD-FIT-COACH 83 33.2 QEVD-FIT-COACH-Benchmark 44 33.2 QEVD-FIT-COACH-Competition 116 26.5
+> Long-video subtotal 243 30.0
+> Overall total 2,219 –
+
+Table 5: Video composition of FitAQA. Average video du-ration is in seconds. UCF101 consists of image sequences. evidence, as if explaining the video to someone who cannot see it. For long videos, annotators performed the same label and description annotation, and additionally marked the tem-poral interval(s) where each described error occurred. When the same form-error type appeared with different manifesta-tions over time, annotators wrote separate descriptions and marked the corresponding intervals for each unique descrip-tion. Annotators also indicated whether the execution quality varied over time, which was later used to identify videos suit-able for temporal-grounding evaluation. 
+
+Annotation Tools For short clips, annotators used our custom-built web annotation system, as shown in Figure 7. For long videos, annotators used the video annotation inter-face of VGG Image Annotator (Dutta and Zisserman 2019), which supports temporal segment annotation in videos. 
+
+Video Filtering For short clips, we filtered out videos whose only labels were exercise mismatch , poor lighting condition , or incomplete subject visibility . Videos with these quality-related issues were retained only when they also con-tained recognizable form errors that could be assessed from the visible evidence. This step filtered out 192 videos, cor-responding to 8.9% of the annotated short-clip candidates. For long videos, we retained only videos whose execution quality varied over time, removing clips that were consis-tently correct or consistently exhibited the same error pattern throughout the segment. This step filtered out 613 videos, corresponding to 71.6% of the annotated long-video candi-dates. 
+
+Expert Review Each video was first annotated by one stu-dent annotator and then reviewed by one expert. For retained videos, the expert checked whether the selected form-error labels, textual descriptions, and temporal intervals were con-sistent with the taxonomy and visible video evidence. Expert review led to annotation revisions for 162 short clips, cor-responding to 8.2% of the retained short clips, and 24 long videos, corresponding to 9.9% of the retained long videos. For filtered-out samples, experts further checked 20 short clips and 62 long videos, accounting for approximately 10% Figure 7: Screenshot of the custom-built web annotation system. of the excluded samples in each subset. All sampled filtering decisions were confirmed to be correct. 
+
+Video Composition 
+
+After annotation and video filtering, FitAQA consists of 2,219 videos in total. The short-clip subset contains 1,976 clips from QEVD-FIT-300k, EgoExo-Fitness, Kinetics-700, and UCF101, and is used for perception and judgement eval-uation. The long-video subset contains 243 videos from the longer-video subsets of QEVD, and is used for temporal grounding evaluation. Table 5 summarizes the final source-wise composition and average video duration. For UCF101, we do not report average duration because the retained sam-ples are image sequences rather than standard video files. 
+
+Question Generation 
+
+For perception and judgement, we first group the annotated short clips by action type and form-error type, and collect the video-specific descriptions within each group. We then use GPT-5.4 to generate one perception question and one judge-ment question for each action-error group. This produces 348 initial perception-judgement question pairs. As shown in Prompt 2, the model is instructed to generate multiple-choice questions primarily grounded in the annotated descriptions and visual variations observed in the dataset. The generated question pairs are further revised by experts before answer inference. During this review, experts verify that the perception options remain neutral descriptions and that each option has an unambiguous semantic mapping to Prompt 2: Question Generation Prompt 
+
+You are an expert in sports science. For a given error type of a specific exercise, design high −quality multiple −choice questions based on the textual descriptions of this error type across all video samples. The questions should distinguish differences in how different videos exhibit this error type. {"action_name": <ACTION_NAME>, "total_num_videos": <ACTION_VIDEO_COUNT>, "form_error_type": <FORM_ERROR_TYPE>, "num_videos_without_this_error": <NUM_UNMARKED_VIDEOS>, "descriptions_of_this_error": <DESCRIPTIONS> }You need to generate one ‘perception‘ question and one ‘judgement‘ question. 
+
+* ‘perception‘: The question should rely only on visual information in the video and should be answerable without knowing the standard for correct exercise execution. For example, "In the video, are the left and right hands raised to the same height?" 
+
+* ‘judgement‘: The question should require both visual information and knowledge of proper exercise form to assess the error or movement quality. For example, "In the video, is the arm range of motion performed correctly?" Requirements: 
+
+* ‘perception‘: Each question should provide 2 −4 options. The question stem and options should describe only visible phenomena in the video, without any subjective evaluation or technical terminology. Option A should correspond to the correct execution, while the other options should correspond to different types of incorrect execution. The options should be logically mutually exclusive with clear boundaries. Do not design questions for which multiple options may apply. Do not use vague degree words. 
+
+* ‘judgement‘: The question should ask whether the movement is performed correctly with respect to the target aspect. Do not directly copy the name of the error type in the question; instead, convert it into a more natural expression. The options should be "Yes" and "No". Do not explain the judging criteria or visual characteristics associated with this error type. 
+
+* Both types of questions should be grounded in the video content. Do not ask purely theoretical questions. Notes: 
+
+* Videos that are not annotated with this error type should be treated as correct in this aspect. 
+
+* You may add reasonable options based on the textual descriptions of existing samples, even if an option does not exactly correspond to any existing description. Output schema: ‘‘‘json [{"question_type": "perception", "question": "question stem", "options": { "A": "option 1", "B": "option 2", "..." }}, {"question_type": "judgement", "question": "judgement stem", "options": { "A": "Yes", "B": "No" }}]‘‘‘ Prompt 3: Answer Inference Prompt 
+
+> You are an expert in sports science. Answer the given question based on the structured annotation of the video. {"action_name": <ACTION_NAME>, "question": <QUESTION>, "form_error_type_of_the_question": < FORM_ERROR_TYPE>, "options": <OPTIONS>, "video_annotation": <FULL_VIDEO_ANNOTATION> }Notes:
+
+* The structured annotation contains the error types that occur in the video and their corresponding textual descriptions. If an error type does not appear in the annotation, the video should be treated as correct in that aspect. 
+
+* If the full annotation uniquely supports one option, set ‘can_answer=true‘ and provide the corresponding option letter. 
+
+* If the video annotation does not contain sufficient information to answer the question , set ‘can_answer=false‘ and ‘answer=null‘. Output schema: ‘‘‘json {"can_answer": true, "answer": "B" }‘‘‘ 
+
+the matched judgement answer. Under this expert-verified mapping, the option associated with correct execution is in-dexed as A during construction and maps to Yes , while the remaining options map to No . Experts also merge question pairs when different form-error labels lead to the same judge-ment aspect. For instance, Excessive Hip Internal Rotation 
+
+and Excessive Hip External Rotation can both be assessed through whether the knees track in the correct direction. Keeping separate judgement questions for such labels would make the answer depend on the generating error type rather than the actual queried aspect. We therefore merge them into one aspect-level question to ensure consistent answer assign-ment. By merging groups of two or three related question pairs, experts consolidate 110 initial question pairs into 50 question pairs. For the remaining 238 non-merged question pairs, 42 pairs receive wording-level revisions, and another 9 pairs receive substantial rewrites. The wording-level re-visions mainly adjust option phrasing to make the distinc-tions among options clearer while keeping the tested visual cue and answer mapping unchanged. Substantial rewrites are used when the original question and options are ambiguous or do not clearly capture the intended form-error aspect. After revision, FitAQA contains 288 unique perception       
+
+> Before verification After verification Answerable Unanswerable Answerable 37,270 (1,044) 884 Unanswerable 312 2,516
+
+Table 6: Answer revisions during expert verification. Counts include matched judgement instances updated through the fixed perception-to-judgement mapping. The value in paren-theses denotes the number of option-label corrections among instances that remained answerable. and judgement question pairs, which are then instantiated with videos to form the QA instances. 
+
+Answer Inference 
+
+We construct 20,491 candidate matched perception– judgement question pairs, corresponding to 40,982 QA in-stances. For each candidate perception instance, we use GPT-5.4-mini to infer the answer from the sample’s full annotation. The prompt is shown in Prompt 3. The model is allowed to ab-stain when the annotations do not provide sufficient evidence to select a unique option. We then derive the corresponding judgement answer from the perception answer: option A is mapped to Yes , non-A options are mapped to No , and ab-stained perception answers remain abstained. After automatic inference, experts inspect the correspond-ing video to verify each inferred answer. They correct the option label when the video evidence supports a different option and mark an instance as unanswerable when the video does not support a unique answer. Any correction to a per-ception answer is propagated to the matched judgement an-swer through the same mapping. Table 6 summarizes the changes made by experts during answer verification. Among 40,982 candidate QA instances, 1,196 change answerability status, yielding an answerability correction rate of 2.92%. Specifically, 884 instances initially marked as unanswerable are assigned a valid answer, while 312 initially answerable instances are marked as unanswerable. Among the 37,270 in-stances that remain answerable before and after verification, experts correct the selected option for 1,044, corresponding to an answer correction rate of 2.80%. Overall, 2,240 in-stances (5.47%) receive either an answerability or option-label correction. After verification, 38,154 of the 40,982 candidate QA instances remain answerable. Because each perception question has a matched judgement question, this total comprises 19,077 answerable perception QA instances and 19,077 matched judgement QA instances. 
+
+MILP-Based Downsampling 
+
+After verification, the perception instances remain strongly imbalanced across answer options. Because each question is applied to videos of the same exercise, many instances do not exhibit the queried form error, making the option associ-ated with correct execution of the queried aspect dominant. Retaining all instances would allow benchmark scores to be driven by this frequent answer rather than reliable recognition 0% 25% 50% 75% 100%         
+
+> before after
+> 79.2% 12.6% 41.1% 33.0% 17.1%
+> ABCDE
+> 14812 16
+> 0% 25% 50% 75% 100% before after
+> (a) Perception Answer Distribution (b) Perception Instances per Video
+
+Figure 8: Effect of MILP-based downsampling on (a) per-ception answer options and (b) the number of perception instances per video. of quality-relevant visual evidence. We therefore downsam-ple the verified instances while preserving dataset coverage. Specifically, we formulate the problem as a mixed-integer lin-ear program (MILP). It requires every source video and every observed question-option bucket to remain represented, lim-its each video to four instances, and restricts overrepresented buckets relative to the other options for the same question. The objective further favors distributing retained instances across questions and answer options rather than repeatedly selecting from common buckets. The procedure retains 2,562 perception QA instances and the same number of corresponding judgement instances. It preserves all 1,976 source videos and 288 perception ques-tions. As shown in Fig. 8(a), the option associated with cor-rect execution accounts for 79.2% of the verified percep-tion instances before downsampling and 41.1% afterward. Fig. 8(b) further shows that no video contributes more than four retained instances. Overall, the procedure substantially reduces answer and video concentration while preserving the coverage of the verified candidate pool. 
+
+## Dataset Quality Validation 
+
+We conduct a blinded cross-check on a stratified random sample covering the six quality dimensions. Within each dimension, we sample 10% of the final perception and tem-poral grounding instances, with each sampled perception in-stance accompanied by its matched judgement instance. This yields 257 perception instances, 257 matched judgement in-stances, and 39 temporal grounding instances. During the cross-check, experts do not have access to the original an-swers or temporal intervals. Each expert independently re-annotates perception and temporal grounding instances pre-viously reviewed by the other expert. Judgement answers are then derived from the re-annotated perception answers using the same mapping as in dataset construction. For perception, the two experts agree on 253 of the 257 answers, yielding an exact-answer agreement of 98.4%. Be-cause judgement answers are mapped from perception an-swers, the mapped judgement answers inherit the same agree-
+
+Prompt 4: Perception and Judgement Prompt 
+
+> You are an expert fitness video question answering assistant. Answer the multiple −choice question based only on the given video. Return exactly one option letter from the provided choices. Do not explain. <VIDEO> Action: <ACTION_NAME> Question: <QUESTION> Options: <OPTION_LINES> Answer with exactly one option letter.
+
+Prompt 5: Temporal Grounding Prompt 
+
+> You are given a fitness exercise video and one form −error description. Find the time interval(s) where the described error is clearly visible. <VIDEO> Exercise action: <ACTION_NAME> Error description: <ERROR_DETAIL> Return continuous interval(s), not individual frames. If the error occurs in multiple disjoint intervals, return multiple segments. Return only valid JSON, with no markdown or explanation. Use exactly this schema: {"segments":[{"start":1.0,"end":7.5}]}
+
+ment. For temporal grounding, all intervals annotated by each expert are treated as a temporal set. We compute IoU from the total duration of the intersection and union of the two sets for each instance, obtaining an mIoU of 97.3% across the 39 sampled instances. The cross-check is used only to measure agreement, and discrepancies do not alter the final annotations. The blinded cross-check provides evidence of high annotation consistency. 
+
+## Evaluation Details 
+
+Evaluation Prompts 
+
+For perception and judgement, we use the multiple-choice prompt shown in Prompt 4. During dataset construction, the answer options follow a fixed order, with option A in each perception question denoting the manifestation associated with correct execution. To remove positional cues, we shuf-fle the options of each QA instance once before evaluation and remap its ground-truth label accordingly. The resulting option order is fixed across all evaluated models and runs. Prompt 6: Perception-Oracle Prompt Template 
+
+> You are an expert fitness video question answering assistant. Answer the multiple −choice judgement question using the available evidence. Return exactly one option letter from the provided choices. Do not explain. <VIDEO> Perception evidence: Question: <PERCEPTION_QUESTION> Options: <PERCEPTION_OPTION_LINES> Answer: <PERCEPTION_ANSWER> Based on the above perception evidence, answer the following judgement question. Action: <ACTION_NAME> Question: <JUDGEMENT_QUESTION> Options: <JUDGEMENT_OPTION_LINES> Answer with exactly one option letter.
+
+For temporal grounding, general-purpose MLLMs use the prompt shown in Prompt 5. For specialized temporal grounding models, we retain their official prompting formats and native temporal representations. All models receive the same exercise action and annotated form error description. Model-specific outputs, including textual time ranges, sam-pled frame indices, and discrete temporal tokens, are con-verted into intervals in seconds before evaluation. A single predicted interval is treated as a singleton temporal set. 
+
+Controlled Perception-Oracle Prompts 
+
+Prompt 6 presents the prompt template used in the controlled perception-oracle evaluation. In the model-perception and GT-perception settings, <PERCEPTION_ANSWER> is in-stantiated with the model-predicted and ground-truth per-ception answers, respectively. In the question-only setting, 
+
+<PERCEPTION_ANSWER> is omitted from the template. In the GT-perception with no video setting, <VIDEO> is omit-ted from the GT-perception prompt. The judgement question remains identical across all settings, and its ground-truth an-swer is never provided. All settings use the same fixed, pre-shuffled option order described above, with no reshuffling during inference. 
+
+Output Parsing Rules 
+
+Perception and Judgement We strip leading and trailing whitespace from each response and normalize the extracted option label to uppercase. A response is valid only if exactly one label among the provided options can be identified. Re-sponses containing no valid label or multiple distinct labels are treated as invalid. Invalid responses are counted as incor-rect, and no additional language model is used to interpret or correct malformed outputs. 
+
+Temporal Grounding For general-purpose MLLMs, we parse the required segments field. The native outputs of specialized models are first converted into the same list of intervals in seconds. We discard intervals with missing fields or non-finite start and end values. Valid timestamps are clipped to the video range [0 , T ], where T is the video dura-tion, and intervals with a non-positive duration after clipping are removed. The remaining intervals are sorted chronologi-cally, and overlapping intervals are merged. If none remains, the response is treated as an empty prediction. 
+
+Evaluation Metrics 
+
+Perception We report accuracy and question-macro accu-racy (Q-MAcc). Let Np denote the number of perception instances, gi the ground-truth option label, and ˆgi the parsed prediction, with ˆgi = ∅ for an invalid response. Accuracy is defined as 
+
+Acc = 1
+
+Np
+
+> Np
+
+X
+
+> i=1
+
+1[ˆ gi = gi].
+
+Let Q denote the set of unique perception questions and Iq
+
+the set of instances associated with question q. Q-MAcc is defined as 
+
+Q-MAcc = 1
+
+|Q| 
+
+X
+
+> q∈Q
+
+1
+
+|I q |
+
+X
+
+> i∈I q
+
+1[ˆ gi = gi].
+
+By assigning equal weight to each unique question, Q-MAcc prevents questions instantiated with more videos from dom-inating the aggregate score. 
+
+Judgement We treat the answer indicating a form error as the positive class and report recall, precision, and F1 for this class. To ensure that invalid responses are always penalized, we count them as false negatives for error-positive instances and as false positives for error-negative instances. Using the resulting counts, the metrics are defined as 
+
+Recall = TP TP + FN , Precision = TP TP + FP ,
+
+F1 = 2TP 2TP + FP + FN .
+
+A metric is set to zero when its denominator is zero. 
+
+Temporal Grounding For each temporal grounding in-stance i, let Pi and Gi denote the unions of all predicted and ground-truth intervals, respectively. The temporal intersec-tion over union (tIoU) is defined as 
+
+tIoU i = μ(Pi ∩ Gi)
+
+μ(Pi ∪ Gi) ,
+
+where μ(·) denotes the total duration of a temporal region. This set-based formulation naturally supports multiple dis-joint intervals while ensuring that overlapping temporal re-gions are counted only once. We report the mean IoU (mIoU), computed as the average tIoU over the Ng temporal grounding instances: 
+
+mIoU = 1
+
+Ng
+
+> Ng
+
+X
+
+> i=1
+
+tIoU i .Model Think Perception Judgement Temporal Grounding Accuracy Q-MAcc Recall Precision F1 R@0.3 R@0.5 R@0.7 mIoU 
+
+Simple Baselines 
+
+Uniform Random – 33.6 35.7 50.0 58.9 54.1 – – – –Always Correct – 41.1 43.2 0.0 0.0 0.0 – – – –Always Error – – – 100.0 58.9 74.2 – – – –Whole Video – – – – – – 25.5 4.9 0.0 23.2 
+
+Temporal Grounding Models 
+
+Grounded-VideoLLM-Phi3.5 – – – – – – 11 .91.5 4.40.8 0.50.3 13 .11.6
+
+VideoMind – – – – – – 33.0 14.9 4.9 22.8 TimeLens – – – – – – 28.6 16.2 7.5 22.0 
+
+Open-source Models 
+
+VideoLLaMA3-7B ✗ 38 .40.6 40 .80.5 18 .91.1 59 .60.8 28 .70.9 27 .31.8 12 .11.5 4.90.9 18 .41.6
+
+InternVL3.5-8B ✗ 40 .10.7 43 .70.8 19 .51.0 64 .20.9 29 .90.9 19 .82.1 3.60.7 0.50.3 17 .31.8
+
+InternVL3.5-30B-A3B ✗ 41 .70.4 44 .60.5 10 .31.2 65 .10.7 17 .71.0 15 .21.9 5.20.8 1.30.5 12 .11.4
+
+Gemma-4-31B ✗ 43 .40.5 46 .30.4 17 .61.4 65 .80.6 27 .81.1 35 .61.7 16 .51.5 5.41.1 24 .91.6
+
+Qwen3-VL-8B ✗ 41 .30.8 44 .20.7 16 .91.3 64 .90.9 26 .81.1 12 .41.5 3.40.6 0.30.2 10 .11.1
+
+Qwen3-VL-30B-A3B ✗ 41 .40.4 44 .30.5 12 .11.1 64 .80.7 20 .31.0 32 .72.2 15 .71.6 7.51.2 24 .31.9
+
+Qwen3.5-9B ✗ 41 .30.7 44 .60.6 35 .81.4 63 .01.2 45 .71.3 36 .11.8 19 .11.4 7.01.0 25 .71.7
+
+Qwen3.5-9B ✓ 41 .10.6 43 .90.7 28 .91.2 64 .51.0 39 .91.1 42 .32.3 22 .71.8 10 .31.4 30 .42.1
+
+Qwen3.5-27B ✗ 42 .50.5 45 .20.4 37 .41.3 63 .40.9 47 .11.1 51 .31.9 35 .11.7 19 .31.5 37 .61.8
+
+Qwen3.5-27B ✓ 42 .60.4 45 .70.5 31 .31.1 66 .70.8 42 .61.0 52 .32.0 30 .21.6 17 .01.3 36 .61.9
+
+Qwen3.5-35B-A3B ✗ 42 .40.5 45 .60.4 22 .51.4 64 .50.9 33 .41.2 43 .31.7 26 .81.5 13 .71.2 30 .51.6
+
+Qwen3.5-35B-A3B ✓ 42 .50.4 45 .90.5 27 .71.2 65 .70.8 39 .01.1 45 .91.8 25 .81.4 12 .91.1 31 .71.7
+
+Closed-source Models 
+
+Gemini-3.1-pro-preview ✓ 50 .70.3 54 .30.4 80 .60.9 65 .20.6 72 .10.8 62 .41.6 43 .81.5 25 .81.3 44 .01.4
+
+no video 39 .41.0 41 .21.0 18 .20.7 58 .90.9 27 .70.8 27 .51.8 7.10.4 1.10.7 20 .10.4
+
+GPT-5.4 ✓ 47 .60.4 51 .30.5 38 .81.1 72 .30.8 50 .51.0 51 .31.9 28 .51.6 18 .61.4 36 .91.8
+
+GPT-5.5 ✓ 51 .20.3 54 .10.4 48 .31.0 71 .90.7 57 .80.9 67 .31.7 42 .41.5 27 .01.3 47 .51.6
+
+no video 40 .70.4 43 .90.7 80 .61.2 59 .20.3 68 .30.6 7.80.5 2.40.8 0.20.3 7.30.2
+
+Table 7: Main results across three runs, including the no-video controls used to analyze potential textual bias. Standard deviations are shown as subscripts where applicable. VideoMind and TimeLens use deterministic decoding in their official inference settings and are reported without standard deviations. All values are percentages. We additionally report Recall@ τ , defined as the propor-tion of instances whose tIoU is at least τ :
+
+Recall@ τ = 1
+
+Ng
+
+> Ng
+
+X
+
+> i=1
+
+1[tIoU i ≥ τ ] .
+
+We use thresholds τ ∈ { 0.3, 0.5, 0.7}.
+
+## Additional Results 
+
+Main Results Across Runs 
+
+Table 7 reports the mean and standard deviation over three runs where applicable. For completeness, we additionally report an always-error baseline, which predicts every execu-tion as erroneous. Although it achieves an F1 of 74.2%, this strategy is clearly unsuitable for practical fitness assessment. Overall, the results are stable across runs, with small standard deviations on most metrics. Although the relative ordering of similarly performing models varies in some cases, this variation does not affect our main conclusion that current MLLMs remain limited on FitAQA. 
+
+Textual Bias Analysis 
+
+We additionally evaluate Gemini-3.1-pro-preview and GPT-5.5 without video input to probe potential textual bias. The results are reported in Table 7. This setting retains all task-specific textual inputs and, for temporal grounding, provides the total video duration to define the valid timestamp range. Removing the video substantially degrades perception and temporal grounding performance for both models. Perception Q-MAcc drops close to the always-correct baseline, while Recall@0.7 falls to nearly zero despite access to the total video duration. These results show that perception and tem-poral grounding relies on recognizing visual evidence rather than on textual priors. Judgement exhibits a different pattern. Gemini-3.1-pro-preview deteriorates sharply without video, whereas GPT-5.5 achieves a higher F1 by predicting form errors much more frequently. Their no-video error recalls are 18.2% and 80.6%, respectively. Without visual evidence, Gemini tends to predict correct execution, whereas GPT-5.5 tends to predict form errors in the absence of visual evidence. Therefore, the relatively high no-video F1 of GPT-5.5 reflects 0% 20% 40% 60% 80% 100% 
+
+1 2 3 45678910 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 
+
+0% 20% 40% 60% 80% 100% 
+
+1 2 3 45678910 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 
+
+0% 20% 40% 60% 80% 100% 
+
+2 457913 17 22 24 25 27 28 29 30 33 34 35 37 38 
+
+0% 20% 40% 60% 80% 100% 
+
+1 2 3 45678910 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 
+
+0% 20% 40% 60% 80% 100% 
+
+1 2 3 45678910 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 
+
+0% 20% 40% 60% 80% 100% 
+
+2 457913 17 22 24 25 27 28 29 30 33 34 35 37 38 
+
+0% 20% 40% 60% 80% 100% 
+
+1 2 3 45678910 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 
+
+0% 20% 40% 60% 80% 100% 
+
+1 2 3 45678910 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 
+
+0% 20% 40% 60% 80% 100% 
+
+2 457913 17 22 24 25 27 28 29 30 33 34 35 37 38 
+
+0% 20% 40% 60% 80% 100% 
+
+1 2 3 45678910 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 
+
+0% 20% 40% 60% 80% 100% 
+
+1 2 3 45678910 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 
+
+0% 20% 40% 60% 80% 100% 
+
+2 457913 17 22 24 25 27 28 29 30 33 34 35 37 38 
+
+> Gemma-4-31B Qwen3.5-27B Gemini-3.1-pro-preview GPT-5.5
+
+Perception (Q-MAcc) Judgement (F1) Temporal Grounding (mIoU) 
+
+Alignment Completeness Coordination Stability Symmetry Tempo Figure 9: Results by form error for Gemma-4-31B, Qwen3.5-27B, Gemini-3.1-pro-preview, and GPT-5.5. The numbers around each polar plot indicate the corresponding taxonomy IDs in Table 4. Questions associated with multiple form errors contribute to the result for each corresponding error. a prediction bias toward the error class rather than reliable quality assessment. 
+
+Results by Form Error 
+
+Figure 9 shows that model performance varies substantially across individual form errors. In perception, GPT-5.5 per-forms particularly well on ID 7 (Excessive Hip Abduction) and ID 8 (Excessive Hip Adduction), while Gemini-3.1-pro-preview achieves the highest Q-MAcc on ID 13 (Insufficient Shoulder Flexion). ID 16 (Insufficient Scapular Protraction) remains difficult for all four models, with Q-MAcc below 29%. For judgement, Gemini-3.1-pro-preview shows a clear advantage on ID 5 (Excessive Hip Internal Rotation), ID 6 (Excessive Hip External Rotation), ID 7 (Excessive Hip Ab-duction), and ID 8 (Excessive Hip Adduction), whereas ID 26 (Load Distribution Asymmetry) is consistently challeng-ing. The temporal grounding results reveal complementary strengths. Qwen3.5-27B performs best on ID 24 (Incorrect Movement Trajectory), Gemini-3.1-pro-preview on ID 25 (Incorrect Support Placement) and ID 37 (Extraneous Move-ment), and GPT-5.5 on ID 13 (Insufficient Shoulder Flex-ion) and ID 35 (Missing Movement Phase). Moreover, the strongest model for a given form error is not always consistent across perception, judgement, and temporal grounding. 
+
+Paired Perception and Judgement Results 
+
+Table 8 examines the joint correctness of paired percep-tion and judgement questions. GPT-5.5 achieves the high-est proportion of pairs for which both answers are correct (40.1%). Gemini-3.1-pro-preview, however, has the lowest rate of joint failure, with only 19.4% of pairs answered in-correctly on both questions. The asymmetric cases further reveal that perception and judgement are related but not equivalent capabilities. For Gemini-3.1-pro-preview, 29.8% of all paired instances fall into the perception-incorrect and judgement-correct category, a larger proportion than for the other models. More specifically, its judgement accuracy re-mains 60.6% among perception-incorrect pairs, compared with 65.7% among perception-correct pairs. This relatively small difference shows that an incorrect answer about the specific visual manifestation does not necessarily lead to an incorrect binary judgement. In contrast, Gemma-4-31B ex-hibits a much stronger coupling between the two tasks: its judgement accuracy is 78.7% when perception is correct but only 21.0% when perception is incorrect. Conversely, all four models exhibit cases in which perception is correct but judge-ment is incorrect, ranging from 9.2% for Gemma-4-31B to 17.4% for Gemini-3.1-pro-preview. Thus, correctly recog-nizing the relevant visual state does not always translate into correctly assessing whether the movement constitutes a form error. Overall, these results indicate that perception provides useful evidence for judgement, while successful judgement additionally requires interpreting the observed state against domain knowledge. 
+
+Perception and Judgement Cases 
+
+Figure 10 qualitatively illustrates the joint outcome patterns in Table 8 through cases covering all four combinations                     
+
+> Model P✓J✓P✓J✗P✗J✓P✗J✗
+> Gemma-4-31B 34.2 9.2 11.9 44.7 Qwen3.5-27B 28.4 14.1 21.9 35.6 Gemini-3.1-pro-preview 33.4 17.4 29.8 19.4 GPT-5.5 40.1 11.0 18.3 30.6
+
+Table 8: Joint correctness of paired perception (P) and judge-ment (J) predictions. ✓ and ✗ denote correct and incorrect predictions, respectively. All values are percentages.                   
+
+> FPS Perception Q-MAcc Judgement F1 Temporal Grounding R@0.7 mIoU
+> 144.3 50.4 9.8 30.3 245.1 47.0 18.0 36.0 445.6 41.8 19.9 37.6 846.4 43.1 18.3 35.9
+
+Table 9: Effect of video sampling rate on Qwen3.5-27B in non-thinking mode. of perception and judgement correctness. The examples in which perception is correct but judgement is incorrect show that a model may identify the observed visual manifestation yet assess it incorrectly against the exercise standard. Con-versely, several correct judgement predictions accompany an incorrect perception answer. Because judgement is binary, such cases can conceal failures to identify the precise visual manifestation. These examples reinforce the value of paired evaluation for tracing errors to visual evidence recognition or subsequent quality judgement. 
+
+Temporal Duration Distributions 
+
+Figure 11 shows a common tendency toward temporal over-localization among the six representative models. Each dis-tribution is constructed from the ratio of total predicted du-ration to total ground-truth duration for each instance, where a ratio above one indicates an overlong prediction. Five of the six models exhibit a median ratio above one, indicating that predictions longer than the annotated error regions are common. For GPT-5.5, these ratios average 2.43, while the predicted and ground-truth durations average 12.36 and 6.93 seconds, respectively. Such over-localization introduces ex-cessive temporal coverage and reduces tIoU. This tendency is consistent with weak performance at stricter thresholds. 
+
+Effect of Video Sampling Rate 
+
+Table 9 evaluates Qwen3.5-27B in non-thinking mode with frame sampling rates ranging from 1 to 8 FPS. Perception Q-MAcc increases only modestly, from 44.3% to 46.4%, while judgement F1 decreases overall, from 50.4% to 43.1%. Temporal grounding improves up to 4 FPS, reaching 19.9% Recall@0.7 and 37.6% mIoU, before declining at 8 FPS. For Qwen3.5-27B, increasing the sampling rate alone does not consistently improve performance, suggesting that sparse sampling is not the sole limitation in this setting. perception  judgement video  prediction 
+
+During the glute bridge in the video, which best describes the heels' contact with the floor? 
+
+A. Only the left heel lifts off the floor 
+
+B. Both heels lift off the floor 
+
+C. Both heels stay on the floor throughout 
+
+D. Only the right heel lifts off the floor 
+
+During the glute bridge in the video, is the heel 
+
+contact with the floor correct? 
+
+A. No 
+
+B. Yes 
+
+Gemma-4-31B:  C / B 
+
+Qwen3.5-27B:  C / B 
+
+Gemini-3.1-pro-preview: 
+
+C / A 
+
+GPT-5.5: B / A 
+
+Action Name: Glute Bridge Form Error:  Insufficient Ankle Dorsiflexion 
+
+Action Name:  Posterior Deltoid Stretch  Form Error:  Insufficient Range of Motion 
+
+In the video, how is the arm being stretched positioned relative to the front of the chest? 
+
+A. The elbow crosses the body’s midline, but there is 
+
+space between the upper arm and the chest 
+
+B. The elbow crosses the body’s midline, and the upper 
+
+arm stays close to the chest 
+
+C. The elbow does not cross the body’s midline 
+
+In the video, is the upper arm being pulled across 
+
+far enough for the stretch? 
+
+A. No 
+
+B. Yes 
+
+Gemma-4-31B:  B / B 
+
+Qwen3.5-27B:  B / A 
+
+Gemini-3.1-pro-preview: 
+
+B / B
+
+GPT-5.5: B /  B
+
+Action Name:  Downward-Facing Dog  Form Error:  Range-of-Motion Asymmetry 
+
+In the video, while holding Downward-Facing Dog, how do the left and right angles between the torso 
+
+and thighs compare? 
+
+A. The angle is smaller on the left side 
+
+B. The angle is smaller on the right side 
+
+C. The angles on both sides are about the same 
+
+In the video, is downward-facing dog performed 
+
+correctly in terms of left-right hip angle symmetry? 
+
+A. Yes 
+
+B. No 
+
+Gemma-4-31B:  C / A 
+
+Qwen3.5-27B:  C / A 
+
+Gemini-3.1-pro-preview: 
+
+A / B
+
+GPT-5.5: C /  B
+
+Action Name:  Side-Lying Leg Raise  Form Error:  Excessive Hip Internal Rotation, Excessive Hip External Rotation 
+
+In the video, where does the knee of the lifting leg mainly point? 
+
+A. Toward the floor 
+
+B. Upward 
+
+C. Straight forward 
+
+In the video, is the knee direction of the lifting leg correct? 
+
+A. No 
+
+B. Yes 
+
+Gemma-4-31B:  B / B 
+
+Qwen3.5-27B:  A / B 
+
+Gemini-3.1-pro-preview: 
+
+C / A
+
+GPT-5.5: B /  A
+
+Action Name:  Side Lunge  Form Error:  Incorrect Movement Trajectory 
+
+When stepping into the side lunge in the video, which best describes where the stepping foot lands and 
+
+where the body weight shifts? 
+
+A. The stepping foot lands diagonally forward, while the body weight stays in place 
+
+B. The stepping foot lands directly to the side, and the 
+
+body weight shifts toward the stepping leg 
+
+C. The stepping foot lands directly to the side, while the 
+
+body weight stays in place 
+
+D. The stepping foot lands diagonally forward, and the 
+
+body weight shifts toward the stepping leg 
+
+When stepping into the side lunge in the video, are the stepping foot 
+
+placement and body 
+
+weight shift correct? 
+
+A. No 
+
+B. Yes 
+
+Gemma-4-31B:  B / B 
+
+Qwen3.5-27B:  B / B 
+
+Gemini-3.1-pro-preview: 
+
+B / A
+
+GPT-5.5:  B / B 
+
+Action Name:  Push-up  Form Error:  Excessive Scapular Elevation, Insufficient Scapular Protraction 
+
+During the push-up, which best describes the shoulder blade position? 
+
+A. Shoulders down, shoulder blades spread apart 
+
+B. Shoulders down, shoulder blades drawn together 
+
+C. Shoulders shrugged up, shoulder blades drawn together 
+
+D. Shoulders shrugged up, shoulder blades spread apart 
+
+During the push-up, is the shoulder blade position correct? 
+
+A. No 
+
+B. Yes 
+
+Gemma-4-31B:  B / B 
+
+Qwen3.5-27B:  A / A 
+
+Gemini-3.1-pro-preview: 
+
+B / A
+
+GPT-5.5:  B / B Figure 10: Representative paired perception and judgement QA instances. Ground-truth options are highlighted with green shading. Model outputs are shown as perception/judgement predictions, with green and red text denoting correct and incorrect predictions, respectively. VideoMind Gemma-4-31B InternVL3.5-30B-A3B Qwen3.5-27B Gemini-3.1-pro-preview GPT-5.5 02468duration ratio GT values above 8x are capped median = 10.6s 10.0s 5.7s 12.6s 8.4s 11.0s Figure 11: Distributions of the ratios between predicted and ground-truth temporal grounding durations. The values above each model report the median predicted duration. The median ground-truth duration is 5.7 seconds. 
+
+Source Dataset Access and Redistribution 
+
+QEVD Available from Qualcomm under the Data License Agreement–Research Use. We do not redistribute the videos; users must obtain QEVD from Qualcomm and comply with the agreement. EgoExo-Fitness Available by request under the EgoExo-Fitness License Agreement. We do not redistribute the videos; users must request access from the dataset administrators and comply with the agreement. Kinetics-700 Available through the official Kinetics/CVDF distribution. We do not redistribute the videos; users should obtain them from the official source and follow the applicable terms. UCF101 Available through the official UCF CRCV dataset page. We do not redistribute the videos; users should obtain them from the official source and follow the applicable terms. 
+
+Table 10: Source datasets used to construct FitAQA and their access and redistribution conditions. 
+
+## Limitations 
+
+FitAQA currently focuses on bodyweight fitness exercises. While this setting covers many common movements, it does not include equipment-based exercises. Therefore, errors re-lated to equipment usage, such as grip, load selection, equip-ment placement, or external-object trajectory, are not eval-uated in the current version. The long-video subset is also smaller and less diverse than the short-clip subset. This is mainly because existing fitness datasets contain relatively few long videos with temporally varying execution qual-ity, which are necessary for meaningful temporal grounding evaluation. Nevertheless, it provides a setting for temporal grounding evaluation, and future versions can expand it with more exercises, recording conditions, and error transitions. 
+
+## Ethical Considerations 
+
+FitAQA is intended for research evaluation of MLLMs, rather than direct deployment as an automated fitness coaching, clinical rehabilitation, or medical decision-making system without further validation. Incorrect feedback may lead to in-appropriate training guidance or injury risk; therefore, mod-els evaluated on FitAQA should not replace professional ad-vice without human oversight. FitAQA is built from existing third-party fitness and video datasets, and its release will re-spect the access, license, and redistribution conditions of the original sources. Since the videos may contain visible human subjects, we do not collect or annotate any new personally identifying information, and we release only QA instances, video metadata, and evaluation scripts rather than the origi-nal videos. 
+
+## Artifact Release and Terms of Use 
+
+Table 10 summarizes the source datasets used to construct FitAQA, together with their access and redistribution condi-tions. We do not redistribute any original videos. Users must obtain the source datasets from their official providers and comply with the corresponding licenses or terms of use.
