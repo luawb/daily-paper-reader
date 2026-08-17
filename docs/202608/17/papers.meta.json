@@ -1,0 +1,54 @@
+{
+  "label": "2026-08-17",
+  "date": "2026-08-17",
+  "generated_at": "2026-08-17T20:29:41",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202608/17/2608.13989v1-a-subjective-study-on-a-new-sharpness-informed-class-of-metrics",
+      "section": "deep",
+      "title_en": "A Subjective Study on a New Sharpness Informed Class of Metrics",
+      "authors": "Uditangshu Aurangabadkar, Vibhoothi Vibhoothi, Darren Ramsook, Anil Kokaram",
+      "date": "2026-08-14",
+      "pdf": "https://arxiv.org/pdf/2608.13989v1",
+      "score": "9.0",
+      "evidence": "提出一类新的锐度感知图像质量评价指标",
+      "tldr": "现有深度学习去模糊模型多使用感知损失提升整体质量，但鲜少显式优化图像锐度。本文开展四协议主观研究，构建均匀锐度增量数据集与DMOS，并提出锐度信息IQA度量SI-PSNR以合理惩罚过度锐化。结果表明SI-PSNR在基准上相关性优于其他PSNR变体，且锐度感知复合损失恢复图像在67%比较中被偏好。该工作为去模糊主观评价和锐度敏感损失设计提供了新基准与指标。",
+      "tags": "query:xiqa",
+      "abstract_en": "Perceptual loss functions in Deep Neural Network (DNN) deblurring architectures improve the overall quality of restored images. However, few focus on explicitly targeting sharpness in the restorations. We conduct a subjective study of models trained with and without losses which explicitly target sharpness using a four-protocol approach, exploring preferred sharpness levels and effects on image quality. We introduce a novel dataset of images with uniform sharpness increments along with Difference Mean Opinion Scores (DMOS). Additionally, we propose a novel class of Sharpness Informed (SI) Image Quality Assessment (IQA) metrics which properly penalize over-sharpening. Our new SI-PSNR metric outperforms all other PSNR variants in terms of correlation statistics on IQA benchmarking datasets. We show that, on average, images restored using a sharpness-aware composite loss are preferred in 67% of binarized comparisons, as opposed to losses that do not explicitly target sharpness.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/17/2608.12876v1-spared-reasoning-based-ai-generated-image-detection-via-adversarially-edited-data",
+      "section": "quick",
+      "title_en": "SPARED: Reasoning-Based AI-Generated Image Detection via Adversarially Edited Data",
+      "authors": "Yicheng Bao, Xiahui Guo, Xuhong Wang, Xin Tan",
+      "date": "2026-08-13",
+      "pdf": "https://arxiv.org/pdf/2608.12876v1",
+      "score": "6.0",
+      "evidence": "对抗强化学习训练推理型多模态大模型为AI生成图像检测提供解释。",
+      "tldr": "现有 AI 生成图像检测器不仅缺乏推理，还因数据来源差异、模板化解释和静态训练集而存在捷径与失效问题。SPARED 提出对抗强化学习框架，让扩散编辑器将真实照片编辑为同源假图以欺骗检测器，同时推理多模态大模型作为防御者输出正确判断和自由形式推理。两者交替训练，攻击者每轮针对检测器盲区生成更难样本，迫使检测器泛化而非记忆固定伪影。在三个外部基准上检测器逐轮单调提升，且解释质量作为仅准确率训练的副作用同步改善。",
+      "tags": "query:xiqa",
+      "abstract_en": "Detecting AI-generated images is only half the task: a deployed detector must also justify its verdict, yet existing detectors inherit three failure modes from their training data: real and fake images collected from different sources invite provenance shortcuts, supervised explanation corpora teach templated rationales, and a static forgery corpus leaves the decision boundary standing still while generators keep moving. We introduce \\methodname{}, an adversarial reinforcement learning framework that pits two heterogeneous models against each other. A diffusion image editor learns to edit real photographs into fake counterparts of those same photographs that fool the current detector, while a reasoning MLLM learns to expose them with a verdict grounded in free-form reasoning. Both rewards are shortcut-proof by design: the attacker is credited only when its edit is faithfully executed, and the defender only when its verdict is correct. As the two models alternate, each round's attacker regenerates a harder training pool aimed at the current detector's blind spots, so the detector must generalize rather than memorize any fixed artifact distribution. Although the explanation is never rewarded, its quality rises round over round as a side effect of accuracy-only training. A detector trained within this loop improves monotonically across rounds on each of three external benchmarks.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/17/2608.14026v1-mmdynopt-agent-dynamic-optimization-for-multimodal-large-language-model-reasoning-via-reinforcement-learning",
+      "section": "quick",
+      "title_en": "MMDynOpt-Agent: Dynamic Optimization for Multimodal Large Language Model Reasoning via Reinforcement Learning",
+      "authors": "Wenjin Liu, Haoran Luo, Fayuan Ke, Zhenghong Lin, Yue Lu, Zhe Cui, Anh Tuan Luu, Carl Yang",
+      "date": "2026-08-14",
+      "pdf": "https://arxiv.org/pdf/2608.14026v1",
+      "score": "6.0",
+      "evidence": "提出基于强化学习的多模态大模型推理优化方法，与大语言模型处理图像文本相关",
+      "tldr": "现有方法难以将多模态输入中的视觉线索与问题语义有效转化为推理条件，限制了多模态大模型的推理性能。MMDynOpt-Agent将动态优化建模为马尔可夫决策过程，通过端到端强化学习训练轻量级智能体，与目标模型交互生成多轮优化提示，并设计融合格式合规、答案正确性与预算意识的奖励机制。在十五个公开数据集上取得领先结果，显著超越基线，并具备跨模型迁移与泛化能力。",
+      "tags": "query:xiqa",
+      "abstract_en": "Recently, multimodal large language models (MLLMs) have demonstrated strong potential in visual understanding and complex reasoning tasks. However, existing methods often struggle to efficiently transform visual cues from multimodal inputs and the semantics of the question into effective reasoning conditions, thereby limiting the reasoning performance of multimodal large language models. To address this challenge, we propose MMDynOpt-Agent, which models the dynamic optimization of multimodal reasoning as a Markov decision process via end-to-end reinforcement learning. Specifically, a lightweight multimodal agent serves as the decision policy and interacts with the target MLLM as the environment, adaptively steering its reasoning through multi-turn dynamic optimization prompts. Furthermore, to reduce the cost of multimodal reasoning, a reward mechanism that combines format compliance, answer correctness, and budget awareness is designed to jointly ensure reasoning accuracy and efficiency. MMDynOpt-Agent is transferable and generalizable, enabling training with one target MLLM and inference-time transfer to others. Experimental results on fifteen public datasets show MMDynOpt-Agent achieves strong performance and outperforms baselines. Our project is available at https://github.com/QwenQKing/MMDynOpt-Agent.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

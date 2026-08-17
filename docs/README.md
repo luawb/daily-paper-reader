@@ -6,29 +6,32 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-16
-- 运行时间：2026-08-16 20:18:30 UTC
+- 最新运行日期：2026-08-17
+- 运行时间：2026-08-17 20:29:16 UTC
 - 运行状态：成功
-- 本次总论文数：2
+- 本次总论文数：3
 - 精读区：1
-- 速读区：1
+- 速读区：2
 
 ### 今日简报（AI）
-- 今日共生成 2 篇推荐（精读 1 篇，速读 1 篇）
-- 精读：《TangPoetryBench: A Multi-Dimensional Benchmark and Rubric-Conditioned Evaluator for Poetry-to-Image Generation》（9.0/10）
-- 速读：《FitAQA: A Benchmark of Fitness Action Quality Assessment for Multimodal Large Language Models》（7.0/10）
+- 今日共生成 3 篇推荐（精读 1 篇，速读 2 篇）
+- 精读：《A Subjective Study on a New Sharpness Informed Class of Metrics》（9.0/10）
+- 速读：《SPARED: Reasoning-Based AI-Generated Image Detection via Adversarially Edited Data》（6.0/10）, 《MMDynOpt-Agent: Dynamic Optimization for Multimodal Large Language Model Reasoning via Reinforcement Learning》（6.0/10）
 - 这些结果覆盖了当下较热的方向，建议先看精读区论文的关键问题与方法。
-- 详情：[/202608/16/README](/202608/16/README)
+- 详情：[/202608/17/README](/202608/17/README)
 
 ### 精读区论文标签
-1. [TangPoetryBench: A Multi-Dimensional Benchmark and Rubric-Conditioned Evaluator for Poetry-to-Image Generation](/202608/16/2608.11452v1-tangpoetrybench-a-multi-dimensional-benchmark-and-rubric-conditioned-evaluator-for-poetry-to-image-generation)  
+1. [A Subjective Study on a New Sharpness Informed Class of Metrics](/202608/17/2608.13989v1-a-subjective-study-on-a-new-sharpness-informed-class-of-metrics)  
    标签：评分：9.0/10、query:xiqa
-   evidence：诗歌图像生成的多维基准和基于评分标准的评估器，评估视觉质量、忠实度、情感并提供解释
+   evidence：提出一类新的锐度感知图像质量评价指标
 
 ### 速读区论文标签
-1. [FitAQA: A Benchmark of Fitness Action Quality Assessment for Multimodal Large Language Models](/202608/16/2608.08736v1-fitaqa-a-benchmark-of-fitness-action-quality-assessment-for-multimodal-large-language-models)  
-   标签：评分：7.0/10、query:xiqa
-   evidence：用MLLM评估健身动作质量的基准，包含统一错误分类和多质量维度，提供超越最终分数的洞察
+1. [SPARED: Reasoning-Based AI-Generated Image Detection via Adversarially Edited Data](/202608/17/2608.12876v1-spared-reasoning-based-ai-generated-image-detection-via-adversarially-edited-data)  
+   标签：评分：6.0/10、query:xiqa
+   evidence：对抗强化学习训练推理型多模态大模型为AI生成图像检测提供解释。
+2. [MMDynOpt-Agent: Dynamic Optimization for Multimodal Large Language Model Reasoning via Reinforcement Learning](/202608/17/2608.14026v1-mmdynopt-agent-dynamic-optimization-for-multimodal-large-language-model-reasoning-via-reinforcement-learning)  
+   标签：评分：6.0/10、query:xiqa
+   evidence：提出基于强化学习的多模态大模型推理优化方法，与大语言模型处理图像文本相关
 
 
 <div class="dpr-home-promo-card">
