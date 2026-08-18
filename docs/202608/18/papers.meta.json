@@ -1,0 +1,24 @@
+{
+  "label": "2026-08-18",
+  "date": "2026-08-18",
+  "generated_at": "2026-08-18T20:48:04",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202608/18/2608.15217v1-self-supervised-topologically-invariant-manifold-learning-for-railway-image-quality-assessment",
+      "section": "deep",
+      "title_en": "Self-Supervised Topologically Invariant Manifold Learning for Railway Image Quality Assessment",
+      "authors": "Tingqiong Cui, Yibu Yang, Yang Li, Jiahao Fu, Xiaoliu Luo, Xu Wang, Mengzhu Wang, Siyuan Liu, Guanghui Huang",
+      "date": "2026-08-15",
+      "pdf": "https://arxiv.org/pdf/2608.15217v1",
+      "score": "8.0",
+      "evidence": "提出面向铁路图像的自监督盲图像质量评估方法",
+      "tldr": "现有盲图像质量评估方法依赖合成失真与主观标注，真实域泛化受限。本文提出基于拓扑不变流形学习的自监督框架，通过重复随机裁剪生成渐进背景稀释尺度，利用目标信息密度单调退化构建自约束质量流形。单调性散度滤波器筛选精英评估器，M估计器与主成分稳定器融合生成伪真值，收缩方差至Cramér-Rao下界。在CSIQ、LIVEC、LIVE-2上取得优越零样本迁移，铁路数据集上流形余弦相似度>0.999且生存率100%，验证跨范式解耦与拓扑韧性。",
+      "tags": "query:xiqa",
+      "abstract_en": "Existing blind image quality assessment (BIQA) methods typically rely on synthetic distortions and subjective annotations, limiting generalization in real-world domains. To address this, we propose a fully self-supervised BIQA framework based on topologically invariant manifold learning under boundary constraints, which constructs a stable quality reference without manual labels. The framework generates progressive background dilution scales via repeated random cropping around each target; exploiting the monotonic degradation of target information density across these scales, it establishes a self-constrained quality manifold. A linearized spatial moment projection eliminates geometric distortions from random cropping; then a monotonicity divergence filter prunes background-sensitive evaluators, isolating an elite pool \\(\\mathcal{M}_{\\text{elite}}\\). A robust M-estimator with a principal component stabilizer fuses the metrics into an asymptotically efficient pseudo-ground truth \\(q_{\\text{PGT}}\\), contracting variance toward the Cramér-Rao lower bound. Extensive evaluations demonstrate that the elite evaluator pool, distilled from 11 baseline metrics, secures superior zero-shot transferability across standard synthetic and wild benchmarks (CSIQ, LIVEC, LIVE-2). Concurrently, deployments on the CQU Railway Rolling Stock Surveillance Dataset (2,797 images) yield a manifold cosine similarity \\(>0.999\\) and a 100.0\\% survival rate under industrial extreme stresses, robustly validating its cross-paradigm decoupling and topological resilience.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

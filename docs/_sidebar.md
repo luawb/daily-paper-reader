@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-08-18 <!--dpr-date:20260818-->
+    * 精读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/18/2608.15217v1-self-supervised-topologically-invariant-manifold-learning-for-railway-image-quality-assessment" data-sidebar-item="{&quot;title&quot;: &quot;Self-Supervised Topologically Invariant Manifold Learning for Railway Image Quality Assessment&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.15217v1-self-supervised-topologically-invariant-manifold-learning-for-railway-image-quality-assessment&quot;, &quot;score&quot;: &quot;8.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;提出面向铁路图像的自监督盲图像质量评估方法&quot;}">Self-Supervised Topologically Invariant Manifold Learning for Railway Image Quality Assessment</a>
   * 2026-08-17 <!--dpr-date:20260817-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/17/2608.13989v1-a-subjective-study-on-a-new-sharpness-informed-class-of-metrics" data-sidebar-item="{&quot;title&quot;: &quot;A Subjective Study on a New Sharpness Informed Class of Metrics&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.13989v1-a-subjective-study-on-a-new-sharpness-informed-class-of-metrics&quot;, &quot;score&quot;: &quot;9.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;提出一类新的锐度感知图像质量评价指标&quot;}">A Subjective Study on a New Sharpness Informed Class of Metrics</a>

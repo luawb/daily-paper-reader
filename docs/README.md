@@ -6,32 +6,26 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-17
-- 运行时间：2026-08-17 20:29:16 UTC
+- 最新运行日期：2026-08-18
+- 运行时间：2026-08-18 20:47:41 UTC
 - 运行状态：成功
-- 本次总论文数：3
+- 本次总论文数：1
 - 精读区：1
-- 速读区：2
+- 速读区：0
 
 ### 今日简报（AI）
-- 今日共生成 3 篇推荐（精读 1 篇，速读 2 篇）
-- 精读：《A Subjective Study on a New Sharpness Informed Class of Metrics》（9.0/10）
-- 速读：《SPARED: Reasoning-Based AI-Generated Image Detection via Adversarially Edited Data》（6.0/10）, 《MMDynOpt-Agent: Dynamic Optimization for Multimodal Large Language Model Reasoning via Reinforcement Learning》（6.0/10）
+- 今日共生成 1 篇推荐（精读 1 篇，速读 0 篇）
+- 精读：《Self-Supervised Topologically Invariant Manifold Learning for Railway Image Quality Assessment》（8.0/10）
 - 这些结果覆盖了当下较热的方向，建议先看精读区论文的关键问题与方法。
-- 详情：[/202608/17/README](/202608/17/README)
+- 详情：[/202608/18/README](/202608/18/README)
 
 ### 精读区论文标签
-1. [A Subjective Study on a New Sharpness Informed Class of Metrics](/202608/17/2608.13989v1-a-subjective-study-on-a-new-sharpness-informed-class-of-metrics)  
-   标签：评分：9.0/10、query:xiqa
-   evidence：提出一类新的锐度感知图像质量评价指标
+1. [Self-Supervised Topologically Invariant Manifold Learning for Railway Image Quality Assessment](/202608/18/2608.15217v1-self-supervised-topologically-invariant-manifold-learning-for-railway-image-quality-assessment)  
+   标签：评分：8.0/10、query:xiqa
+   evidence：提出面向铁路图像的自监督盲图像质量评估方法
 
 ### 速读区论文标签
-1. [SPARED: Reasoning-Based AI-Generated Image Detection via Adversarially Edited Data](/202608/17/2608.12876v1-spared-reasoning-based-ai-generated-image-detection-via-adversarially-edited-data)  
-   标签：评分：6.0/10、query:xiqa
-   evidence：对抗强化学习训练推理型多模态大模型为AI生成图像检测提供解释。
-2. [MMDynOpt-Agent: Dynamic Optimization for Multimodal Large Language Model Reasoning via Reinforcement Learning](/202608/17/2608.14026v1-mmdynopt-agent-dynamic-optimization-for-multimodal-large-language-model-reasoning-via-reinforcement-learning)  
-   标签：评分：6.0/10、query:xiqa
-   evidence：提出基于强化学习的多模态大模型推理优化方法，与大语言模型处理图像文本相关
+- 本次无速读推荐。
 
 
 <div class="dpr-home-promo-card">
