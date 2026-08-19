@@ -1,0 +1,132 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-19T20:37:54.324014+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2608.17514v1",
+      "source": "arxiv",
+      "title": "SE-MoLoRA: Shared-Expert LoRA Adapters for Domain-Specific Photographic Assessment",
+      "abstract": "Vision-language models can describe images fluently, but they often fail to provide actionable photographic critique because semantic content and aesthetic judgment remain entangled. We propose SE-MoLoRA, a modular parameter-efficient adaptation framework for domain-specific photographic assessment. The method separates general photographic knowledge from specialist residual judgments using an always-active shared LoRA expert and routed adapters for composition, lighting, and technical quality. A lightweight query router selects the relevant specialist, enabling targeted critique without training separate full models. A rank-64 shared adapter captures broad photographic vocabulary, while rank-32 specialists learn domain-specific residuals with an orthogonal regularization penalty that encourages disentangled representations. Training data is obtained by distilling the Reddit Photo Critique Dataset into domain-labeled critique samples. On held-out critique generation, SE-MoLoRA improves BERTScore-F1 from 0.2317 to 0.4215 over monolithic LoRA and is preferred in 84.6\\% of pairwise comparisons, while using fewer active parameters than separate specialist models. SVD-based ablation study shows that shared-specialist decomposition and orthogonal regularization reduce expert overlap. These results demonstrate that modular adaptation improves controllability and specificity in multimodal photographic critique.",
+      "authors": [
+        "Bishwash Khanal",
+        "Anlan Zhang",
+        "Sasu Tarkoma",
+        "Tommi Mikkonen",
+        "Abhishek Kumar"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.MM"
+      ],
+      "published": "2026-08-18T08:40:04+00:00",
+      "link": "https://arxiv.org/pdf/2608.17514v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "SE-MoLoRA uses LoRA adapters on vision-language models to provide domain-specific photographic critique, disentangling semantic content from aesthetic judgment.",
+      "llm_evidence_cn": "SE-MoLoRA利用LoRA适配器在视觉语言模型上提供特定领域摄影评论，分离语义内容与美学判断。",
+      "llm_evidence": "SE-MoLoRA利用LoRA适配器在视觉语言模型上提供特定领域摄影评论，分离语义内容与美学判断。",
+      "canonical_evidence": "SE-MoLoRA利用LoRA适配器在视觉语言模型上提供特定领域摄影评论，分离语义内容与美学判断。",
+      "llm_tldr_en": "The paper addresses the challenge of providing actionable photographic critique by disentangling semantic content and aesthetic judgment in vision-language models using a shared-expert LoRA adapter framework with specialized experts for composition, lighting, and technical quality.",
+      "llm_tldr_cn": "视觉语言模型能流畅描述图像，但往往将语义内容与美学判断纠缠，无法提供可操作的摄影批评。本文提出SE-MoLoRA，一种模块化的参数高效适配框架，通过常激活共享LoRA专家和针对构图、光照、技术质量的路由适配器，分离一般摄影知识与专家残差判断。轻量查询路由器选择相关专家，实现有针对性的批评。实验表明，该框架能以低参数实现领域特定的摄影评估，有效提升批评的可操作性与针对性。",
+      "llm_tldr": "视觉语言模型能流畅描述图像，但往往将语义内容与美学判断纠缠，无法提供可操作的摄影批评。本文提出SE-MoLoRA，一种模块化的参数高效适配框架，通过常激活共享LoRA专家和针对构图、光照、技术质量的路由适配器，分离一般摄影知识与专家残差判断。轻量查询路由器选择相关专家，实现有针对性的批评。实验表明，该框架能以低参数实现领域特定的摄影评估，有效提升批评的可操作性与针对性。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "generating natural language descriptions of image quality",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.13381v1",
+      "source": "arxiv",
+      "title": "Reconstructing Historical Manuscripts through MSI: The Potential of Contrast in Assessing Image Quality and Legibility",
+      "abstract": "Digital restoration of historical manuscript images aims to improve readability while preserving the authenticity of cultural heritage documents. However, evaluating quality of restored manuscripts remains challenging, where readability is often subjective and expert annotations are scarce. This study investigates the suitability of contrast-based image quality measures to assess quality and legibility of reconstructed manuscript images from multi-spectral imaging. Two experiments were conducted with publicly-available data sets, facilitating manual quality scores by experts and full-reference image quality measures as reference evaluations. The results show that potential contrast achieves the highest correlation with expert ratings, while contrast-to-noise ratio demonstrates the strongest agreement with full-reference quality measures. Overall, contrast-based measures consistently outperform general image quality measures, demonstrating their potential as objective indicators of manuscript legibility and reconstruction quality.",
+      "authors": [
+        "Anna Breger"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-08-13T15:41:29+00:00",
+      "link": "https://arxiv.org/pdf/2608.13381v1",
+      "tags": [
+        "keyword:XIQA"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Assesses contrast-based image quality measures for manuscript quality evaluation",
+      "llm_evidence_cn": "评估基于对比度的图像质量指标用于手稿质量评价",
+      "llm_evidence": "评估基于对比度的图像质量指标用于手稿质量评价",
+      "canonical_evidence": "评估基于对比度的图像质量指标用于手稿质量评价",
+      "llm_tldr_en": "This paper investigates contrast-based image quality measures for evaluating the quality and legibility of restored historical manuscript images from multi-spectral imaging, using expert scores and full-reference metrics as references, showing potential contrast correlates best.",
+      "llm_tldr_cn": "针对历史手稿图像恢复后质量评估缺乏客观标准的问题，该研究探讨了基于对比度的图像质量指标在评估多光谱成像重建手稿质量和可读性方面的适用性。方法上，在两个公开数据集上开展实验，以专家人工评分为主、全参考图像质量指标为辅，对比了多种对比度测度。结果表明，潜在对比度与专家评分一致性最高。该工作为文化遗产图像的质量评价提供了简单有效的客观工具，减少了对稀缺专家标注的依赖。",
+      "llm_tldr": "针对历史手稿图像恢复后质量评估缺乏客观标准的问题，该研究探讨了基于对比度的图像质量指标在评估多光谱成像重建手稿质量和可读性方面的适用性。方法上，在两个公开数据集上开展实验，以专家人工评分为主、全参考图像质量指标为辅，对比了多种对比度测度。结果表明，潜在对比度与专家评分一致性最高。该工作为文化遗产图像的质量评价提供了简单有效的客观工具，减少了对稀缺专家标注的依赖。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.11167v1",
+      "source": "arxiv",
+      "title": "MultiModal Code-Switching: Interleaving Visual Objects into Language for Explicit Object-Level Alignment",
+      "abstract": "Existing Multimodal Large Language Models (MLLMs) predominantly rely on image-text pairs for modality alignment pretraining, mapping global image representations to long textual descriptions. However, this image-level alignment suffers from referential ambiguity: models struggle to infer the correspondences between multiple visual objects and textual entities from the global representation, leading to data inefficiency and suboptimal semantic grounding. To address this, we propose MultiModal Code-Switching (MMCS), a novel pretraining paradigm that provides explicit object-level supervision. Inspired by the linguistic phenomenon of code-switching, MMCS interleaves vision and language by replacing textual entities with their corresponding visual objects, enforcing local vision-language grounding. We further develop a scalable data synthesis pipeline to generate a pretraining dataset of 773K samples with accurate object-entity correspondences. Experiments show that MMCS is highly data-efficient: with only 50K samples, it matches or surpasses models trained on 600K image-text pairs. Furthermore, MMCS consistently improves visual grounding and perception capabilities across varying model scales.",
+      "authors": [
+        "Changhao Xiang",
+        "Shangyu Xing",
+        "Zhen Wu",
+        "Jianbing Zhang",
+        "Xinyu Dai"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.CL",
+        "cs.LG"
+      ],
+      "published": "2026-08-11T17:28:52+00:00",
+      "link": "https://arxiv.org/pdf/2608.11167v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Introduces multimodal LLM pretraining via MultiModal Code-Switching, interleaving visual objects into language for explicit object-level alignment",
+      "llm_evidence_cn": "提出多模态代码切换预训练范式，将视觉对象交错到语言中实现显式对象级对齐",
+      "llm_evidence": "提出多模态代码切换预训练范式，将视觉对象交错到语言中实现显式对象级对齐",
+      "canonical_evidence": "提出多模态代码切换预训练范式，将视觉对象交错到语言中实现显式对象级对齐",
+      "llm_tldr_en": "Existing MLLMs align images with text globally, causing referential ambiguity. MMCS interleaves visual objects into language during pretraining for explicit object-level supervision, improving semantic grounding and data efficiency.",
+      "llm_tldr_cn": "现有多模态大模型主要依赖图像-文本对进行模态对齐预训练，将全局图像表示映射到长文本描述，但存在指代歧义，难以推断多个视觉对象与文本实体的对应关系。多模态语码转换（MMCS）借鉴语言学中的语码转换现象，在预训练中用视觉对象替代文本实体，交错视觉与语言，提供显式对象级监督。实验表明，MMCS能改善语义接地，提高数据效率，实现更细粒度的多模态对齐。",
+      "llm_tldr": "现有多模态大模型主要依赖图像-文本对进行模态对齐预训练，将全局图像表示映射到长文本描述，但存在指代歧义，难以推断多个视觉对象与文本实体的对应关系。多模态语码转换（MMCS）借鉴语言学中的语码转换现象，在预训练中用视觉对象替代文本实体，交错视觉与语言，提供显式对象级监督。实验表明，MMCS能改善语义接地，提高数据效率，实现更细粒度的多模态对齐。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
