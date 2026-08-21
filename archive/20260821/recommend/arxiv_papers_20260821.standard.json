@@ -1,0 +1,59 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-21T19:19:08.394780+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.18710v1",
+      "source": "arxiv",
+      "title": "CamWorldQA: Perceptual Quality Assessment of Camera-Controlled World Video Generation",
+      "abstract": "Recent advances in generative video models have enabled camera-controlled world video generation, allowing models to synthesize videos under user-defined camera trajectories. However, existing video quality assessment (VQA) methods are mainly developed for natural videos and fail to capture the unique perceptual characteristics of camera-controlled generation, such as viewpoint consistency, motion coherence, and content preservation. In this work, we introduce CamWorldQA, the first benchmark for perceptual quality assessment of camera-controlled world video generation. CamWorldQA contains 720 generated videos produced by 6 representative generation methods from 20 diverse source videos under 6 camera trajectories, where each video is annotated with a human-rated perceptual quality score through subjective experiments. Furthermore, we propose CWQA, a no-reference quality assessment network with three complementary branches that extract spatial features, temporal motion features and optical flow features to jointly predict quality scores. Extensive experiments demonstrate that CWQA achieves superior performance over existing quality assessment methods on the CamWorldQA dataset.",
+      "authors": [
+        "Yunhe Li",
+        "Likun Wu",
+        "Sijing Wu",
+        "Xinyu Tian",
+        "Huiyu Duan",
+        "Yixuan Gao",
+        "Yunhao Li",
+        "Guangtao Zhai"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-08-19T09:10:02+00:00",
+      "link": "https://arxiv.org/pdf/2608.18710v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "perceptual quality assessment benchmark for camera-controlled world video generation",
+      "llm_evidence_cn": "相机控制世界视频生成的感知质量评估基准",
+      "llm_evidence": "相机控制世界视频生成的感知质量评估基准",
+      "canonical_evidence": "相机控制世界视频生成的感知质量评估基准",
+      "llm_tldr_en": "CamWorldQA addresses the gap in video quality assessment for camera-controlled world video generation by curating 720 annotated videos from 6 methods under 6 trajectories, with annotations for viewpoint consistency, motion coherence, and content preservation, providing the first benchmark for this domain.",
+      "llm_tldr_cn": "针对现有视频质量评估方法难以捕捉相机控制生成视频的独特感知特性（如视角一致性、运动一致性和内容保持），本文提出首个相机控制世界视频生成感知质量评估基准CamWorldQA。该基准包含由6种代表性方法在6条相机轨迹下从20个源视频生成的720个视频，每个视频均进行了标注。实验表明该基准能有效反映生成视频的感知质量，为生成视频质量评价提供了新工具。",
+      "llm_tldr": "针对现有视频质量评估方法难以捕捉相机控制生成视频的独特感知特性（如视角一致性、运动一致性和内容保持），本文提出首个相机控制世界视频生成感知质量评估基准CamWorldQA。该基准包含由6种代表性方法在6条相机轨迹下从20个源视频生成的720个视频，每个视频均进行了标注。实验表明该基准能有效反映生成视频的感知质量，为生成视频质量评价提供了新工具。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

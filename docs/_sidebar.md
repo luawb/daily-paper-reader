@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-08-21 <!--dpr-date:20260821-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/21/2608.18710v1-camworldqa-perceptual-quality-assessment-of-camera-controlled-world-video-generation" data-sidebar-item="{&quot;title&quot;: &quot;CamWorldQA: Perceptual Quality Assessment of Camera-Controlled World Video Generation&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.18710v1-camworldqa-perceptual-quality-assessment-of-camera-controlled-world-video-generation&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;相机控制世界视频生成的感知质量评估基准&quot;}">CamWorldQA: Perceptual Quality Assessment of Camera-Controlled World Video Generation</a>
   * 2026-08-20 <!--dpr-date:20260820-->
     * 精读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/20/2608.18579v1-mr-iqa-2-faithful-image-quality-reflection-via-fine-grained-credit-assignment" data-sidebar-item="{&quot;title&quot;: &quot;MR-IQA-2: Faithful Image Quality Reflection via Fine-Grained Credit Assignment&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.18579v1-mr-iqa-2-faithful-image-quality-reflection-via-fine-grained-credit-assignment&quot;, &quot;score&quot;: &quot;10.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;基于多模态大模型的图像质量评价与推理功劳分配&quot;}">MR-IQA-2: Faithful Image Quality Reflection via Fine-Grained Credit Assignment</a>

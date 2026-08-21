@@ -1,0 +1,24 @@
+{
+  "label": "2026-08-21",
+  "date": "2026-08-21",
+  "generated_at": "2026-08-21T19:20:45",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202608/21/2608.18710v1-camworldqa-perceptual-quality-assessment-of-camera-controlled-world-video-generation",
+      "section": "quick",
+      "title_en": "CamWorldQA: Perceptual Quality Assessment of Camera-Controlled World Video Generation",
+      "authors": "Yunhe Li, Likun Wu, Sijing Wu, Xinyu Tian, Huiyu Duan, Yixuan Gao, Yunhao Li, Guangtao Zhai",
+      "date": "2026-08-19",
+      "pdf": "https://arxiv.org/pdf/2608.18710v1",
+      "score": "6.0",
+      "evidence": "相机控制世界视频生成的感知质量评估基准",
+      "tldr": "相机控制世界视频生成缺乏专用质量评估方法，现有VQA难以捕捉视角一致性、运动连贯性等特性。为此构建首个基准CamWorldQA，包含720个视频及人工评分。同时提出CWQA无参考网络，融合空间、时序运动与光流特征进行质量预测。实验证明CWQA在CamWorldQA上显著超越现有方法，为生成视频质量评估提供新方向。",
+      "tags": "query:xiqa",
+      "abstract_en": "Recent advances in generative video models have enabled camera-controlled world video generation, allowing models to synthesize videos under user-defined camera trajectories. However, existing video quality assessment (VQA) methods are mainly developed for natural videos and fail to capture the unique perceptual characteristics of camera-controlled generation, such as viewpoint consistency, motion coherence, and content preservation. In this work, we introduce CamWorldQA, the first benchmark for perceptual quality assessment of camera-controlled world video generation. CamWorldQA contains 720 generated videos produced by 6 representative generation methods from 20 diverse source videos under 6 camera trajectories, where each video is annotated with a human-rated perceptual quality score through subjective experiments. Furthermore, we propose CWQA, a no-reference quality assessment network with three complementary branches that extract spatial features, temporal motion features and optical flow features to jointly predict quality scores. Extensive experiments demonstrate that CWQA achieves superior performance over existing quality assessment methods on the CamWorldQA dataset.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
