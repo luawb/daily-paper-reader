@@ -1,0 +1,24 @@
+{
+  "label": "2026-08-23",
+  "date": "2026-08-23",
+  "generated_at": "2026-08-23T20:22:10",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202608/23/2608.16263v1-seeing-before-answering-training-free-visual-layer-profiling-for-vision-language-models",
+      "section": "quick",
+      "title_en": "Seeing Before Answering: Training-Free Visual Layer Profiling for Vision-Language Models",
+      "authors": "Ruchen Liu, Yi Yang, Yiming Xu, Michael Ying Yang, Monika Sester, Bodo Rosenhahn",
+      "date": "2026-08-17",
+      "pdf": "https://arxiv.org/pdf/2608.16263v1",
+      "score": "6.0",
+      "evidence": "无训练视觉层剖析以改进视觉语言模型对图像和文本的处理",
+      "tldr": "现有LLaVA式视觉语言模型固定从视觉骨干倒数第二层传递视觉token，但该默认层在多数基准中经常次优。本文提出训练自由的视觉层剖析方法，利用视觉数据集熵VDE和Gromov-Wasserstein距离预测层有用性。实验表明预投影器VDE能跟踪逐层准确率，并在SigLIP-based LLaVA-Video上覆盖每个任务最优层，在CLIP-based Video-LLaVA上提供区域级指导。该方法将搜索缩小到少量候选，提升效率且具可解释性。",
+      "tags": "query:xiqa",
+      "abstract_en": "LLaVA-style Vision-Language Models (VLMs) pass visual tokens from a fixed late layer of the vision backbone, typically the penultimate one, to the language model. We first show that this hidden convention is fragile: across 2 VLMs and 7 image and video benchmarks, the default layer is sub-optimal in 13 of 14 model-task pairs, and the best layer shifts with both task and visual backbone. Finding that layer by exhaustive layer-wise inference is prohibitively expensive, and no better fixed default exists. We therefore ask whether layer usefulness can instead be predicted from representation geometry. We study matrix-based entropy, introduced for unimodal layer analysis, which we compute over sample-level visual embeddings as Visual Dataset Entropy (VDE); and Gromov-Wasserstein (GW) distance, introduced for encoder-level VLM model selection, which we repurpose as a layer-wise visual--language alignment signal. Transferring these to LLaVA-based models is not obvious a priori: the vision tower is frozen while the multimodal projector is trained, so we profile both sides of the projector. We find that VDE transfers, and GW does not. Computed from 100 unlabeled task samples without downstream inference, pre-projector VDE tracks layer-wise accuracy and its top-ranked layers cover the oracle best layer on every task for the SigLIP-based LLaVA-Video, while giving region-level guidance for the CLIP-based Video-LLaVA. Post-projector profiles show that the projector reshapes visual geometry but does not erase the performance-relevant trend, leaving $\\mathrm{VDE}_{\\mathrm{pre}}$ the stronger signal. GW instead flattens after projection and is best read as an alignment diagnostic rather than a selector. VDE thus offers an interpretable, training-free policy that narrows the visual-layer search to a handful of candidates for limited downstream verification.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

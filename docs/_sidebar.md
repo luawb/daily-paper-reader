@@ -1,6 +1,9 @@
 * <a class="dpr-sidebar-root-link" href="#/">首页</a>
 * <a class="dpr-sidebar-root-link dpr-sidebar-noactive-link" href="javascript:void(0)" data-dpr-hash="#/tutorial/README">使用教程</a>
 * Daily Papers
+  * 2026-08-23 <!--dpr-date:20260823-->
+    * 速读区
+      * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/23/2608.16263v1-seeing-before-answering-training-free-visual-layer-profiling-for-vision-language-models" data-sidebar-item="{&quot;title&quot;: &quot;Seeing Before Answering: Training-Free Visual Layer Profiling for Vision-Language Models&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.16263v1-seeing-before-answering-training-free-visual-layer-profiling-for-vision-language-models&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;无训练视觉层剖析以改进视觉语言模型对图像和文本的处理&quot;}">Seeing Before Answering: Training-Free Visual Layer Profiling for Vision-Language Models</a>
   * 2026-08-21 <!--dpr-date:20260821-->
     * 速读区
       * <a class="dpr-sidebar-item-link dpr-sidebar-item-structured" href="#/202608/21/2608.18710v1-camworldqa-perceptual-quality-assessment-of-camera-controlled-world-video-generation" data-sidebar-item="{&quot;title&quot;: &quot;CamWorldQA: Perceptual Quality Assessment of Camera-Controlled World Video Generation&quot;, &quot;link&quot;: &quot;https://arxiv.org/abs/2608.18710v1-camworldqa-perceptual-quality-assessment-of-camera-controlled-world-video-generation&quot;, &quot;score&quot;: &quot;6.0&quot;, &quot;tags&quot;: [{&quot;kind&quot;: &quot;query&quot;, &quot;label&quot;: &quot;xiqa&quot;}], &quot;evidence&quot;: &quot;相机控制世界视频生成的感知质量评估基准&quot;}">CamWorldQA: Perceptual Quality Assessment of Camera-Controlled World Video Generation</a>

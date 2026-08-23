@@ -1,0 +1,57 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-23T20:20:04.828852+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 11,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.16263v1",
+      "source": "arxiv",
+      "title": "Seeing Before Answering: Training-Free Visual Layer Profiling for Vision-Language Models",
+      "abstract": "LLaVA-style Vision-Language Models (VLMs) pass visual tokens from a fixed late layer of the vision backbone, typically the penultimate one, to the language model. We first show that this hidden convention is fragile: across 2 VLMs and 7 image and video benchmarks, the default layer is sub-optimal in 13 of 14 model-task pairs, and the best layer shifts with both task and visual backbone. Finding that layer by exhaustive layer-wise inference is prohibitively expensive, and no better fixed default exists. We therefore ask whether layer usefulness can instead be predicted from representation geometry. We study matrix-based entropy, introduced for unimodal layer analysis, which we compute over sample-level visual embeddings as Visual Dataset Entropy (VDE); and Gromov-Wasserstein (GW) distance, introduced for encoder-level VLM model selection, which we repurpose as a layer-wise visual--language alignment signal. Transferring these to LLaVA-based models is not obvious a priori: the vision tower is frozen while the multimodal projector is trained, so we profile both sides of the projector. We find that VDE transfers, and GW does not. Computed from 100 unlabeled task samples without downstream inference, pre-projector VDE tracks layer-wise accuracy and its top-ranked layers cover the oracle best layer on every task for the SigLIP-based LLaVA-Video, while giving region-level guidance for the CLIP-based Video-LLaVA. Post-projector profiles show that the projector reshapes visual geometry but does not erase the performance-relevant trend, leaving $\\mathrm{VDE}_{\\mathrm{pre}}$ the stronger signal. GW instead flattens after projection and is best read as an alignment diagnostic rather than a selector. VDE thus offers an interpretable, training-free policy that narrows the visual-layer search to a handful of candidates for limited downstream verification.",
+      "authors": [
+        "Ruchen Liu",
+        "Yi Yang",
+        "Yiming Xu",
+        "Michael Ying Yang",
+        "Monika Sester",
+        "Bodo Rosenhahn"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-08-17T08:35:37+00:00",
+      "link": "https://arxiv.org/pdf/2608.16263v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Training-free visual layer profiling to improve vision-language model processing of images and text",
+      "llm_evidence_cn": "无训练视觉层剖析以改进视觉语言模型对图像和文本的处理",
+      "llm_evidence": "无训练视觉层剖析以改进视觉语言模型对图像和文本的处理",
+      "canonical_evidence": "无训练视觉层剖析以改进视觉语言模型对图像和文本的处理",
+      "llm_tldr_en": "Fixed penultimate vision layers in LLaVA-style VLMs are often suboptimal; this paper introduces a training-free visual layer profiling via matrix-based entropy on visual embeddings. Experiments on 2 VLMs and 7 benchmarks show task-dependent optimal layers and validate the profile method.",
+      "llm_tldr_cn": "本文揭示LLaVA式视觉语言模型默认使用倒数第二层视觉特征往往并非最优，且最佳层随任务和视觉骨干变化。为此提出基于视觉嵌入的矩阵熵进行无训练层剖析，预测各层实用性。在2个VLM和7个基准上的实验表明固定层假设脆弱，而表示几何驱动的层选择可行。该方法为改进VLM多模态处理提供了任务自适应的新思路。",
+      "llm_tldr": "本文揭示LLaVA式视觉语言模型默认使用倒数第二层视觉特征往往并非最优，且最佳层随任务和视觉骨干变化。为此提出基于视觉嵌入的矩阵熵进行无训练层剖析，预测各层实用性。在2个VLM和7个基准上的实验表明固定层假设脆弱，而表示几何驱动的层选择可行。该方法为改进VLM多模态处理提供了任务自适应的新思路。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
