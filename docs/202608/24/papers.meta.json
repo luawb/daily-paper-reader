@@ -1,0 +1,69 @@
+{
+  "label": "2026-08-24",
+  "date": "2026-08-24",
+  "generated_at": "2026-08-24T19:55:45",
+  "count": 4,
+  "papers": [
+    {
+      "paper_id": "202608/24/2608.20999v1-latent-ordinal-evidence-misaligned-outputs-inference-time-ordinal-lens-alignment-for-multimodal-llms",
+      "section": "deep",
+      "title_en": "Latent Ordinal Evidence, Misaligned Outputs: Inference-Time Ordinal Lens Alignment for Multimodal LLMs",
+      "authors": "Haiming Li, Yingsheng Liu, Jingmin Zhu, Siyuan Yan, Xieji Li, Jiajun Sun, Zhen Yu, Zongyuan Ge",
+      "date": "2026-08-21",
+      "pdf": "https://arxiv.org/pdf/2608.20999v1",
+      "score": "9.0",
+      "evidence": "将图像质量评估作为多模态LLM中的序数回归任务并提出推理时对齐",
+      "tldr": "多模态大语言模型在图像质量评估等序数回归任务中，内部序数证据与数字标记输出存在错位。论文通过分析发现序数标签可从隐藏状态线性恢复，但原生输出受unembedding矩阵过滤而弱暴露。提出推理时序数透镜对齐方法，校正输出与内部证据，从而提升序数决策可靠性。",
+      "tags": "query:xiqa",
+      "abstract_en": "Multimodal LLMs apply the language model interface to visual inputs, where ordinal regression tasks such as age estimation, image quality assessment, and disease grading require autoregressive decisions over ordered class labels. We ask whether MLLMs reliably convert internal ordinal evidence into ordered digit-token outputs. Across four ordinal benchmarks and four MLLM backbones, ordinal labels are linearly recoverable from hidden states with Spearman correlation up to 0.938, and a task-designed prompt further sharpens this structure. Yet native digit-token outputs weakly expose it: the unembedding matrix filters the ordinal direction, and the digit-token row space retains below 1.15% across all 16 model-dataset combinations, with a 16 to 77 absolute-point accuracy gap between linear-probe and native outputs. We introduce Ordinal Lens Alignment (OLA), a frozen-backbone inference-time method that trains lightweight W_S-anchored lenses on mid-to-deep decoder layers, fuses them into an ordinal distribution, and corrects only digit-token logits at generation. OLA outperforms the SOTA LoRA-tuned OrderChain baseline in most settings while keeping the MLLM frozen, surpasses discriminative ordinal baselines in most cells, and improves over an offline lens in every setting.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/24/2608.21180v1-toward-vision-language-model-based-assessment-of-clinical-quality-and-usability-of-lge-mr-images-for-cardiac-ablation-planning",
+      "section": "deep",
+      "title_en": "Toward Vision Language Model-based Assessment of Clinical Quality and Usability of LGE-MR Images for Cardiac Ablation Planning",
+      "authors": "Bipasha Kundu, Abhishek Chaturvedi, Axel W. E. Wismueller, Richard Simon, Cristian A. Linte",
+      "date": "2026-08-21",
+      "pdf": "https://arxiv.org/pdf/2608.21180v1",
+      "score": "9.0",
+      "evidence": "基于视觉语言模型的LGE-MR图像质量评估用于心脏消融规划",
+      "tldr": "LGE心脏MRI对房颤消融规划至关重要，但图像质量差会导致靶点定位错误，且质量评估依赖放射科医生主观判断，缺乏自动化。本文提出两阶段视觉语言模型框架：先微调VLM生成结构化质量报告，再经GPT推理输出质量分数与消融规划可用性决策。在20名患者60个图像-文本对上，InternVL2取得最高标准级准确率（平均ACC=0.65），DeepSeek实现完美临床可用性一致性（Acc=1.00）。该框架提供可解释、安全关键的图像质量评估，有望提升消融规划可靠性。",
+      "tags": "query:xiqa",
+      "abstract_en": "LGE cardiac MRI is widely used for left atrial fibrosis assessment and ablation planning in atrial fibrillation patients as knowledge of fibrotic tissue regions identified from LGE-MRI is critical for catheter ablation. Often, poor quality images used during ablation planning can cause mis-localization of ablation targets, directly impacting procedure safety and outcome. The decision of whether a scan meets the minimum quality threshold for ablation planning is currently made informally by the reviewing radiologist and is not captured by any automated system, yet it is arguably the most safety-critical output of the image quality assessment (IQA) process. However, variations in image quality caused by noise, motion artifacts, and poor boundary definition significantly compromise the reliability of downstream segmentation and clinical decision-making tasks. Manual quality assessment by expert radiologists is subjective and difficult to scale, while existing automated methods produce scalar scores without interpretable clinical reasoning. In this work, we propose a two-stage vision language model (VLM) framework for clinically grounded image quality assessment of left atrial LGE-MRI. In the first stage, a fine-tuned VLM generates structured radiology-style quality reports predicting five radiologist-defined criteria: Noise, Motion Artifact, LA Boundary Accuracy, PV Region Accuracy, and Under-segmentation Severity. In the second stage, a GPT-based reasoning module maps the predicted quality and reports to a structured quality scores and binary clinical usability decision for ablation planning. We curate a dataset of 60 annotated image slice-text pairs from 20 patients and benchmark four state-of-the-art VLM architectures. InternVL2 achieves the highest criterion-level accuracy (Avg ACC=0.65, PLCC=0.79), while DeepSeek achieves perfect clinical usability agreement (Acc=1.00, kappa=1.00).",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/24/2608.20713v1-agidefect-4k-a-richly-annotated-dataset-for-ai-generated-image-defect-detection-localization-and-explanation",
+      "section": "deep",
+      "title_en": "AGIDefect-4K: A Richly Annotated Dataset for AI-Generated Image Defect Detection, Localization and Explanation",
+      "authors": "Xiangfei Sheng, Weidong Zou, Tianjiao Gu, Zhichao Yang, Pengfei Chen, Leida Li",
+      "date": "2026-08-21",
+      "pdf": "https://arxiv.org/pdf/2608.20713v1",
+      "score": "8.0",
+      "evidence": "提供缺陷检测、定位和文本解释的AI生成图像数据集，支持带解释的图像质量评价",
+      "tldr": "生成图像虽逼真但仍有细微缺陷，现有基准对全面缺陷诊断不足。本文构建AGIDefect-4K数据集，涵盖15个开源与闭源生成模型的4000张图像，提供检测标签、像素级分割掩码、文本解释和质量分数，并提出基于多模态大模型的基线AGIDA联合处理检测、定位、解释与质量预测。基准测试显示缺陷理解仍具挑战。该数据集为AI生成图像缺陷研究提供统一基准，促进生成可靠性提升。",
+      "tags": "query:xiqa",
+      "abstract_en": "Generative AI can now produce highly realistic images, yet current models still exhibit subtle but critical defects that undermine their reliability. While existing AI-generated image (AGI) evaluation benchmarks have made notable progress, comprehensive AGI defect diagnosis remains underexplored. To bridge this gap, we introduce AGIDefect-4K, a richly annotated dataset of 4,000 images from 15 state-of-the-art generative models spanning both open-source and closed-source systems. AGIDefect-4K features hierarchical defect annotations: (1) detection labels identifying whether defects exist, (2) pixel-level segmentation masks localizing defective regions, and (3) detailed textual explanations characterizing defect types and their perceptual impact. Each image is further annotated with an overall quality score. Building on this, we present AGIDA (AGI Defect Assistant), a baseline framework leveraging Multimodal Large Language Models (MLLMs) for joint defect detection, localization, explanation, and quality prediction. Comprehensive benchmarking on AGIDefect-4K reveals that AGI defect understanding remains challenging, underscoring the value of this dataset. The dataset is publicly available at https://github.com/sxfly99/AGIDefect-4K.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/24/2608.15517v2-glaq-grounding-latent-queries-in-visual-evidence-for-multimodal-reasoning",
+      "section": "quick",
+      "title_en": "GLaQ: Grounding Latent Queries in Visual Evidence for Multimodal Reasoning",
+      "authors": "Zesheng Yang, Lingling Zhang, Xinyu Zhang, Cheng Zhang, Pengyu Li, Heng Wang, Lin Wu",
+      "date": "2026-08-16",
+      "pdf": "https://arxiv.org/pdf/2608.15517v2",
+      "score": "6.0",
+      "evidence": "在多模态推理中基于视觉证据进行解释生成",
+      "tldr": "针对多模态大模型推理中细粒度视觉证据难以在文本推理步骤间保留的问题，本文提出GLaQ，通过在视觉证据中 grounding 潜在查询来增强推理。该方法不依赖外部工具，可在内部保留视觉信息。实验表明，GLaQ能提升多模态推理能力，为图像质量推理与解释生成等任务提供可迁移的多模态推理基础。",
+      "tags": "query:xiqa",
+      "abstract_en": "Chain-of-thought reasoning has substantially improved the problem-solving capabilities of multimodal large language models. Fine-grained visual evidence, however, remains difficult to preserve and reuse across text-based reasoning steps. To address this limitation, tool-augmented thinking-with-images methods maintain visual access externally by revisiting or manipulating the image, but require predefined tools and additional inference-time processing. As an internal alternative, continuous visual latent reasoning retains intermediate computation in hidden states. However, its prevailing autoregressive construction makes each latent state depend on its predecessors, so later states may repeat information already present in the latent sequence rather than capture complementary visual details. We introduce GLaQ, a grounded latent-query framework that replaces sequential latent rollout with a fixed set of context-conditioned queries grounded in the original visual tokens. The grounded queries are reinjected for answer generation, providing direct and coordinated access to source visual evidence. We train GLaQ with localized-view supervision followed by reinforcement learning under task-level rewards. Across five benchmarks for fine-grained visual understanding and perception, GLaQ-7B gains 5.99--9.66\\% over its base model and leads all compared visual latent methods, suggesting that direct query-to-image grounding can recover localized evidence from the full image without external visual operations or autoregressive latent rollouts.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

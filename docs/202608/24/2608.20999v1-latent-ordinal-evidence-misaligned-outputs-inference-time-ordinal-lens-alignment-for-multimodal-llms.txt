@@ -1,0 +1,761 @@
+Title: Latent Ordinal Evidence, Misaligned Outputs: Inference-Time Ordinal Lens Alignment for Multimodal LLMs
+
+URL Source: https://arxiv.org/pdf/2608.20999v1
+
+Published Time: Mon, 24 Aug 2026 00:52:51 GMT
+
+Number of Pages: 23
+
+Markdown Content:
+## Latent Ordinal Evidence, Misaligned Outputs: Inference-Time Ordinal Lens Alignment for Multimodal LLMs 
+
+Haiming Li 1,2,* Yingsheng Liu 1,2,* † Jingmin Zhu 1,2,* Siyuan Yan 1,2 
+
+Xieji Li 1,2 Jiajun Sun 2 Zhen Yu 1,2, ‡ Zongyuan Ge 1,2 1Faculty of Information Technology, Monash University, Melbourne, Australia 
+
+> 2
+
+Monash University, Melbourne, Victoria, Australia 
+
+Abstract 
+
+Multimodal LLMs apply the language model interface to visual inputs, where ordinal regres-sion tasks such as age estimation, image quality assessment, and disease grading require autore-gressive decisions over ordered class labels. We ask whether MLLMs reliably convert internal ordinal evidence into ordered digit-token out-puts. Across four ordinal benchmarks and four MLLM backbones, ordinal labels are linearly recoverable from hidden states with Spearman correlation up to 0.938, and a task-designed prompt further sharpens this structure. Yet na-tive digit-token outputs weakly expose it: the unembedding matrix filters the ordinal direc-tion, and the digit-token row space retains be-low 1.15% across all 16 model-dataset com-binations, with a 16 to 77 absolute-point ac-curacy gap between linear-probe and native outputs. We introduce Ordinal Lens Align-ment (OLA), a frozen-backbone inference-time method that trains lightweight WS -anchored lenses on mid-to-deep decoder layers, fuses them into an ordinal distribution, and corrects only digit-token logits at generation. OLA out-performs the SOTA LoRA-tuned OrderChain baseline in most settings while keeping the MLLM frozen, surpasses discriminative ordi-nal baselines in most cells, and improves over an offline lens in every setting. 
+
+1 Introduction 
+
+Ordinal prediction differs from nominal classifica-tion because its errors carry distance. Misclassi-fying age group 3 as group 4 differs qualitatively from misclassifying it as group 7, and similar grada-tions arise in disease grading, image quality assess-ment, and aesthetic rating. Discriminative ordinal regression has been addressed through rank-aware decoders (Cheng et al., 2008; Niu et al., 2016; Cao     
+
+> Code: https://anonymous.4open.science/r/OLA-0BEE
+> *Equal Contribution.
+> †Project Leader.
+> ‡Corresponding Author.
+
+et al., 2020; Shi et al., 2023), label-smoothing and diversity objectives (Diaz and Marathe, 2019; Berg et al., 2021), domain-specific aesthetic and medi-cal scoring (Talebi and Milanfar, 2018; Jia et al., 2017), and vision-language formulations (Du et al., 2024; Li et al., 2022; Wang et al., 2023). An al-ternative route reformulates the task as digit-token generation through prompted MLLMs (Wang et al., 2025); this is attractive because it preserves the language-model generation interface and supports rationale-style responses. However, autoregressive token decoding over a discrete vocabulary provides no architectural guarantee that the generated digit tokens respect the ordinal scale of the underlying labels: a language model can emit a valid token without emitting an ordinally appropriate one, a tendency recently audited as central-tendency bias in MLLM clinical ordinal scoring (Zhang et al., 2026). We examine this issue through a diagnostic study across four ordinal benchmarks (Adience, Dia-betic Retinopathy, Historical Color Image, and Aes-thetic) and four MLLM backbones (Qwen2.5-VL, Qwen3-VL, Gemma-4, and LLaVA-NeXT). Three observations emerge. First, hidden states contain strong ordinal evidence: linear probes recover or-dered labels with peak Spearman correlation up to 0.938 (Table 1), and a task-designed prompt further sharpens this structure in last-token repre-sentations. Second, native digit-token outputs do not reliably expose this evidence: the unembedding matrix WU spectrally filters the probed ordinal di-rection, and the digit-token row space WS retains less than 1.15% of its energy across all 16 model-dataset combinations (Figure 1, Table 2). Third, this output-side weakness corresponds to a behav-ioral accuracy gap of 16 to 77 absolute points be-tween linear probes on hidden states and the native digit-token output, indicating that what is linearly decodable internally can differ systematically from what the generation interface produces. 1arXiv:2608.20999v1 [cs.CV] 21 Aug 2026 Adience ( C = 8 ) DR ( C = 5 ) HCI ( C = 5 ) Aesthetic ( C = 5 )Backbone IT/N LT/N LT/D IT/N LT/N LT/D IT/N LT/N LT/D IT/N LT/N LT/D Qwen3-VL 0.916 0.872 0.938 0.427 0.276 0.758 0.617 0.556 0.843 0.859 0.864 0.916 
+
+Gemma-4 0.887 0.893 0.929 0.362 0.255 0.757 0.430 0.551 0.773 0.794 0.838 0.919 
+
+LLaVA-NeXT 0.917 0.920 0.924 0.421 0.365 0.756 0.554 0.586 0.800 0.822 0.860 0.906 
+
+Table 1: SRCC Diagnostics for Probe-Readable Ordinal Evidence 10-25%  25-50%  50-75%  75-100%                       
+
+> 10%
+> 20%
+> 30%
+> 40%
+> 50%
+> 60%
+> Per-bucket energy share
+> Unweighted (raw geometry)
+> 𝜎 2-weighted (output)
+> 13%
+> 53%
+> 11% 10%
+> 18%
+> 13% 15%
+> 9%
+> 43%
+> 14%
+> TOP 10%
+> (b) Energy by 𝝈 -bucket
+> 𝜎 rank percentile (high 𝜎 →low 𝜎)
+> (a) Ordinal energy across 𝑾 U’s singular spectrum
+> 0500 1000 1500 2000 2500 3000 3500 4000
+> Singular value index
+> 0.0
+> 0.2
+> 0.4
+> 0.6
+> 0.8
+> 1.0
+> Cumulative ordinal energy
+> 𝜎 𝑖 (singular values of 𝑊 𝑈 )
+> top/bottom 10% 𝜎
+> Std band over 5 layers
+> Cumulative ordinal energy (mean of 5 layers)
+> 10 2
+> 10 1
+> 𝜎 𝑖 (log scale)
+> 𝑘 90 ∗= 3533
+
+Figure 1: Spectral Filtering of the Probed Ordinal Di-rection by the Unembedding Matrix WU
+
+Motivated by this gap, we propose Ordinal Lens Alignment (OLA), a frozen-backbone inference-time method that bridges latent evidence to digit-token logits without modifying the vision encoder, language-model backbone, or unembedding ma-trix. OLA trains lightweight WS -anchored lenses on K mid-to-deep decoder layers, fuses them via a learned softmax weighting into an instance-specific ordinal distribution P OLA , and applies a target-restricted, discrepancy-driven correction to digit-token logits at the answer position. Our contributions are threefold. First, we pro-vide a diagnostic account that separates probe-readable latent ordinal evidence from its weak ex-posure in native digit-token outputs across four backbones and four benchmarks, with SRCC up to 0.938 yet below 1.15% WS row-space reten-tion in all 16 combinations. Second, we pro-pose Ordinal Lens Alignment (OLA), a frozen-backbone inference-time method that connects multi-layer WS -anchored lenses to digit-token log-its through a target-restricted, discrepancy-driven correction, without modifying the vision encoder, language-model backbone, or unembedding matrix. Third, OLA improves over prompt-only, hidden-steering, capacity-matched, and offline-lens alter-natives, and outperforms the SOTA LoRA-tuned OrderChain baseline in most settings while requir-ing only lightweight lens training without LoRA fine-tuning. 
+
+Backbone Adience DR HCI Aesthetic Qwen2.5-VL 1.05% 0.92% 0.99% 1.01% Qwen3-VL 1.12% 1.06% 1.08% 1.14% Gemma-4 0.97% 0.88% 0.93% 0.96% LLaVA-NeXT 1.03% 0.95% 0.97% 1.02% 
+
+Table 2: Digit-Token Row-Space Retention of Probe-Derived Ordinal Directions 
+
+2 Task Setup & Diagnostic Findings 
+
+2.1 Task setup 
+
+We consider visual ordinal prediction with MLLMs. An input (x, P ) pairs an image with a prompt specifying the task and answer format; the la-bel y ∈ {0, 1, . . . , C − 1} is ordered, with C
+
+varying across benchmarks. The MLLM predicts via greedy autoregressive decoding; ˆy = c iff the emitted digit token equals sc, where Sdigit =
+
+{s0, . . . , s C−1} is the per-tokenizer digit-token set. Let hℓ(x, P ) ∈ Rd be the last-token hidden state at layer ℓ, WU ∈ R|V|× d the unembedding ma-trix, and WS = WU [Sdigit ] ∈ RC×d its digit-token row submatrix. Evaluation uses ACC, MAE, and SRCC: top-1 correctness, ordinal error magnitude, and monotonic agreement of predicted or probed indices with ground-truth labels. We evaluate on Adience (Eidinger et al., 2014) (C = 8 ), DR (Kaggle, 2015), HCI (Palermo et al., 2012), and Aesthetic (Schifanella et al., 2015) (C = 5 each) with the open-source MLLM back-bones Qwen2.5-VL (Bai et al., 2025b), Qwen3-VL (Bai et al., 2025a), Gemma-4 (Team et al., 2024), and LLaVA-NeXT (Liu et al., 2024); SRCC di-agnostics use the latter three as representatives. Per-layer linear probes on frozen hidden states at three diagnostic sites yield the maximum test SRCC across layers, most recoverable in mid-to-deep layers, suggesting ordinal structure emerges after cross-modal fusion but is weakly exposed at the digit-token interface. Dataset descriptions, class distributions, and probe-site protocols appear in Appendix A. 22.2 Latent Ordinal Evidence Is Probe-Readable 
+
+For each diagnostic site and decoder layer, we train a free linear readout over frozen hidden states, in the spirit of linear probing (Alain and Bengio, 2016; Hewitt and Manning, 2019) and lens-based inter-pretation (Belrose et al., 2023; Park et al., 2023): 
+
+ppr  
+
+> ℓ
+
+(c | x, P ) = σ
+
+
+
+Bℓ˜hℓ(x, P ) + aℓ
+
+ 
+
+> c
+
+(1) where σ(·) denotes the softmax and ˜hℓ = ( hℓ −
+
+μℓ)/σ ℓ is standardized. The free probe is uncon-strained by native digit-token rows, testing whether ordinal labels are linearly recoverable from frozen representations. Table 1 reports the peak test SRCC across decoder layers under the three protocols of Section 2.1; per-layer SRCC breakdowns across all three backbones are in Appendix D.1. Under the most informative protocol (last-token hidden state with a task-designed prompt), every model-dataset cell reaches SRCC ≥ 0.756 , peak-ing at 0.938 on Adience with Qwen3-VL, 0.919 on Aesthetic with Gemma-4, and 0.843 on HCI with Qwen3-VL. Across all 12 backbone-dataset combinations of Table 1, ordered labels are linearly recoverable from frozen hidden states, so down-stream ordinal errors cannot be explained by absent internal evidence. The task-designed prompt (specifying the ordi-nal scale and answer format; see Appendix B for templates and design principles) consistently im-proves last-token SRCC, with largest gains where the neutral probe is weakest: on DR, SRCC rises from 0.255–0.365 to 0.756–0.758; on HCI, from 0.551–0.586 to 0.773–0.843. Adience and Aesthetic already show strong neutral or visual-token recoverability, so prompt gains are smaller. The prompt thus helps the LM aggregate task-relevant cross-modal evidence at the answer po-sition; whether the native digit-token interface uses it effectively is the focus of the next diagnostic. 
+
+Finding 1. MLLMs contain strong ordinal evi-dence in hidden states. 
+
+2.3 The Output Interface Filters and Weakly Exposes Ordinal Evidence 
+
+Finding 1 establishes that ordinal labels are lin-early recoverable; we now ask whether the same evidence reaches the digit-token logits. We ex-amine WU from two complementary angles, its spectral structure and the digit-token row space 
+
+WS , and relate both to the behavioral gap between hidden-state probes and native digit-token outputs. Let WU = U ΣV ⊤ with singular values σ1 ≥· · · ≥ σd and right singular vectors Vi. For a probe-derived ordinal direction vord , let αi = ⟨vord , V i⟩.Partitioning singular indices into rank buckets B
+
+(top 10%, 10–25%, 25–50%, 50–75%, 75–100%), we report two normalized energy shares per bucket: 
+
+Eraw (B) = 
+
+P 
+
+> i∈B
+
+α2
+
+> i
+
+Pdj=1 α2
+
+> j
+
+,Eout (B) = 
+
+P 
+
+> i∈B
+
+α2 
+
+> i
+
+σ2
+
+> i
+
+Pdj=1 α2 
+
+> j
+
+σ2
+
+> j
+
+.
+
+(2) 
+
+Eraw measures the raw distribution of the probe direction across the singular spectrum, and Eout 
+
+the distribution after the per-direction σ2 weight-ing that v 7 → WU v imposes. Figure 1 shows the top 10% bucket carries only 13% of the raw probe-direction mass yet contributes 53% of the 
+
+σ2-weighted output energy, while the bottom 25% carries 43% of the raw mass but only 14% after σ2
+
+weighting. The output interface therefore reweights the ordinal direction through the singular spectrum of WU , attenuating a broad low-σ component and amplifying a smaller high-σ one, echoing struc-tured signal patterns previously observed in LLM unembedding spectra (Cancedda, 2024). Since ordinal prediction is evaluated through digit tokens, we measure the retention of vord in the digit-token row space WS :
+
+RWS (vord ) = ∥Πrow( WS )vord ∥22
+
+∥vord ∥22
+
+(3) where Πrow( WS ) is the orthogonal projector onto 
+
+row( WS ). Table 2 reports RWS across four back-bones and four benchmarks: cell means span 0.88%–1.14%, mean 1.00%. Only about one per-cent of the probe-derived ordinal direction is rep-resented in the digit-token row space. This does not imply destruction of the remaining energy or that OLA modifies WS ; the native interface simply exposes this direction weakly. Behaviorally, this filtering aligns with accuracy gaps of 16 to 77 ab-solute points between hidden-state linear readouts and native digit-token outputs, largest on DR and HCI where native generation is weakest. 
+
+Finding 2. Native digit-token outputs weakly expose the recovered ordinal evidence. 3Findings 1 and 2 identify an interface-level fail-ure mode: evidence is present in frozen hidden states but only weakly exposed in the native digit-token logits. The intervention should therefore connect probe-readable evidence to digit-token log-its at generation, without teaching the backbone or retraining WU ; Section 3 introduces Ordinal Lens Alignment (OLA) to implement this. 
+
+3 Ordinal Lens Alignment 
+
+Ordinal Lens Alignment (OLA) is a frozen-backbone inference-time procedure that connects probe-readable ordinal evidence in mid-to-deep de-coder layers to the digit-token logits at the answer position, without modifying the vision encoder, language-model backbone, or unembedding head. The only learned parameters are lightweight lens and fusion weights, trained once per backbone-dataset pair. 
+
+3.1 Overview 
+
+Figure 2 summarizes OLA as an output-side inter-vention at the answer-token decoding step. Given 
+
+(x, P ) with task-designed prompt P , the frozen MLLM produces native logits at the answer po-sition. Forward hooks capture last-token hid-den states at K mid-to-deep decoder layers L =
+
+{ℓ1, . . . , ℓ K }; each is passed through a lens map-ping it into digit-token scores via the frozen WS
+
+(Section 3.2). A learned softmax then fuses per-layer scores into an instance-specific ordinal distri-bution P OLA (c | x, P ) over Sdigit (Section 3.3). Before greedy decoding selects the answer to-ken, OLA compares P OLA with the native digit-token distribution Q(c | x, P ) and applies a target-restricted, discrepancy-driven correction only to logits in Sdigit (Section 3.3); other logits remain unchanged. This decomposition separates three functions en-tangled in native MLLM output: latent evidence readout, multi-layer aggregation under a fixed K-layer window, and inference-time alignment with the digit-token interface. OLA combines logit-lens style readouts (Belrose et al., 2023) with inference-time output-side adjustment, unlike representation steering on hidden states (Panickssery et al., 2023) or LoRA-based MLLM adaptation (Wang et al., 2025); see Appendix F for extended discussion. 
+
+3.2 Ordinal Lens 
+
+The per-layer lens maps a frozen hidden state into a digit-token score vector. Following Findings 1 and 2, it is linear (ordinal labels are linearly re-coverable) and anchored on WS (native digit-token rows weakly expose the probe direction), express-ing probe-readable evidence as digit-token scores rather than repairing WS or the LM head. Let hℓ(x, P ) ∈ Rd be the last-token hidden state at layer ℓ, captured during the same forward pass as the native logits. For each ℓ ∈ L , the lens computes 
+
+ˆzℓ(x, P ) = WS
+
+ Aℓ˜hℓ(x, P ) + bℓ
+
+ (4) with ˜hℓ = ( hℓ − μℓ)/σ ℓ and Aℓ = Id + UℓV ⊤ 
+
+> ℓ
+
+.Here ˆzℓ ∈ RC is the digit-token score vector, 
+
+μℓ, σ ℓ ∈ Rd are channel-wise statistics on the train-ing split, Uℓ, V ℓ ∈ Rd×r define a low-rank resid-ual transformation ( r ≪ d), and bℓ ∈ Rd is a learned offset; trainable parameters are {Uℓ, V ℓ, b ℓ}.
+
+WS ∈ RC×d is frozen, reused from the MLLM un-embedding head. Each layer lens is trained independently with cross-entropy over ordinal labels, 
+
+L(ℓ)lens = −E(x,P,y )∼D train log σ ˆzℓ(x, P ) 
+
+> y
+
+(5) on cached hidden states, with no gradient flowing through the MLLM backbone or WS . Unlike the diagnostic probe with a free matrix Bℓ, the lens factors the readout through WS , making it an in-terface module rather than a replacement classifier. Implementation details appear in Appendix C. 
+
+3.3 Aggregation and Online Alignment 
+
+The per-layer lens (Section 3.2) yields K com-plementary, WS -anchored readouts from different mid-to-deep layers; OLA aggregates them into an ordinal distribution that corrects the native digit-token logits at generation. OLA fuses the K per-layer scores via a learned softmax over layers, with α ∈ RK the fusion pa-rameter and a = softmax( α) ∈ ∆K−1 the non-negative weights: 
+
+zOLA (x, P ) = X
+
+> ℓ∈L
+
+aℓ ˆzℓ(x, P ),P OLA (c | x, P ) = σ zOLA (x, P )
+
+> c
+
+.
+
+(6) 
+
+α is learned on the training split with lenses frozen via the same cross-entropy objective; the aggrega-tion adds only K scalars, independent of C and 
+
+d.At inference, the frozen MLLM produces na-tive logit Lna (c | x, P ) for digit token sc, c ∈{0, . . . , C − 1}; we define the native digit-token 40 1 2 3 4 … 9              
+
+> 024…9
+> 024…9
+> 1
+> 1
+> 01234…9
+> Frozen MLLM
+> decoder
+> Layerℓ − 1
+> Layerℓ
+> Layerℓ + 1
+> ℎℓ1
+> ℎℓ2
+> ℎℓ3
+> Ordinal Lens
+> 𝐴 ℓ, 𝑏 ℓ
+> Ordinal Lens
+> 𝐴 ℓ, 𝑏 ℓ
+> Ordinal Lens
+> 𝐴 ℓ, 𝑏 ℓ
+> Layer-wise ordinal lens learning
+> z̃ℓ1
+> z̃ℓ2
+> z̃ℓ3
+> Softmax
+> Layer fusion
+> {𝜶 ℓ}
+> 𝑃 𝑂𝐿𝐴 (c|x)
+> instance-specific
+> ordinal distribution
+
+z̃ℓ=𝑊 𝑠 (𝐴 ℓ ℎℓ+ 𝑏 ℓ)
+
+> 3
+> 3
+
+Multi-layer Ordinal Lens Learning 
+
+> Probe readable ordinal evidence
+> High rank
+> Low rank
+
+Inference-Time Ordinal Alignment             
+
+> 𝑊 𝑈 ∈ ℝ 𝕍 ×𝕕
+> Frozen LM Head
+> 012349…
+> …
+> Digit logit
+> Non-digit logits
+> 012349
+
+…       
+
+> native 𝐿 𝑡 𝑐 steered 𝐿′ 𝑡 𝑐
+> Steered digit distribution
+> (adjusted digit logits) Native digit
+> distribution 𝑄 𝑡 𝑐
+
+…      
+
+> 0123495
+
+…     
+
+> 𝐿 𝑡|𝑠 𝑑𝑖𝑔𝑖𝑡
+> 𝐿 𝑡
+> Adaptive Alignment
+> 𝑄 𝑡 𝑐 𝑥, 𝑃 − 𝑃 OLA 𝑐 𝑥, 𝑃
+> +
+> MILD DR(STAGE 2)
+> 𝑊 non−digit
+> 𝑊 𝑆
+> 𝑑𝑖𝑔𝑖𝑡 − 𝑡𝑜𝑘𝑒𝑛
+> 𝑟𝑜𝑤𝑠
+
+Figure 2: Architecture of Ordinal Lens Alignment for Inference-Time 
+
+distribution Q(c | x, P ) = σ(Lna )c. Before greedy decoding emits the answer token, OLA applies a discrepancy-driven correction to the digit-token logits: 
+
+L′(c | x, P ) = Lna (c | x, P )
+
+− λ⋆ ω(P OLA ) Q(c | x, P )
+
+− P OLA (c | x, P ) (7) for c ∈ { 0, . . . , C − 1}, where λ⋆ ≥ 0 is se-lected on the validation split and ω(P OLA ) =max c P OLA (c | x, P ) is a confidence gate. The correction is sign-aware: it lowers L′(c) when Q
+
+assigns more probability to c than P OLA does and raises it otherwise. Logits outside Sdigit (EOS and non-digit entries) remain unchanged; greedy decod-ing then emits the ordinal prediction. The complete lens-training and inference-time alignment algo-rithms appear in Appendix E. 
+
+4 Experiments 
+
+This section evaluates OLA along the evidence chain of Section 2. The main benchmark in Sec-tion 4.1 tests whether OLA reduces the behavioral gap between probe-readable hidden-state evidence and native digit-token outputs identified in Sec-tion 2.3, comparing it with discriminative ordinal references and a LoRA-tuned MLLM baseline. The component ablation in Section 4.2 isolates which parts of OLA drive the improvement; Section 4.3 then examines ordinal output structure and hidden-representation geometry. Each result is tied to the diagnostic claim it tests. 
+
+4.1 Main Benchmark 
+
+We evaluate four MLLM backbones (Qwen2.5-VL, Qwen3-VL, Gemma-4, LLaVA-NeXT) on the four ordinal benchmarks of Section 2.1. Adience, DR, and HCI are reported as mean and standard devia-tion over five folds; Aesthetic uses the balanced test split. For all MLLM-based methods, image inputs, label mappings, digit sets, and evaluation parsers are held consistent within each backbone-dataset setting, while method-specific prompts and training procedures follow the baseline definitions. We com-pare OLA against three families. The first contains discriminative ordinal references (Ord2Seq, Num-CLIP) trained outside the MLLM generation inter-face. The second contains frozen-backbone MLLM baselines: Naive Prompt for direct digit-token generation under minimal scaffolding, and CAA (Panickssery et al., 2023) for validation-selected residual-stream steering with a class-difference di-rection. The third is OrderChain (Wang et al., 2025), the published MLLM ordinal baseline ap-plying LoRA fine-tuning (Hu et al., 2022) under a task-specific prompt convention. These compar-isons span task-specific discriminative prediction, frozen MLLM prompting, hidden-state steering, backbone adaptation, and the output-side alignment OLA introduces. Table 3 reports the main benchmark (full mean ±std over five folds in Appendix D.3). OLA improves over Naive Prompt in every model-dataset setting, with the largest gains on DR and HCI, where the diagnostics in Section 2.3 show a wide gap between probe-readable hidden-state 5Adience DR HCI Aesthetic Backbone Method ACC ↑ MAE ↓ ACC ↑ MAE ↓ ACC ↑ MAE ↓ ACC ↑ MAE ↓ Mean ACC ↑                                                                                                                                                                   
+
+> Discriminative Ord2Seq 0.639 0.430 0.842 0.250 0.609 0.520 0.644 0.304 0.684 NumCLIP 0.651 0.410 0.831 0.270 0.696 0.350 0.665 0.296 0.711 Qwen2.5-VL 7B Naive Prompt 0.572 0.544 0.156 1.567 0.278 0.952 0.372 0.772 0.345 CAA 0.628 0.396 0.702 0.357 0.338 0.817 0.245 0.928 0.478 OrderChain 0.765 0.282 0.870 0.140 0.653 0.347 0.705 0.295 0.748 OLA 0.809 0.233 0.920 0.080 0.685 0.315 0.696 0.304 0.778
+> Qwen3-VL 8B Naive Prompt 0.581 0.401 0.688 0.570 0.328 0.952 0.397 0.859 0.499 CAA 0.648 0.374 0.722 0.333 0.358 0.792 0.265 0.904 0.498 OrderChain 0.790 0.210 0.895 0.110 0.655 0.530 0.710 0.294 0.763 OLA 0.806 0.207 0.926 0.078 0.757 0.260 0.698 0.302 0.797
+> Gemma-4 E4B Naive Prompt 0.571 0.489 0.137 1.429 0.245 0.996 0.214 0.963 0.292 CAA 0.574 0.437 0.744 0.307 0.319 0.896 0.341 0.816 0.495 OrderChain 0.755 0.245 0.880 0.145 0.580 0.510 0.681 0.320 0.724 OLA 0.760 0.240 0.922 0.078 0.733 0.270 0.701 0.300 0.779
+> LLaVA-NeXT 7B Naive Prompt 0.450 0.766 0.148 1.891 0.216 1.043 0.307 0.984 0.280 CAA 0.635 0.365 0.205 1.186 0.342 0.966 0.365 0.781 0.387 OrderChain 0.682 0.367 0.839 0.221 0.622 0.438 0.696 0.324 0.710 OLA 0.791 0.229 0.924 0.076 0.723 0.308 0.719 0.281 0.789
+
+Table 3: Main benchmark results 
+
+evidence and weak native digit-token behavior. On DR, OLA raises Qwen2.5-VL from 0.156 to 0.920 ACC, Gemma-4 from 0.137 to 0.922, and LLaVA-NeXT from 0.148 to 0.924; on HCI, OLA raises Qwen3-VL from 0.328 to 0.757 and Gemma-4 from 0.245 to 0.733. These gains do not sim-ply track zero-shot backbone strength; they are strongest where the native output interface under-uses recoverable ordinal evidence. Compared with CAA, OLA is higher in every model-dataset setting. CAA also intervenes on hidden representations but injects a single residual-stream direction and relies on the native LM head to convert that perturbation into a digit-token deci-sion. OLA instead reads ordinal evidence through 
+
+WS -anchored lenses and applies a target-restricted correction directly to digit-token logits. This sup-ports the diagnostic from Section 2.3: a strong hidden-state direction alone does not ensure re-liable ordinal transfer through the native output interface. Compared with the SOTA LoRA-tuned Order-Chain baseline, OLA achieves higher ACC in 14 of 16 model-dataset settings while keeping the vi-sion encoder, language-model backbone, and un-embedding matrix frozen. The two exceptions are Qwen2.5-VL and Qwen3-VL on Aesthetic, where OrderChain is higher by 0.9 and 1.2 ACC points respectively; this boundary case is consistent with the more subjective label structure of aesthetic rat-ing. OLA also exceeds Ord2Seq in all 16 cells and NumCLIP in 15 of 16 cells while preserving the MLLM generation interface. These comparisons indicate that output-side ordinal alignment recovers much of the performance associated with backbone adaptation, without changing frozen MLLM param-eters. Table 1 shows the Designed Prompt sharpens last-token ordinal structure most on DR and HCI. To separate the lens contribution from the prompt contribution, Section 4.2 holds every trained OLA component fixed while varying only the inference-time prompt. 
+
+4.2 Component Ablation 
+
+Table 4 traces OLA across the design space identi-fied by the diagnostics (full mean ±std over five folds in Appendix D.4). Free supervised read-outs on frozen hidden states (Probe Only, Capacity Probe) already recover much of the gap between Naive Prompt and OLA, confirming Section 2.2: the ordinal signal is available in hidden states and does not require a non-linear predictor. Probe Steer-ing, however, stays far below the probe-based clas-sifiers in most settings, even with a supervised probe-derived direction; this supports Section 2.3: improving a hidden-state direction alone does not suffice when the intervention still passes through the native output interface. Comparing Capacity Probe with OLA-Offline tests whether the WS -anchored lens and multi-layer aggregation preserve the useful signal while ty-ing the readout to the digit-token interface. OLA-Offline is higher than Capacity Probe in 12 of 16 6Adience DR HCI Aesthetic Backbone Method ACC ↑ MAE ↓ ACC ↑ MAE ↓ ACC ↑ MAE ↓ ACC ↑ MAE ↓ Mean ACC ↑                                                                                                                                                                                                                                                                                                
+
+> Qwen2.5-VL 7B Designed Prompt 0.601 0.399 0.830 0.227 0.483 0.610 0.454 0.681 0.592 Probe Steering 0.650 0.364 0.725 0.331 0.386 0.749 0.429 0.666 0.548 Probe Only 0.780 0.267 0.910 0.095 0.623 0.390 0.670 0.350 0.746 Capacity Probe 0.792 0.272 0.894 0.082 0.616 0.401 0.687 0.329 0.747 Single-Layer Logit 0.715 0.305 0.895 0.110 0.620 0.410 0.530 0.470 0.690 OL + Naive 0.652 0.365 0.534 0.653 0.513 0.565 0.515 0.508 0.554 OLA-Offline 0.792 0.259 0.872 0.096 0.625 0.382 0.687 0.323 0.744 OLA-Online 0.809 0.233 0.920 0.080 0.685 0.315 0.696 0.304 0.778
+> Qwen3-VL 8B Designed Prompt 0.627 0.401 0.840 0.176 0.274 0.987 0.430 0.812 0.543 Probe Steering 0.670 0.343 0.745 0.307 0.406 0.724 0.449 0.643 0.568 Probe Only 0.785 0.230 0.911 0.089 0.690 0.356 0.620 0.440 0.752 Capacity Probe 0.781 0.220 0.913 0.082 0.716 0.293 0.646 0.374 0.764 Single-Layer Logit 0.775 0.280 0.908 0.095 0.630 0.614 0.590 0.470 0.726 OL + Naive 0.638 0.387 0.794 0.237 0.422 0.712 0.525 0.549 0.595 OLA-Offline 0.800 0.210 0.916 0.080 0.726 0.282 0.653 0.369 0.774 OLA-Online 0.806 0.207 0.926 0.078 0.757 0.260 0.698 0.302 0.797
+> Gemma-4 E4B Designed Prompt 0.692 0.309 0.828 0.179 0.292 0.902 0.348 0.855 0.540 Probe Steering 0.623 0.387 0.785 0.258 0.322 0.880 0.333 0.826 0.516 Probe Only 0.735 0.275 0.905 0.108 0.701 0.360 0.680 0.330 0.755 Capacity Probe 0.732 0.261 0.913 0.082 0.729 0.315 0.682 0.316 0.764 Single-Layer Logit 0.725 0.290 0.895 0.120 0.650 0.410 0.620 0.430 0.723 OL + Naive 0.684 0.320 0.493 0.705 0.392 0.772 0.563 0.512 0.533 OLA-Offline 0.750 0.231 0.920 0.079 0.714 0.345 0.696 0.304 0.770 OLA-Online 0.760 0.240 0.922 0.078 0.733 0.270 0.701 0.300 0.779
+> LLaVA-NeXT 7B Designed Prompt 0.624 0.381 0.798 0.259 0.352 0.886 0.367 0.899 0.535 Probe Steering 0.622 0.381 0.189 1.211 0.336 0.979 0.527 0.599 0.419 Probe Only 0.755 0.302 0.840 0.175 0.702 0.350 0.705 0.301 0.751 Capacity Probe 0.776 0.285 0.893 0.077 0.703 0.331 0.703 0.300 0.769 Single-Layer Logit 0.690 0.315 0.821 0.257 0.604 0.456 0.530 0.550 0.661 OL + Naive 0.593 0.427 0.684 0.460 0.368 0.857 0.492 0.659 0.534 OLA-Offline 0.789 0.261 0.909 0.071 0.718 0.329 0.715 0.275 0.783 OLA-Online 0.791 0.229 0.924 0.076 0.723 0.308 0.719 0.281 0.789
+
+Table 4: Component ablation across the design space identified by the diagnostics. 
+
+settings, with an average gain of 0.66 ACC points, useful but not the main source of the final improve-ment. The most consistent gain comes from re-connecting the fused lens distribution to the native logits: OLA-Online improves over OLA-Offline in all 16 settings (average +1.80 ACC), over Capacity Probe in all 16 (+2.45), and over Probe Only in all 16 (+3.48). These comparisons rule out the view that OLA is only a stronger offline classifier; the decisive step is the target-restricted correction that brings the lens distribution back into the MLLM generation process. Single-Layer Logit further clarifies the roles of aggregation and online alignment. It outper-forms simpler prompt or steering baselines but remains below OLA-Online because it uses only one validation-selected layer and lacks the discrep-ancy correction of Section 3.3. The full method is thus not just a probe, not just hidden-state steer-ing, and not just single-layer logit substitution; it is an output-side alignment procedure that exploits probe-readable evidence while respecting the digit-token interface identified by the diagnostics. The OL + Naive row tests prompt dependence directly: the full OLA pipeline trained under the Designed Prompt is applied at inference under the Naive Prompt without re-tuning the lens, fusion, or λ⋆. Across all 16 settings, OL + Naive sub-stantially exceeds the Naive Prompt baseline (e.g., Qwen3-VL on DR: 0.794 vs. 0.688; LLaVA-NeXT on DR: 0.684 vs. 0.148) while remaining below OLA-Online. The gap to Naive Prompt lower-bounds the share of the OLA gain attributable to prompt-invariant latent ordinal evidence, and the gap to OLA-Online upper-bounds the contribution of the Designed Prompt at inference. 
+
+Finding 3. Target-restricted online alignment reliably converts latent evidence into ordinal decisions. 
+
+4.3 Robustness and Qualitative Analyses 
+
+Three additional analyses complement the main results: layer-window robustness of the lens, confusion-matrix structure under OLA, and layer-wise PCA of frozen hidden states. Figure 3 reports OLA accuracy under vary-7K (number of fused mid-layers)         
+
+> 0.70 0.72 0.74 0.76 0.78 0.80
+> Accuracy
+> Adience
+> K (number of fused mid-layers)
+> 0.750 0.775 0.800 0.825 0.850 0.875 0.900 0.925 0.950
+> Accuracy
+> DR
+> 3610
+> K (number of fused mid-layers)
+> 0.66 0.68 0.70 0.72 0.74 0.76
+> Accuracy
+> HCI
+> 3610
+> K (number of fused mid-layers)
+> 0.68 0.69 0.70 0.71 0.72
+> Accuracy
+> Aesthetic
+> OLA K-Sweep accuracy vs. number of fused mid-layers
+> Qwen 2.5-VL 7B Qwen 3-VL 8B LLaVA-1.6 Mistral 7B Gemma 4 E4B
+
+Figure 3: OLA accuracy under varying numbers of fused mid-to-deep decoder layers 
+
+Figure 4: Row-Normalized Confusion Matrices 
+
+ing numbers of fused mid-to-deep decoder layers. 
+
+K = 6 is a stable default rather than a universal op-timum: in most backbone-dataset curves, K = 6 is either best or close to best, while K = 10 becomes less stable when the window extends too broadly (most clearly LLaVA-NeXT on DR). Smaller win-dows are competitive in isolated cases (LLaVA-NeXT on Adience and Aesthetic) but lack the same overall consistency. We fix K = 6 throughout the main experiments without selecting K on the test set, supporting the role of multi-layer aggrega-tion in Section 3.3: a stable readout window over the mid-decoder band rather than an oracle tuning mechanism. Figure 4 shows row-normalized confusion ma-trices of OLA on Qwen3-VL. Adience displays a strong near-diagonal pattern, with most residual errors confined to adjacent age groups. DR and HCI also concentrate errors among nearby ordi-nal classes, consistent with the MAE reductions in Table 3. This matters because ordinal prediction Layer 2  Layer 10  Layer 18 
+
+> Layer 34 Layer 26 Layer 22
+> PC3
+> PC3
+> PC3 PC3
+> PC3
+> PC3
+
+Figure 5: Layer-Wise PCA of Last-Token Hidden States 
+
+is not only a top-1 problem: confusing neighbor-ing classes is less severe than confusing distant ones. Aesthetic remains less diagonal, matching its boundary-case role in the main benchmark and reflecting the noisier structure of subjective ratings. After OLA routes latent ordinal evidence into digit-token logits, residual errors tend to preserve ordinal proximity rather than becoming arbitrary label mis-takes. Figure 5 visualizes last-token hidden states from Qwen3-VL on Adience across decoder layers. Early layers show substantial class mixing and no clear monotonic color gradient. From the mid-decoder layers onward, the samples organize into a smoother class-ordered structure with a more visi-ble color gradient. This pattern is consistent with the SRCC diagnostic in Table 1, where ordinal labels become more recoverable from intermedi-ate and deeper hidden states. The visualization should be read qualitatively rather than as causal proof, since PCA only shows a low-dimensional projection; its role is to connect Finding 1 with the layer band used by OLA: the method reads from the part of the frozen MLLM where ordinal information is already organized, and the online correction then exposes it through the digit-token output interface. Cross-backbone PCAs on Adi-ence and cross-dataset PCAs on Qwen3-VL appear in Appendix D.2. 
+
+5 Conclusion 
+
+Across four ordinal benchmarks and four MLLM backbones, latent ordinal evidence is linearly recov-erable from frozen hidden states, yet the digit-token row space exposes less than 1.15% of this energy. OLA bridges the gap with WS -anchored lenses and a target-restricted online correction, matching or exceeding LoRA-tuned baselines without modify-ing the frozen MLLM. 8Limitations 
+
+We highlight three scope conditions of the present study. First, our experiments cover four open-source MLLM backbones (Qwen2.5-VL, Qwen3-VL, Gemma-4, LLaVA-NeXT) and four ordinal bench-marks. Closed-source MLLMs (e.g., GPT-4V, Claude, Gemini) are not evaluated, since OLA re-quires access to mid-to-deep hidden states and the digit-token row submatrix WS . The method applies directly to open-source models with standard trans-former interfaces; extending to API-based models requires comparable logit access. Second, all four benchmarks use single-digit or-dinal label tokens ( C ≤ 8). Tasks with multi-digit ordinal outputs (e.g., direct year prediction, multi-digit severity scales) would require either label-tokenizer redesign or extending the discrepancy correction to token sequences. We view this as an orthogonal extension rather than a fundamental obstacle. Third, OLA trains lightweight lens and fusion pa-rameters per backbone-dataset pair (lens: O(Kdr )
+
+parameters; fusion: K scalars). Training operates on cached hidden states without backbone gradi-ents, so the cost is much smaller than LoRA fine-tuning, but the method is not fully training-free. Lens transfer across datasets within the same back-bone is left to future work. 
+
+References 
+
+Guillaume Alain and Yoshua Bengio. 2016. Under-standing intermediate layers using linear classifier probes. arXiv preprint arXiv:1610.01644 .Shuai Bai, Yuxuan Cai, Ruizhe Chen, Keqin Chen, Xionghui Chen, Zesen Cheng, Lianghao Deng, Wei Ding, Chang Gao, Chunjiang Ge, Wenbin Ge, Zhi-fang Guo, Qidong Huang, Jie Huang, Fei Huang, Binyuan Hui, Shutong Jiang, Zhaohai Li, Mingsheng Li, and 45 others. 2025a. Qwen3-vl technical report. 
+
+arXiv preprint arXiv:2511.21631 .Shuai Bai, Keqin Chen, Xuejing Liu, Jialin Wang, Wen-bin Ge, Sibo Song, Kai Dang, Peng Wang, Shi-jie Wang, Jun Tang, Humen Zhong, Yuanzhi Zhu, Mingkun Yang, Zhaohai Li, Jianqiang Wan, Pengfei Wang, Wei Ding, Zheren Fu, Yiheng Xu, and 8 others. 2025b. Qwen2.5-vl technical report. arXiv preprint arXiv:2502.13923 .Nora Belrose, Igor Ostrovsky, Lev McKinney, Zach Fur-man, Logan Smith, Danny Halawi, Stella Biderman, and Jacob Steinhardt. 2023. Eliciting latent predic-tions from transformers with the tuned lens. arXiv preprint arXiv:2303.08112 .Axel Berg, Magnus Oskarsson, and Mark O’Connor. 2021. Deep ordinal regression with label diversity. In 2020 25th international conference on pattern recognition (ICPR) , pages 2740–2747. IEEE. Nicola Cancedda. 2024. Spectral filters, dark signals, and attention sinks. In Proceedings of the 62nd An-nual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , pages 4792– 4808. Wenzhi Cao, Vahid Mirjalili, and Sebastian Raschka. 2020. Rank consistent ordinal regression for neural networks with application to age estimation. Pattern Recognition Letters , 140:325–331. Jianlin Cheng, Zheng Wang, and Gianluca Pollastri. 2008. A neural network approach to ordinal regres-sion. In 2008 IEEE international joint conference on neural networks (IEEE world congress on computa-tional intelligence) , pages 1279–1284. IEEE. Raul Diaz and Amit Marathe. 2019. Soft labels for or-dinal regression. In Proceedings of the IEEE/CVF conference on computer vision and pattern recogni-tion , pages 4738–4747. Yao Du, Qiang Zhai, Weihang Dai, and Xiaomeng Li. 2024. Teach clip to develop a number sense for ordi-nal regression. In European conference on computer vision , pages 1–17. Springer. Eran Eidinger, Roee Enbar, and Tal Hassner. 2014. Age and gender estimation of unfiltered faces. IEEE Transactions on information forensics and security ,9(12):2170–2179. John Hewitt and Christopher D Manning. 2019. A struc-tural probe for finding syntax in word representations. In Proceedings of the 2019 Conference of the North American Chapter of the Association for Computa-tional Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers) , pages 4129–4138. Edward J Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean Wang, Liang Wang, Weizhu Chen, and 1 others. 2022. Lora: Low-rank adaptation of large language models. Iclr , 1(2):3. Zhipeng Jia, Xingyi Huang, I Eric, Chao Chang, and Yan Xu. 2017. Constrained deep weak supervision for histopathology image segmentation. IEEE trans-actions on medical imaging , 36(11):2376–2388. E Kaggle. 2015. Kaggle diabetic retinopathy detection. Wanhua Li, Xiaoke Huang, Zheng Zhu, Yansong Tang, Xiu Li, Jie Zhou, and Jiwen Lu. 2022. Ordinalclip: Learning rank prompts for language-guided ordinal regression. Advances in Neural Information Process-ing Systems , 35:35313–35325. Haotian Liu, Chunyuan Li, Yuheng Li, Bo Li, Yuanhan Zhang, Sheng Shen, and Yong Jae Lee. 2024. Lla-vanext: Improved reasoning, ocr, and world knowl-edge. 
+
+9Zhenxing Niu, Mo Zhou, Le Wang, Xinbo Gao, and Gang Hua. 2016. Ordinal regression with multiple output cnn for age estimation. In Proceedings of the IEEE conference on computer vision and pattern recognition , pages 4920–4928. Frank Palermo, James Hays, and Alexei A Efros. 2012. Dating historical color images. In European Confer-ence on Computer Vision , pages 499–512. Springer. Nina Panickssery, Nick Gabrieli, Julian Schulz, Meg Tong, Evan Hubinger, and Alexander Matt Turner. 2023. Steering llama 2 via contrastive activation addition. arXiv preprint arXiv:2312.06681 .Kiho Park, Yo Joong Choe, and Victor Veitch. 2023. The linear representation hypothesis and the ge-ometry of large language models. arXiv preprint arXiv:2311.03658 .Rossano Schifanella, Miriam Redi, and Luca Maria Aiello. 2015. An image is worth more than a thou-sand favorites: Surfacing the hidden beauty of flickr pictures. In Proceedings of the international AAAI conference on web and social media , volume 9, pages 397–406. Xintong Shi, Wenzhi Cao, and Sebastian Raschka. 2023. Deep neural networks for rank-consistent ordinal re-gression based on conditional probabilities. Pattern Analysis and Applications , 26(3):941–955. Hossein Talebi and Peyman Milanfar. 2018. Nima: Neu-ral image assessment. IEEE transactions on image processing , 27(8):3998–4011. Gemma Team, Thomas Mesnard, Cassidy Hardin, Robert Dadashi, Surya Bhupatiraju, Shreya Pathak, Laurent Sifre, Morgane Rivière, Mihir Sanjay Kale, Juliette Love, and 1 others. 2024. Gemma: Open models based on gemini research and technology. 
+
+arXiv preprint arXiv:2403.08295 .Jinhong Wang, Yi Cheng, Jintai Chen, TingTing Chen, Danny Chen, and Jian Wu. 2023. Ord2seq: Regard-ing ordinal regression as label sequence prediction. In Proceedings of the IEEE/CVF International Con-ference on Computer Vision , pages 5865–5875. Jinhong Wang, Shuo Tong, Jian Liu, Dongqi Tang, Weiqiang Wang, Wentong Li, Hongxia Xu, Danny Z Chen, Jintai Chen, and Jian Wu. 2025. Orderchain: Towards general instruct-tuning for stimulating the ordinal understanding ability of mllm. In Proceed-ings of the IEEE/CVF International Conference on Computer Vision , pages 3477–3487. Jiaqing Zhang, Sandeep Elluri, Bhanu Cherukuvada, Yonah Joffe, Jessica Sena, Miguel Contreras, Scott Siegel, Subhash Nerella, Catherine Price, and Parisa Rashidi. 2026. Auditing multimodal llm raters: Cen-tral tendency bias in clinical ordinal scoring. arXiv preprint arXiv:2605.16386 .
+
+10 A Datasets 
+
+This section documents the four ordinal bench-marks used in the main paper. For each dataset we give a brief overview that lists the source pub-lication, the number of ordinal classes, and the per-class sample count, followed by the specific experimental settings. 
+
+A.1 Adience 
+
+Adience (Eidinger et al., 2014) is a benchmark for unfiltered face-image age estimation. The ordi-nal label space partitions human age into C = 8 
+
+ordered groups (0–2, 4–6, 8–13, 15–20, 25–32, 38– 43, 48–53, 60+ years); boundaries are non-uniform in calendar years, which makes Adience a canoni-cal benchmark for ordinal classification rather than ordinary multi-class age prediction. We follow the official five-fold protocol released with Adience. Per-class counts are reported in Table 5.                         
+
+> y01234567Range (yrs) 0–2 4–6 8–13 15–20 25–32 38–43 48–53 60+ Count 2,488 2,140 2,124 1,642 5,081 2,339 830 872
+
+Table 5: Adience class distribution. 
+
+A.2 Diabetic Retinopathy (DR) 
+
+The Diabetic Retinopathy Detection corpus (Kag-gle, 2015) contains 35,126 retinal-fundus pho-tographs graded on the five-level International Clin-ical Diabetic Retinopathy (ICDR) scale: 0 = no DR, 
+
+1 = mild non-proliferative DR (NPDR), 2 = moder-ate NPDR, 3 = severe NPDR, 4 = proliferative DR. We adopt a random five-fold split (75%/5%/20% for training, validation, and test), giving 28,101 training-plus-validation images and 7,025 test im-ages per fold. 
+
+y 0 1 2 3 4Grade No DR Mild Mod. Severe Prolif. Count 25,810 2,443 5,292 873 708 
+
+Table 6: DR class distribution. 
+
+A.3 Historical Color Images (HCI) 
+
+The Historical Color Image dataset (Palermo et al., 2012) is a 1,325-image benchmark for historical-photograph dating. Each photograph is annotated with the decade in which it was taken, giving 
+
+C = 5 ordered classes (1930s, 1940s, 1950s, 1960s, 1970s). The corpus is exactly class-balanced (265 images per decade). We adopt a random five-fold split (75%/5%/20% for training, validation, and test). 
+
+A.4 Aesthetic 
+
+The Aesthetic dataset (Schifanella et al., 2015) is a 12,984-image collection covering four themes (Na-ture, Animal, Urban, People), annotated on a five-level scale that maps to the ordinal labels 0 = unac-ceptable, 1 = flawed, 2 = ordinary, 3 = professional, 
+
+4 = exceptional. Because the corpus is sharply im-balanced across classes, we adopt a class-balanced test partition.                
+
+> y01234Quality Unaccept. Flawed Ordinary Profess. Except. Count 23 552 7,603 4,574 232
+
+Table 7: Aesthetic class distribution. 
+
+A.5 Cross-dataset summary 
+
+Table 8 consolidates the four datasets’ ordinal class count, corpus size, per-fold test size, fold count, and split-protocol family. Dataset Attribute C Train+val Test/fold Folds Adience age 8 ∼ 14 ,900 ∼ 3,700 5 (official) DR disease grade 5 28,101 7,025 5 (random) HCI decade 5 1,060 265 5 (random) Aesthetic aesthetic rating 5 12,777 207 Balanced test 
+
+Table 8: Per-dataset split summary. 
+
+A.6 Probe-Site Protocol 
+
+To probe latent ordinal evidence, we extract hid-den states at three diagnostic sites: (i) the mean of visual placeholder tokens with a neutral caption prompt, (ii) the assistant-start position under the same neutral prompt, and (iii) the assistant-start po-sition under a task-designed prompt that specifies the ordinal scale and answer format. For each back-bone, dataset, and diagnostic site, we fit per-layer linear probes on the training split and report the maximum test SRCC across layers as the diagnos-tic summary. 
+
+B Prompt Templates 
+
+This section presents the design principles of the Designed Prompts used to elicit ordinal answers from the four MLLM backbones. The four dataset-specific templates differ only in their domain con-tent; they share the same four-component skeleton. 11 B.1 Design principles 
+
+Every Designed Prompt is composed of four com-ponents delivered in the following order: an AI role, a domain-knowledge background, an ex-plicit task statement, and a coarse-to-fine reasoning step (CRD). The role primes the backbone with a domain-relevant persona; the background grounds the answer in the precise ordinal label scale; the task statement fixes the answer format; and the CRD step is the conditional chain-of-thought that the lens later reads from the hidden states. Component (i), the AI role, is a one-sentence persona that primes the backbone with a domain-relevant identity. Component (ii), domain-knowledge background, is a short factual state-ment that enumerates the ordinal label scale of the dataset, including the semantic anchor of each class. Component (iii), the task statement, is a direct instruction that tells the backbone what to predict and in what format (a single digit, wrapped in a dataset-specific answer delimiter such as $N$ 
+
+or &N& ). Component (iv), coarse-to-fine reasoning (CRD), is a two-step conditional chain that asks the backbone to first commit to a coarse super-class (a contiguous group of adjacent ordinal classes), and then commit to a fine class within that super-class. The coarse partition is a fixed, dataset-specific hi-erarchy that we define once and reuse across all four backbones; it is not derived from any test-time information, so the Designed Prompt contains no label leakage. The four components together form a prompt that aligns the backbone’s reasoning trace with the ordinal geometry that the lens reads at inference time. Empirically, replacing this prompt with the Naive Prompt (a bare class-mapping question with-out role, background, or coarse-to-fine reasoning) reduces last-token ordinal SRCC substantially in the deep layers, which is the diagnostic we report in the main paper. 
+
+B.2 Example template: Diabetic Retinopathy 
+
+The following Designed Prompt for the Dia-betic Retinopathy (DR) dataset illustrates the four-component skeleton. The remaining three tem-plates (Adience, HCI, Aesthetic) follow the same structure with domain-appropriate substitutions. 
+
+Role. You are an ophthalmologist trained to grade diabetic retinopathy from colour fundus pho-tographs on the ICDR scale. Background. The ICDR scale defines five severity grades: 0 denotes no diabetic lesions; 1 mild NPDR with microa-neurysms only; 2 moderate NPDR; 3 severe NPDR; 
+
+4 proliferative DR with neovascularisation. Task. 
+
+Grade the DR severity in the fundus photograph and output a single digit from 0 to 4 wrapped as 
+
+&N& . Coarse-to-fine reasoning. First commit to one of three coarse categories: Healthy for grade 0;Non-proliferative DR for grades 1 to 3; Prolifera-tive DR for grade 4. State the visible lesion types that justify the coarse choice. If the coarse cat-egory is Non-proliferative DR, refine to mild 1,moderate 2, or severe 3 based on lesion count and distribution. Otherwise commit directly to 0 or 4.Output the final answer as &N& .
+
+C Experimental Setup 
+
+This section consolidates the experimental settings for the two trained components that the appendix relies on: the per-layer SRCC probe used in the diagnostic of Appendix D, and the multi-layer or-dinal lens used by OLA at inference. 
+
+C.1 SRCC probe 
+
+We extract the last-token hidden state from the frozen base backbone under the Designed Prompt with image input, L2-normalise it, and fit a linear probe Linear (d → 1) per layer with mean-squared-error loss against the ordinal label. The optimiser is Adam with learning rate 10 −4, with cosine an-nealing over 100 epochs, batch size 128 , and a fixed seed of 42 . The reported metric is the Spear-man rank-correlation between the probe’s scalar prediction and the ordinal label. The probe head is selected by best test SRCC under a val-as-test pro-tocol on Adience, DR, and Aesthetic; HCI uses its native validation split. Three backbones are probed: Qwen3-VL, Gemma-4, and LLaVA-NeXT. 
+
+C.2 Ordinal lens training 
+
+Training is in two stages, both with the MLLM backbone, the unembedding WU , and its digit-token submatrix WS strictly frozen; WS integrity is verified by a SHA-256 hash before and after each stage. Inputs are the last-token hidden states cached from a single forward pass of the frozen MLLM at the K=6 mid-decoder layers L. Per-layer channel-wise statistics (μℓ, σ ℓ) are computed once on the training split with σℓ clamped to a floor of 10 −3, and the hidden state is standardised as 
+
+˜hℓ = ( hℓ − μℓ)/σ ℓ throughout. 12 Stage A: per-layer ordinal lens. For each layer 
+
+ℓ ∈ L we independently train the lens parameters 
+
+{Uℓ, V ℓ, b ℓ} that define Aℓ = I + UℓV ⊤ 
+
+> ℓ
+
+with rank 
+
+r=64 . Uℓ is initialised from N (0 , 0.02 2) and Vℓ
+
+is initialised to zero, so the initial transformation collapses to the identity. The objective is cross-entropy of σ(WS (Aℓ˜hℓ + bℓ)) against the ordinal label. The optimiser is AdamW with learning rate 
+
+10 −4, batch size 128 , gradient-clip norm 1.0, and a per-layer seed of 42 + layer _id . Each layer trains for at most 100 epochs and the best-epoch parame-ters are kept under validation accuracy. 
+
+Stage B: softmax fusion. With all (Aℓ, b ℓ)
+
+frozen, we train the K fusion logits α ∈ RK such that aℓ = σ(α)ℓ. The objective is cross-entropy of 
+
+σ(P 
+
+> ℓ
+
+aℓ WS (Aℓ˜hℓ + bℓ)) against the ordinal label. The optimiser is AdamW with learning rate 10 −2,no weight decay, batch size 128 , and seed 42 . Stage B trains for at most 30 epochs and the best-epoch 
+
+α is kept under validation accuracy. After Stage B we cache P OLA (· | x) on the train, validation, and test splits for downstream phases. 13 D Extended Experimental Results 
+
+This section reports a per-layer SRCC diagnostic across three MLLM backbones and the full main-benchmark and ablation tables with five-fold standard deviations. 
+
+D.1 Per-layer SRCC across backbones and datasets 
+
+We probe each layer of three MLLM backbones on all four datasets following the protocol in Appendix C.1, with Qwen3-VL having 36 decoder layers and hidden 4096 , Gemma-4 having 42 layers and hidden 2560 ,and LLaVA-NeXT having 32 layers and hidden 4096 .
+
+Layer Adience DR HCI Aesthetic 2 0.6845 0.7522 0.5771 0.7405 4 0.7283 0.7433 0.3927 0.7175 6 0.7154 0.7503 0.4278 0.7301 8 0.7423 0.7530 0.4769 0.7607 10 0.7259 0.7539 0.4980 0.7773 12 0.7632 0.7542 0.5234 0.8155 14 0.7966 0.7557 0.5467 0.8214 16 0.8589 0.7564 0.6977 0.8568 18 0.8989 0.7577 0.7627 0.9106 20 0.9376 0.7578 0.8148 0.9140 22 0.9353 0.7578 0.8377 0.9144 24 0.9344 0.7578 0.8235 0.9163 
+
+26 0.9336 0.7578 0.8342 0.9145 28 0.9337 0.7578 0.8432 0.9127 30 0.9342 0.7578 0.8271 0.9114 34 0.9347 0.7564 0.7983 0.9051 
+
+Table 9: Per-layer SRCC on Qwen3-VL. 
+
+SRCC peaks in the upper-middle decoder (L20–L28) and the peaks on Adience and Aesthetic fall inside the layer window L = {16 , 18 , 20 , 22 , 24 , 26 } used by OLA. 
+
+Layer Adience DR HCI Aesthetic 2 0.7987 0.7485 0.3744 0.4907 9 0.8023 0.7492 0.2497 0.5670 12 0.8095 0.7541 0.2413 0.7309 15 0.8481 0.7554 0.5146 0.7909 18 0.8866 0.7564 0.7188 0.7934 20 0.8885 0.7563 0.7251 0.8610 21 0.8927 0.7567 0.7140 0.8662 22 0.9058 0.7565 0.7458 0.8874 24 0.9252 0.7560 0.7512 0.8960 26 0.9245 0.7562 0.7728 0.9083 28 0.9166 0.7561 0.7224 0.8748 33 0.9210 0.7559 0.6395 0.8864 36 0.9262 0.7561 0.6477 0.8976 40 0.9293 0.7563 0.6962 0.9192 
+
+Table 10: Per-layer SRCC on Gemma-4. 
+
+The Gemma-4 decoder peaks later than Qwen3-VL (L40 on Adience and Aesthetic, L26 on HCI), with DR plateauing at ρ ≈ 0.756 .14 Layer Adience DR HCI Aesthetic 2 0.7751 0.7495 0.3611 0.6679 4 0.8164 0.7487 0.3857 0.7171 6 0.8304 0.7504 0.3736 0.6762 8 0.8504 0.7504 0.3742 0.6867 10 0.8608 0.7525 0.3568 0.6788 12 0.8666 0.7557 0.3250 0.6950 14 0.8950 0.7559 0.7214 0.8930 16 0.9164 0.7554 0.7960 0.9056                             
+
+> 18 0.9149 0.7548 0.7921 0.8983 20 0.9136 0.7544 0.7784 0.8935 22 0.9152 0.7549 0.7891 0.9034 24 0.9163 0.7553 0.7974 0.9021 26 0.9236 0.7557 0.7960 0.8978 28 0.9216 0.7556 0.7961 0.8947 30 0.9192 0.7556 0.8003 0.9056
+
+Table 11: Per-layer SRCC on LLaVA-NeXT. 
+
+LLaVA-NeXT carries a non-trivial ordinal signal already at L2 ( ρ ≥ 0.66 on three of four datasets) and peaks around L16–L30 across datasets. Table 12 summarises the best layer per backbone-dataset cell: the best-layer SRCC falls in [0 .756 , 0.938] across all 12 cells and the best layer is consistently in the upper-middle of the decoder, never the final layer.                    
+
+> Backbone \Dataset Adience DR HCI Aesthetic Qwen3-VL L20 / 0.9376 L20 / 0.7578 L28 / 0.8432 L24 / 0.9163 Gemma-4 L40 / 0.9293 L21 / 0.7567 L26 / 0.7728 L40 / 0.9192 LLaVA-NeXT L26 / 0.9236 L14 / 0.7559 L30 / 0.8003 L16 / 0.9056
+
+Table 12: Best layer and best SRCC per backbone–dataset cell. 
+
+D.2 Layer-wise 3D PCA visualisations 
+
+We project the last-token hidden states onto their top three principal components at representative decoder layers and colour the points by ordinal class. Figures 6–12 show the resulting layer-wise structure: an ordinal arc emerges in the middle-to-late decoder layers, consistent with the per-layer SRCC peaks reported above. 15 Figure 6: Layer-wise 3D PCA of last-token hidden states on Adience under Qwen3-VL. Points are coloured by the eight age groups; the ordinal arc emerges in the middle-to-late decoder layers. 
+
+Figure 7: Layer-wise 3D PCA on Adience under Qwen2.5-VL. 
+
+16 Figure 8: Layer-wise 3D PCA on Adience under Gemma-4. 
+
+Figure 9: Layer-wise 3D PCA on Adience under LLaVA-NeXT. 
+
+17 Figure 10: Layer-wise 3D PCA on DR under Qwen3-VL. Points are coloured by the five ICDR severity grades. 
+
+Figure 11: Layer-wise 3D PCA on HCI under Qwen3-VL. Points are coloured by the five decade classes. 
+
+18 Figure 12: Layer-wise 3D PCA on Aesthetic under Qwen3-VL. Points are coloured by the five aesthetic grades. 
+
+D.3 Main results with five-fold standard deviations 
+
+Table 13 reports the main benchmark with mean ± std over five folds for Adience, DR, and HCI; Aesthetic uses one class-balanced fold. 
+
+Adience DR HCI Aesthetic Backbone Method ACC ↑ MAE ↓ ACC ↑ MAE ↓ ACC ↑ MAE ↓ ACC ↑ MAE ↓
+
+Qwen2.5-VL Naive Prompt 0.5722 ±0.0168 0.5442 ±0.0644 0.1564 ±0.0058 1.5670 ±0.0118 0.2788 ±0.0027 0.9520 ±0.0044 0.3723 0.7721 CAA 0.6284 ±0.1641 0.3956 ±0.3129 0.7022 ±0.0142 0.3574 ±0.0211 0.3381 ±0.0396 0.8167 ±0.0882 0.2453 0.9283 OrderChain 0.7650 ±0.0344 0.2823 ±0.0127 0.8700 ±0.0098 0.1400 ±0.0016 0.6528 ±0.0423 0.3473 ±0.0223 0.7053 0.2947 
+
+OLA (ours) 0.8088 ±0.0156 0.2327 ±0.0045 0.9201 ±0.0040 0.0799 ±0.0004 0.6848 ±0.0281 0.3153 ±0.0132 0.6962 0.3039 
+
+Qwen3-VL Naive Prompt 0.5805 ±0.0340 0.4011 ±0.0299 0.6882 ±0.0121 0.5704 ±0.0229 0.3281 ±0.0201 0.9526 ±0.0202 0.3969 0.8588 CAA 0.6484 ±0.1641 0.3743 ±0.2961 0.7222 ±0.0142 0.3334 ±0.0197 0.3582 ±0.0396 0.7921 ±0.0852 0.2653 0.9037 OrderChain 0.7898 ±0.0252 0.2103 ±0.0067 0.8950 ±0.0043 0.1100 ±0.0005 0.6552 ±0.0315 0.5301 ±0.0251 0.7101 0.2942 
+
+OLA (ours) 0.8059 ±0.0206 0.2068 ±0.0053 0.9255 ±0.0022 0.0780 ±0.0002 0.7573 ±0.0409 0.2602 ±0.0141 0.6977 0.3024 
+
+Gemma-4 Naive Prompt 0.5714 ±0.0179 0.4890 ±0.0314 0.1370 ±0.0046 1.4291 ±0.0227 0.2444 ±0.0161 0.9958 ±0.0256 0.2138 0.9627 CAA 0.5743 ±0.0461 0.4373 ±0.1036 0.7441 ±0.0165 0.3071 ±0.0126 0.3191 ±0.0054 0.8957 ±0.0519 0.3412 0.8156 OrderChain 0.7548 ±0.0312 0.2453 ±0.0093 0.8800 ±0.0086 0.1450 ±0.0014 0.5804 ±0.0258 0.5100 ±0.0227 0.6805 0.3196 
+
+OLA (ours) 0.7602 ±0.0649 0.2399 ±0.0027 0.9219 ±0.0059 0.0782 ±0.0005 0.7329 ±0.0250 0.2700 ±0.0092 0.7005 0.2995 
+
+LLaVA-NeXT Naive Prompt 0.4501 ±0.1295 0.7659 ±0.1685 0.1478 ±0.0101 1.8911 ±0.0277 0.2156 ±0.0221 1.0430 ±0.0251 0.3069 0.9842 CAA 0.6350 ±0.0221 0.3651 ±0.0283 0.2050 ±0.0245 1.1861 ±0.1056 0.3422 ±0.0266 0.9663 ±0.1768 0.3654 0.7805 OrderChain 0.6821 ±0.0506 0.3671 ±0.0272 0.8392 ±0.0161 0.2214 ±0.0042 0.6221 ±0.0371 0.4384 ±0.0262 0.6957 0.3243 
+
+OLA (ours) 0.7910 ±0.0410 0.2293 ±0.0119 0.9242 ±0.0083 0.0759 ±0.0006 0.7232 ±0.0553 0.3083 ±0.0236 0.7189 0.2812 
+
+Table 13: Main results on four ordinal benchmarks under four MLLM backbones, with mean ± std over five folds (Adience, DR, HCI); Aesthetic uses one class-balanced fold. 
+
+D.4 Ablation studies with five-fold standard deviations 
+
+Table 14 reports the full ablation studies under four MLLM backbones on all four datasets. Eight methods are compared per backbone-dataset cell: Capacity Probe, Probe Only, Probe Steering, Single-Layer Logit, Designed Prompt, OL + Naive, OLA-Offline, and OLA-Online. 19 Adience DR HCI Aesthetic Backbone Method ACC ↑ MAE ↓ ACC ↑ MAE ↓ ACC ↑ MAE ↓ ACC ↑ MAE ↓
+
+Qwen2.5-VL Capacity Probe 0.7923 ±0.0250 0.2721 ±0.0086 0.8941 ±0.0178 0.0821 ±0.0016 0.6161 ±0.0356 0.4009 ±0.0232 0.6871 0.3291 Probe Only 0.7800 ±0.0286 0.2667 ±0.0098 0.9100 ±0.0106 0.0950 ±0.0011 0.6230 ±0.0251 0.3904 ±0.0157 0.6700 0.3500 Probe Steering 0.6496 ±0.1851 0.3639 ±0.2881 0.7246 ±0.0071 0.3306 ±0.0196 0.3864 ±0.0619 0.7488 ±0.0806 0.4293 0.6658 Single-Layer Logit 0.7150 ±0.0215 0.3050 ±0.0092 0.8950 ±0.0086 0.1100 ±0.0011 0.6200 ±0.0258 0.4100 ±0.0171 0.5300 0.4701 Designed Prompt 0.6012 ±0.0280 0.3989 ±0.0180 0.8300 ±0.0054 0.2270 ±0.0015 0.4825 ±0.0248 0.6104 ±0.0314 0.4541 0.6812 OL + Naive 0.6521 ±0.0626 0.3653 ±0.0250 0.5341 ±0.1525 0.6532 ±0.0760 0.5125 ±0.0531 0.5645 ±0.0314 0.5153 0.5080 OLA-Offline 0.7918 ±0.0107 0.2593 ±0.0036 0.8722 ±0.0274 0.0963 ±0.0031 0.6252 ±0.0192 0.3821 ±0.0117 0.6867 0.3227 
+
+OLA-Online 0.8088 ±0.0156 0.2327 ±0.0045 0.9201 ±0.0040 0.0799 ±0.0004 0.6848 ±0.0281 0.3153 ±0.0132 0.6962 0.3039 
+
+Qwen3-VL Capacity Probe 0.7809 ±0.0316 0.2198 ±0.0089 0.9126 ±0.0102 0.0824 ±0.0009 0.7160 ±0.0562 0.2932 ±0.0231 0.6461 0.3740 Probe Only 0.7851 ±0.0257 0.2300 ±0.0075 0.9107 ±0.0097 0.0894 ±0.0009 0.6900 ±0.0258 0.3564 ±0.0133 0.6200 0.4400 Probe Steering 0.6696 ±0.1851 0.3431 ±0.2716 0.7446 ±0.0070 0.3065 ±0.0181 0.4064 ±0.0619 0.7244 ±0.0779 0.4493 0.6425 Single-Layer Logit 0.7750 ±0.0172 0.2800 ±0.0062 0.9080 ±0.0034 0.0950 ±0.0004 0.6300 ±0.0258 0.4262 ±0.0252 0.5900 0.4700 Designed Prompt 0.6274 ±0.0212 0.4009 ±0.0135 0.8398 ±0.0114 0.1755 ±0.0024 0.3742 ±0.0370 0.8511 ±0.0252 0.4300 0.8116 OL + Naive 0.6381 ±0.0539 0.3872 ±0.0220 0.7941 ±0.0724 0.2366 ±0.0362 0.4215 ±0.0852 0.7115 ±0.0252 0.5248 0.5493 OLA-Offline 0.7998 ±0.0378 0.2102 ±0.0099 0.9163 ±0.0120 0.0797 ±0.0011 0.7260 ±0.0413 0.2816 ±0.0161 0.6528 0.3692 
+
+OLA-Online 0.8059 ±0.0206 0.2068 ±0.0053 0.9255 ±0.0022 0.0780 ±0.0002 0.7573 ±0.0409 0.2602 ±0.0141 0.6977 0.3024 
+
+Gemma-4 Capacity Probe 0.7324 ±0.0201 0.2605 ±0.0071 0.9130 ±0.0119 0.0822 ±0.0011 0.7294 ±0.0196 0.3152 ±0.0086 0.6817 0.3159 Probe Only 0.7350 ±0.0215 0.2750 ±0.0080 0.9050 ±0.0060 0.1080 ±0.0007 0.7013 ±0.0200 0.3600 ±0.0103 0.6800 0.3300 Probe Steering 0.6229 ±0.0677 0.3872 ±0.0916 0.7854 ±0.0087 0.2575 ±0.0106 0.3220 ±0.0028 0.8800 ±0.0509 0.3333 0.8261 Single-Layer Logit 0.7250 ±0.0215 0.2900 ±0.0086 0.8950 ±0.0043 0.1200 ±0.0006 0.6500 ±0.0271 0.4100 ±0.0171 0.6200 0.4300 Designed Prompt 0.6915 ±0.0460 0.3086 ±0.0195 0.8282 ±0.0150 0.1790 ±0.0032 0.2920 ±0.0275 0.9024 ±0.0850 0.3478 0.8551 OL + Naive 0.6835 ±0.0638 0.3197 ±0.0240 0.4925 ±0.1242 0.7049 ±0.0621 0.3924 ±0.0742 0.7722 ±0.0500 0.5625 0.5119 OLA-Offline 0.7497 ±0.0147 0.2305 ±0.0046 0.9197 ±0.0064 0.0790 ±0.0006 0.7144 ±0.0274 0.3448 ±0.0132 0.6957 0.3043 
+
+OLA-Online 0.7602 ±0.0649 0.2399 ±0.0027 0.9219 ±0.0059 0.0782 ±0.0005 0.7329 ±0.0250 0.2700 ±0.0092 0.7005 0.2995 
+
+LLaVA-NeXT Capacity Probe 0.7762 ±0.0586 0.2847 ±0.0216 0.8929 ±0.0345 0.0771 ±0.0031 0.7028 ±0.0132 0.3312 ±0.0062 0.7031 0.2995 Probe Only 0.7550 ±0.0350 0.3021 ±0.0140 0.8400 ±0.0100 0.1750 ±0.0021 0.7023 ±0.0268 0.3500 ±0.0134 0.7053 0.3012 Probe Steering 0.6217 ±0.0281 0.3808 ±0.0297 0.1893 ±0.0024 1.2113 ±0.1077 0.3355 ±0.0566 0.9788 ±0.1789 0.5266 0.5990 Single-Layer Logit 0.6902 ±0.0248 0.3150 ±0.0113 0.8213 ±0.0208 0.2574 ±0.0065 0.6042 ±0.0302 0.4561 ±0.0253 0.5300 0.5500 Designed Prompt 0.6244 ±0.0180 0.3813 ±0.0110 0.7982 ±0.0174 0.2590 ±0.0056 0.3523 ±0.0121 0.8861 ±0.0304 0.3671 0.8986 OL + Naive 0.5934 ±0.0214 0.4269 ±0.0150 0.6835 ±0.1142 0.4598 ±0.0571 0.3676 ±0.0519 0.8569 ±0.0304 0.4924 0.6589 OLA-Offline 0.7890 ±0.0524 0.2610 ±0.0173 0.9088 ±0.0138 0.0712 ±0.0011 0.7180 ±0.0620 0.3288 ±0.0284 0.7146 0.2754 
+
+OLA-Online 0.7910 ±0.0410 0.2293 ±0.0119 0.9242 ±0.0083 0.0759 ±0.0006 0.7232 ±0.0553 0.3083 ±0.0236 0.7189 0.2812 
+
+Table 14: Ablation studies on four ordinal benchmarks under four MLLM backbones (mean ± std over five folds for Adience, DR, HCI; Aesthetic uses one class-balanced fold). 
+
+20 E Pseudocode 
+
+Algorithms 1 and 2 give the pseudocode for the two OLA phases that match the method overview in Figure 2; lines that are pure I/O or device management are omitted for brevity. 
+
+Algorithm 1 Multi-layer Ordinal Lens Learning 
+
+Require: frozen MLLM M , dataset D, designed prompt P , layer set L, digit-row matrix WS (frozen) 
+
+Ensure: lens parameters {Aℓ, b ℓ}ℓ∈L , fusion logits α, cached P OLA (· | x)
+
+// one forward pass per sample, cache last-token hidden 
+
+1: register forward hooks on every layer ℓ ∈ L 
+
+2: for each x ∈ D do 
+
+3: out ← M. FORWARD (P, image (x)) 
+
+4: H[x, ℓ ] ← captured last-token hidden at layer ℓ, for ℓ ∈ L 
+
+5: end for 
+
+// Stage A: per-layer ordinal lens (independent training) 
+
+6: for each ℓ ∈ L do 
+
+7: (μℓ, σ ℓ) ← mean and clamped std of H[: , ℓ ] on train split 8: initialise Aℓ ← I + UℓV ⊤ 
+
+> ℓ
+
+with Uℓ ∼ N (0 , 0.02) , Vℓ ← 0; bℓ ← 0
+
+9: for epoch = 1 to 100 do 
+
+10: for minibatch B do 
+
+11: ˜h ← (H[B, ℓ ] − μℓ)/σ ℓ
+
+12: ˆzℓ ← WS (Aℓ˜h + bℓ)
+
+13: CE(softmax(ˆ zℓ), y [B]) .BACKWARD () ; clip-norm 1.0; AdamW step 14: end for 
+
+15: track val accuracy; keep best-epoch (Aℓ, b ℓ)
+
+16: end for 
+
+17: end for 
+
+// Stage B: softmax fusion over K layers 
+
+18: freeze all {Aℓ, b ℓ}; α ← 0; require_grad (α)
+
+19: for epoch = 1 to 30 do 
+
+20: for minibatch B do 
+
+21: ˆzℓ(B) ← WS (Aℓ˜hℓ(B) + bℓ) for ℓ ∈ L 
+
+22: a ← softmax( α)
+
+23: zOLA ← P 
+
+> ℓ∈L
+
+aℓ ˆzℓ(B)
+
+24: CE(softmax( zOLA ), y [B]) .BACKWARD () ; AdamW step ( α only) 25: end for 
+
+26: track val accuracy; keep best-epoch α
+
+27: end for 
+
+// cache the instance-specific ordinal distribution 
+
+28: for split in {train , val , test } do 
+
+29: P OLA (· | x) ← softmax  P  
+
+> ℓ
+
+aℓ ˆzℓ(x) for x in split 30: end for 
+
+31: return {Aℓ, b ℓ}, α, P OLA 
+
+21 Algorithm 2 Inference-Time Ordinal Alignment                                                                                                                                
+
+> Require: frozen MLLM M, designed prompt P, trained lens {Aℓ, b ℓ}and α, cached POLA (· | x), base digit logits Lna [x]on val and test, grid Λ, digit-token ids Sdigit , EOS ids Seos
+> Ensure: λ⋆and online-corrected predictions on test
+> // 1. select λ⋆on validation (offline grid sweep)
+> 1: for λ∈Λdo
+> 2: for xin val do
+> 3: Q(x)←softmax( Lna [x])
+> 4: ω(x)←max cPOLA (c|x)
+> 5: ˜L←Lna [x]−λ(Q(x)−POLA (· | x)) ω(x)
+> 6: ˆy(x)←arg max c∈S digit ˜L
+> 7: end for
+> 8: record ACC val (λ)
+> 9: end for
+> 10: λ⋆←arg max λACC val (λ)
+> // 2. online generation on test (deterministic decoding)
+> 11: register forward hooks on every ℓ∈ L that write into a shared dict H
+> 12: for xin test do
+> 13: clear H▷per-sample reset 14: prefill Mwith (P, image (x)) ▷hooks fill H[ℓ]
+> 15: POLA (· | x)←softmax  P
+> ℓaℓWS(AℓH[ℓ]˜+bℓ)
+> 16: ω(x)←max cPOLA (c|x)
+> 17: greedily decode until reaching the answer slot ▷no correction 18: at the answer slot:
+> 19: Lt←M. lm_head_logits 20: Qt(c)←softmax( Lt[Sdigit ])
+> 21: Lt[Sdigit ]←Lt[Sdigit ]−λ⋆(Qt−POLA (· | x)) ω(x)
+> 22: emit arg max( Lt)as the ordinal prediction 23: continue greedy decoding until EOS ▷no correction 24: end for
+
+F Related Work 
+
+F.1 Discriminative Ordinal Regression 
+
+Ordinal regression treats prediction as classification over ordered labels, where the distance between predicted and true classes is meaningful. Early work formulated this as a neural ranking problem (Cheng et al., 2008) and decomposed the C-class ordinal task into C−1 binary subproblems (Niu et al., 2016). Subsequent work introduced rank consistency through shared bias terms (CORAL, Cao et al., 2020) and conditional probabilities (CORN, Shi et al., 2023). Other approaches encode ordinal structure through soft labels that smooth class boundaries (Diaz and Marathe, 2019), label diversity that decorrelates probe directions (Berg et al., 2021), or weak supervision for medical grading (Jia et al., 2017). Domain-specific work includes face-age estimation (Eidinger et al., 2014) and neural image assessment (Talebi and Milanfar, 2018). Number-aware vision-language models such as NumCLIP (Du et al., 2024) and OrdinalCLIP (Li et al., 2022) introduce contrastive objectives that preserve numerical and ordinal relations in visual representations, and sequence-based formulations such as Ord2Seq (Wang et al., 2023) reduce ordinal classification to autoregressive sequence prediction. Our work extends this diagnostic perspective to frozen MLLM hidden states and the digit-token interface, rather than training a discriminative ordinal head. 
+
+F.2 Ordinal Prediction With MLLMs 
+
+Recent work applies MLLMs to ordinal recognition by reformulating ordered labels as digit-token generation. OrderChain is the closest baseline: it combines task-specific prompting with LoRA fine-tuning on age, aesthetic, and medical grading benchmarks (Wang et al., 2025). A separate line of work audits MLLMs as ordinal raters in clinical settings, reporting central-tendency bias on clinical ordinal scales (Zhang et al., 2026). Rather than updating the backbone, OLA asks whether the frozen model already contains ordinal evidence and whether the output interface exposes it, separating backbone adaptation from inference-time output alignment. The MLLM backbones we study span the Qwen-VL 22 family (Bai et al., 2025a,b), the Gemma open-weights family (Team et al., 2024), and LLaVA-NeXT (Liu et al., 2024). 
+
+F.3 Linear Probing and Representation Geometry 
+
+Linear classifier probes (Alain and Bengio, 2016) measure how much task-relevant information a frozen representation linearly carries; structural probes (Hewitt and Manning, 2019) extend this to relational structure such as syntax. The linear representation hypothesis (Park et al., 2023) further argues that concepts in large language models are approximately encoded as linear directions in the residual stream. Our diagnostic uses the same linear-readout family and additionally measures the spectral and row-space exposure of these directions through the unembedding matrix. 
+
+F.4 Representation Steering and Parameter-Efficient Adaptation 
+
+Representation steering methods control model behavior by adding or projecting directions in the residual stream, with directions estimated from contrastive examples or learned probes (Panickssery et al., 2023). While these methods influence generation via hidden-state directions, they still rely on the native LM head, which our diagnostics show can be unreliable for ordinal prediction when a strong hidden direction is weakly exposed by the digit-token rows. OLA therefore applies alignment at the output side, modifying only candidate digit-token logits with a signal derived from WS -anchored ordinal lenses. Parameter-efficient adaptation such as LoRA (Hu et al., 2022) provides an alternative route by training low-rank backbone updates; OLA differs by leaving the backbone frozen and training only output-side lens parameters. 
+
+F.5 Lens-Based Interpretation and Spectral Output Filtering 
+
+Logit-lens style methods map intermediate transformer states into vocabulary logits to analyze how predictions evolve across depth (Belrose et al., 2023). Spectral analyses of the unembedding matrix identify structured filters and dark signals that the output interface imposes on residual-stream content (Cancedda, 2024). OLA uses the same readout family but trains task-specific ordinal lenses anchored on 
+
+WS and uses their fused distribution for inference-time correction rather than interpretation only. 23

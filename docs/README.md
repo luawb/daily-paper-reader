@@ -6,26 +6,35 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-08-23
-- 运行时间：2026-08-23 20:21:38 UTC
+- 最新运行日期：2026-08-24
+- 运行时间：2026-08-24 19:55:37 UTC
 - 运行状态：成功
-- 本次总论文数：1
-- 精读区：0
+- 本次总论文数：4
+- 精读区：3
 - 速读区：1
 
 ### 今日简报（AI）
-- 今日共生成 1 篇推荐（精读 0 篇，速读 1 篇）
-- 速读：《Seeing Before Answering: Training-Free Visual Layer Profiling for Vision-Language Models》（6.0/10）
+- 今日共生成 4 篇推荐（精读 3 篇，速读 1 篇）
+- 精读：《Latent Ordinal Evidence, Misaligned Outputs: Inference-Time Ordinal Lens Alignment for Multimodal LLMs》（9.0/10）, 《Toward Vision Language Model-based Assessment of Clinical Quality and Usability of LGE-MR Images for Cardiac Ablation Planning》（9.0/10）
+- 速读：《GLaQ: Grounding Latent Queries in Visual Evidence for Multimodal Reasoning》（6.0/10）
 - 这些结果覆盖了当下较热的方向，建议先看精读区论文的关键问题与方法。
-- 详情：[/202608/23/README](/202608/23/README)
+- 详情：[/202608/24/README](/202608/24/README)
 
 ### 精读区论文标签
-- 本次无精读推荐。
+1. [Latent Ordinal Evidence, Misaligned Outputs: Inference-Time Ordinal Lens Alignment for Multimodal LLMs](/202608/24/2608.20999v1-latent-ordinal-evidence-misaligned-outputs-inference-time-ordinal-lens-alignment-for-multimodal-llms)  
+   标签：评分：9.0/10、query:xiqa
+   evidence：将图像质量评估作为多模态LLM中的序数回归任务并提出推理时对齐
+2. [Toward Vision Language Model-based Assessment of Clinical Quality and Usability of LGE-MR Images for Cardiac Ablation Planning](/202608/24/2608.21180v1-toward-vision-language-model-based-assessment-of-clinical-quality-and-usability-of-lge-mr-images-for-cardiac-ablation-planning)  
+   标签：评分：9.0/10、query:xiqa
+   evidence：基于视觉语言模型的LGE-MR图像质量评估用于心脏消融规划
+3. [AGIDefect-4K: A Richly Annotated Dataset for AI-Generated Image Defect Detection, Localization and Explanation](/202608/24/2608.20713v1-agidefect-4k-a-richly-annotated-dataset-for-ai-generated-image-defect-detection-localization-and-explanation)  
+   标签：评分：8.0/10、query:xiqa
+   evidence：提供缺陷检测、定位和文本解释的AI生成图像数据集，支持带解释的图像质量评价
 
 ### 速读区论文标签
-1. [Seeing Before Answering: Training-Free Visual Layer Profiling for Vision-Language Models](/202608/23/2608.16263v1-seeing-before-answering-training-free-visual-layer-profiling-for-vision-language-models)  
+1. [GLaQ: Grounding Latent Queries in Visual Evidence for Multimodal Reasoning](/202608/24/2608.15517v2-glaq-grounding-latent-queries-in-visual-evidence-for-multimodal-reasoning)  
    标签：评分：6.0/10、query:xiqa
-   evidence：无训练视觉层剖析以改进视觉语言模型对图像和文本的处理
+   evidence：在多模态推理中基于视觉证据进行解释生成
 
 
 <div class="dpr-home-promo-card">
