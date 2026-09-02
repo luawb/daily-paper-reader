@@ -1,0 +1,386 @@
+Title: Scalable Question-Centric Text-to-Image Evaluation: Reliable Ranking, Fine-Grained Diagnosis, and Cost-Aware Routing
+
+URL Source: https://arxiv.org/pdf/2608.24112v1
+
+Published Time: Wed, 26 Aug 2026 00:38:44 GMT
+
+Number of Pages: 9
+
+Markdown Content:
+# Scalable Question-Centric Text-to-Image Evaluation: Reliable Ranking, Fine-Grained Diagnosis, and Cost-Aware Routing 
+
+Shaoan Zhao 1,2,∗, Fang Zhao 1,2,∗, Xueqiang Guo 1,2, Xinpei Su 1,2, Huanlin Gao 1,2, Qiang Hui 1,2, Ting Lu 1,2,
+
+Fuyuan Shi 1,2, Chao Tan 1,2, Bikun Yang 3, Kai Wang 1,2,†, Shiguo Lian 1,2,†
+
+> 1
+
+Data Science & Artificial Intelligence Research Institute, China Unicom 
+
+> 2
+
+Unicom Data Intelligence, China Unicom 
+
+> 3
+
+China Unicom Group Co.,Ltd 
+
+Abstract 
+
+Modern text-to-image (T2I) models often have similar to-tal scores but different strengths, making practical selection difficult. Fine-grained benchmarks decompose prompts into questions, yet often return them to prompt scores and fixed categories, weakening attribution and ignoring complexity. Related requirements are also scored separately or as one to-tal, obscuring basic versus compositional failure. We present 
+
+QC-T2I-Bench , a question-centric framework that converts open prompts into attributed atomic questions and organizes their dependencies with Davidsonian Scene Graphs (DSGs). We use hierarchy-constrained question aggregation to exclude downstream questions after a prerequisite fails and to pre-vent simple and complex prompts from receiving the same total weight. We then use the DSG structure to measure joint success within prompts and compare repeated entities across prompts, separating basic realization failures from failures under additional requirements. We evaluate multiple open-source T2I models on English and Chinese prompts. The re-sulting question-level evidence supports reliable ranking and fine-grained diagnosis: joint completion falls from 80.7% for components with two capabilities to 37.2% for those with seven or more. Finally, we reuse the same records for training-free routing; our cost-aware router matches ERNIE’s 89.51-point estimate with 21.3% less GPU-s/MP. 
+
+# Introduction 
+
+Recent text-to-image (T2I) models have greatly improved image quality and prompt following (Esser et al. 2024; Black Forest Labs 2024; Wu et al. 2025). As models become stronger, choosing between them becomes harder. Models with similar aggregate scores may have very different capa-bility profiles: one may render text accurately, another may handle spatial relations reliably, and yet another may better follow knowledge-intensive prompts. Practical model selec-tion therefore needs more than a leaderboard. It needs evi-dence about where each model succeeds, why it fails, and which model best fits a particular request. Conventional metrics provide global image- or prompt-level scores rather than evidence about individual require-ments (Hessel et al. 2021). Evaluation has therefore moved toward question-generation and visual-question-answering (QG/A) methods that decompose a prompt into local checks 
+
+> *
+
+Equal contribution. †Corresponding author. 
+
+(Hu et al. 2023; Cho et al. 2024; Li et al. 2024). This is an important step, but decomposition alone does not guarantee fine-grained evaluation. The central issue is how the resulting evidence is attributed, aggregated, and reused. Many evaluation pipelines still organize this evidence around prompts. They collect prompts under predefined cat-egories, generate local checks, average the checks into a prompt score, and assign that score back to the prompt’s category (Hu et al. 2023; Cho et al. 2024; Wei et al. 2025; Li et al. 2026). This design creates several recurring problems. A complex prompt may contain requirements from multiple capabilities, making its category score hard to interpret. A new request may not fit the predefined categories. Simple and complex prompts may receive the same total weight even though they contain different numbers of requirements. A missing parent object may cause several dependent checks to fail, exaggerating one error. Finally, evidence about the same requirement is rarely compared across prompts, making it difficult to tell whether a model fails on the basic content or only after additional constraints are added. Table 1 summarizes these gaps. Atomic attribution (A), open-prompt evaluation (O), complexity awareness (C), and cross-prompt evidence (X) are four desired properties. De-pendency awareness (D) is a necessary safeguard against repeated penalties caused by one missing prerequisite. Exist-ing benchmarks support different subsets of these properties, but none combines all five. We introduce QC-T2I-Bench , which changes the basic unit of evaluation from the prompt to the atomic question. Each record preserves the question’s capability label, visual answer, dependency validity, and prompt context. A two-level taxonomy organizes questions into 21 capabilities un-der Non-text Entities, Text Content, Attributes, Relations, and High-Level Semantics. Hierarchy-Constrained Question Aggregation (HCQ) removes dependency-invalid evidence and balances capabilities instead of giving every prompt the same total weight. Because prompts use a shared question schema rather than benchmark-specific prompt categories, the same protocol can also be applied to new requests. We further use DSGs to organize the questions in each prompt according to their dependencies (Cho et al. 2024). This lets us test whether a model can satisfy a group of re-lated requirements together, rather than only checking them one by one. We then compare repeated entities across differ-arXiv:2608.24112v1 [cs.AI] 25 Aug 2026 Benchmark A O D C XArena-T2I Hard ConceptMix CVTG-2K DPG-Bench DSG EvalMuse-40K GenAI-Bench GenEval GenEval 2 LongTextBench OneIG-Bench PhyBench PRISM-Bench Qwen-Image-Bench T2I-CompBench++ T2I-CoReBench TIFA TIIF-Bench WISE 
+
+> QC-T2I-Bench
+
+Table 1: Support for five structural properties across T2I benchmarks. , , and denote full, partial, and no support. A: atomic attribution; O: open prompts; D: dependency aware-ness; C: complexity awareness; X: cross-prompt evidence. ent prompts to distinguish a basic generation failure from a failure caused by additional attributes or relations. The same question records also form a capability profile for each model and can guide generator selection for new requests. We evaluate QC-T2I-Bench on 13 T2I models with bilin-gual evidence. The framework supports three connected uses: 
+
+reliable ranking , fine-grained diagnosis , and cost-aware routing . Bootstrap analysis separates most model pairs while preserving uncertainty for the closest systems. The DSG analysis shows where models fail as related requirements ac-cumulate. Finally, a training-free cost-aware router matches the fixed ERNIE point estimate while reducing GPU-s/MP by 21.3%. Our contributions are threefold. (1) We introduce QC-T2I-Bench, which converts open prompts into attributed atomic questions and uses validity-aware Hierarchy-Constrained Question Aggregation (HCQ) to avoid prompt-level normal-ization. (2) We develop a DSG-based compositional analysis that combines complete-component success, cross-prompt root controls, and topology-matched contrasts to localize failures. (3) We demonstrate reliable ranking, fine-grained diagnosis, and training-free quality–cost routing, including a 21.3% cost reduction at the matched ERNIE point estimate. 
+
+# Related Work 
+
+Fine-grained evaluation benchmarks. T2I evaluation has progressed from controlled property tests to question-based verification. GenEval (Ghosh, Hajishirzi, and Schmidt 2023) evaluates predefined object properties, while GenEval 2 (Ka-math et al. 2025) adds atom-level questions and atomicity analysis. TIFA (Hu et al. 2023) decomposes prompts into VQA pairs, and DSG (Cho et al. 2024) organizes atomic questions through valid dependencies. Other work improves supervision and calibration through dimension-specific con-cepts or element-level annotations (Wei et al. 2025; Han et al. 2024), while VQAScore and GenAI-Bench study holistic alignment and its agreement with human preferences (Lin et al. 2024; Li et al. 2024). More recent benchmarks use hierarchical capability rubrics or dependency-aware check-lists (Li et al. 2026; Ban et al. 2026). These developments make local verification more reliable, but their evidence is usually summarized within each prompt or a fixed reporting taxonomy. 
+
+Capability-specific and closed-set benchmarks. A com-plementary line of work deepens evaluation within selected capabilities. WISE and PhyBench focus on world knowledge and physical rules (Niu et al. 2025; Meng et al. 2024); T2I-CompBench++, ConceptMix, and DPG-Bench stress com-positional or dense instructions (Huang et al. 2023; Wu et al. 2024; Hu et al. 2024); and PRISM-Bench, OneIG-Bench, and T2I-CoReBench expand coverage to bilingual, creative, and reasoning-heavy scenarios (Fang et al. 2025; Chang et al. 2026; Li et al. 2025a). LongTextBench and CVTG-2K fur-ther examine long or multilingual instructions and visual text (Geng et al. 2025; Du et al. 2025). Table 1 summarizes these structural choices: atomic checking is common, but support for open prompts, dependencies, and prompt com-plexity is fragmented; none of the compared benchmarks connects evidence across prompts. QC-T2I-Bench combines all five properties in one question-centric framework. 
+
+Evidence reuse and generator routing. Generator-routing work addresses model selection directly. CATIm-age learns prompt-conditioned quality–cost decisions, while DiffAgent uses an LLM agent for API selection (Li et al. 2025b; Zhao et al. 2024). OctoT2I, Image-POSER, and GenArtist extend selection to stateful or multi-step orchestra-tion through self-evolving memory, reinforcement learning, or tool planning (Jiang et al. 2026; Mohebbi et al. 2025; Wang et al. 2024). These methods obtain routing signals by learning a policy, building agent state, or repeatedly evaluat-ing intermediate outputs. Our router instead reuses question-level histories already collected for ranking and diagnosis, enabling training-free model selection from the same evalu-ation evidence. 
+
+# Method 
+
+QC-T2I-Bench retains the identity, capability coordinates, and dependency context of every atomic judgment. These records support two complementary operations. The scoring path aggregates valid non-text and text evidence into capabil-ity coordinates and a hierarchy-constrained question aggre-gation (HCQ) score. The structural path reuses the recorded DSGs to measure component completion, construct cross-prompt root controls, and test topology-localized outcome coupling. The same records subsequently support model di-agnosis and training-free routing. 
+
+Question construction and capability coordinates. We collect prompts from six public sources spanning knowl-Figure 1: Two-level taxonomy: five first-level reporting groups organize 21 mutually exclusive secondary capabil-ities, assigned by each question’s core predicate. edge, entities, attributes, relations, text rendering, reasoning, and long multilingual instructions; source counts are pro-vided in the supplement. Each prompt p is converted into 
+
+c(p) = {(qi, t i)}np
+
+> i=1
+
+, where np is the number of atomic questions, qi is an independently judgeable question, and ti
+
+is its secondary capability label. Construction follows four rules: Target Yes , Atomicity , Coverage , and Tag Validity .Together, they require a “yes” answer for a compliant im-age, one visual requirement per question, coverage of salient constraints, and attribution by the question’s core predicate. We instantiate this fixed contract with Qwen3-235B-A22B (Yang et al. 2025), iterative automated auditing, and a final cleanup pass; the supplement reports source composition and audit details. Evaluation produces one record per question, 
+
+r = ( p, q, m, ℓ, g, t, y, v ), (1) where p and q are the prompt and question, m is the evaluated model, ℓ is the language, g is the first-level reporting group, and t is the secondary capability. For non-text capabilities, 
+
+y ∈ { 0, 1} is the native binary outcome and v ∈ { 0, 1} in-dicates dependency validity. Text Content retains the same capability coordinates but uses the transcription statistics defined below for official scoring. The taxonomy contains five first-level groups— Non-text Entities , Text Content , At-tributes , Relations , and High-Level Semantics —and 21 sec-ondary capabilities (Figure 1). Each question receives ex-actly one secondary capability by its core predicate, while one prompt may contribute questions to several groups. Text Content is separated because it uses the dedicated transcrip-tion evaluator described below. 
+
+Dependency-aware capability scoring. Before adjudica-tion, we organize prompt p into a Davidsonian Scene Graph 
+
+Gp = ( Vp, E p) (Cho et al. 2024), where Vp is the set of ques-tion nodes and Ep is the set of directed prerequisite edges. An edge u → q ∈ Ep indicates that question u is a semantic prerequisite of q. During adjudication, q is scored only when its prerequisites succeed, preventing one missing entity from becoming repeated attribute and relation failures. For model m, language scope Λ, and non-text capability 
+
+t, let Qℓ,t be the questions in language ℓ, ymℓq ∈ { 0, 1} their adjudicated outcomes, and vmℓq ∈ { 0, 1} their dependency validity. The valid count and score are 
+
+Nm, Λ,t = X
+
+> ℓ∈Λ
+
+X
+
+> q∈Q ℓ,t
+
+vmℓq ,Sm, Λ,t = 1
+
+Nm, Λ,t 
+
+X
+
+> ℓ∈Λ
+
+X
+
+> q∈Q ℓ,t
+
+vmℓq ymℓq , t̸ = ttext . (2) Thus Sm, Λ,t is the mean over valid questions at one capability coordinate when Nm, Λ,t > 0 and is NA otherwise; invalid records enter neither sum. 
+
+Text-rendering branch. Rendered text remains a semantic capability coordinate, but its evidence type differs: a binary VQA judgment can accept semantically related text while missing character-level errors. We therefore use Qwen3-VL-Instruct-30B to extract text blocks and optimally match them to targets within each image i. Let Dmℓi be the target-conditioned UTF-16 edit distance and Lℓi the target length, and let Itext  
+
+> mℓ
+
+contain images with an available transcription record. We micro-average over all available text records in language scope Λ:
+
+Sm, Λ,t text = max 0, 1 −
+
+P
+
+> ℓ∈Λ
+
+P
+
+> i∈I text
+> mℓ
+
+Dmℓi 
+
+P
+
+> ℓ∈Λ
+
+P
+
+> i∈I text
+> mℓ
+
+Lℓi 
+
+!
+
+. (3) This micro-average gives every target character equal weight; empty extractions incur full deletion cost, while unavailable evaluator records are excluded. If the denominator is zero, the score is NA. 
+
+Hierarchy-constrained aggregation. We combine these secondary scores with HCQ, which micro-averages valid questions within each secondary capability, then macro-averages capabilities within each reporting group and across the five groups. With Tg the capabilities in group g, Tg =
+
+|T g |, and G the number of reporting groups, 
+
+SHCQ  
+
+> m, Λ
+
+= 1
+
+G
+
+> G
+
+X
+
+> g=1
+
+1
+
+Tg
+
+X
+
+> t∈T g
+
+Sm, Λ,t . (4) Here G = 5 and, in the order Non-text Entities, Text Content, Attributes, Relations, and High-Level Semantics, 
+
+(T1, . . . , T 5) = (5 , 1, 6, 4, 5) .
+
+Compositional capability analysis. Beyond capability ag-gregation, we use the recorded DSG structure for three com-plementary diagnostics. Component exactness tests whether related requirements are jointly satisfied; cross-prompt root matching separates entity-generation difficulty from failures under attached constraints; and marginal-controlled coupling tests whether excess outcome dependence localizes to ex-plicit DSG edges. A prompt may contain several disconnected structures, so we define its DSG atlas as the maximal weakly connected components Ap = {Gp, 1, . . . , G p,K p }. For a component G
+
+of a fixed prompt–language pair, let Q(G) be its questions and T (G) = S
+
+> q∈Q (G)
+
+{t(q)} its component tag set. We score each maximal component once for its full tag set rather than enumerating its pairs or lower-order subsets. Components define structural context, not an assumption of statistical de-pendence; that distinction motivates the edge-controlled test below. For model m and component G, Cm(G) is the complete-component exactness indicator. It equals 1 only when every question is valid and succeeds, equals 0 when any valid ques-tion fails, and is undefined when the component cannot other-wise be scored. Unlike mean coverage, this criterion retains root failures even when their descendants are masked: 
+
+Cm(G) = 
+
+
+
+0, ∃q ∈ Q (G) : vmq = 1 ∧ ymq = 0 ,
+
+1, ∀q ∈ Q (G) : vmq = 1 ∧ ymq = 1 ,
+
+NA , otherwise. (5) Applying the same rule separately to roots and descen-dants gives root survival Rm(G) and descendant completion conditional on root survival. To distinguish a composition-specific root failure from a generally difficult entity, we conservatively match entity roots across prompts without adding cross-prompt dependency edges. For entity identity e
+
+in prompt p, the leave-one-prompt-out baseline is 
+
+¯R−pmℓe = 1
+
+|P ℓe \ { p}| 
+
+X
+
+> p′∈P ℓe \{ p}
+
+Rmℓp ′e. (6) Here, Pℓe contains prompts in language ℓ with a matched root e, and Rmℓp ′e ∈ { 0, 1} is its prompt-level root-survival outcome for model m. Matches stay within one language and model and require at least three other prompts. Comparing the local outcome Rmℓpe with ¯R−pmℓe therefore controls for the model’s baseline ability to realize the same entity. 
+
+Marginal-controlled coupling. Complete-component ex-actness decreases as more fallible requirements are conjoined even when their outcomes are independent. We therefore test whether joint success follows recorded DSG topology be-yond this ordinary multiplication of marginal success rates. For model m, language ℓ, prompt p, matched pair stratum s,and context c, define 
+
+bP c, 11  
+
+> mℓps
+
+= 1
+
+|M ℓpsc |
+
+X
+
+> (i,j )∈M ℓpsc
+
+Ymℓpi Ymℓpj ,
+
+∆cmℓps = bP c, 11  
+
+> mℓps
+
+− ˆπ−p,c mℓs, 1 ˆπ−p,c mℓs, 2.
+
+(7) Here the nonempty set Mℓpsc contains ordered matched pairs (i, j ), Ymℓpi , Y mℓpj ∈ { 0, 1} are their native binary outcomes, and positions 1 and 2 denote the two ordered endpoints. The stratum fixes their ordered capability tags, root/descendant roles, and DSG depths; c is either edge , a direct parent–child pair, or disc , a structurally matched pair from disconnected components in the same prompt. The first term is observed joint success, while the product of leave-one-prompt-out endpoint marginals is the success expected in the same model–language stratum. To isolate dependence associated specifically with arecorded DSG edge, we compare the two residuals after matching: 
+
+Γmℓ = 1
+
+|P ∗
+
+> mℓ
+
+|
+
+X
+
+> p∈P ∗
+> mℓ
+
+1
+
+|S ∗
+
+> mℓp
+
+|
+
+X
+
+> s∈S ∗
+> mℓp
+
+
+
+∆edge  
+
+> mℓps
+
+− ∆disc 
+
+> mℓps
+
+
+
+.
+
+(8) Here P∗ 
+
+> mℓ
+
+contains prompts with matched edge and discon-nected contexts, and S∗ 
+
+> mℓp
+
+contains their eligible matched strata; the nested means give equal weight to strata within a prompt and then to prompts. We additionally macro-average these estimates across models. Thus ∆ = 0 is consistent with marginal multiplication, while ∆ > 0 indicates excess outcome coupling. The contrast Γ asks whether that excess is stronger on explicit DSG edges than on matched discon-nected pairs; it is not a quality gain or a causal composition penalty. For this structural test only, Y is recovered before dependency masking, which would otherwise induce edge dependence mechanically. Matching thresholds and full es-timators are reported in the supplement. Together, the scoring and structural paths populate the evidence summarized by the bilingual views in Table 2; the following experiments reuse the same records for ranking, diagnosis, and routing. 
+
+# Experiments 
+
+Experimental Setup 
+
+Models and generation. We evaluate 13 recent open-source T2I systems: ERNIE-Image (Liu et al. 2026), Qwen-Image (Wu et al. 2025), Z-Image Base and Turbo (Z-Image Team et al. 2025), FLUX.1-dev and FLUX.2-dev (Black For-est Labs 2024), FLUX.2-Klein 4B/9B, GLM-Image (Z.ai 2026), HiDream-O1/I1 (Cai et al. 2026, 2025), LongCat-Image (Meituan LongCat Team et al. 2025), and Lens (Chen et al. 2026). We use official defaults and disable configurable prompt enhancement so every generator receives the same prompt. The fixed benchmark contains 6,573 conceptual prompts, 94,547 English questions, and 94,555 Chinese questions. Analyses are run separately by language: the main paper presents both leaderboards side by side and reports bilin-gual aggregation, dependency, and routing summaries, while complete language-specific profiles are in the supplement. 
+
+Evaluation protocol. Every model generates both lan-guage sets. We apply HCQ (Equation 4) independently to each language; the language-specific leaderboards do not pool English and Chinese evidence. 
+
+Aggregation robustness. Rank recovery alone confounds scoring noise with rule-induced changes in model gaps. Let 
+
+g(t) map capability t to its unique reporting group. We hold the HCQ capability weight αt = 1 /(GT g(t)) fixed and compare the noise introduced by two within-capability Model English Chinese Total Ent. Text Attr. Rel. Sem. Total Ent. Text Attr. Rel. Sem. FLUX.2-dev 89.48 97.5 78.6 94.7 89.4 87.1 88.60 97.2 74.4 94.6 89.6 87.3                                                                                                                                                 
+
+> ERNIE-Image 89.43 97.2 79.7 95.0 89.5 85.7 89.58 97.5 79.7 95.4 90.5 84.8 Z-Image Base 88.11 95.5 79.1 93.6 86.9 85.3 89.15 96.7 79.8 94.3 88.5 86.4 Qwen-Image 87.72 95.7 79.4 93.4 87.0 83.1 88.55 96.3 82.4 93.6 87.9 82.6 Lens 87.34 97.3 72.8 94.6 89.1 82.9 87.37 97.5 73.0 94.4 89.6 82.3 FLUX.2-Klein-9B 87.08 95.8 72.3 94.0 87.9 85.3 85.35 96.7 61.0 94.4 89.1 85.5 HiDream-O1 86.80 95.3 73.1 92.7 87.3 85.5 87.00 95.1 76.1 92.2 87.0 84.6 Z-Image Turbo 85.67 93.9 78.5 91.6 84.0 80.4 85.98 95.1 77.5 91.4 84.8 81.1 FLUX.2-Klein-4B 84.33 96.0 61.9 93.5 86.8 83.4 82.29 95.3 52.0 93.6 88.3 82.3 GLM-Image 83.94 92.6 73.4 88.9 82.9 82.0 84.88 93.1 76.2 89.1 83.9 82.2 LongCat-Image 83.91 96.2 63.8 91.6 84.7 83.3 85.97 96.2 70.0 92.8 87.7 83.2 FLUX.1-dev 76.21 89.9 44.1 88.8 80.1 78.2 32.75 23.0 16.5 47.2 41.8 35.3 HiDream-I1 75.66 91.7 35.2 88.9 81.7 80.8 65.02 78.9 20.6 80.4 73.8 71.4
+
+Table 2: Aligned English and Chinese HCQ results (%). Models are ordered by English total; each language is aggregated independently by equally averaging the five reporting views. Ent., Attr., Rel., and Sem. denote Non-text Entities, Attributes, Relations, and High-Level Semantics. Best values within each language are bold; full 21-dimension profiles are in the supplement. rules. Let Pt be the prompts contributing to capability t,
+
+Pt = |P t|, npt the valid question count from prompt p,and Nt = P 
+
+> p∈P t
+
+npt . Question-micro weighting assigns each judgment αt/N t; prompt-first weighting assigns it 
+
+αt/(Ptnpt ). Under independent, zero-mean, equal-variance adjudication errors, their noise-variance ratio is 
+
+V prompt 
+
+> t
+
+V question 
+
+> t
+
+=
+
+ 1
+
+Pt
+
+X
+
+> p∈P t
+
+npt 
+
+ 1
+
+Pt
+
+X
+
+> p∈P t
+
+1
+
+npt 
+
+ ≥ 1. (9) Here V prompt  
+
+> t
+
+and V question  
+
+> t
+
+are the variances of capability 
+
+t’s weighted adjudication-error contribution under the two rules. The arithmetic–harmonic mean inequality makes the ratio at least one, with equality only when every prompt con-tributes the same number of questions. Thus equal atomic weights minimize variance under the fixed capability con-struct, while prompt-first weighting amplifies errors in rela-tively sparse prompts. The full proof, unequal-variance ex-tension, and rank-gap analysis are reported in the supplement. 
+
+Reliable Ranking 
+
+Leaderboard. Table 2 aligns the five capability views and HCQ total across languages; complete 21-dimensional pro-files are in the supplement. FLUX.2-dev leads in English and ERNIE-Image in Chinese, but no model is best across every view, keeping each scalar order traceable to its diagnostic coordinates. 
+
+Bootstrap ranking reliability. We test whether the leader-board survives prompt resampling using 2,000 paired boot-strap draws over the full set of retained conceptual-prompt clusters, resampling every attached question together. The 95% paired intervals exclude zero for 68 of the 78 model pairs. FLUX.2-dev has a 55.2% top-1 probability and a 95% rank interval of [1 , 2] ; ERNIE-Image has the complemen-tary 44.8% top-1 probability and the same interval. Thus the broad ordering is resolved, but the 0.042-point gap be-        
+
+> Var. increase One short-prompt error (pp) Language Prompt vs. Q Q Prompt Increase English 23.2% 0.0102 0.0151 48.4% Chinese 21.2% 0.0110 0.0156 41.8%
+
+Table 3: Adjudication-noise sensitivity at 1,000 prompts. “Question” gives equal weight to valid atomic judgments; “Prompt” normalizes prompts first. A short prompt contains at most three questions. Lower is more robust. tween the first two models is not evidence of deterministic separation. 
+
+Adjudication-noise robustness. Prompt-first normaliza-tion increases both adjudication-noise variance and the in-fluence of one error in a short prompt in English and Chinese (Table 3). The smaller full-benchmark effects would hide this difference at the roughly 1,000-prompt scale of recent bench-marks; complete diagnostics are in the supplement. 
+
+Fine-Grained Diagnosis 
+
+Capability boundaries. The five views in Table 2 sepa-rate strong entity and appearance generation from weaker text, relation, and semantic capabilities. The complete 21-dimensional matrices further localize persistent deficits in Text Content, Scientific and Cultural Knowledge, Temporal Setting, and Logical Constraints; cross-language shifts are capability- and model-specific rather than uniform. 
+
+Effect of dependency masking. The official metrics ex-clude dependency-invalid descendants. Counting them as failures leaves the broad ordering stable ( ρ = 0 .978 ) but changes two positions, indicating that masking removes cas-cading penalties without manufacturing the ranking; full shifts are in the supplement. 
+
+DSG-component composition diagnosis. The DSG atlas yields 10,584 maximal components from 5,792 conceptual Figure 2: Scaling and root-control views of complete DSG components. Left: prompt-macro exact completion versus the number of distinct capability tags in the full graph. Right: local entity-root success (orange) and the same model’s leave-one-prompt-out success on matched roots (blue). Line samples identify the corresponding model curves. 
+
+Figure 3: Outcome coupling after removing the joint success expected from ordinary marginal error multiplication. Each row compares question pairs in the same DSG component (orange) with matched pairs from disconnected components (blue). Points are model-macro residuals ∆ from Equation 7; bars are 95% prompt-bootstrap intervals. prompts. In Figure 2, mean exact completion falls from 80.7% for two-tag components to 37.2% for components with seven or more tags. This describes joint difficulty, not interaction: exact success becomes stricter as requirements accumulate even under independent errors. The cross-prompt control uses 4,319–4,347 eligible matched contexts per model. Local roots trail their matched baseline by only 0.14–0.88 points, with nine of thirteen in-tervals excluding zero. Root survival and conditional descen-dant completion can therefore locate entity versus attached-structure failure, but do not by themselves establish interac-tion. 
+
+Topology-localized coupling. After marginal control, the direct-edge contrast is +1 .10 points (95% prompt-bootstrap interval [+0 .69 , +1 .50] ), whereas the non-ancestral contrast is smaller and unresolved at +0 .38 points [−0.17 , +1 .01] 
+
+(Figure 3). Directly dependent requirements thus co-succeed and co-fail beyond their individual rates, and the excess local-izes to explicit DSG topology rather than component mem-bership alone. Chinese results reproduce the direct-edge pat-tern; full estimates are in the supplement. Figure 4 adds structure-specific resolution: Qwen-Image is weak on a five-tag Man-Made–Color–Material–Spatial– Quantification component, whereas FLUX.2-Klein-4B is comparatively strong on the related Shape variant. Such pro-files distinguish models with similar scalar scores; all cells and structural frequencies are in the supplement. 
+
+Scalable Cost-Aware Routing 
+
+Question histories reveal which generators satisfy which atomic requirements. We reuse them to select one T2I gen-Figure 4: High-frequency DSG-component composition fingerprints. Columns are the three most frequent full tag sets at each car-dinality from two through five; frequency selects columns but does not weight cells. Abbreviations: H=Humans, MM=Man-Made, Sh=Shape, Col=Color, Mat=Material, Lt=Lighting, St=State, Int=Interaction, Sp=Spatial, and Q/C=Quantification/Comparison. Cell text is prompt-macro conditional descendant completion (%) after every root survives. The color bar gives the deviation in percentage points from the same model’s mean at that tag-set size. erator for each complete request; routing does not select the VQA evaluator. 
+
+Routers and evaluation protocol. Our training-free router, Q-Profile , estimates generator quality from the re-quest’s active views and reference-fold outcomes without learned parameters. Its quality-first variant (Q) selects the predicted maximum; its cost-aware variant (C) selects the least expensive generator within a validation-selected ϵ of that maximum. We retain the original source-stratified nested five-fold choices and do not retune settings after the HCQ revision. English and Chinese scores are computed separately and combined with fixed 50/50 weights. Cost is latency times occupied GPUs per output megapixel (GPU-s/MP); paired intervals resample shared conceptual IDs across languages. Full protocol and retrieval ablations are in the supplement. 
+
+Quality-cost results. Q-Profile-Q gives the highest routed point estimate, but its paired gain over ERNIE is marginal at the lower endpoint and comes at higher cost. Q-Profile-C matches ERNIE’s point estimate while reducing cost by 21.3% relative to ERNIE and 65.0% relative to FLUX2. Its interval against ERNIE crosses the preregistered 0.20-point non-inferiority margin, so the result supports a quality– cost tradeoff rather than lossless routing. Uniform random performs worse, excluding arbitrary model assignment as the explanation. 
+
+# Conclusion 
+
+QC-T2I-Bench turns question decomposition from an inter-mediate step toward a prompt score into reusable evidence.                
+
+> Method EN ZH Bi. GPU-s/MP Save E/F ERNIE-Image 89.43 89.58 89.51 28.15 0.0/+55.6% FLUX.2-dev 89.48 88.60 89.04 63.34 -125.0/0.0% Uniform random 85.08 82.62 83.85 19.20 +31.8/+69.7% Q-Profile-Q 89.72 89.98 89.85 46.46 -65.0/+26.7% Q-Profile-C 89.25 89.78 89.51 22.16 +21.3 /+65.0 %
+
+Table 4: Out-of-fold routing under HCQ. Bi. is the fixed EN/ZH average; Save E/F is relative to fixed ERNIE-Image/FLUX2-dev. Q and C denote quality-first and cost-aware routing. Its attributed records combine five capability groups, depen-dency validity, and DSG context: HCQ yields complexity-aware rankings, while graph controls separate root realiza-tion from attached requirements. Across 13 models and two languages, exact completion falls from 80.7% for two-tag components to 37.2% for components with seven or more tags; after marginal control, excess coupling is resolved on direct DSG edges but not matched non-ancestral pairs, local-izing rather than causally identifying composition-associated dependence. The same records support a training-free router that matches ERNIE’s point estimate with 21.3% lower GPU-s/MP, although its interval precludes a lossless-routing claim. Thus one auditable evidence base supports ranking, diagno-sis, and cost-aware selection without treating any scalar score as universal. Future work should calibrate question construc-tion, DSG parsing, and adjudication across domains. References 
+
+Ban, Y.; Xie, T.; An, S.; Hong, Y.; Frick, E.; Hsu, I.-H.; Chiang, W.-L.; Stoica, I.; and Hsieh, C.-J. 2026. Arena-T2I Hard: Benchmarking and Improving Faithfulness with Dependency-Aware Checklist. arXiv:2606.31711. Black Forest Labs. 2024. FLUX. https://github.com/black-forest-labs/flux. Cai, Q.; et al. 2025. HiDream-I1: A High-Efficient Image Generative Foundation Model with Sparse Diffusion Trans-former. arXiv preprint arXiv:2505.22705 .Cai, Q.; et al. 2026. HiDream-O1-Image: A Natively Unified Image Generative Foundation Model with Pixel-level Unified Transformer. arXiv preprint arXiv:2605.11061 .Chang, J.; Fang, Y.; Xing, P.; Wu, S.; Cheng, W.; Wang, R.; Zeng, X.; Yu, G.; and Chen, H.-B. 2026. Oneig-bench: Omni-dimensional nuanced evaluation for image generation. 
+
+Advances in Neural Information Processing Systems , 38. Chen, D.; et al. 2026. Lens: Rethinking Training Efficiency for Foundational Text-to-Image Models. arXiv preprint arXiv:2605.21573 .Cho, J.; Hu, Y.; Baldridge, J.; Garg, R.; Anderson, P.; Kr-ishna, R.; Bansal, M.; Pont-Tuset, J.; and Wang, S. 2024. Davidsonian scene graph: Improving reliability in fine-grained evaluation for text-to-image generation. In Interna-tional conference on learning representations , volume 2024, 15625–15645. Du, N.; Chen, Z.; Chen, Z.; Gao, S.; Chen, X.; Jiang, Z.; Yang, J.; and Tai, Y. 2025. Textcrafter: Accurately render-ing multiple texts in complex visual scenes. arXiv e-prints ,arXiv–2503. Esser, P.; et al. 2024. Scaling rectified flow transformers for high-resolution image synthesis. In Forty-first international conference on machine learning .Fang, R.; Yu, A.; Duan, C.; Huang, L.; Bai, S.; Cai, Y.; Wang, K.; Liu, S.; Liu, X.; and Li, H. 2025. FLUX-Reason-6M & PRISM-Bench: A Million-Scale Text-to-Image Reason-ing Dataset and Comprehensive Benchmark. arXiv preprint arXiv:2509.09680 .Geng, Z.; et al. 2025. X-omni: Reinforcement learning makes discrete autoregressive image generative models great again. 
+
+arXiv preprint arXiv:2507.22058 .Ghosh, D.; Hajishirzi, H.; and Schmidt, L. 2023. Geneval: An object-focused framework for evaluating text-to-image alignment. Advances in Neural Information Processing Sys-tems , 36: 52132–52152. Han, S.; Fan, H.; Fu, J.; Li, L.; Li, T.; Cui, J.; Wang, Y.; Tai, Y.; Sun, J.; Guo, C.; and Li, C. 2024. EvalMuse-40K: A Reliable and Fine-Grained Benchmark with Comprehensive Human Annotations for Text-to-Image Generation Model Evalua-tion. arXiv:2412.18150. Hessel, J.; Holtzman, A.; Forbes, M.; Le Bras, R.; and Choi, Y. 2021. Clipscore: A reference-free evaluation metric for image captioning. In Proceedings of the 2021 conference on empirical methods in natural language processing , 7514– 7528. Hu, X.; Wang, R.; Fang, Y.; Fu, B.; Cheng, P.; and Yu, G. 2024. ELLA: Equip Diffusion Models with LLM for Enhanced Semantic Alignment. arXiv:2403.05135. Hu, Y.; Liu, B.; Kasai, J.; Wang, Y.; Ostendorf, M.; Krishna, R.; and Smith, N. A. 2023. Tifa: Accurate and interpretable text-to-image faithfulness evaluation with question answer-ing. In Proceedings of the IEEE/CVF International Confer-ence on Computer Vision , 20406–20417. Huang, K.; Sun, K.; Xie, E.; Li, Z.; and Liu, X. 2023. T2i-compbench: A comprehensive benchmark for open-world compositional text-to-image generation. Advances in Neural Information Processing Systems , 36: 78723–78747. Jiang, X.; Chen, B.; Li, G.; Duan, Y.; Wang, R.; and Zhang, J. 2026. OctoT2I: A Self-Evolving Agentic Text-to-Image Router. arXiv preprint arXiv:2606.01803 .Kamath, A.; Chang, K.-W.; Krishna, R.; Zettlemoyer, L.; Hu, Y.; and Ghazvininejad, M. 2025. GenEval 2: Addressing Benchmark Drift in Text-to-Image Evaluation. arXiv preprint arXiv:2512.16853 .Li, B.; Lin, Z.; Pathak, D.; Li, J.; Fei, Y.; Wu, K.; Ling, T.; Xia, X.; Zhang, P.; Neubig, G.; and Ramanan, D. 2024. GenAI-Bench: Evaluating and Improving Compositional Text-to-Visual Generation. arXiv preprint arXiv:2406.13743 .Li, N.; et al. 2026. Qwen-Image-Bench: From Generation to Creation in Text-to-Image Evaluation. arXiv preprint arXiv:2605.28091 .Li, O.; Wang, Y.; Hu, X.; Huang, H.; Chen, R.; Ou, J.; Tao, X.; Wan, P.; Qi, X.; and Feng, F. 2025a. Easier Painting Than Thinking: Can Text-to-Image Models Set the Stage, but Not Direct the Play? arXiv preprint arXiv:2509.03516 .Li, Q.; Chen, K.; Su, C.; Jitkrittum, W.; Sun, Q.; and Sangk-loy, P. 2025b. Cost-Aware Routing for Efficient Text-to-Image Generation. arXiv preprint arXiv:2506.14753 .Lin, Z.; Pathak, D.; Li, B.; Li, J.; Xia, X.; Neubig, G.; Zhang, P.; and Ramanan, D. 2024. Evaluating Text-to-Visual Generation with Image-to-Text Generation. arXiv preprint arXiv:2404.01291 .Liu, J.; et al. 2026. ERNIE-Image Technical Report. arXiv:2605.25347. Meituan LongCat Team; et al. 2025. LongCat-Image Tech-nical Report. arXiv preprint arXiv:2512.07584 .Meng, F.; et al. 2024. Phybench: A physical common-sense benchmark for evaluating text-to-image models. arXiv preprint arXiv:2406.11802 .Mohebbi, H.; Abdulrahman, M.; Miao, Y.; Poupart, P.; and Kothawade, S. 2025. Image-POSER: Reflective RL for Multi-Expert Image Generation and Editing. arXiv preprint arXiv:2511.11780 .Niu, Y.; et al. 2025. Wise: A world knowledge-informed semantic evaluation for text-to-image generation. arXiv preprint arXiv:2503.07265 .Wang, Z.; Li, A.; Li, Z.; and Liu, X. 2024. GenArtist: Mul-timodal LLM as an Agent for Unified Image Generation and Editing. In Advances in Neural Information Processing Sys-tems , volume 37, 128374–128395. Wei, X.; et al. 2025. TIIF-Bench: How Does Your T2I Model Follow Your Instructions? arXiv:2506.02161 .Wu, C.; et al. 2025. Qwen-image technical report. arXiv preprint arXiv:2508.02324 .Wu, X.; Yu, D.; Huang, Y.; Russakovsky, O.; and Arora, S. 2024. Conceptmix: A compositional image generation benchmark with controllable difficulty. Advances in Neural Information Processing Systems , 37: 86004–86047. Yang, A.; Li, A.; Yang, B.; et al. 2025. Qwen3 Technical Report. arXiv preprint arXiv:2505.09388 .Z-Image Team; et al. 2025. Z-Image: An Efficient Image Generation Foundation Model with Single-Stream Diffusion Transformer. arXiv preprint arXiv:2511.22699 .Z.ai. 2026. GLM-Image Model Card. https://huggingface. co/zai-org/GLM-Image. Zhao, L.; Yang, Y.; Zhang, K.; Shao, W.; Zhang, Y.; Qiao, Y.; Luo, P.; and Ji, R. 2024. DiffAgent: Fast and Accurate Text-to-Image API Selection with Large Language Model. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition , 6390–6399.

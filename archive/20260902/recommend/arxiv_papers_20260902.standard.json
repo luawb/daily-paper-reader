@@ -1,0 +1,297 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-02T22:21:49.536022+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [
+    {
+      "id": "2608.26713v1",
+      "source": "arxiv",
+      "title": "AesCanvas: A Large-Scale Dataset and Benchmark for Aesthetic Critique and Contextual Suitability",
+      "abstract": "Recent advances in Multimodal Large Language Models (MLLMs) have extended Image Aesthetic Assessment (IAA) beyond scalar scores toward interpretable critique and guidance. Yet existing benchmarks mainly assess intrinsic visual quality or fixed domain criteria, leaving open whether an appealing image is appropriate for a specific purpose, audience, cultural setting, or domain convention. We introduce AesCanvas, a unified suite with two complementary components: CritiqueCanvas with 519,136 instruction-response pairs from 54,300 images supports long-form, multi-dimensional critique across photography, painting, and virtual imagery, whereas ContextCanvas with 301 expert-reviewed use scenarios evaluates contextual aesthetic suitability in realistic use scenarios. Under a unified protocol, we evaluate closed-source frontier, open-weight general, and aesthetic-specific MLLMs. Results reveal a clear separation between critique generation and context-sensitive judgment: reference-based lexical and semantic metrics only partially capture critique quality, while aesthetic specialists remain competitive on selected critique metrics yet substantially lag strong general-purpose MLLMs on ContextCanvas. Further analyses show that aesthetic specialization does not reliably transfer to contextual suitability and that model decisions may fail to track or ground themselves in decisive contextual visual cues. These findings establish culturally situated, evidence-grounded suitability as a distinct objective for aesthetic modeling.",
+      "authors": [
+        "Xuanwei Hu",
+        "Haoyu Dong",
+        "Kejun Wu",
+        "Tianyi Liu",
+        "Jianjun Gao"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-08-27T07:06:32+00:00",
+      "link": "https://arxiv.org/pdf/2608.26713v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "Dataset and benchmark for aesthetic critique using MLLMs",
+      "llm_evidence_cn": "使用多模态大模型进行美学批判的数据集与基准",
+      "llm_evidence": "使用多模态大模型进行美学批判的数据集与基准",
+      "canonical_evidence": "使用多模态大模型进行美学批判的数据集与基准",
+      "llm_tldr_en": "Introduces AesCanvas, a dataset and benchmark for aesthetic critique and contextual suitability that uses multimodal large language models to provide interpretable image quality assessment beyond scalar scores.",
+      "llm_tldr_cn": "现有图像美学评估主要依赖标量分数，缺乏对图像在不同用途、受众和文化背景下的适应性解释。本文提出AesCanvas统一基准，包含CritiqueCanvas（519,136对指令-响应，覆盖摄影、绘画和虚拟图像）和ContextCanvas（301个专家评审场景），旨在从内在视觉质量扩展到情境适应性评估。该工作弥补了以往仅关注单一视觉质量或固定领域标准的不足，强调图像对特定目的、受众、文化背景的适用性。实验表明，该基准能支持多模态大语言模型生成可解释、多维度的美学批判，为图像质量评价提供了新的方向。",
+      "llm_tldr": "现有图像美学评估主要依赖标量分数，缺乏对图像在不同用途、受众和文化背景下的适应性解释。本文提出AesCanvas统一基准，包含CritiqueCanvas（519,136对指令-响应，覆盖摄影、绘画和虚拟图像）和ContextCanvas（301个专家评审场景），旨在从内在视觉质量扩展到情境适应性评估。该工作弥补了以往仅关注单一视觉质量或固定领域标准的不足，强调图像对特定目的、受众、文化背景的适用性。实验表明，该基准能支持多模态大语言模型生成可解释、多维度的美学批判，为图像质量评价提供了新的方向。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "image quality reasoning and explanation generation via multimodal large models",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.24372v1",
+      "source": "arxiv",
+      "title": "Bridging Adversarial and Collaborative Learning for AI-Generated Image Quality Assessment",
+      "abstract": "AI-generated image quality assessment (AIGIQA) requires jointly reasoning about perceptual fidelity and prompt alignment, two quality dimensions that are often treated as independent in existing AIGIQA models. However, by re-examining human ratings, we uncover a previously overlooked phenomenon: the two dimensions are interdependent and exhibit both competitive and cooperative interactions during human rating. This observation suggests that a unified model should neither collapse the two dimensions nor rigidly separate them, but rather adaptively negotiate their interplay. Motivated by this insight, we introduce an interaction-aware learning framework that models perception-alignment relations through adversarial and collaborative inference pathways. Instead of designing a rigid dual-branch architecture, our method employs a gated interaction module that dynamically routes features according to the inferred relationship between the two dimensions. Task-aware prompts further modulate the gating behaviour, enabling the model to switch between competition and cooperation when necessary. Experiments across multiple AIGIQA benchmarks demonstrate that our approach not only achieves state-of-the-art accuracy but also yields interpretable interaction patterns, offering a more faithful approximation of human judgment. The codes are available at https://github.com/LQAMEI/ACL-IQA.",
+      "authors": [
+        "Baoliang Chen",
+        "Qing Lin",
+        "Sijie Mai"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-08-25T10:31:00+00:00",
+      "link": "https://arxiv.org/pdf/2608.24372v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Directly addresses AI-generated image quality assessment with joint reasoning of perceptual fidelity and prompt alignment",
+      "llm_evidence_cn": "直接处理AI生成图像质量评价，联合推理感知保真度与提示对齐",
+      "llm_evidence": "直接处理AI生成图像质量评价，联合推理感知保真度与提示对齐",
+      "canonical_evidence": "直接处理AI生成图像质量评价，联合推理感知保真度与提示对齐",
+      "llm_tldr_en": "Proposes an interaction-aware learning framework that models interdependent perceptual fidelity and prompt alignment via adversarial and collaborative learning for AI-generated image quality assessment.",
+      "llm_tldr_cn": "该论文针对现有AI生成图像质量评价模型将感知保真度和提示对齐两个质量维度独立处理的问题，通过重新审视人类评分发现两维度相互依存并存在竞争与合作交互。论文提出交互感知学习框架，通过对抗与协作学习自适应协商两个维度的关系。实验结果表明该框架能更准确地评估AI生成图像质量，为基于推理的图像质量评价提供了有效方法。",
+      "llm_tldr": "该论文针对现有AI生成图像质量评价模型将感知保真度和提示对齐两个质量维度独立处理的问题，通过重新审视人类评分发现两维度相互依存并存在竞争与合作交互。论文提出交互感知学习框架，通过对抗与协作学习自适应协商两个维度的关系。实验结果表明该框架能更准确地评估AI生成图像质量，为基于推理的图像质量评价提供了有效方法。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "advanced image quality assessment using reasoning methods",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.24112v1",
+      "source": "arxiv",
+      "title": "Scalable Question-Centric Text-to-Image Evaluation: Reliable Ranking, Fine-Grained Diagnosis, and Cost-Aware Routing",
+      "abstract": "Modern text-to-image (T2I) models often have similar total scores but different strengths, making practical selection difficult. Fine-grained benchmarks decompose prompts into questions, yet often return them to prompt scores and fixed categories, weakening attribution and ignoring complexity. Related requirements are also scored separately or as one total, obscuring basic versus compositional failure. We present QC-T2I-Bench, a question-centric framework that converts open prompts into attributed atomic questions and organizes their dependencies with Davidsonian Scene Graphs (DSGs). We use hierarchy-constrained question aggregation to exclude downstream questions after a prerequisite fails and to prevent simple and complex prompts from receiving the same total weight. We then use the DSG structure to measure joint success within prompts and compare repeated entities across prompts, separating basic realization failures from failures under additional requirements. We evaluate multiple open-source T2I models on English and Chinese prompts. The resulting question-level evidence supports reliable ranking and fine-grained diagnosis: joint completion falls from 80.7\\% for components with two capabilities to 37.2\\% for those with seven or more. Finally, we reuse the same records for training-free routing; our cost-aware router matches ERNIE's 89.51-point estimate with 21.3\\% less GPU-s/MP.",
+      "authors": [
+        "Shaoan Zhao",
+        "Fang Zhao",
+        "Xueqiang Guo",
+        "Xinpei Su",
+        "Huanlin Gao",
+        "Qiang Hui",
+        "Ting Lu",
+        "Fuyuan Shi",
+        "Chao Tan",
+        "Bikun Yang",
+        "Kai Wang",
+        "Shiguo Lian"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-25T06:20:18+00:00",
+      "link": "https://arxiv.org/pdf/2608.24112v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "question-centric text-to-image evaluation; decomposes prompts into atomic questions with scene graph dependencies for fine-grained diagnosis",
+      "llm_evidence_cn": "以问题为中心的文生图评估；将提示分解为原子问题并用场景图依赖进行细粒度诊断",
+      "llm_evidence": "以问题为中心的文生图评估；将提示分解为原子问题并用场景图依赖进行细粒度诊断",
+      "canonical_evidence": "以问题为中心的文生图评估；将提示分解为原子问题并用场景图依赖进行细粒度诊断",
+      "llm_tldr_en": "Introduces QC-T2I-Bench, a question-centric framework that decomposes T2I prompts into attributed atomic questions organized by Davidsonian Scene Graphs, enabling reliable ranking, fine-grained diagnosis, and cost-aware routing for text-to-image models.",
+      "llm_tldr_cn": "针对现有文生图模型评估中总分相似但优劣难以区分、细粒度诊断不足的问题，提出以问题为中心的评估框架QC-T2I-Bench。该框架将开放提示分解为带属性的原子问题，并利用Davidsonian场景图组织问题依赖关系。实验表明该框架能实现更可靠的模型排名、细粒度诊断以及成本感知的路由选择。这项工作为文生图模型的精细质量评估提供了新思路。",
+      "llm_tldr": "针对现有文生图模型评估中总分相似但优劣难以区分、细粒度诊断不足的问题，提出以问题为中心的评估框架QC-T2I-Bench。该框架将开放提示分解为带属性的原子问题，并利用Davidsonian场景图组织问题依赖关系。实验表明该框架能实现更可靠的模型排名、细粒度诊断以及成本感知的路由选择。这项工作为文生图模型的精细质量评估提供了新思路。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.24782v1",
+      "source": "arxiv",
+      "title": "Image Difference Quantification Using Autoencoder-Based Latent Representations",
+      "abstract": "Traditional image similarity metrics such as Mean Squared Error (MSE), Peak Signal-to-Noise Ratio (PSNR), and the Structural Similarity Index Measure (SSIM) rely on pixel-level comparisons and often fail to capture perceptually meaningful differences between images. In contrast, latent representations learned by deep neural networks encode high-level semantic information that is more closely aligned with human visual perception. This paper proposes a convolutional autoencoder-based framework for quantifying image differences using cosine similarity in latent space. The learned compact embeddings enable robust differentiation between visually distinct images under variations in illumination, pose, and background. Extensive evaluation on dog-cat images and additional cross-domain datasets demonstrates clear class-wise clustering and strong inter-class separability in the latent space, with 98.4% of dog-cat image pairs exhibiting similarity scores below 0.5. Further validation using the TID2013 dataset shows that latent-space distance correlates positively with human Mean Opinion Scores (MOS), demonstrating sensitivity to perceptually relevant image distortions. The proposed approach provides a computationally efficient and semantically grounded alternative to conventional pixel-based similarity metrics, with potential applications in content-based retrieval, perceptual quality assessment, and semantic similarity analysis.",
+      "authors": [
+        "Manish Sharma",
+        "Timothy Yim",
+        "Clifton Forlines"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-08-25T16:23:47+00:00",
+      "link": "https://arxiv.org/pdf/2608.24782v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Proposes a learned perceptual image difference metric using autoencoder latent similarity",
+      "llm_evidence_cn": "提出基于自编码器潜在相似性的感知图像差异度量",
+      "llm_evidence": "提出基于自编码器潜在相似性的感知图像差异度量",
+      "canonical_evidence": "提出基于自编码器潜在相似性的感知图像差异度量",
+      "llm_tldr_en": "Pixel-level metrics fail to capture perceptual differences. This paper uses a convolutional autoencoder and cosine similarity in latent space to quantify image differences, showing robustness to illumination, pose, and background.",
+      "llm_tldr_cn": "针对像素级指标（MSE、PSNR、SSIM）难以捕捉人类感知差异的问题，本文提出基于卷积自编码器的框架，在潜在空间用余弦相似度量化图像差异。实验表明，学习到的紧凑嵌入能在光照、姿态和背景变化下稳健区分视觉不同图像。该方法为感知图像评估提供了新的思路。",
+      "llm_tldr": "针对像素级指标（MSE、PSNR、SSIM）难以捕捉人类感知差异的问题，本文提出基于卷积自编码器的框架，在潜在空间用余弦相似度量化图像差异。实验表明，学习到的紧凑嵌入能在光照、姿态和背景变化下稳健区分视觉不同图像。该方法为感知图像评估提供了新的思路。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.25452v1",
+      "source": "arxiv",
+      "title": "VGA-BenchV2: An Expanded Unified Benchmark and Multi-Model Framework for Evaluating Video Aesthetics and Generation Quality",
+      "abstract": "We introduce VGA-BenchV2, an extended human-aligned benchmark and optimization framework for jointly evaluating and improving video generation quality and aesthetic value. Built upon VGA-Bench, VGA-BenchV2 preserves the original fine-grained taxonomy with two primary dimensions-Aesthetic and Generation-and 52 sub-dimensions. Guided by this taxonomy, we curate 1,016 diverse prompts and collect over 60,000 videos generated by 12 mainstream video generation models. More importantly, VGA-BenchV2 substantially expands human-labeled supervision by adding 36,000 task-level annotations, including 16,200 for aesthetic quality, 13,200 for aesthetic tagging, and 6,600 for generation quality, corresponding to 13.46x, 11.15x, and 1.55x scale-ups over VGA-Bench, respectively. Leveraging this enlarged annotation corpus, we develop a hybrid evaluator architecture consisting of VAQA-Net for continuous aesthetic scoring and two Qwen-based Large Vision-Language Model evaluators, VTag-Net and VGQA-Net, for aesthetic tagging and generation quality assessment. Extensive experiments demonstrate strong alignment with human judgments across diverse generation models. Beyond evaluation, VGA-BenchV2 further introduces an evaluation-to-optimization pipeline, where the learned aesthetic evaluator serves as a reward model for reinforcement learning-based generator fine-tuning. This closes the loop from benchmark construction and human supervision to automated evaluation and model optimization, enabling video generators to improve not only in realism but also in aesthetic quality and human preference alignment. Resources are available at https://huggingface.co/datasets/BestiVictoryLab/VGA-Bench.",
+      "authors": [
+        "Longteng Jiang",
+        "DanDan Zheng",
+        "Qianqian Qiao",
+        "Heng Huang",
+        "Huaye Wang",
+        "Yihang Bo",
+        "Bao Peng",
+        "Jingdong Chen",
+        "Jun Zhou",
+        "Xin Jin"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-08-26T07:16:46+00:00",
+      "link": "https://arxiv.org/pdf/2608.25452v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "human-aligned benchmark for video aesthetics and generation quality; includes aesthetic quality, tagging, and generation quality annotations",
+      "llm_evidence_cn": "面向视频美学与生成质量的人类对齐基准；包含美学质量、标签和生成质量标注",
+      "llm_evidence": "面向视频美学与生成质量的人类对齐基准；包含美学质量、标签和生成质量标注",
+      "canonical_evidence": "面向视频美学与生成质量的人类对齐基准；包含美学质量、标签和生成质量标注",
+      "llm_tldr_en": "Introduces VGA-BenchV2, an expanded benchmark for video aesthetics and generation quality with 52 sub-dimensions, 1,016 prompts, 60k+ videos, and 36k task-level human annotations, enabling joint evaluation and improvement of video generation models.",
+      "llm_tldr_cn": "针对视频生成质量与美学价值评估维度不足的问题，提出扩展的基准VGA-BenchV2。该基准保留原有细粒度分类体系，包含美学与生成两大维度及52个子维度，收集了来自12个模型的超过6万个视频，并新增3.6万条任务级人工标注。实验表明该基准可有效评估并提升视频生成模型的质量与美学表现，为视频质量评估提供了更全面的标准。",
+      "llm_tldr": "针对视频生成质量与美学价值评估维度不足的问题，提出扩展的基准VGA-BenchV2。该基准保留原有细粒度分类体系，包含美学与生成两大维度及52个子维度，收集了来自12个模型的超过6万个视频，并新增3.6万条任务级人工标注。实验表明该基准可有效评估并提升视频生成模型的质量与美学表现，为视频质量评估提供了更全面的标准。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "evaluating the quality of images",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.28707v1",
+      "source": "arxiv",
+      "title": "ReVA: A Region-Aware Visual Assistant for Visually Grounded Question Answering",
+      "abstract": "Multimodal Large Language Models (MLLMs) have achieved remarkable progress in Visual Question Answering (VQA), yet they continue to struggle with questions requiring precise spatial reasoning and fine-grained visual understanding. These limitations often manifest as object, attribute, and spatial hallucinations, where models generate confident but visually unsupported responses due to insufficient region-level and fine-grained visual grounding. To address this challenge, we propose ReVA, a region-aware VQA model that employs a frozen CLIP ViT-L/14 Vision Transformer (ViT) and a Qwen2.5-7B-Instruct large language model (LLM) connected through a dual bridge that aligns both whole-image and region-level representations with the LLM's embedding space. The image bridge maps final transformer block features into image tokens. The region bridge maps cropped features from enriched intermediate features across ViT blocks so early texture and later object cues are more evident, into K region tokens for every bounding box. ReVA uses a detector stack that supplies automatic zero-shot bounding boxes that are both question-agnostic and question-dependent, using RAM++ (Recognize Anything Model), spaCy, and Grounding DINO. The image tokens and region tokens are concatenated as an LLM prompt prefix to jointly encode scene-level context and fine-grained regional evidence when answering questions. Evaluated on VQAv2, MMBench, POPE, and SEED-Bench, ReVA achieves 82.85% mean F1 on POPE, compared with 81.14% for an image-token baseline without region tokens. These results demonstrate that explicit region-aware visual representations reduce object hallucination and improve the factual grounding of MLLMs.",
+      "authors": [
+        "Anoop Senthil"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.CV"
+      ],
+      "published": "2026-08-27T20:33:13+00:00",
+      "link": "https://arxiv.org/pdf/2608.28707v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Multimodal LLM with region-level grounding for image-text reasoning",
+      "llm_evidence_cn": "基于区域级对齐的多模态大语言模型，用于图像文本推理",
+      "llm_evidence": "基于区域级对齐的多模态大语言模型，用于图像文本推理",
+      "canonical_evidence": "基于区域级对齐的多模态大语言模型，用于图像文本推理",
+      "llm_tldr_en": "ReVA is a region-aware multimodal LLM that aligns whole-image and region-level visual features with a LLM to reduce hallucinations in VQA. Its dual-bridge architecture is a transferable method for grounding visual understanding, potentially useful for explainable image quality assessment.",
+      "llm_tldr_cn": "本文针对多模态大语言模型在精确空间推理和细粒度视觉理解中容易产生幻觉的问题，提出区域感知的视觉问答模型ReVA。该模型采用双桥结构，将冻结的CLIP ViT整体图像和区域级表示对齐到Qwen2.5-7B大语言模型的嵌入空间。实验表明该方法能改善视觉接地并减少幻觉，其区域级对齐策略为可解释的图像质量评估提供了潜在的技术基础。",
+      "llm_tldr": "本文针对多模态大语言模型在精确空间推理和细粒度视觉理解中容易产生幻觉的问题，提出区域感知的视觉问答模型ReVA。该模型采用双桥结构，将冻结的CLIP ViT整体图像和区域级表示对齐到Qwen2.5-7B大语言模型的嵌入空间。实验表明该方法能改善视觉接地并减少幻觉，其区域级对齐策略为可解释的图像质量评估提供了潜在的技术基础。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.29088v1",
+      "source": "arxiv",
+      "title": "HANIA: Planner-Guided Multimodal Graph Evidence Selection for Grounded Question Answering",
+      "abstract": "Multimodal question answering remains sensitive to noisy, incomplete, and weakly grounded evidence. Long unstructured contexts can introduce redundancy and encourage unsupported generation, while flat retrieval may overlook relations needed for multi-step reasoning. We present HANIA, a planner-guided multimodal graph framework for evidence-grounded question answering. HANIA processes the supplied image and text using a frozen vision-language model to extract concise question-relevant visual evidence with explicit abstention. It then constructs an input-grounded multimodal graph and applies a two-group finite-state planner to coordinate descriptive and relational evidence. Coverage-aware pruning retains a compact evidence set based on relevance, graph confidence, concept coverage, and modality diversity. The selected passages, visual statements, and graph triples are provided to a frozen instruction-tuned decoder. We evaluate HANIA on ScienceQA using answer accuracy, evidence-filtering quality, evidence-budget sensitivity, and efficiency. The results show that structured evidence planning and compact graph-guided retrieval can support competitive multimodal question answering without target-dataset fine-tuning or iterative retrieval. The code is available at https://github.com/Zafar-southeast/HANIA.",
+      "authors": [
+        "Zafar Ali",
+        "Asad Khan",
+        "Nimbeshaho Thierry",
+        "Nabila Amir",
+        "Adam A. Q. Mohammed",
+        "Pavlos Kefalas"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-29T06:38:21+00:00",
+      "link": "https://arxiv.org/pdf/2608.29088v1",
+      "tags": [
+        "keyword:XIQA",
+        "query:XIQA"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Multimodal LLM with planning and graph-based evidence selection for cross-modal reasoning",
+      "llm_evidence_cn": "集成规划与图证据选择的多模态大语言模型，用于跨模态推理",
+      "llm_evidence": "集成规划与图证据选择的多模态大语言模型，用于跨模态推理",
+      "canonical_evidence": "集成规划与图证据选择的多模态大语言模型，用于跨模态推理",
+      "llm_tldr_en": "HANIA is a planner-guided multimodal graph framework that selects relevant visual and textual evidence for grounded QA. It uses a frozen vision-language model and finite-state planner to coordinate evidence, which is a reasoning method applicable to explainable IQA.",
+      "llm_tldr_cn": "本文针对多模态问答中噪声、不完整和弱接地证据的问题，提出HANIA框架。它利用冻结的视觉语言模型提取问题相关的视觉证据，构建输入接地的多模态图，并采用两组有限状态规划器协调描述性和关系性证据。实验表明该方法能提高证据选择质量和生成答案的可靠性，其规划与图推理机制可迁移用于图像质量推理与解释生成。",
+      "llm_tldr": "本文针对多模态问答中噪声、不完整和弱接地证据的问题，提出HANIA框架。它利用冻结的视觉语言模型提取问题相关的视觉证据，构建输入接地的多模态图，并采用两组有限状态规划器协调描述性和关系性证据。实验表明该方法能提高证据选择质量和生成答案的可靠性，其规划与图推理机制可迁移用于图像质量推理与解释生成。",
+      "llm_tags": [
+        "query:xiqa"
+      ],
+      "matched_query_tag": "query:xiqa",
+      "matched_query_text": "large language model that processes images and text",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
