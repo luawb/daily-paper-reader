@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-09-06T22:19:36.349923+00:00",
-  "updated_date": "20260906",
+  "generated_at": "2026-09-07T22:19:28.054882+00:00",
+  "updated_date": "20260907",
   "carryover_days": 9,
   "tag_states": {
     "XIQA": {
-      "updated_date": "20260906",
+      "updated_date": "20260907",
       "carryover_days": 9,
       "items": []
     }
